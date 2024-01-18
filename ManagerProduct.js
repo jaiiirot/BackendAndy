@@ -5,11 +5,6 @@ class ManagerProduct {
   constructor() {
     this.products = [];
     this.path = "./products.json";
-    this.putProducts();
-  }
-  async putProducts() {
-    const aux = JSON.parse(await fs.promises.readFile(this.path, "utf-8"));
-    return this.products.push(...aux);
   }
 
   getProductsById(idProd) {
@@ -30,8 +25,10 @@ class ManagerProduct {
     category,
     thumbnails
   ) {
+    const compare = this.products.find((prod) => prod.code === code);
+    if (!!compare) return "no se puede agregar el producto porque ya existe";
     let product = {
-      id: this.products.length + 1,
+      id: this.products.length,
       title,
       description,
       code,
@@ -42,7 +39,7 @@ class ManagerProduct {
       thumbnails,
     };
     this.products.push(product);
-    fs.writeFileSync(this.path, JSON.stringify(this.products));
+    fs.writeFileSync(this.path, JSON.stringify(this.products, null, "\t"));
     return product;
   }
   async updateProduct(idProd, Prod) {
