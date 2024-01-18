@@ -5,19 +5,19 @@ class ManagerProduct {
   constructor() {
     this.products = [];
     this.path = "./products.json";
+    this.putProducts();
   }
-  putProducts = async () => {
-    this.products = JSON.parse(await fs.promises.readFile(this.path, "utf-8"));
-    console.log(this.products);
-  };
+  async putProducts() {
+    const aux = JSON.parse(await fs.promises.readFile(this.path, "utf-8"));
+    return this.products.push(...aux);
+  }
 
   getProductsById(idProd) {
     if (!!idProd) return null;
     return this.products.find((product) => product.id === idProd);
   }
   getProducts() {
-    // if (this.products.length === 0) return null;
-    console.log(this.products);
+    if (this.products.length === 0) return null;
     return this.products;
   }
   addProduct(
@@ -28,20 +28,8 @@ class ManagerProduct {
     status,
     stock,
     category,
-    thumbnail
+    thumbnails
   ) {
-    if (
-      !title ||
-      !description ||
-      !code ||
-      price === undefined ||
-      status === undefined ||
-      stock === undefined ||
-      !category ||
-      !thumbnail
-    ) {
-      return "Todos los campos deben estar completos.";
-    }
     let product = {
       id: this.products.length + 1,
       title,
@@ -51,38 +39,40 @@ class ManagerProduct {
       status,
       stock,
       category,
-      thumbnail,
+      thumbnails,
     };
     this.products.push(product);
     fs.writeFileSync(this.path, JSON.stringify(this.products));
     return product;
   }
-  updateProduct(idProd, Prod) {
+  async updateProduct(idProd, Prod) {
+    console.log(idProd, Prod);
     if (this.products.length === 0) return null;
     const aux = this.products.map((prod) =>
       prod.id === idProd
         ? {
-            id: prod.id,
-            title: prod.title | Prod.title,
-            description: prod.description | Prod.description,
-            code: prod.code | Prod.code,
-            price: prod.price | Prod.price,
-            status: prod.status | Prod.status,
-            stock: prod.stock | Prod.stock,
-            category: prod.category | Prod.category,
-            thumbnail: prod.thumbnail | Prod.thumbnail,
+            id: idProd,
+            title: Prod.title,
+            description: Prod.description,
+            code: Prod.code,
+            price: Prod.price,
+            status: Prod.status,
+            stock: Prod.stock,
+            category: Prod.category,
+            thumbnail: Prod.thumbnails,
           }
         : prod
     );
-    fs.writeFileSync(this.path, []);
-    fs.writeFileSync(this.path, JSON.stringify(aux, null, "\t"));
-    return aux;
+    this.products = aux;
+    fs.promises.writeFile(this.path, []);
+    fs.promises.writeFile(this.path, JSON.stringify(aux, null, "\t"));
+    return this.products;
   }
-  deleteProduct(idProd) {
+  async deleteProduct(idProd) {
     const aux = this.products.filter((prod) => prod.id !== idProd);
     this.products = aux;
-    fs.writeFileSync(this.path, []);
-    fs.writeFileSync(this.path, JSON.stringify(aux, null, "\t"));
+    fs.promises.writeFile(this.path, []);
+    fs.promises.writeFile(this.path, JSON.stringify(aux, null, "\t"));
     return aux;
   }
   getLimitProducts(limit) {

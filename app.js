@@ -1,13 +1,16 @@
 const express = require("express");
 const routerProd = require("./routes/product.router");
+const routerCart = require("./routes/cart.router");
 
 const app = express();
 
 //Middlewares
 app.use(express.json());
 
+
 //Routes
-app.use("/product", routerProd);
+app.use("/api/product", routerProd);
+app.use("/api/carts", routerCart);
 
 //Reglas
 app.get("/ping", (req, res) => {
