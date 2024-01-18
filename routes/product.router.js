@@ -2,7 +2,7 @@ const managerProduct = require("../ManagerProduct");
 const Router = require("express");
 const router = Router();
 
-router.get("/", () => {
+router.get("/", (req, res) => {
   managerProduct.putProducts();
   const limitProd = managerProduct.getLimitProducts(parseInt(req.query.limit));
   if (!limitProd) {
