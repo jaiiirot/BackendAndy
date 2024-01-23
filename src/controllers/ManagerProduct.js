@@ -4,7 +4,7 @@ class ManagerProduct {
   static id = 0;
   constructor() {
     this.products = [];
-    this.path = "./products.json";
+    this.path = "../controllers/products.json";
   }
 
   getProductsById(idProd) {

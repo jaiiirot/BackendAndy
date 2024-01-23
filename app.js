@@ -1,12 +1,11 @@
 const express = require("express");
-const routerProd = require("./routes/product.router");
-const routerCart = require("./routes/cart.router");
+const routerProd = require("./src/routes/product.router");
+const routerCart = require("./src/routes/cart.router");
 
 const app = express();
 
 //Middlewares
 app.use(express.json());
-
 
 //Routes
 app.use("/api/product", routerProd);

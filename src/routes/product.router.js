@@ -1,4 +1,4 @@
-const managerProduct = require("../ManagerProduct");
+const managerProduct = require("../controllers/ManagerProduct");
 const Router = require("express");
 const router = Router();
 

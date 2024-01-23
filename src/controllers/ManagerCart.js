@@ -4,7 +4,7 @@ class ManagerCart {
   static id = 0;
   constructor() {
     this.carts = [];
-    this.path = "./carito.json";
+    this.path = "../data/carito.json";
   }
 
   async addCart() {
