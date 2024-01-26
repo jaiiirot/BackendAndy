@@ -1,6 +1,6 @@
-const managerCart = require("../controllers/ManagerCart");
-const Router = require("express");
-const router = Router();
+import express from "express";
+import managerCart from "../controllers/ManagerCart.js";
+const router = express.Router();
 
 router.post("/", (req, res) => {
   const newCart = managerCart.addCart();
@@ -26,4 +26,4 @@ router.post("/:cid/product/:pid", (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

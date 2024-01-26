@@ -1,0 +1,74 @@
+.index {
+  width: 100%;
+}
+.index-welcome {
+  margin: 1rem;
+  border-radius: 2rem;
+  position: relative;
+  /* width: 100%; */
+  height: 70dvh;
+  background: url("../image/background.jpeg") no-repeat center center fixed;
+  background-size: cover;
+  overflow: hidden;
+}
+.index-subwelcome {
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.599);
+}
+.index-subwelcome h2 {
+  text-align: end;
+  font-size: 3rem;
+  font-weight: 900;
+  color: #f9f9f9;
+}
+.index-subwelcome h1 {
+  font-size: 10rem;
+  font-weight: 200;
+  color: #fff;
+}
+.index-subwelcome .index-button {
+  border: none;
+  outline: none;
+  margin-top: 2rem;
+  border-radius: 5px;
+}
+.index-subwelcome .index-button a {
+  font-size: 1rem;
+  font-weight: 200;
+  font-weight: 500;
+  padding: 1rem 1.5rem;
+  background-color: #253508;
+  color: #fff;
+  text-decoration: none;
+}
+.index-subwelcome .index-button a:hover {
+  background-color: #a52a2a;
+}
+.index-category {
+  margin: 1rem 0px;
+  width: 100%;
+  height: max-content;
+}
+
+@media screen and (max-width: 970px) {
+  .index-welcome {
+    background-position: left center;
+  }
+  .index-subwelcome h1 {
+    font-size: 4rem;
+  }
+  .index-subwelcome p {
+    font-size: 0.8rem;
+  }
+  .index-subwelcome .index-button a {
+    font-size: 0.8rem;
+  }
+}

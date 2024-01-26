@@ -1,10 +1,10 @@
-const fs = require("fs");
+import fs from "fs";
 
 class ManagerCart {
   static id = 0;
   constructor() {
     this.carts = [];
-    this.path = "../data/carito.json";
+    this.path = "src/models/carts.json";
   }
 
   async addCart() {
@@ -54,4 +54,4 @@ class ManagerCart {
 
 const managerCart = new ManagerCart();
 
-module.exports = managerCart;
+export default managerCart;

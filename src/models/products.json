@@ -1,0 +1,35 @@
+[
+	{
+		"id": 0,
+		"status": true,
+		"title": "JOGGER GABARDINA DEMPSEY [ NEGRO ]",
+		"description": "Babucha unisex de gabardina con cintura y puño elastizada, cordon de ajuste en la cintura. Bolsillos laterales y traseros tipo chino. Modelo usa talle 44, mi...",
+		"code": "11d1",
+		"price": 35490,
+		"stock": 8,
+		"category": "JOGGER",
+		"thumbnails": "https://acdn.mitiendanube.com/stores/002/580/475/products/pantalon-jogger-chino-negro-0212d2926b159f72dc16942250052037-480-0.webp"
+	},
+	{
+		"id": 1,
+		"status": true,
+		"title": "JOGGER GABARDINA DEMPSEY [ NEGRO ]",
+		"description": "Babucha unisex de gabardina con cintura y puño elastizada, cordon de ajuste en la cintura. Bolsillos laterales y traseros tipo chino. Modelo usa talle 44, mi...",
+		"code": "asdasdad",
+		"price": 35490,
+		"stock": 8,
+		"category": "JOGGER",
+		"thumbnails": "https://acdn.mitiendanube.com/stores/002/580/475/products/pantalon-jogger-chino-negro-0212d2926b159f72dc16942250052037-480-0.webp"
+	},
+	{
+		"id": 2,
+		"status": true,
+		"title": "JOGGER GABARDINA DEMPSEY [ NEGRO ]",
+		"description": "Babucha unisex de gabardina con cintura y puño elastizada, cordon de ajuste en la cintura. Bolsillos laterales y traseros tipo chino. Modelo usa talle 44, mi...",
+		"code": "1dw1w",
+		"price": 35490,
+		"stock": 8,
+		"category": "JOGGER",
+		"thumbnails": "https://acdn.mitiendanube.com/stores/002/580/475/products/pantalon-jogger-chino-negro-0212d2926b159f72dc16942250052037-480-0.webp"
+	}
+]

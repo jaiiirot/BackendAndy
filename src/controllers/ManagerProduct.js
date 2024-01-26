@@ -1,50 +1,37 @@
-const fs = require("fs");
+import fs from "fs";
 
 class ManagerProduct {
   static id = 0;
   constructor() {
     this.products = [];
-    this.path = "../controllers/products.json";
+    this.path = "src/models/products.json";
   }
 
   getProductsById(idProd) {
-    if (!!idProd) return null;
     return this.products.find((product) => product.id === idProd);
   }
+
   getProducts() {
-    if (this.products.length === 0) return null;
+    if (this.products.length === 0) return { msg: "No hay productos cargados" };
     return this.products;
   }
-  addProduct(
-    title,
-    description,
-    code,
-    price,
-    status,
-    stock,
-    category,
-    thumbnails
-  ) {
-    const compare = this.products.find((prod) => prod.code === code);
-    if (!!compare) return "no se puede agregar el producto porque ya existe";
+
+  addProduct(data) {
+    const compare = this.products.find((prod) => prod.code === data.code);
+    if (!!compare)
+      return { msg: "no se puede agregar el producto porque ya existe" };
     let product = {
       id: this.products.length,
-      title,
-      description,
-      code,
-      price,
-      status,
-      stock,
-      category,
-      thumbnails,
+      status: true,
+      ...data,
     };
     this.products.push(product);
-    fs.writeFileSync(this.path, JSON.stringify(this.products, null, "\t"));
-    return product;
+    fs.promises.writeFile(this.path, JSON.stringify(this.products, null, "\t"));
+    return { msg: "Producto agregado", product };
   }
+
   async updateProduct(idProd, Prod) {
-    console.log(idProd, Prod);
-    if (this.products.length === 0) return null;
+    if (this.products.length === 0) return { msg: "No hay productos cargados" };
     const aux = this.products.map((prod) =>
       prod.id === idProd
         ? {
@@ -63,21 +50,24 @@ class ManagerProduct {
     this.products = aux;
     fs.promises.writeFile(this.path, []);
     fs.promises.writeFile(this.path, JSON.stringify(aux, null, "\t"));
-    return this.products;
+    return { msg: "Producto actualizado" };
   }
+
   async deleteProduct(idProd) {
+    if (this.products.length === 0) return { msg: "No hay productos cargados" };
     const aux = this.products.filter((prod) => prod.id !== idProd);
     this.products = aux;
     fs.promises.writeFile(this.path, []);
     fs.promises.writeFile(this.path, JSON.stringify(aux, null, "\t"));
-    return aux;
+    return { msg: "Producto eliminado" };
   }
+
   getLimitProducts(limit) {
-    if (this.products.length === 0) return null;
+    if (this.products.length === 0) return { msg: "No hay productos cargados" };
     return this.products.slice(0, limit);
   }
 }
 
 const managerProduct = new ManagerProduct();
 
-module.exports = managerProduct;
+export default managerProduct;

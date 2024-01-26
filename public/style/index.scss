@@ -1,0 +1,179 @@
+.index {
+  width: 100%;
+}
+
+.index-welcome {
+  margin: 1rem;
+  border-radius: 2rem;
+  position: relative;
+
+  /* width: 100%; */
+  height: 70dvh;
+  background: url("../image/background.jpeg") no-repeat center center fixed;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.index-subwelcome {
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.599);
+
+  h2 {
+    text-align: end;
+    font-size: 3rem;
+    font-weight: 900;
+    color: #f9f9f9;
+  }
+
+  h1 {
+    font-size: 10rem;
+    font-weight: 200;
+    color: #fff;
+  }
+
+  .index-button {
+    border: none;
+    outline: none;
+    margin-top: 2rem;
+    border-radius: 5px;
+
+    a {
+      font-size: 1rem;
+      font-weight: 200;
+      font-weight: 500;
+      padding: 1rem 1.5rem;
+      background-color: #253508;
+      color: #fff;
+      text-decoration: none;
+
+      &:hover {
+        background-color: #a52a2a;
+      }
+    }
+  }
+}
+
+.index-category-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  .title-font{
+    font-size: 5rem;
+    font-weight: 900;
+    text-align: center;
+  }
+  .index-category-hombre,
+  .index-category-mujer{
+    max-width: 1440px;
+    margin: 1rem;
+    overflow: hidden;
+  }
+  .index-category {
+    padding: 1rem 0px;
+    width: 100%;
+    height: max-content;
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+    gap: 1rem;
+    &-item {
+      overflow: hidden;
+      width: 300px;
+      height: 400px;
+      border-radius: 2rem;
+      cursor: pointer;
+      box-shadow: 2px 2px 10px #2e2e2e;
+      &:hover{
+        span{
+          background-color: #0000007e;
+        }
+      }
+      span {
+        transition: all 0.3s ease-in-out;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        background: #00000052;
+        h3 {
+          transform: rotate(-90deg);
+          color: #f9f9f9;
+          text-shadow: 5px 5px 5px #000000;
+          font-size: 2rem;
+        }
+      }
+    }
+    &-remerasm {
+      background: url("https://www.brooksfieldstore.com/30521-home_default/remera-oversized-fit.jpg") no-repeat center center;
+      background-size: cover;
+    }
+    &-buzosm {
+      background: url("https://www.brooksfieldstore.com/25220-home_default/canguro-duck.jpg")no-repeat center center;
+      background-size: cover;
+    }
+    &-pantalonesm {
+      background: url("https://www.brooksfieldstore.com/31816-home_default/pantalon-chino-fairbanks.jpg")no-repeat center center;
+      background-size: cover;
+    }
+    &-shortsm {
+      background: url("https://www.brooksfieldstore.com/31313-home_default/bermuda-wells.jpg")no-repeat center center;
+      background-size: cover;
+    }
+    &-sweatersm {
+      background: url("https://www.brooksfieldstore.com/28979-home_default/sweater-new-milan.jpg")no-repeat center center;
+      background-size: cover;
+    }
+    &-camisasm {
+      background: url("https://www.brooksfieldstore.com/31776-home_default/camisa-mao-half-placket-linen.jpg")no-repeat center center;
+      background-size: cover;
+    }
+    &-remerasf {
+      background: url("https://www.brooksfieldstore.com/33459-home_default/remera-joni-embroidery-organic-cotton.jpg")no-repeat center center;
+      background-size: cover;
+    }
+    &-buzosf {
+      background: url("https://www.brooksfieldstore.com/33518-home_default/buzo-selway-oversize.jpg")no-repeat center center;
+      background-size: cover;
+    }
+    &-pantalonesf {
+      background: url("https://www.brooksfieldstore.com/33722-home_default/pantalon-elba.jpg")no-repeat center center;
+      background-size: cover;
+    }
+    &-shortsf {
+      background: url("https://www.brooksfieldstore.com/33319-home_default/short-viola.jpg")no-repeat center center;
+      background-size: cover;
+    }
+    &-vestidosf {
+      background: url("https://www.brooksfieldstore.com/30405-home_default/vestido-helen.jpg")no-repeat center center;
+      background-size: cover;
+    }
+    &-camisasf {
+      background: url("https://www.brooksfieldstore.com/30224-home_default/camisa-sally-stripes-ls.jpg")no-repeat center center;
+      background-size: cover;
+    }
+  }
+}
+
+@media screen and (max-width: 970px) {
+  .index-welcome {
+    background-position: left center;
+  }
+
+  .index-subwelcome {
+    h1 {
+      font-size: 4rem;
+    }
+
+    p,
+    .index-button a {
+      font-size: 0.8rem;
+    }
+  }
+}
