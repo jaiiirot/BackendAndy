@@ -4,16 +4,25 @@
     text-decoration: none;
     color: #000;
   }
+  .title-big {
+    text-align: center;
+    font-size: 6rem;
+    width: 100%;
+    font-weight: 200;
+    margin: 0.5rem 0px;
+    background-color: #f9f9f9;
+    border-radius: 2rem;
+  }
 }
+
 main {
-  padding: 0 1rem;
+  padding: 0.5rem 0.5rem 0;
 }
 .index__box {
   display: flex;
   gap: 1rem;
   width: 100%;
-  background: url("/image/f01.jpeg")
-    center center no-repeat;
+  background: url("/image/f01.jpeg") center center no-repeat;
   background-size: cover;
   border-radius: 2rem;
   overflow: hidden;
@@ -50,11 +59,6 @@ main {
 }
 
 .index__category--container {
-  h2 {
-    font-size: 7rem;
-    font-weight: 200;
-    margin-bottom: 1rem;
-  }
   .index__category--box {
     width: 100%;
     display: grid;
@@ -83,11 +87,6 @@ main {
 }
 
 .index__elements {
-  .index__element--title {
-    font-size: 7rem;
-    font-weight: 200;
-    margin-bottom: 1rem;
-  }
   .index__boxelements {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -96,6 +95,71 @@ main {
       img {
         width: 100%;
       }
+    }
+  }
+}
+
+@media (max-width: 783px) {
+  * {
+    .title-big {
+      font-size: 3rem;
+    }
+  }
+  .index__box {
+    h2 {
+      font-size: 3rem;
+      font-weight: 200;
+    }
+    button {
+      border-radius: 0.9rem;
+      padding: 0.5rem 1rem;
+    }
+  }
+
+  .index__category--container {
+    .index__category--box {
+      grid-template-areas:
+        "c5 c4"
+        "c1 c2 "
+        "c1 c3 ";
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(3, 300px);
+      gap: 0.5rem;
+    }
+  }
+
+  .index__elements {
+    .index__boxelements {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+    }
+  }
+}
+
+@media (max-width: 530px) {
+  *{
+    .title-big {
+      border-radius: .5rem;
+      font-size: 2rem;
+    }
+  }
+  .index__category--container {
+    .index__category--box {
+      grid-template-areas:
+        "c1"
+        "c2"
+        "c3"
+        "c4"
+        "c5";
+      grid-template-columns: repeat(1, 1fr);
+      grid-template-rows: repeat(5, 350px);
+      gap: 0.5rem;
+    }
+  }
+  .index__elements {
+    .index__boxelements {
+      grid-template-columns: repeat(1, 1fr);
+      gap: 0.5rem;
     }
   }
 }

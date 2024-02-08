@@ -5,6 +5,16 @@ class ManagerProduct {
   constructor() {
     this.products = [];
     this.path = "src/models/products.json";
+    this.loadProducts();
+  }
+
+  async loadProducts() {
+    try {
+      const data = await fs.promises.readFile(this.path, "utf-8");
+      this.products = JSON.parse(data);
+    } catch (error) {
+      console.log("No se encontraron productos");
+    }
   }
 
   getProductsById(idProd) {

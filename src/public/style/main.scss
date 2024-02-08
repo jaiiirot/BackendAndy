@@ -143,7 +143,17 @@
 }
 @media (max-width: 530px) {
   /*HEADER*/
-  &__menu {
-    display: none;
+  .header {
+    &__menu {
+      display: none;
+    }
   }
+  /*FOOTER*/
+.footer {
+  &__explore {
+    a {
+      font-size: .9rem;
+    }
+  }
+}
 }

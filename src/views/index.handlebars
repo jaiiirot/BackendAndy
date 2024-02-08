@@ -2,7 +2,6 @@
 <main>
     <section class="index__box">
         <div class="index__boxsec01">
-
             <h3>
                 Bienvenido a
             </h3>
@@ -13,78 +12,25 @@
                 "Donde el estilo y la elegancia se encuentran."
             </p>
             <button>
-                todos los productos
+                Todos los productos
             </button>
         </div>
     </section>
     <section class="index__category--container">
-        <h2 class="title-font index__category--title">+ SECCIONES +</h2>
+        <h2 class="title-font title-big">+ SECCIONES +</h2>
         <div class="index__category--box">
-            <div class="index__category index__category01"
-                style="grid-area: c1; background: url('/image/c01.jpg') no-repeat center center; background-size: cover;">
-                <h4>Remeras</h4>
-            </div>
-            <div class="index__category index__category02" style="grid-area: c2; background: url('/image/c02.jpg') no-repeat center center; background-size: cover;" alt="">
-                <h4>Shorts</h4>
-            </div>
-            <div class="index__category index__category03" style="grid-area: c3; background: url('/image/c03.jpg') no-repeat center center" alt="">
-                <h4>Vestidos</h4>
-            </div>
-            <div class="index__category index__category04"
-                style="grid-area: c4; background: url('/image/c04.jpg') no-repeat center center; background-size: cover;">
-                <h4>Buzos</h4>
-            </div>
-            <div class="index__category index__category05"
-                style="grid-area: c5; background: url('/image/c05.jpg') no-repeat center center; background-size: cover;">
-                <h4>Accesorios</h4>
-            </div>
+            {{#each secctions}}
+                {{> card_secctions title=this.title area=this.area image=this.image }}
+            {{/each}}
         </div>
 
     </section>
     <section class="index__elements">
-        <h2 class="title-font index__element--title">+ PRODUCTOS +</h2>
+        <h2 class="title-font title-big">+ PRODUCTOS +</h2>
         <div class="index__boxelements">
-
-            <a class="index__boxelement">
-                <img src="https://equus.vtexassets.com/arquivos/ids/258573/04SCLL1765N5-E8-2.jpg?v=638284137475030000"
-                    alt="">
-                <div class="">
-                    <h5>MUSCULOSA OVERISIZE SLUSH</h5>
-                    <p>$ 20302</p>
-                </div>
-            </a>
-            <a class="index__boxelement">
-                <img src="https://equus.vtexassets.com/arquivos/ids/259299/04SRCF1913R1-Z2-2.jpg?v=638284145988930000"
-                    alt="">
-                <div class="">
-                    <h5>MUSCULOSA OVERISIZE SLUSH</h5>
-                    <p>$ 20302</p>
-                </div>
-            </a>
-            <a class="index__boxelement">
-                <img src="https://equus.vtexassets.com/arquivos/ids/259050/04SCCF1909R1-Z7-2.jpg?v=638284143089330000"
-                    alt="">
-                <div class="">
-                    <h5>MUSCULOSA OVERISIZE SLUSH</h5>
-                    <p>$ 20302</p>
-                </div>
-            </a>
-            <a class="index__boxelement">
-                <img src="https://equus.vtexassets.com/arquivos/ids/259109/04SUCF1910R1-Z8-2.jpg?v=638284143664600000"
-                    alt="">
-                <div class="">
-                    <h5>MUSCULOSA OVERISIZE SLUSH</h5>
-                    <p>$ 20302</p>
-                </div>
-            </a>
-            <a class="index__boxelement">
-                <img src="https://equus.vtexassets.com/arquivos/ids/259175/04SUCF1911R1-Z9-2.jpg?v=638284144440800000"
-                    alt="">
-                <div class="">
-                    <h5>MUSCULOSA OVERISIZE SLUSH</h5>
-                    <p>$ 20302</p>
-                </div>
-            </a>
+            {{#each product}}
+                {{> card_product title=this.title price=this.price thumbnails=this.thumbnails }}
+            {{/each}}
         </div>
     </section>
 
