@@ -28,7 +28,7 @@
     <section class="index__elements">
         <h2 class="title-font title-big">+ PRODUCTOS +</h2>
         <div class="index__boxelements">
-            {{#each product}}
+            {{#each products}}
                 {{> card_product title=this.title price=this.price thumbnails=this.thumbnails }}
             {{/each}}
         </div>

@@ -36,31 +36,35 @@ router.get("/", (req, res) => {
 
 router.get("/inicio", (req, res) => {
   res.render("index", {
-    title: "Home | Palerms",
+    title: "Home || Palermo",
     style: "index.css",
     js: "index.js",
     secctions: secctions,
-    product: managerProduct.getProducts(),
+    products: managerProduct.getLimitProducts(10),
   });
 });
 
 router.get("/hombre", (req, res) => {
-  res.render("hombre", {
-    title: "hombre | Palerms",
-    // style: "shop.css",
+  res.render("shop", {
+    title: "Hombre || Palermo",
+    section_title: "HOMBRE",
+    products: managerProduct.getProducts(),
+    style: "shop.css",
     // js: "shop.js",
   });
 });
 router.get("/mujer", (req, res) => {
-  res.render("mujer", {
-    title: "mujer | Palerms",
-    // style: "shop.css",
+  res.render("shop", {
+    title: "Mujer || Palermo",
+    section_title: "MUJER",
+    products: managerProduct.getProducts(),
+    style: "shop.css",
     // js: "shop.js",
   });
 });
-router.get("/nosotros", (req, res) => {
-  res.render("nosotros", {
-    title: "Nosotros | Palerms",
+router.get("/contacto", (req, res) => {
+  res.render("contact", {
+    title: "Contacto || Palerms",
     // style: "shop.css",
     // js: "shop.js",
   });

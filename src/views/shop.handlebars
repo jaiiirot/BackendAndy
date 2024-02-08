@@ -1,0 +1,17 @@
+{{> header}}
+<section>
+    <div>
+        {{section_title}}
+    </div>
+</section>
+<section>
+    <div>
+        {{section_area}}
+    </div>
+    <div>
+        {{#each products}}
+            {{> card_product title=this.title price=this.price thumbnails=this.thumbnails }}
+        {{/each}} 
+    </div>
+</section>
+{{> footer}}
