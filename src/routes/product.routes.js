@@ -1,6 +1,5 @@
 import express from "express";
 import managerProduct from "../controllers/ManagerProduct.js";
-import { validationData, validationId } from "../middlewares/middleware.js";
 
 const router = express.Router();
 
@@ -19,26 +18,32 @@ router.get("/", (req, res) => {
   }
 });
 
-router.post("/", validationData, (req, res) => {
+router.post("/", (req, res) => {
   const newProduct = managerProduct.addProduct(req.body);
   res.status(201).send(newProduct);
 });
 
-router.get("/:id", validationId, (req, res) => {
+router.get("/:id", (req, res) => {
+  if (isNaN(req.params.id))
+    return res.status(400).send({ msg: `Id no valido: ${req.params.id}` });
   const product = managerProduct.getProductsById(parseInt(req.params.id));
   product
     ? res.status(200).send(product)
     : res.status(404).send({ error: "Producto no encontrado." });
 });
 
-router.delete("/:id", validationId, (req, res) => {
+router.delete("/:id", (req, res) => {
+  if (isNaN(req.params.id))
+    return res.status(400).send({ msg: `Id no valido: ${req.params.id}` });
   const product = managerProduct.deleteProduct(parseInt(req.params.id));
   product
     ? res.status(404).send({ error: "Producto no encontrado" })
     : res.status(200).send(product);
 });
 
-router.put("/:id", validationId, validationData, (req, res) => {
+router.put("/:id", (req, res) => {
+  if (isNaN(req.params.id))
+    return res.status(400).send({ msg: `Id no valido: ${req.params.id}` });
   const product = managerProduct.updateProduct(
     parseInt(req.params.id),
     req.body

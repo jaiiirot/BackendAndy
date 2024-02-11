@@ -13,15 +13,14 @@ const httpServer = app.listen(8080, () => {
 
 //MIDDLAWARES
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(express.static("public"));
 app.use(express.static(`${__dirname}/public`));
+app.use(express.json());
 
 //CONFIGURACIONES
 const socketServer = new Server(httpServer);
+app.set("views", `${__dirname}/views`);
 app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");
-app.set("views", `${__dirname}/views`);
 
 //ROUTES
 app.use("/", routerViews);

@@ -1,10 +1,17 @@
-<a class="index__boxelement">
-  <img
-    src="{{thumbnails}}"
-    alt="imagen {{title}}"
-  />
-  <div class="">
-    <h5>{{title}}</h5>
-    <p>${{price}}</p>
+<a class="card-container" href="/">
+  <img class="card-img" src="{{thumbnails}}" alt="imagen {{title}}" />
+  <div class="card-info">
+    <div class="card-price">
+      <h5>{{title}}</h5>
+      <p>${{price}}</p>
+    </div>
+    <div class="card-button">
+      <button>
+        <i class="fa-solid fa-heart" aria-hidden="true"></i>
+      </button>
+      <button>
+        <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+      </button>
+    </div>
   </div>
 </a>

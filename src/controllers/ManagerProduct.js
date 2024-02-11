@@ -27,6 +27,9 @@ class ManagerProduct {
   }
 
   addProduct(data) {
+    if (this.validationData(data)) {
+      return { msg: "Faltan datos" };
+    }
     const compare = this.products.find((prod) => prod.code === data.code);
     if (!!compare)
       return { msg: "no se puede agregar el producto porque ya existe" };
@@ -41,6 +44,9 @@ class ManagerProduct {
   }
 
   async updateProduct(idProd, Prod) {
+    if (this.validationData(Prod)) {
+      return { msg: "Faltan datos" };
+    }
     if (this.products.length === 0) return { msg: "No hay productos cargados" };
     const aux = this.products.map((prod) =>
       prod.id === idProd
@@ -76,6 +82,23 @@ class ManagerProduct {
     if (this.products.length === 0) return { msg: "No hay productos cargados" };
     return this.products.slice(0, limit);
   }
+
+  validationData = (body) => {
+    const { title, description, code, price, stock, category, thumbnails } =
+      body;
+    if (
+      !title ||
+      !description ||
+      !code ||
+      !price ||
+      !stock ||
+      !category ||
+      !thumbnails
+    ) {
+      return true;
+    }
+    return false;
+  };
 }
 
 const managerProduct = new ManagerProduct();

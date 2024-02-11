@@ -1,34 +1,6 @@
 import managerProduct from "../controllers/ManagerProduct.js";
-import express from "express";
-const router = express.Router();
-
-const secctions = [
-  {
-    area: "c1",
-    title: "REMERAS",
-    image: "c01.jpg",
-  },
-  {
-    area: "c2",
-    title: "SHORTS",
-    image: "c02.jpg",
-  },
-  {
-    area: "c3",
-    title: "VESTIDOS",
-    image: "c03.jpg",
-  },
-  {
-    area: "c4",
-    title: "BUZOS",
-    image: "c04.jpg",
-  },
-  {
-    area: "c5",
-    title: "ACCESORIOS",
-    image: "c05.jpg",
-  },
-];
+import { Router } from "express";
+const router = Router();
 
 router.get("/", (req, res) => {
   res.redirect("/inicio");
@@ -39,7 +11,33 @@ router.get("/inicio", (req, res) => {
     title: "Home || Palermo",
     style: "index.css",
     js: "index.js",
-    secctions: secctions,
+    sections: [
+      {
+        area: "c1",
+        title: "REMERAS",
+        image: "c01.jpg",
+      },
+      {
+        area: "c2",
+        title: "SHORTS",
+        image: "c02.jpg",
+      },
+      {
+        area: "c3",
+        title: "VESTIDOS",
+        image: "c03.jpg",
+      },
+      {
+        area: "c4",
+        title: "BUZOS",
+        image: "c04.jpg",
+      },
+      {
+        area: "c5",
+        title: "ACCESORIOS",
+        image: "c05.jpg",
+      },
+    ],
     products: managerProduct.getLimitProducts(10),
   });
 });
@@ -64,10 +62,25 @@ router.get("/mujer", (req, res) => {
 });
 router.get("/contacto", (req, res) => {
   res.render("contact", {
-    title: "Contacto || Palerms",
+    title: "Contacto || Palermo",
     // style: "shop.css",
     // js: "shop.js",
   });
 });
 
+router.get("/dashboard/", (req, res) => {
+  res.render("admin/dashboard", {
+    title: "Dashboard || Palermo",
+    style: "dashboard.css",
+    js: "dashboard.js",
+  });
+});
+
+router.get("/dashboard/productos", (req, res) => {
+  res.render("admin/list", {
+    title: "Productos || Palermo",
+    style: "listProduct.css",
+    js: "listProduct.js",
+  });
+});
 export default router;
