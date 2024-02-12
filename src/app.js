@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import __dirname from "./utils.js";
 import routerProd from "./routes/product.routes.js";
 import routerCart from "./routes/cart.routes.js";
@@ -31,6 +32,14 @@ app.use("/api/carts", routerCart);
 app.get("/ping", (req, res) => {
   res.send("Pong");
 });
+
+//404
+app.use((req, res, next) => {
+  res.status(404).send("404 Not Found");
+});
+
+//MONGOOSE
+mongoose.connect("mongodb://localhost:27017/ecommerce");
 
 //SOCKET IO
 socketServer.on("connection", (socket) => {

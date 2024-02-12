@@ -1,4 +1,4 @@
-import managerProduct from "../controllers/ManagerProduct.js";
+import ProductsDAO from "../dao/products.dao.js";
 import { Router } from "express";
 const router = Router();
 
@@ -6,7 +6,7 @@ router.get("/", (req, res) => {
   res.redirect("/inicio");
 });
 
-router.get("/inicio", (req, res) => {
+router.get("/inicio", async (req, res) => {
   res.render("index", {
     title: "Home || Palermo",
     style: "index.css",
@@ -38,28 +38,40 @@ router.get("/inicio", (req, res) => {
         image: "c05.jpg",
       },
     ],
-    products: managerProduct.getLimitProducts(10),
+    products: await ProductsDAO.getAllWithLimit(10),
   });
 });
 
-router.get("/hombre", (req, res) => {
-  res.render("shop", {
-    title: "Hombre || Palermo",
-    section_title: "HOMBRE",
-    products: managerProduct.getProducts(),
-    style: "shop.css",
-    // js: "shop.js",
-  });
+router.get("/productos", async (req, res) => {
+  try {
+    let products;
+    const sex = req.query.sex;
+    if (sex && (sex === "hombre" || sex === "mujer")) {
+      console.log(sex);
+      products = await ProductsDAO.getByCategory(sex);
+      res.render("shop", {
+        title: sex.toUpperCase() + " || Palermo",
+        section_title: sex.toUpperCase(),
+        products: products,
+        style: "shop.css",
+        // js: "shop.js",
+      });
+    } else {
+      products = await ProductsDAO.getAll();
+      res.render("shop", {
+        title: "Productos || Palermo",
+        section_title: "PRODUCTOS",
+        products: products,
+        style: "shop.css",
+        // js: "shop.js",
+      });
+    }
+  } catch (error) {
+    console.error("Error al procesar la solicitud:", error);
+    res.status(500).send({ error: "Error interno del servidor" });
+  }
 });
-router.get("/mujer", (req, res) => {
-  res.render("shop", {
-    title: "Mujer || Palermo",
-    section_title: "MUJER",
-    products: managerProduct.getProducts(),
-    style: "shop.css",
-    // js: "shop.js",
-  });
-});
+
 router.get("/contacto", (req, res) => {
   res.render("contact", {
     title: "Contacto || Palermo",
@@ -76,7 +88,7 @@ router.get("/dashboard/", (req, res) => {
   });
 });
 
-router.get("/dashboard/productos", (req, res) => {
+router.get("/listadeproductos", (req, res) => {
   res.render("admin/list", {
     title: "Productos || Palermo",
     style: "listProduct.css",
