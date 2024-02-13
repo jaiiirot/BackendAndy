@@ -1,33 +1,39 @@
 {{> header}}
-<main>
-    <section class="index__box">
-        <div class="index__boxsec01">
-            <h3>
+<main class="px-[1rem]">
+    <section class="index__box flex gap-4 w-full" style="background-image: url('/image/f02.jpeg'); background-position: center center; background-repeat: no-repeat; background-size: cover; border-radius: .5rem; overflow: hidden;">
+        <div class="index__boxsec01 flex flex-col justify-center items-center w-full text-center p-12 bg-black bg-opacity-75 text-white">
+            <h3 class="text-lg font-medium">
                 Bienvenido a
             </h3>
-            <h2 class="title-font">
+            <h2 class="title-font text-7xl font-light">
                 PALERMO
             </h2>
             <p>
                 "Donde el estilo y la elegancia se encuentran."
             </p>
-            <button>
+            <button class="mt-4 px-8 py-3 bg-red-900 text-white rounded-full hover:bg-black transition duration-300 ease-in-out">
                 Todos los productos
             </button>
         </div>
     </section>
-    <section class="index__category--container">
-        <h2 class="title-font title-big">+ CATEGORIAS +</h2>
-        <div class="index__category--box">
+
+    <section class="index__category--container w-full">
+        <h2 class="title-font text-3xl font-bold mb-4">+ CATEGORIAS +</h2>
+        <div class="gap-2"
+        style="    display: grid;
+    grid-template-areas:
+      'c1 c2 c5'
+      'c1 c3 c4';
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 400px);">
             {{#each sections}}
                 {{> card_sections title=this.title area=this.area image=this.image }}
             {{/each}}
         </div>
-
     </section>
-    <section class="index__elements">
+    <section class="index__elements mb-4 w-full">
         <h2 class="title-font title-big">+ PRODUCTOS +</h2>
-        <div class="index__boxelements">
+        <div class="index__boxelements grid grid-cols-1 gap-2 md:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6  ">
             {{#each products}}
                 {{> card_product title=this.title price=this.price thumbnails=this.thumbnails }}
             {{/each}}

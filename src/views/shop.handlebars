@@ -1,117 +1,128 @@
 {{> header}}
 <main>
-<section class="shop__title" style="background: url('image/{{section_title}}.jpg') top center no-repeat;
-    background-size: cover;">
-    <div class="shop__position">
-        <p>{{section_title}}</p>
-        <h2 class="title-font title-big">
-            + {{section_title}} +
-        </h2>
-    </div>
-</section>
-<section class="shop__filters__products">
-    <div class="shop__filters">
-        {{section_area}}
-        <div id="filter-categories">
-            <h6>Filtrar por categoría</h6>
-            <ul class="clear section-categories" data-id="3" data-section-id="man" style="">
-                <li>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input filter-categories-checkbox" id="aside_3-37"
-                            data-amount="21" value="21">
-                        <label class="custom-control-label text-truncate fs-14" for="aside_3-37">Camisas (21)</label>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input filter-categories-checkbox" id="aside_3-43"
-                            data-amount="10" value="10">
-                        <label class="custom-control-label text-truncate fs-14" for="aside_3-43">Remeras Mangas Cortas
-                            (10)</label>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input filter-categories-checkbox" id="aside_3-41"
-                            data-amount="8" value="8">
-                        <label class="custom-control-label text-truncate fs-14" for="aside_3-41">Camperas / Chaquetas
-                            (8)</label>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input filter-categories-checkbox" id="aside_3-39"
-                            data-amount="8" value="8">
-                        <label class="custom-control-label text-truncate fs-14" for="aside_3-39">Buzos / Hoodies
-                            (8)</label>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input filter-categories-checkbox" id="aside_3-38"
-                            data-amount="3" value="3">
-                        <label class="custom-control-label text-truncate fs-14" for="aside_3-38">Pantalones (3)</label>
-                    </div>
-                </li>
-            </ul>
-            <ul class="clear section-categories" data-id="ofertas" data-section-id="ofertas" style="display:none">
-
-                <li>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input filter-categories-checkbox"
-                            id="aside_ofertas-37" data-amount="17" value="17">
-                        <label class="custom-control-label text-truncate fs-14" for="aside_ofertas-37">Camisas
-                            (17)</label>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input filter-categories-checkbox"
-                            id="aside_ofertas-43" data-amount="7" value="7">
-                        <label class="custom-control-label text-truncate fs-14" for="aside_ofertas-43">Remeras Mangas
-                            Cortas (7)</label>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input filter-categories-checkbox"
-                            id="aside_ofertas-39" data-amount="6" value="6">
-                        <label class="custom-control-label text-truncate fs-14" for="aside_ofertas-39">Buzos / Hoodies
-                            (6)</label>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input filter-categories-checkbox"
-                            id="aside_ofertas-45" data-amount="2" value="2">
-                        <label class="custom-control-label text-truncate fs-14" for="aside_ofertas-45">Bermudas / Shorts
-                            (2)</label>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input filter-categories-checkbox"
-                            id="aside_ofertas-38" data-amount="1" value="1">
-                        <label class="custom-control-label text-truncate fs-14" for="aside_ofertas-38">Pantalones
-                            (1)</label>
-                    </div>
-                </li>
-            </ul> <a href="#" id="show-all-categories" style="">Ver todas</a>
+    <section class="bg-cover bg-center bg-no-repeat h-72 rounded-lg mb-2"
+        style="background-image: url('image/{{section_title}}.jpg')">
+        <div class="h-full flex flex-col justify-center items-center bg-[#00000090]">
+            <p class="text-white">{{section_title}}</p>
+            <h2 class="title-font text-3xl text-white">
+                + {{section_title}} +
+            </h2>
         </div>
-    </div>
-    <div class="shop__products">
-        {{#each products}}
-        {{> card_product title=this.title price=this.price thumbnails=this.thumbnails }}
-        {{/each}}
-    </div>
-</section>
+    </section>
+    <section class="shop__filters__products flex flex-col lg:flex-row w-full">
+        <div class="shop__filters bg-white w-full lg:w-1/4 p-4">
+            {{section_area}}
+            <div id="filter-categories">
+                <h6 class="font-bold text-lg">Filtrar</h6>
+                <ul class="clear section-categories mt-2">
+                    <div class="space-y-2">
+                        <details
+                            class="overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                            <summary
+                                class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
+                                <span class="text-sm font-medium"> Disponibilidad </span>
+
+                                <span class="transition group-open:-rotate-180">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="h-4 w-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                    </svg>
+                                </span>
+                            </summary>
+
+                            <div class="border-t border-gray-200 bg-white">
+                                <header class="flex items-center justify-between p-4">
+                                    <span class="text-sm text-gray-700"> 0 Selected </span>
+
+                                    <button type="button" class="text-sm text-gray-900 underline underline-offset-4">
+                                        Reset
+                                    </button>
+                                </header>
+
+                                <ul class="space-y-1 border-t border-gray-200 p-4">
+                                    <li>
+                                        <label for="FilterInStock" class="inline-flex items-center gap-2">
+                                            <input type="checkbox" id="FilterInStock"
+                                                class="size-5 rounded border-gray-300" />
+
+                                            <span class="text-sm font-medium text-gray-700"> In Stock (5+) </span>
+                                        </label>
+                                    </li>
+
+                                    <li>
+                                        <label for="FilterPreOrder" class="inline-flex items-center gap-2">
+                                            <input type="checkbox" id="FilterPreOrder"
+                                                class="size-5 rounded border-gray-300" />
+
+                                            <span class="text-sm font-medium text-gray-700"> Pre Order (3+) </span>
+                                        </label>
+                                    </li>
+
+                                    <li>
+                                        <label for="FilterOutOfStock" class="inline-flex items-center gap-2">
+                                            <input type="checkbox" id="FilterOutOfStock"
+                                                class="size-5 rounded border-gray-300" />
+
+                                            <span class="text-sm font-medium text-gray-700"> Out of Stock (10+) </span>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </details>
+
+                        <details
+                            class="overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                            <summary
+                                class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
+                                <span class="text-sm font-medium"> Precio </span>
+
+                                <span class="transition group-open:-rotate-180">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="h-4 w-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                    </svg>
+                                </span>
+                            </summary>
+
+                            <div class="border-t border-gray-200 bg-white">
+                                <header class="flex items-center justify-between p-4">
+                                    <span class="text-sm text-gray-700"> The highest price is $600 </span>
+
+                                    <button type="button" class="text-sm text-gray-900 underline underline-offset-4">
+                                        Reset
+                                    </button>
+                                </header>
+
+                                <div class="border-t border-gray-200 p-4">
+                                    <div class="flex justify-between gap-4">
+                                        <label for="FilterPriceFrom" class="flex items-center gap-2">
+                                            <span class="text-sm text-gray-600">$</span>
+
+                                            <input type="number" id="FilterPriceFrom" placeholder="From"
+                                                class="w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
+                                        </label>
+
+                                        <label for="FilterPriceTo" class="flex items-center gap-2">
+                                            <span class="text-sm text-gray-600">$</span>
+
+                                            <input type="number" id="FilterPriceTo" placeholder="To"
+                                                class="w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </ul>
+            </div>
+        </div>
+        <div class="shop__products grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 2xl:grid-cols-5 gap-2 w-full lg:w-3/4 px-4">
+            {{#each products}}
+            {{> card_product title=this.title price=this.price thumbnails=this.thumbnails }}
+            {{/each}}
+        </div>
+    </section>
 </main>
 {{> footer}}

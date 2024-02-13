@@ -22,6 +22,9 @@ class ProductsDAO {
   static async deleteProduct(id) {
     return Products.findByIdAndDelete(id).lean();
   }
+  static async deleteProducts(ids) {
+    return Products.deleteMany({ _id: { $in: ids } }).lean();
+  }
   static async updateStock(id, stock) {
     return Products.findByIdAndUpdate(
       id,

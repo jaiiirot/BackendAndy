@@ -1,9 +1,24 @@
-<a
-  class="index__category index__category01"
+{{!-- <a
+  class="w-full h-full"
   href="/productos/{{title}}"
   style="grid-area: {{area}}; background: url('/image/{{image}}') no-repeat center center; background-size: cover;"
 >
   <div class="index__category--title">
     <h4>{{title}}</h4>
+  </div>
+</a> --}}
+<a
+  href="/productos/{{title}}"
+  class="relative w-full h-full"
+  style="grid-area: {{area}}; background: url('/image/{{image}}') no-repeat center center; background-size: cover;"
+>
+  <div
+    class="index__category w-full h-full rounded-md overflow-hidden relative"
+  >
+    <div
+      class="index__category--title absolute top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50"
+    >
+      <h4 class="text-white text-3xl font-extralight">{{title}}</h4>
+    </div>
   </div>
 </a>

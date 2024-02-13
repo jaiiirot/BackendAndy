@@ -47,7 +47,6 @@ router.get("/productos", async (req, res) => {
     let products;
     const sex = req.query.sex;
     if (sex && (sex === "hombre" || sex === "mujer")) {
-      console.log(sex);
       products = await ProductsDAO.getByCategory(sex);
       res.render("shop", {
         title: sex.toUpperCase() + " || Palermo",
@@ -80,19 +79,38 @@ router.get("/contacto", (req, res) => {
   });
 });
 
-router.get("/dashboard/", (req, res) => {
+router.get("/panel/", async (req, res) => {
+  const products = await ProductsDAO.getAll();
   res.render("admin/dashboard", {
-    title: "Dashboard || Palermo",
+    title: "Dashboard || Panel",
+    products: products,
     style: "dashboard.css",
     js: "dashboard.js",
   });
 });
 
-router.get("/listadeproductos", (req, res) => {
-  res.render("admin/list", {
-    title: "Productos || Palermo",
-    style: "listProduct.css",
-    js: "listProduct.js",
+router.get("/panel/productos", async (req, res) => {
+  const products = await ProductsDAO.getAll();
+  const actions = req.query.actions;
+  if (actions === "agregar") {
+    res.render("admin/add_prod", {
+      title: "Agregar Producto || Panel",
+      js: "addProduct.js",
+    });
+  } else {
+    res.render("admin/list", {
+      title: "Productos || Panel",
+      products: products,
+      js: "listProduct.js",
+    });
+  }
+});
+
+router.get("/panel/mensajes", async (req, res) => {
+  const products = await ProductsDAO.getAll();
+
+  res.render("admin/messages_dash", {
+    title: "Mensajes || Panel",
   });
 });
 export default router;

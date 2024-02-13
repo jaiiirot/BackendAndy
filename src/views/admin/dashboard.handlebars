@@ -1,70 +1,219 @@
-<main>
-  <section class="dash__menu">
-    <div class="dash__logo">
-      <a href="/dashboard/">
-        <h4 class="title-font style-logo">PALERMO</h4>
-      </a>
+<div class="flex w-screen h-screen text-gray-400 bg-gray-900">
+  {{> header_dash}}
+
+  <div class="flex flex-col flex-grow">
+    <div
+      class="flex items-center flex-shrink-0 h-16 px-8 border-b border-gray-800"
+    >
+      <h1 class="text-lg font-medium">Panel de Control</h1>
+      <button
+        class="flex items-center justify-center h-10 px-4 ml-auto text-sm font-medium bg-gray-800 rounded hover:bg-gray-700"
+      >
+        Agregar
+      </button>
+      <button
+        class="flex items-center justify-center h-10 px-4 ml-2 text-sm font-medium rounded hover:bg-gray-800"
+      >
+        Eliminar
+      </button>
+      <button
+        class="flex items-center justify-center h-10 px-4 ml-2 text-sm font-medium rounded hover:bg-gray-800"
+      >
+        Actualizar
+      </button>
     </div>
-    <div class="dash__options">
-      <ul>
-        <li><a href="/dashboard/">Inicio</a></li>
-        <li><a href="/listadeproductos">Productos</a></li>
-        <li><a href="/listadepedidos">Pedidos</a></li>
-        <li><a href="/listadeususario">Usuarios</a></li>
-        <li><a href="/configuraciones">Configuraciones</a></li>
-      </ul>
-    </div>
-  </section>
-  <section class="dash__container">
-    <div class="dash__table__estadisticas">
-      <h2>Informacion</h2>
-      <div class="dash__estadisticas">
-        <div class="dash__estadistica dash__hombre">
-          <i class="fa-solid fa-tags"></i>
-          <div>
-            <h5>Productos</h5>
-            <H2>100</H2>
-          </div>
-        </div>
-        <div class="dash__estadistica dash__mujer">
-          <i class="fa-solid fa-cart-shopping"></i>
-          <div>
-            <h5>Pedidos</h5>
-            <h2>23</h2>
-          </div>
-        </div>
-        <div class="dash__estadistica dash__usuarios">
-          <i class="fa-solid fa-user"></i>
-          <div>
-            <h5>Usuarios</h5>
-            <h2>204</h2>
-          </div>
-        </div>
+    <div class="flex-grow p-6 overflow-auto bg-gray-800">
+      <div class="flex">
+        {{!  }}
+        {{!-- <div class="shadow overflow-hidden sm:rounded-lg">
+          <table class="min-w-full text-sm text-gray-400">
+            <thead class="bg-gray-800 text-xs uppercase font-medium">
+              <tr>
+                <th></th>
+                <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                  Titulo
+                </th>
+                <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                  Descripción
+                </th>
+                <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                  Precio
+                </th>
+                <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                  Estado
+                </th>
+                <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                  Stock
+                </th>
+                <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                  Categoria
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-gray-800">
+              {{#each products}}
+              <tr class="bg-black bg-opacity-20">
+                <td class="pl-4">
+                  <input type="checkbox">
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap overflow-hidden">
+                  <p style="  white-space: nowrap; overflow: hidden; width: 200px; text-overflow:ellipsis;">
+                  {{this.title}}
+                  </p>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap overflow-hidden	">
+                  <p style="  white-space: nowrap; overflow: hidden; width: 200px; text-overflow:ellipsis;">
+                  {{this.description}}
+                  </p>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap overflow-hidden	">
+                  <p style="  white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;">
+                  $ {{this.price}}
+                  </p>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap overflow-hidden	">
+                  <p style="  white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;">
+                  {{this.status}}
+                  </p>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap overflow-hidden	">
+                  <p style="  white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;">
+                  {{this.stock}}
+                  </p>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap overflow-hidden	">
+                  <p style="  white-space: nowrap; overflow: hidden; width: 200px; text-overflow:ellipsis;">
+                  {{this.category}}
+                  </p>
+                </td>
+              </tr>
+              {{/each}}
+              {{!-- <tr>
+                <td class="pl-4">
+                  2
+                </td>
+                <td class="flex px-6 py-4 whitespace-nowrap">
+                  <img
+                    class="w-5"
+                    src="https://ssl.gstatic.com/onebox/media/sports/logos/0iShHhASp5q1SL4JhtwJiw_48x48.png"
+                    alt=""
+                  />
+                  <span class="ml-2 font-medium">Liverpool</span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  17
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  9
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  6
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  2
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  37
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  21
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  16
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  33
+                </td>
+                <td class="flex px-6 py-4 whitespace-nowrap">
+                  <svg
+                    class="w-4 fill-current text-red-500"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  <svg
+                    class="w-4 fill-current text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  <svg
+                    class="w-4 fill-current text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  <svg
+                    class="w-4 fill-current text-green-600"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  <svg
+                    class="w-4 fill-current text-green-600"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </td>
+              </tr> --}}
+
+            </tbody>
+          </table>
+        </div> --}}
+        {{!  }}
       </div>
     </div>
-    <div class="dash__table__pedidos">
-      <h2>Ultimos Pedidos</h2>
-      <div class="pedidos-container">
-        <div class="pedidos-header">
-          <h4>Id usuario</h4>
-          <h4>Id Pedido</h4>
-          <h4>Fecha</h4>
-          <h4>Estado</h4>
-        </div>
-        <div class="pedidos-body">
-          <div class="pedido-item">
-            <p>1</p>
-            <p>1</p>
-            <p>12/12/2021</p>
-            <p>Entregado</p>
-          </div>
-          <div class="pedido-item">
-            <p>2</p>
-            <p>2</p>
-            <p>12/12/2021</p>
-            <p>Entregado</p>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
+  </div>
+  <!-- Component End  -->
+
+</div>
+
+{{! <a
+  class="fixed flex items-center justify-center h-8 pr-2 pl-1 bg-blue-600 rounded-full bottom-0 right-0 mr-4 mb-4 shadow-lg text-blue-100 hover:bg-blue-600"
+  href="https://twitter.com/lofiui"
+  target="_top"
+>
+  <div
+    class="flex items-center justify-center h-6 w-6 bg-blue-500 rounded-full"
+  >
+    <svg
+      class="w-4 h-4 fill-current"
+      viewBox="0 0 24 24"
+      class="r-jwli3a r-4qtqp9 r-yyyyoo r-16y2uox r-1q142lx r-8kz0gk r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-1srniue"
+    ><g><path
+          d="M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.093 7.14 2.093 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z"
+        ></path></g></svg>
+  </div>
+  <span class="text-sm ml-1 leading-none">@lofiui</span>
+</a> }}

@@ -1,17 +1,19 @@
-<a class="card-container" href="/s">
-  <img class="card-img" src="{{photo}}" alt="imagen {{title}}" />
-  <div class="card-info">
-    <div class="card-price">
-      <h5>{{title}}</h5>
-      <p>${{price}}</p>
+<a
+  class="relative rounded-lg overflow-hidden w-full text-black"
+  href="/{{title}}"
+>
+  <img class="card-img w-full" src="{{photo}}" alt="imagen {{title}}" />
+  <div
+    class="absolute w-full bg-white bottom-0 flex flex-col justify-between p-4 min-h-20 gap-2"
+  >
+    <div>
+      <h3 class="text-xs font-bold">{{title}}</h3>
+      <p>$ {{price}}</p>
     </div>
-    <div class="card-button">
-      <button>
-        <i class="fa-solid fa-heart" aria-hidden="true"></i>
-      </button>
-      <button>
-        <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
-      </button>
-    </div>
+    <span
+      class="flex relative z-50 rounded-lg border-none bg-red-900 p-2 text-white justify-center cursor-pointer hover:bg-red-700"
+    >
+      Agregar carrito
+    </span>
   </div>
 </a>
