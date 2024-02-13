@@ -11,33 +11,21 @@ class ProductsDAO {
     return Products.find({ category: { $in: [`${category}`] } }).lean();
   }
   static async getById(id) {
-    return Products.findById(id).lean();
+    return Products.findOne({ _id: id }).lean();
   }
   static async addProduct(product) {
     return Products.create(product);
   }
-  static async updateProduct(id, product) {
-    return Products.findByIdAndUpdate(id, product, { new: true }).lean();
-  }
   static async deleteProduct(id) {
-    return Products.findByIdAndDelete(id).lean();
+    return Products.findByIdAndDelete(id);
   }
   static async deleteProducts(ids) {
-    return Products.deleteMany({ _id: { $in: ids } }).lean();
+    return Products.deleteMany({ _id: { $in: ids } });
   }
-  static async updateStock(id, stock) {
-    return Products.findByIdAndUpdate(
-      id,
-      { stock: stock },
-      { new: true }
-    ).lean();
-  }
-  static async updateStatus(id, status) {
-    return Products.findByIdAndUpdate(
-      id,
-      { status: status },
-      { new: true }
-    ).lean();
+  static async updateProduct(id, product) {
+    console.log(id);
+    console.log(product);
+    return Products.findByIdAndUpdate(id, product, { new: true }).lean();
   }
 }
 

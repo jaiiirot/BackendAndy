@@ -90,14 +90,23 @@ router.get("/panel/", async (req, res) => {
 });
 
 router.get("/panel/productos", async (req, res) => {
-  const products = await ProductsDAO.getAll();
+  let products;
   const actions = req.query.actions;
   if (actions === "agregar") {
     res.render("admin/add_prod", {
       title: "Agregar Producto || Panel",
       js: "addProduct.js",
     });
+  } else if (actions === "editar" && !!req.query.id) {
+    products = await ProductsDAO.getById(req.query.id);
+    res.render("admin/put_prod", {
+      title: "Editar Producto || Panel",
+      product: products,
+      js: "editProduct.js",
+      exist_product: true,
+    });
   } else {
+    products = await ProductsDAO.getAll();
     res.render("admin/list", {
       title: "Productos || Panel",
       products: products,
@@ -107,8 +116,6 @@ router.get("/panel/productos", async (req, res) => {
 });
 
 router.get("/panel/mensajes", async (req, res) => {
-  const products = await ProductsDAO.getAll();
-
   res.render("admin/messages_dash", {
     title: "Mensajes || Panel",
   });
