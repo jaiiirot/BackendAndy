@@ -3,6 +3,8 @@ const buttonDelete = document.getElementById("delete-item");
 const buttonUpdate = document.getElementById("update-item");
 const itemsContainer = document.querySelectorAll("input[type=checkbox]");
 const trOptions = document.querySelectorAll(".tr_item");
+const url = new URL(window.location.href);
+const id = url.searchParams.get("id");
 
 trOptions.forEach((tr) => {
   tr.addEventListener("click", () => {
@@ -11,7 +13,7 @@ trOptions.forEach((tr) => {
   });
 });
 buttonAdd.addEventListener("click", () => {
-  window.location.href = "/panel/productos?actions=agregar";
+  window.location.href = `/panel/${id}/productos?actions=agregar`;
 });
 
 buttonDelete.addEventListener("click", async () => {
@@ -60,7 +62,7 @@ buttonDelete.addEventListener("click", async () => {
 buttonUpdate.addEventListener("click", () => {
   itemsContainer.forEach((item) => {
     if (item.checked) {
-      return (window.location = `/panel/productos?actions=editar&id=${item.id}`);
+      return (window.location = `/panel/${id}/productos?actions=editar&id=${item.id}`);
     }
   });
 });

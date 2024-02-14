@@ -73,7 +73,9 @@ document.getElementById("submit-put").addEventListener("click", function () {
       return response.json();
     })
     .then((data) => {
-      window.location.href = "/panel/productos";
+      const url = new URL(window.location.href);
+      const id = url.searchParams.get("id");
+      window.location.href = `/panel/${id}/productos`;
     })
     .catch((error) => {
       console.error("Error al actualizar el producto:", error.message);

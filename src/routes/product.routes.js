@@ -37,7 +37,6 @@ router.post("/", upload.array("photo", 4), async (req, res) => {
   };
   if (req.body) {
     await ProductsDAO.addProduct(product);
-    res.status(201).redirect("/panel/productos");
   } else {
     res
       .status(400)

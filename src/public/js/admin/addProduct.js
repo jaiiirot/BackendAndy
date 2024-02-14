@@ -35,7 +35,7 @@ function previewImages(event) {
   if (files.length > 4) {
     alert("Solo se permiten hasta 4 imágenes.");
     event.target.value = "";
-    imagePreview.innerHTML = `<img class="card-img w-full" src="../image/noimgv.jpg" alt="imagen nuevo producto" id="img-card"/>`;
+    imagePreview.innerHTML = `<img class="card-img w-full" src="../../image/noimgv.jpg" alt="imagen nuevo producto" id="img-card"/>`;
     return;
   }
 
