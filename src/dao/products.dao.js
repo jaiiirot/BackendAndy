@@ -1,29 +1,81 @@
 import { Products } from "./schemas/products.schema.js";
+
 class ProductsDAO {
-  //   constructor() {}
   static async getAll() {
-    return Products.find().lean();
+    try {
+      return await Products.find().lean();
+    } catch (error) {
+      console.error("Error al obtener todos los productos:", error);
+      throw error;
+    }
   }
+
   static async getAllWithLimit(limit) {
-    return Products.find().limit(limit).lean();
+    try {
+      return await Products.find().limit(limit).lean();
+    } catch (error) {
+      console.error(`Error al obtener productos con límite ${limit}:`, error);
+      throw error;
+    }
   }
+
   static async getByCategory(category) {
-    return Products.find({ category: { $in: [`${category}`] } }).lean();
+    try {
+      return await Products.find({ category: { $in: [`${category}`] } }).lean();
+    } catch (error) {
+      console.error(
+        `Error al obtener productos por categoría ${category}:`,
+        error
+      );
+      throw error;
+    }
   }
+
   static async getById(id) {
-    return Products.findOne({ _id: id }).lean();
+    try {
+      return await Products.findOne({ _id: id }).lean();
+    } catch (error) {
+      console.error(`Error al obtener producto con ID ${id}:`, error);
+      throw error;
+    }
   }
+
   static async addProduct(product) {
-    return Products.create(product);
+    try {
+      return await Products.create(product);
+    } catch (error) {
+      console.error("Error al agregar un producto:", error);
+      throw error;
+    }
   }
+
   static async deleteProduct(id) {
-    return Products.findByIdAndDelete(id);
+    try {
+      return await Products.findByIdAndDelete(id);
+    } catch (error) {
+      console.error(`Error al eliminar producto con ID ${id}:`, error);
+      throw error;
+    }
   }
+
   static async deleteProducts(ids) {
-    return Products.deleteMany({ _id: { $in: ids } });
+    try {
+      return await Products.deleteMany({ _id: { $in: ids } });
+    } catch (error) {
+      console.error("Error al eliminar varios productos:", error);
+      throw error;
+    }
   }
+
   static async updateProduct(id, product) {
-    return Products.findByIdAndUpdate(id, product, { new: true }).lean();
+    try {
+      return await Products.findByIdAndUpdate(id, product, {
+        new: true,
+      }).lean();
+    } catch (error) {
+      console.error(`Error al actualizar producto con ID ${id}:`, error);
+      throw error;
+    }
   }
 }
 

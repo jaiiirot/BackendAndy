@@ -1,11 +1,23 @@
 import { Messages } from "./schemas/messages.schema.js";
 import usersDao from "./users.dao.js";
+
 class MessagesDAO {
   async getAll() {
-    return await Messages.find();
+    try {
+      return await Messages.find();
+    } catch (error) {
+      console.error("Error al obtener todos los mensajes:", error);
+      throw error;
+    }
   }
+
   async addMessage(data) {
-    return await Messages.create(data);
+    try {
+      return await Messages.create(data);
+    } catch (error) {
+      console.error("Error al agregar un mensaje:", error);
+      throw error;
+    }
   }
 }
 

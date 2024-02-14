@@ -2,7 +2,11 @@ import { Carts } from "./schemas/carts.schema.js";
 
 class CartsDAO {
   static async getAll() {
-    return Carts.find({}).lean();
+    try {
+      return await Carts.find({}).lean();
+    } catch (error) {
+      console.error("Error al obtener todos los carritos:", error);
+    }
   }
 }
 

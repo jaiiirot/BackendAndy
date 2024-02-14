@@ -3,15 +3,15 @@ import UsersDAO from "../dao/users.dao.js";
 
 const router = Router();
 
-// router.post("/", async (req, res) => {
-//   console.log(req.body);
-//   await usersDao.postUser(req.body);
-//   if (user && user.password === password) {
-//     res.status(200).json({ username: user.username });
-//   } else {
-//     res.status(401).json({ error: "Invalid credentials" });
-//   }
-// });
+router.get("/", async (req, res) => {
+  try {
+    const users = await UsersDAO.getAll();
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error al obtener todos los usuarios:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
 
 router.post("/", async (req, res) => {
   try {
