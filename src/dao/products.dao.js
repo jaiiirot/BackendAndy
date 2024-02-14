@@ -23,8 +23,6 @@ class ProductsDAO {
     return Products.deleteMany({ _id: { $in: ids } });
   }
   static async updateProduct(id, product) {
-    console.log(id);
-    console.log(product);
     return Products.findByIdAndUpdate(id, product, { new: true }).lean();
   }
 }

@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import __dirname from "./utils.js";
 import routerProd from "./routes/product.routes.js";
+import routerUser from "./routes/user.routes.js";
 import routerCart from "./routes/cart.routes.js";
 import routerViews from "./routes/views.routes.js";
 import handlebars from "express-handlebars";
@@ -18,7 +19,7 @@ app.use(express.static(`${__dirname}/public`));
 app.use(express.json());
 
 //CONFIGURACIONES
-const socketServer = new Server(httpServer);
+const socket = new Server(httpServer);
 app.set("views", `${__dirname}/views`);
 app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");
@@ -26,6 +27,7 @@ app.set("view engine", "handlebars");
 //ROUTES
 app.use("/", routerViews);
 app.use("/api/products", routerProd);
+app.use("/api/users", routerUser);
 app.use("/api/carts", routerCart);
 
 //REGLAS
@@ -42,6 +44,12 @@ app.use((req, res, next) => {
 mongoose.connect("mongodb://localhost:27017/ecommerce");
 
 //SOCKET IO
-socketServer.on("connection", (socket) => {
-  console.log("Un cliente se ha conectado");
+let messages = [];
+socket.on("connection", (io) => {
+  console.log("New user connected");
+  io.on("input_chat", (data) => {
+    console.log(io);
+    messages.push(data);
+    socket.emit("container_chat", messages);
+  });
 });

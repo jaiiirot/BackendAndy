@@ -10,8 +10,11 @@
     <div class="flex-grow overflow-auto bg-gray-800">
       <div class="font-sans antialiased h-full flex">
         <div
-          class="bg-gray-900 text-purple-lighter flex-none w-24 p-6 hidden md:block"
+          class="bg-[#1C2531] text-purple-lighter flex-none w-24 p-6 hidden md:block"
         >
+            {{> chats_dash}}
+            {{> chats_dash}}
+            {{> chats_dash}}
             {{> chats_dash}}
         </div>
         
@@ -22,5 +25,12 @@
     </div>
   </div>
 </div>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="../js/addProduct.js"></script>
+{{!-- <script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+
+
+  socket.emit("message", "Hola desde el cliente");
+
+</script> --}}
+{{!-- <script src="../js/admin/messages.js"></script> --}}

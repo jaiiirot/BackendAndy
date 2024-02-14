@@ -8,8 +8,8 @@
     </h3>
   </div>
 </div>
-<div class="px-6 py-4 flex-1 overflow-y-scroll">
-  <div class="border-b border-gray-600 py-3 flex items-start mb-4 text-sm">
+<div class="px-6 py-4 flex-1 overflow-y-scroll" id="on-messages-container">
+  {{!-- <div class="border-b border-gray-600 py-3 flex items-start mb-4 text-sm">
     <img
       src="https://cdn.discordapp.com/embed/avatars/0.png"
       class="cursor-pointer w-10 h-10 rounded-3xl mr-3"
@@ -23,13 +23,14 @@
       </div>
       <p class="text-white leading-normal">Discord is awesome!</p>
     </div>
-  </div>
+  </div> --}}
 </div>
 <div class="p-4 flex">
   <input
     type="text"
     class="p-4 h-full w-full px-4 bg-gray-600 rounded-lg overflow-hidden text-white border-none outline-none"
     placeholder="Message #general"
+    id="message-input"
   />
   <input
     type="button"
@@ -37,3 +38,24 @@
     class="bg-red-900 p-4 border-none text-white rounded-lg cursor-pointer"
   />
 </div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+  const messageInput = document.getElementById("message-input");
+  const messagesContainer = document.getElementById("on-messages-container");
+
+  messageInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      socket.emit("input_chat", e.target.value);
+      e.target.value = "";
+    }
+  });
+  socket.on("container_chat", (messages) => {
+    messagesContainer.innerHTML = "";
+    messages.forEach((msg) => {;
+      const div = `<div><p>${msg}</p></div>`
+      messagesContainer.innerHTML += div;
+    });
+  });
+  
+</script>

@@ -18,7 +18,7 @@
     </section>
 
     <section class="index__category--container w-full">
-        <h2 class="title-font text-3xl font-bold mb-4">+ CATEGORIAS +</h2>
+        <h2 class="title-font text-8xl font-bold m-2 text-center">+ CATEGORIAS +</h2>
         <div class="gap-2"
         style="    display: grid;
     grid-template-areas:
@@ -32,7 +32,7 @@
         </div>
     </section>
     <section class="index__elements mb-4 w-full">
-        <h2 class="title-font title-big">+ PRODUCTOS +</h2>
+        <h2 class="title-font text-8xl font-bold m-2 text-center">+ PRODUCTOS +</h2>
         <div class="index__boxelements grid grid-cols-1 gap-2 md:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6  ">
             {{#each products}}
                 {{> card_product title=this.title price=this.price thumbnails=this.thumbnails }}

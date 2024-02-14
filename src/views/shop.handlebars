@@ -1,6 +1,6 @@
 {{> header}}
 <main>
-    <section class="bg-cover bg-center bg-no-repeat h-72 rounded-lg mb-2"
+    <section class="bg-cover bg-center bg-no-repeat h-72 rounded-lg"
         style="background-image: url('image/{{section_title}}.jpg')">
         <div class="h-full flex flex-col justify-center items-center bg-[#00000090]">
             <p class="text-white">{{section_title}}</p>
@@ -9,8 +9,8 @@
             </h2>
         </div>
     </section>
-    <section class="shop__filters__products flex flex-col lg:flex-row w-full">
-        <div class="shop__filters bg-white w-full lg:w-1/4 p-4">
+    <section class="flex flex-col lg:flex-row w-full p-2 gap-2">
+        <div class="bg-white w-full p-2 lg:w-1/4 ">
             {{section_area}}
             <div id="filter-categories">
                 <h6 class="font-bold text-lg">Filtrar</h6>
@@ -118,7 +118,7 @@
                 </ul>
             </div>
         </div>
-        <div class="shop__products grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 2xl:grid-cols-5 gap-2 w-full lg:w-3/4 px-4">
+        <div class="grid grid-cols-1 w-full h-full sm:grid-cols-2 md:grid-cols-4 2xl:grid-cols-5 gap-2 lg:w-3/4">
             {{#each products}}
             {{> card_product title=this.title price=this.price thumbnails=this.thumbnails }}
             {{/each}}

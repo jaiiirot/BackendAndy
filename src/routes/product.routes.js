@@ -8,16 +8,16 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   let products;
-  if (!req.query.limit) {
-    products = await ProductsDAO.getAll();
-    res.status(200).send(products);
-  } else {
+  if (!!req.query.limit) {
     const limitProd = ProductsDAO.getAllWithLimit(parseInt(req.query.limit));
     limitProd.length > 0
       ? res.status(200).send(limitProd)
       : res.status(404).send({
           error: "No se encontraron productos con el límite especificado",
         });
+  } else {
+    products = await ProductsDAO.getAll();
+    res.status(200).send(products);
   }
 });
 
@@ -26,7 +26,7 @@ router.post("/", upload.array("photo", 4), async (req, res) => {
   const categorys = category.split(",");
   const product = {
     title,
-    description,
+    description: description.replace(/\n/g, `<br>`),
     code,
     price,
     stock,
@@ -73,24 +73,28 @@ router.delete("/", async (req, res) => {
 router.put("/:id", upload.array("photos", 4), async (req, res) => {
   try {
     const product = await ProductsDAO.getById(req.params.id);
-    if (product && product.photo && product.photo.length > 0) {
+    let photos = [];
+    if (req.files.length > 0) {
       product.photo.forEach(async (photo) => {
         const imagePath = `${__dirname}/public/image/products/${photo}`;
         await fs.promises.unlink(imagePath);
       });
+      photos = req.files.map((file) => {
+        return file.filename;
+      });
+    } else {
+      photos = product.photo;
     }
     const { title, description, code, price, stock, category } = req.body;
     const categorys = category.split(",");
     const newProduct = {
       title,
-      description,
+      description: description.replace(/\n/g, `<br>`),
       code,
       price,
       stock,
       category: categorys,
-      photo: req.files.map((file) => {
-        return file.filename;
-      }),
+      photo: photos,
     };
     await ProductsDAO.updateProduct(req.params.id, newProduct);
     res.status(200).send(newProduct);

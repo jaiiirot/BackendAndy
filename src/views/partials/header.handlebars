@@ -12,11 +12,11 @@
           <li><a class="hover:text-red-900" href="/">Inicio</a></li>
           <li><a
               class="hover:text-red-900"
-              href="/productos?sex=hombre"
+              href="/productos?categoria=hombre"
             >Hombre</a></li>
           <li><a
               class="hover:text-red-900"
-              href="/productos?sex=mujer"
+              href="/productos?categoria=mujer"
             >Mujer</a></li>
           <li><a class="hover:text-red-900" href="/contacto">Contacto</a></li>
         </ul>
@@ -55,7 +55,7 @@
             </svg>
             <span>1</span>
           </a>
-          <a class="flex items-center hover:text-red-900" href="#">
+          <span class="flex items-center hover:text-red-900 cursor-pointer" id="login-button">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-6 w-6 hover:text-red-900"
@@ -70,8 +70,7 @@
                 d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-          </a>
-
+          </span>
         </div>
       </div>
       <!-- Responsive navbar -->
@@ -112,3 +111,102 @@
 
   </section>
 </header>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+const loginButton = document.getElementById("login-button");
+loginButton.addEventListener("click", async () => {
+  await Swal.fire({
+    title: "Iniciar Sesion",
+    html: `
+      <input id="swal-input1" class="swal2-input" type="email" name="email" placeholder="Email">
+      <input id="swal-input2" class="swal2-input" type="password" name="password" placeholder="Contraseñas">
+    `,
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonText: "Iniciar Sesion",
+    denyButtonText: "Registrarme",
+    cancelButtonText: "Cancelar",
+    preConfirm: () => {
+      return {
+        email: document.getElementById("swal-input1").value,
+        password: document.getElementById("swal-input2").value,
+      };
+    },
+  }).then((result) => {
+    console.log(result);
+    if (result.isConfirmed) {
+      console.log(result);
+      fetch("/api/users/", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({data: result.value, type: "login"}),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.error) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: data.error,
+            });
+          } else {
+            Swal.fire({
+              icon: "success",
+              title: "Bienvenido",
+              text: data.message,
+            });
+            setTimeout(() => {
+              if (data.user.type === "admin") {
+                window.location.href = `/panel/${data.user._id}`;
+              } else window.location.href = `/`;
+            }, 1000);
+          }
+        });
+    }
+    if (result.isDenied) {
+      Swal.fire({
+        title: "Registrarse",
+        html: `
+          <input id="swal-input0" class="swal2-input" type="text" name="username" placeholder="Nombre">
+          <input id="swal-input1" class="swal2-input" type="email" name="email" placeholder="Email">
+          <input id="swal-input2" class="swal2-input" type="password" name="password" placeholder="Contraseñas">
+        `,
+        confirmButtonText: "Registrarme",
+        preConfirm: () => {
+          return {
+            username: document.getElementById("swal-input0").value,
+            email: document.getElementById("swal-input1").value,
+            password: document.getElementById("swal-input2").value,
+          };
+        },
+      }).then((result) => {
+        fetch("/api/users/", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({data: result.value, type: "register"}),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.error) {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: data.error,
+              });
+            } else {
+              Swal.fire({
+                icon: "success",
+                title: `Bienvenido ${result.value.username}`,
+                text: data.message,
+              });
+            }
+          });
+      });
+    }
+  });
+});
+  </script>

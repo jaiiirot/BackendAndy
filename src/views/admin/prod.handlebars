@@ -1,0 +1,109 @@
+<div class="flex w-screen h-screen text-gray-400 bg-gray-900">
+  {{> header_dash}}
+
+  <div class="flex flex-col flex-grow">
+    <div
+      class="flex items-center flex-shrink-0 h-16 px-8 border-b border-gray-800"
+    >
+      <h1 class="text-lg font-medium">Panel de Control</h1>
+      <button
+        id="add-item"
+        class="flex items-center justify-center h-10 px-4 ml-auto text-sm font-medium bg-gray-800 rounded hover:bg-gray-700"
+      >
+        Agregar
+      </button>
+      <button
+        id="delete-item"
+        class="flex items-center justify-center h-10 px-4 ml-2 text-sm font-medium rounded hover:bg-gray-800"
+      >
+        Eliminar
+      </button>
+      <button
+        id="update-item"
+        class="flex items-center justify-center h-10 px-4 ml-2 text-sm font-medium rounded hover:bg-gray-800"
+      >
+        Actualizar
+      </button>
+    </div>
+    <div class="flex-grow p-6 overflow-auto bg-gray-800">
+      <div class="flex">
+        <div class="shadow overflow-hidden m-auto sm:rounded-lg">
+          <table class="min-w-full text-sm text-gray-400">
+            <thead class="bg-gray-800 text-xs uppercase font-medium">
+              <tr class="bg-gray-900">
+                <th></th>
+                <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                  Titulo
+                </th>
+                <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                  N° Imagenes
+                </th>
+                <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                  Descripción
+                </th>
+                <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                  Precio
+                </th>
+                <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                  Estado
+                </th>
+                <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                  Stock
+                </th>
+                <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                  Categoria
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-gray-800">
+              {{#each products}}
+              <tr class="bg-black bg-opacity-20 tr_item hover:bg-opacity-10 cursor-pointer" id="tr_{{this._id}}">
+                  <td class="pl-4">
+                    <input type="checkbox" id="{{this._id}}">
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap overflow-hidden">
+                    <p style="white-space: nowrap; overflow: hidden; width: 200px; text-overflow:ellipsis;">
+                    {{this.title}}
+                    </p>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap overflow-hidden">
+                    <p style="white-space: nowrap; overflow: hidden; width: min; text-overflow:ellipsis;">
+                    {{this.quantity_photos}}
+                    </p>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap overflow-hidden	">
+                    <p style="white-space: nowrap; overflow: hidden; width: 200px; text-overflow:ellipsis;">
+                    {{this.description}}
+                    </p>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap overflow-hidden	">
+                    <p style="white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;">
+                    $ {{this.price}}
+                    </p>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap overflow-hidden	">
+                    <p style="white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;">
+                    {{this.status}}
+                    </p>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap overflow-hidden	">
+                    <p style="white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;">
+                    {{this.stock}}
+                    </p>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap overflow-hidden	">
+                    <p style="white-space: nowrap; overflow: hidden; width: 200px; text-overflow:ellipsis;">
+                    {{this.category}}
+                    </p>
+                  </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../../js/admin/{{js}}"></script>

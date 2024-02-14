@@ -69,7 +69,7 @@
           <div
             class="relative rounded-lg overflow-hidden w-[200px] text-black"
           >
-            <img class="card-img w-full" src="../image/c01.jpg" alt="imagen nuevo producto" id="img-card"/>
+            <img class="card-img w-full" src="../image/noimgv.jpg" alt="imagen nuevo producto" id="img-card"/>
             <div
               class="absolute w-full bg-white bottom-0 flex flex-col justify-between p-4 min-h-20 gap-2"
             >
@@ -82,7 +82,7 @@
         </div>
         {{!-- IMAGES PROD---}}
         <div class="h-[530px] w-[600px] flex overflow-x-hidden border bg-gray-200" id="image-preview">
-          <h1>PREVIEW IMAGENES, SOLO SE PERMITE 4 IMAGENES</h1>
+            <div class="w-full h-full" style="background: url('../image/noimgh.jpg') no-repeat center center / cover;"></div>
         </div>
       </div>
         {{!-- SITE PROD---}}
@@ -93,4 +93,4 @@
   </div>
 </div>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="../js/addProduct.js"></script>
+<script src="../../js/admin/{{js}}"></script>
