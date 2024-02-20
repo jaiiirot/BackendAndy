@@ -42,11 +42,11 @@ app.use((req, res, next) => {
 
 //jhon@gmail.com --> contraseña: jhon --> admin
 //MONGOOSE
-// mongoose.connect("mongodb://localhost:27017/ecommerce");
+mongoose.connect("mongodb://localhost:27017/ecommerce");
 //MONGOOSE ATLAS
-mongoose.connect(
-  "mongodb+srv://ecommercedb:dbecommercedb@jairotecommerce.wwe0lxx.mongodb.net/ecommerce?retryWrites=true&w=majority"
-);
+// mongoose.connect(
+//   "mongodb+srv://ecommercedb:dbecommercedb@jairotecommerce.wwe0lxx.mongodb.net/ecommerce?retryWrites=true&w=majority"
+// );
 
 //SOCKET IO
 let messages = [];
