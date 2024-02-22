@@ -8,7 +8,6 @@
       src="https://kit.fontawesome.com/de8fe1cee1.js"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="./css/main.css">
     <script src="//cdn.tailwindcss.com"></script>
     {{!Link Swiper's CSS }}
     <link
@@ -16,8 +15,30 @@
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
     <title>{{title}}</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Anton&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+        text-decoration: none;
+      }
+
+      * .font-poppins {
+        font-family: "Poppins", sans-serif;
+      }
+      * .font-anton {
+        font-family: "Anton", sans-serif;
+      }
+      * .style-logo {
+        letter-spacing: -2px;
+      }
+
+    </style>
   </head>
-  <body class="bg-gray-300">
+  <body>
     {{{body}}}
   </body>
 </html>

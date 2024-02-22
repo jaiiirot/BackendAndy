@@ -1,5 +1,4 @@
-import { Messages } from "./schemas/messages.schema.js";
-import usersDao from "./users.dao.js";
+import { Messages } from "./messages.schema.js";
 
 class MessagesDAO {
   async getAll() {

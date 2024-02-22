@@ -1,5 +1,5 @@
 import { Router } from "express";
-import UsersDAO from "../dao/users.dao.js";
+import UsersDAO from "../dao/users/users.dao.js";
 
 const router = Router();
 

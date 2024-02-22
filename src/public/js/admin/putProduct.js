@@ -7,6 +7,7 @@ const formElements = [
   "category-put",
   "file-put",
 ].map((id) => document.getElementById(id));
+
 const [imgCard, titleCard, priceCard] = [
   "img-card-put",
   "title-card-put",
@@ -16,8 +17,6 @@ const [imgCard, titleCard, priceCard] = [
 formElements.forEach((input) =>
   input.addEventListener("input", updateProductCard)
 );
-
-document.getElementById("file-put").addEventListener("change", previewImages);
 
 function previewImages(event) {
   const files = event.target.files;
@@ -34,7 +33,10 @@ function previewImages(event) {
 
   [...files].forEach((file) => {
     const reader = new FileReader();
+
+    console.log(reader);
     reader.onload = function (e) {
+      imgCard.src = e.target.result;
       const img = document.createElement("div");
       img.style.background = `url('${e.target.result}') no-repeat center center / cover`;
       img.classList.add("w-full", "h-full");
@@ -61,7 +63,7 @@ document.getElementById("submit-put").addEventListener("click", function () {
   });
 
   const url = new URL(window.location.href);
-  const id = url.searchParams.get("id");
+  const id = url.searchParams.get("pid");
   fetch(`/api/products/${id}`, {
     method: "PUT",
     body: formData,
@@ -73,9 +75,8 @@ document.getElementById("submit-put").addEventListener("click", function () {
       return response.json();
     })
     .then((data) => {
-      const url = new URL(window.location.href);
-      const id = url.searchParams.get("id");
-      window.location.href = `/panel/${id}/productos`;
+      console.log("Producto actualizado:", data);
+      window.location.href = `/panel/productos`;
     })
     .catch((error) => {
       console.error("Error al actualizar el producto:", error.message);

@@ -1,6 +1,6 @@
 import upload from "../utils/upload.middleware.js";
 import express from "express";
-import ProductsDAO from "../dao/products.dao.js";
+import ProductsDAO from "../dao/products/products.dao.js";
 import fs from "fs";
 import __dirname from "../utils.js";
 

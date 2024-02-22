@@ -1,4 +1,4 @@
-import ProductsDAO from "../dao/products.dao.js";
+import ProductsDAO from "../dao/products/products.dao.js";
 import { Router } from "express";
 const router = Router();
 
@@ -8,40 +8,8 @@ router.get("/inicio", (req, res) => {
 
 router.get("/", async (req, res) => {
   res.render("index", {
-    title: "Home || Palermo",
+    title: "Home || Andy",
     js: "index.js",
-    sections: [
-      {
-        url: "remeras",
-        area: "c1",
-        title: "REMERAS",
-        image: "c01.jpg",
-      },
-      {
-        url: "shorts",
-        area: "c2",
-        title: "  SHORTS",
-        image: "c02.jpg",
-      },
-      {
-        url: "vestidos",
-        area: "c3",
-        title: "VESTIDOS",
-        image: "c03.jpg",
-      },
-      {
-        url: "buzos",
-        area: "c4",
-        title: "BUZOS",
-        image: "c04.jpg",
-      },
-      {
-        url: "accesorios",
-        area: "c5",
-        title: "accesorios",
-        image: "c05.jpg",
-      },
-    ],
     products: await ProductsDAO.getAllWithLimit(10),
   });
 });
@@ -49,18 +17,26 @@ router.get("/", async (req, res) => {
 router.get("/productos", async (req, res) => {
   try {
     let products;
+    const promocion = req.query.promocion;
     const categoria = req.query.categoria;
-    if (!!categoria) {
-      products = await ProductsDAO.getByCategory(categoria);
+    if (!!categoria || !!promocion) {
+      products = await ProductsDAO.getByCategorys(categoria);
       res.render("shop", {
-        title: categoria.toUpperCase() + " || Palermo",
-        section_title: categoria.toUpperCase(),
+        title: categoria[0].toLocaleLowerCase() + " || Andy",
+        section_title: categoria[0].toLocaleLowerCase(),
+        products: products,
+      });
+    } else if (!!promocion) {
+      products = await ProductsDAO.getByPromocion(promocion);
+      res.render("shop", {
+        title: "Ofertas || Andy",
+        section_title: "SALE",
         products: products,
       });
     } else {
       products = await ProductsDAO.getAll();
       res.render("shop", {
-        title: "Productos || Palermo",
+        title: "Productos || Andy",
         section_title: "PRODUCTOS",
         products: products,
       });
@@ -79,7 +55,7 @@ router.get("/productos/:id", async (req, res) => {
       return;
     }
     res.render("product", {
-      title: product.title + " || Palermo",
+      title: product.title + " || Andy",
       product: product,
     });
   } catch (error) {
@@ -90,76 +66,70 @@ router.get("/productos/:id", async (req, res) => {
 
 router.get("/contacto", (req, res) => {
   res.render("contact", {
-    title: "Contacto || Palermo",
+    title: "Contacto || Andy",
   });
 });
 
-router.get("/panel/:id", async (req, res) => {
-  if (!!req.params.id) {
-    const _id_user = req.params.id;
-    const products = await ProductsDAO.getAll();
-    res.render("admin/dashboard", {
-      title: "Dashboard || Panel",
-      _id_user,
-      products: products,
-      js: "dashboard.js",
+router.get("/login", (req, res) => {
+  res.render("login", {
+    title: "Login || Andy",
+  });
+});
+
+router.get("/carrito", (req, res) => {
+  res.render("cart", {
+    title: "Carrito || Andy",
+  });
+});
+
+/*PANEL*/
+router.get("/panel/", async (req, res) => {
+  const products = await ProductsDAO.getAll();
+  res.render("admin/dashboard", {
+    title: "Dashboard || Panel",
+    products: products,
+    js: "dashboard.js",
+  });
+});
+
+router.get("/panel/productos", async (req, res) => {
+  let products;
+  const action = req.query.action;
+
+  if (action === "agregar") {
+    res.render("admin/add_prod", {
+      title: "Panel | Agregar",
+      js: "addProduct.js",
+    });
+  } else if (action === "editar") {
+    products = await ProductsDAO.getById(req.query.pid);
+    res.render("admin/put_prod", {
+      title: "Panel | Editar",
+      product: products,
+      prodesc: products.description.replace(/<br>/g, `\n`),
+      js: "putProduct.js",
+      exist_product: true,
     });
   } else {
-    res.redirect("/");
+    products = await ProductsDAO.getAll();
+    res.render("admin/prod", {
+      title: "Panel | Productos",
+      products: products.map((product) => {
+        return {
+          ...product,
+          quantity_photos: product.photo.length,
+        };
+      }),
+      js: "actionProduct.js",
+    });
   }
 });
 
-router.get("/panel/:id/productos", async (req, res) => {
-  if (!!req.params.id) {
-    let products;
-    const _id_user = req.params.id;
-    const actions = req.query.actions;
-    if (actions === "agregar") {
-      res.render("admin/add_prod", {
-        title: "Panel | Agregar",
-        _id_user,
-        js: "addProduct.js",
-      });
-    } else if (actions === "editar" && !!req.query.id) {
-      products = await ProductsDAO.getById(req.query.id);
-      res.render("admin/put_prod", {
-        title: "Panel | Editar",
-        _id_user,
-        product: products,
-        prodesc: products.description.replace(/<br>/g, `\n`),
-        js: "putProduct.js",
-        exist_product: true,
-      });
-    } else {
-      products = await ProductsDAO.getAll();
-      res.render("admin/prod", {
-        title: "Panel | Productos",
-        _id_user,
-        products: products.map((product) => {
-          return {
-            ...product,
-            quantity_photos: product.photo.length,
-          };
-        }),
-        js: "actionProduct.js",
-      });
-    }
-  } else {
-    res.redirect("/");
-  }
-});
-
-router.get("/panel/:id/mensajes", async (req, res) => {
-  if (!!req.params.id) {
-    const _id_user = req.params.id;
-    res.render("admin/messages_dash", {
-      title: "Mensajes || Panel",
-      _id_user,
-      messages: [],
-      chat: [],
-    });
-  } else {
-    res.redirect("/");
-  }
+router.get("/panel/mensajes", async (req, res) => {
+  res.render("admin/messages_dash", {
+    title: "Mensajes || Panel",
+    messages: [],
+    chat: [],
+  });
 });
 export default router;

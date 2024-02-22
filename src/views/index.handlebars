@@ -1,44 +1,78 @@
 {{> header}}
-<main class="px-[1rem]">
-    <section class="flex gap-4 w-full" style="background-image: url('/image/f02.jpeg'); background-position: center center; background-repeat: no-repeat; background-size: cover; border-radius: .5rem; overflow: hidden;">
-        <div class="index__boxsec01 flex flex-col justify-center items-center w-full py-36 bg-black bg-opacity-75 text-white">
-            <h3 class="text-lg font-medium">
-                Bienvenido a
-            </h3>
-            <h1 class="font-poppins text-7xl font-light">
-                PALERMO
-            </h1>
-            <p>
-                "Donde el estilo y la elegancia se encuentran."
-            </p>
-            <button class="mt-4 px-8 py-3 bg-red-900 text-white rounded hover:bg-black transition duration-300 ease-in-out">
-                Todos los productos
-            </button>
-        </div>
+<main>
+    <section class="grid gap-2 pt-4 w-11/12 items-center grid-cols-1 grid-rows-3 grid-rows-1 m-auto sm:grid-cols-3 sm:grid-rows-1">
+            <article class="h-[250px] sm:h-[400px] w-full cursor-pointer" style="background: url('/image/a.jpg') no-repeat center center / cover ">
+                <a href="/productos?categoria=hombre" class="w-full h-full p-4 flex items-center justify-center transition ease-in-out">
+                    <h2 class="text-4xl font-bold bg-white bg-opacity-50 px-8 py-4 hover:bg-opacity-100 font-anton">Hombres</h2>
+                </a>
+            </article>
+            <article class="h-[250px] sm:h-[400px] w-full cursor-pointer" style="background: url('/image/b.jpg') no-repeat center center / cover">
+                <a href="/productos?categoria=niño" class="w-full h-full p-4 flex items-center justify-center transition ease-in-out">
+                    <h2 class="text-4xl font-bold bg-white bg-opacity-50 px-8 py-4 hover:bg-opacity-100 font-anton">Niños</h2>
+                </a>
+            </article>
+
+            <article class="h-[250px] sm:h-[400px] w-full cursor-pointer" style="background: url('/image/c.jpg') no-repeat center center / cover">
+                <a href="/productos?categoria=mujer" class="w-full h-full p-4 flex items-center justify-center transition ease-in-out">
+                    <h2 class="text-4xl font-bold bg-white bg-opacity-50 px-8 py-4 hover:bg-opacity-100 font-anton">Mujeres</h2>
+                </a>
+            </article>
     </section>
 
-    <section class="w-full">
-        <h2 class="title-font text-8xl font-bold m-2 text-center">+ CATEGORIAS +</h2>
-        <div class="gap-2"
-        style="    display: grid;
-    grid-template-areas:
-      'c1 c2 c5'
-      'c1 c3 c4';
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 400px);">
-            {{#each sections}}
-                {{> card_sections title=this.title area=this.area image=this.image }}
+    <section class="flex flex-col gap-2 w-11/12 items-center m-auto">
+        <h2 class="text-3xl font-normal py-8 text-center">Productos Nuevos</h2>
+        <div class="swiper mySwiper h-full w-full">
+            <div class="swiper-wrapper flex flex-nowarp scroll-smooth">
+            {{#each products}}
+                <div class="swiper-slide flex-[1_0_auto] w-[200px] h-full">
+                {{> card_product title=this.title price=this.price thumbnails=this.thumbnails }}
+                </div>
             {{/each}}
+            </div>
+            <br>
+            <div class="swiper-pagination"></div>
         </div>
     </section>
-    <section class="index__elements mb-4 w-full">
-        <h2 class="title-font text-8xl font-bold m-2 text-center">+ PRODUCTOS +</h2>
-        <div class="index__boxelements grid grid-cols-1 gap-2 md:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6  ">
+    
+    <section class="flex flex-col gap-2 w-11/12 items-center m-auto">
+        <h2 class="text-3xl font-normal py-8 text-center">Accesorios</h2>
+        <div class="swiper mySwiper h-full w-full">
+            <div class="swiper-wrapper flex flex-nowarp scroll-smooth">
             {{#each products}}
+                <div class="swiper-slide flex-[1_0_auto] w-[200px] h-full">
                 {{> card_product title=this.title price=this.price thumbnails=this.thumbnails }}
+                </div>
             {{/each}}
+            </div>
+            <br>
+            <div class="swiper-pagination"></div>
         </div>
     </section>
 
 </main>
 {{> footer}}
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    let swiper = new Swiper(".mySwiper", {
+    slidesPerView: 2,
+    spaceBetween: 10,
+    pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+    },
+    breakpoints: {
+        640: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        768: {
+          slidesPerView: 4,
+          spaceBetween: 20,
+        },
+        1024: {
+          slidesPerView: 5,
+          spaceBetween: 20,
+        },
+      },
+    });
+</script>

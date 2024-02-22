@@ -3,29 +3,29 @@
 
   <div class="flex flex-col flex-grow">
     <div
-      class="flex items-center flex-shrink-0 h-16 px-8 border-b border-gray-800"
+      class="flex items-center flex-shrink-0 h-16 px-8 bg-gray-800"
     >
       <h1 class="text-lg font-medium">Panel de Control</h1>
       <button
         id="add-item"
-        class="flex items-center justify-center h-10 px-4 ml-auto text-sm font-medium bg-gray-800 rounded hover:bg-gray-700"
+        class="flex items-center justify-center h-10 px-4 ml-auto text-sm font-medium bg-green-500 rounded text-black"
       >
         Agregar
       </button>
       <button
         id="delete-item"
-        class="flex items-center justify-center h-10 px-4 ml-2 text-sm font-medium rounded hover:bg-gray-800"
+        class="flex items-center justify-center h-10 px-4 ml-2 text-sm font-medium rounded bg-red-500 text-black"
       >
         Eliminar
       </button>
       <button
         id="update-item"
-        class="flex items-center justify-center h-10 px-4 ml-2 text-sm font-medium rounded hover:bg-gray-800"
+        class="flex items-center justify-center h-10 px-4 ml-2 text-sm font-medium rounded bg-yellow-500 text-black"
       >
         Actualizar
       </button>
     </div>
-    <div class="flex-grow p-6 overflow-auto bg-gray-800">
+    <div class="flex-grow p-6 overflow-auto bg-gray-700">
       <div class="flex">
         <div class="shadow overflow-hidden m-auto sm:rounded-lg">
           <table class="min-w-full text-sm text-gray-400">
@@ -106,4 +106,4 @@
   </div>
 </div>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="../../js/admin/{{js}}"></script>
+<script src="../js/admin/{{js}}"></script>

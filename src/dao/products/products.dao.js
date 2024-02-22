@@ -1,4 +1,4 @@
-import { Products } from "./schemas/products.schema.js";
+import { Products } from "./products.schema.js";
 
 class ProductsDAO {
   static async getAll() {
@@ -19,12 +19,23 @@ class ProductsDAO {
     }
   }
 
-  static async getByCategory(category) {
+  static async getByCategorys(categorys) {
     try {
-      return await Products.find({ category: { $in: [`${category}`] } }).lean();
+      return await Products.find({ category: { $in: categorys } }).lean();
     } catch (error) {
       console.error(
-        `Error al obtener productos por categoría ${category}:`,
+        `Error al obtener productos por categoría ${categorys}:`,
+        error
+      );
+      throw error;
+    }
+  }
+  static async getByPromocion(promocion) {
+    try {
+      return await Products.find({ promocion: promocion }).lean();
+    } catch (error) {
+      console.error(
+        `Error al obtener productos por promocion ${promocion}:`,
         error
       );
       throw error;

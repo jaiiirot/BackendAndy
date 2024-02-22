@@ -1,35 +1,26 @@
-const getElementById = (id) => document.getElementById(id);
-
-const [
-  titleInput,
-  descriptionInput,
-  codeInput,
-  priceInput,
-  stockInput,
-  categoryInput,
-  imageInput,
-] = ["title", "description", "code", "price", "stock", "category", "file"].map(
-  getElementById
-);
+const formElements = [
+  "title-input",
+  "description-input",
+  "code-input",
+  "price-input",
+  "stock-input",
+  "category-input",
+  "file-input",
+].map((id) => document.getElementById(id));
 
 const [imgCard, titleCard, priceCard] = [
   "img-card",
   "title-card",
   "price-card",
-].map(getElementById);
-const inputs = [
-  titleInput,
-  descriptionInput,
-  priceInput,
-  stockInput,
-  categoryInput,
-];
-inputs.forEach((input) => input.addEventListener("input", updateProductCard));
-imageInput.addEventListener("change", previewImages);
+].map((id) => document.getElementById(id));
+
+formElements.forEach((input) =>
+  input.addEventListener("input", updateProductCard)
+);
 
 function previewImages(event) {
   const files = event.target.files;
-  const imagePreview = getElementById("image-preview");
+  const imagePreview = document.getElementById("image-preview");
   imagePreview.innerHTML = "";
 
   if (files.length > 4) {
@@ -53,6 +44,6 @@ function previewImages(event) {
 }
 
 function updateProductCard() {
-  titleCard.textContent = titleInput.value;
-  priceCard.textContent = "$ " + priceInput.value;
+  titleCard.textContent = formElements[0].value;
+  priceCard.textContent = "$ " + formElements[3].value;
 }

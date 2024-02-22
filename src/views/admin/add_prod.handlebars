@@ -1,96 +1,93 @@
 <div class="flex w-screen h-screen text-gray-400 bg-gray-900">
-  {{> header_dash}}
-
-  <div class="flex flex-col flex-grow">
-    <div
-      class="flex items-center flex-shrink-0 h-16 px-8 border-b border-gray-800"
-    >
-      <h1 class="text-lg font-medium">Agregar un Producto</h1>
-    </div>
-    <div class="flex-grow p-6 overflow-auto bg-gray-800">
-      <div class="flex gap-4">
-        {{!-- Form --}}
-        <div>
-          <form id="product-form" class="flex flex-col gap-4" method="post" enctype="multipart/form-data" action="/api/products/">
-          <input
-            type="text"
-            name="title"
-            id="title"
-            placeholder="Titulo de producto"
-            class="border-none outline-none text-black px-4 py-2"
-          />
-          <textarea
-            name="description"
-            id="description"
-            class="border-none outline-none text-black px-4 py-2 resize-none h-32"
-            placeholder="Descripción del producto"
-          ></textarea>
-          <input
-            type="text"
-            name="code"
-            id="code"
-            placeholder="Codigo del producto: 123d1AS"
-            class="border-none outline-none text-black px-4 py-2"
-          />
-          <input
-            type="number"
-            name="price"
-            id="price"
-            placeholder="Precio del producto: 112233"
-            class="border-none outline-none text-black px-4 py-2"
-            min="0" pattern="^[0-9]+"
-          />
-          <input
-            type="number"
-            name="stock"
-            id="stock"
-            placeholder="Stock del producto: 12"
-            class="border-none outline-none text-black px-4 py-2"
-            min="0" pattern="^[0-9]+"
-          />
-          <input
-            type="text"
-            name="category"
-            id="category"
-            placeholder="mujer,hombre,buzos,remera,etc..."
-            class="border-none outline-none text-black px-4 py-2"
-          />
-          <input id="file" type="file" name="photo" multiple onchange="previewImages(event)"/>
-          <input
-            type="submit"
-            value="Crear Producto"
-            class="border-none outline-none px-4 py-2 bg-gray-700 text-white cursor-pointer hover:bg-gray-600 transition-all duration-300 ease-in-out"
-          />
-        </form>
-        </div>
-        {{!-- Preview --}}
-        {{!-CARD--}}
-        <div>
-          <div
-            class="relative rounded-lg overflow-hidden w-[200px] text-black"
-          >
-            <img class="card-img w-full" src="../../image/noimgv.jpg" alt="imagen nuevo producto" id="img-card"/>
-            <div
-              class="absolute w-full bg-white bottom-0 flex flex-col justify-between p-4 min-h-20 gap-2"
-            >
-              <div>
-                <h3 class="text-xs font-bold" id="title-card">Titulo de Producto</h3>
-                <p id="price-card">$ 112233</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        {{!-- IMAGES PROD---}}
-        <div class="h-[530px] w-[600px] flex overflow-x-hidden border bg-gray-200" id="image-preview">
-            <div class="w-full h-full" style="background: url('../../image/noimgh.jpg') no-repeat center center / cover;"></div>
-        </div>
+   {{> header_dash}}
+   <div class="flex flex-col flex-grow">
+      <div
+         class="flex items-center flex-shrink-0 h-16 px-8 border-b border-gray-800"
+         >
+         <h1 class="text-lg font-medium">Agregar un Producto</h1>
       </div>
-        {{!-- SITE PROD---}}
-        <div class="w-full h-max">
-
-        </div>
-    </div>
-  </div>
+      <div class="flex-grow p-6 overflow-auto bg-gray-800">
+         <div class="flex gap-4">
+            {{!-- Form --}}
+            <div>
+               <form id="product-form" class="flex flex-col gap-4" method="post" enctype="multipart/form-data" action="/api/products/">
+                  <input
+                     type="text"
+                     name="title"
+                     id="title-input"
+                     placeholder="Titulo de producto"
+                     class="border-none outline-none text-black px-4 py-2"
+                     />
+                  <textarea
+                     name="description"
+                     id="description-input"
+                     class="border-none outline-none text-black px-4 py-2 resize-none h-32"
+                     placeholder="Descripción del producto"
+                     ></textarea>
+                  <input
+                     type="text"
+                     name="code"
+                     id="code-input"
+                     placeholder="Codigo del producto: 123d1AS"
+                     class="border-none outline-none text-black px-4 py-2"
+                     />
+                  <input
+                     type="number"
+                     name="price"
+                     id="price-input"
+                     placeholder="Precio del producto: 112233"
+                     class="border-none outline-none text-black px-4 py-2"
+                     min="0" pattern="^[0-9]+"
+                     />
+                  <input
+                     type="number"
+                     name="stock"
+                     id="stock-input"
+                     placeholder="Stock del producto: 12"
+                     class="border-none outline-none text-black px-4 py-2"
+                     min="0" pattern="^[0-9]+"
+                     />
+                  <input
+                     type="text"
+                     name="category"
+                     id="category-input"
+                     placeholder="mujer,hombre,buzos,remera,etc..."
+                     class="border-none outline-none text-black px-4 py-2"
+                     />
+                  <input id="file-input" type="file" name="photo" multiple onchange="previewImages(event)"/>
+                  <input
+                     type="submit"
+                     value="Crear Producto"
+                     class="border-none outline-none px-4 py-2 bg-gray-700 text-white cursor-pointer hover:bg-gray-600 transition-all duration-300 ease-in-out"
+                     />
+               </form>
+            </div>
+            {{!-- Preview --}}
+            {{!-CARD--}}
+            <div>
+               <div
+                  class="relative rounded-lg overflow-hidden w-[200px] text-black"
+                  >
+                  <img class="card-img w-full" src="../../image/noimgv.jpg" alt="imagen nuevo producto" id="img-card"/>
+                  <div
+                     class="absolute w-full bg-white bottom-0 flex flex-col justify-between p-4 min-h-20 gap-2"
+                     >
+                     <div>
+                        <h3 class="text-xs font-bold" id="title-card">Titulo de Producto</h3>
+                        <p id="price-card">$ 112233</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            {{!-- IMAGES PROD---}}
+            <div class="h-[530px] w-[600px] flex overflow-x-hidden border bg-gray-200" id="image-preview">
+               <div class="w-full h-full" style="background: url('../../image/noimgh.jpg') no-repeat center center / cover;"></div>
+            </div>
+         </div>
+         {{!-- SITE PROD---}}
+         <div class="w-full h-max">
+         </div>
+      </div>
+   </div>
 </div>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../../js/admin/{{js}}"></script>

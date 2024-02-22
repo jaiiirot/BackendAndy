@@ -1,94 +1,167 @@
 <header
-  class="flex flex-wrap place-items-center bg-white sticky top-0 z-[100] w-full"
+  id="headertop"
+  class="bg-[#fdfdfd] sticky top-0 z-[100] w-full relative"
 >
-  <section>
-    <nav>
-      <div>
+  <section class="w-full">
+    <nav class="">
+      <div class="flex items-center px-4">
         <div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            fill="#000000"
-            height="25px"
-            width="25px"
-            version="1.1"
-            id="Capa_1"
-            viewBox="0 0 488.4 488.4"
-            xml:space="preserve"
-          >
-            <g>
-              <g>
-                <path
-                  d="M0,203.25c0,112.1,91.2,203.2,203.2,203.2c51.6,0,98.8-19.4,134.7-51.2l129.5,129.5c2.4,2.4,5.5,3.6,8.7,3.6    s6.3-1.2,8.7-3.6c4.8-4.8,4.8-12.5,0-17.3l-129.6-129.5c31.8-35.9,51.2-83,51.2-134.7c0-112.1-91.2-203.2-203.2-203.2    S0,91.15,0,203.25z M381.9,203.25c0,98.5-80.2,178.7-178.7,178.7s-178.7-80.2-178.7-178.7s80.2-178.7,178.7-178.7    S381.9,104.65,381.9,203.25z"
-                />
-              </g>
-            </g>
-          </svg>
+          <span>
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </span>
         </div>
-        <div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            fill="#000000"
-            height="25px"
-            width="25px"
-            version="1.1"
-            id="Capa_1"
-            viewBox="0 0 488.4 488.4"
-            xml:space="preserve"
-          >
-            <g>
-              <g>
-                <path
-                  d="M0,203.25c0,112.1,91.2,203.2,203.2,203.2c51.6,0,98.8-19.4,134.7-51.2l129.5,129.5c2.4,2.4,5.5,3.6,8.7,3.6    s6.3-1.2,8.7-3.6c4.8-4.8,4.8-12.5,0-17.3l-129.6-129.5c31.8-35.9,51.2-83,51.2-134.7c0-112.1-91.2-203.2-203.2-203.2    S0,91.15,0,203.25z M381.9,203.25c0,98.5-80.2,178.7-178.7,178.7s-178.7-80.2-178.7-178.7s80.2-178.7,178.7-178.7    S381.9,104.65,381.9,203.25z"
-                />
-              </g>
-            </g>
-          </svg>
+        <div class="flex w-full justify-center flex-col items-center mx-auto">
+          <h1 id="title" class="font-black text-[3rem]"><span
+              class="text-[#FB8996]"
+            >A</span>ndy</h1>
+          <p id="desc" class="text-xs font-bold">INDUMENTARIA</p>
+        </div>
+        <div class="flex gap-4 relative">
+          <a href="/login">
+            <i class="fa-regular fa-user"></i>
+          </a>
+          <span id="view-cart" class="cursor-pointer">
+            <i class="fa-solid fa-bag-shopping"></i>
+          </span>
         </div>
       </div>
-      <div>
-
+      <div class="w-10/12 mx-auto py-2">
+        <hr class="border-black border-1" />
       </div>
-      <ul>
-
+      <ul
+        class="hidden gap-16 items-center justify-center p-2 font-normal text-[14px] md:flex"
+      >
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/productos?promocion=true">SALE</a></li>
+        <li><a href="/productos?categoria=indumentaria">Indumentaria</a></li>
+        <li><a href="/productos?categoria=accesorio">Accesorios</a></li>
+        <li><a href="/contacto">Contacto</a></li>
       </ul>
     </nav>
+  </section>
+
+  <section
+    class="absolute top-0 right-0 w-full bg-black bg-opacity-50 hidden transition-all duration-300 ease-in-out"
+    id="container-cart"
+  >
+    <aside class="relative h-screen w-max ml-auto border border-gray-600 bg-gray-100 px-4 py-8 sm:px-6 lg:px-8">
+      <button
+        id="close-cart"
+        class="absolute end-4 top-4 text-gray-600 transition hover:scale-110"
+      >
+        <span class="sr-only">Close cart</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="h-5 w-5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+      <div class="mt-4 space-y-6 h-full flex flex-col justify-between items-center">
+        <ul class="space-y-4 h-full overflow-y-scroll">
+          <li class="flex items-center gap-4">
+            <img
+              src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=830&q=80"
+              alt=""
+              class="size-16 rounded object-cover"
+            />
+
+            <div>
+              <h3 class="text-sm text-gray-900">Basic Tee 6-Pack</h3>
+
+              <dl class="mt-0.5 space-y-px text-[10px] text-gray-600">
+                <div>
+                  <dt class="inline">Size:</dt>
+                  <dd class="inline">XXS</dd>
+                </div>
+
+                <div>
+                  <dt class="inline">Color:</dt>
+                  <dd class="inline">White</dd>
+                </div>
+              </dl>
+            </div>
+
+            <div class="flex flex-1 items-center justify-end gap-2">
+              <form>
+                <label for="Line1Qty" class="sr-only"> Quantity </label>
+
+                <input
+                  type="number"
+                  min="1"
+                  value="1"
+                  id="Line1Qty"
+                  class="h-8 w-12 rounded border-gray-200 bg-gray-50 p-0 text-center text-xs text-gray-600 [-moz-appearance:_textfield] focus:outline-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
+                />
+              </form>
+
+              <button class="text-gray-600 transition hover:text-red-600">
+                <span class="sr-only">Remove item</span>
+
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="h-4 w-4"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                  />
+                </svg>
+              </button>
+            </div>
+          </li>
+        </ul>
+        <div class="space-y-4 text-center">
+          <a
+            href="/carrito"
+            class="block rounded border border-gray-600 px-5 py-3 text-sm text-gray-600 transition hover:ring-1 hover:ring-gray-400"
+          >
+            Ver mi carrito (2)
+          </a>
+        </div>
+      </div>
+    </aside>
   </section>
 </header>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-  const loginButton = document.getElementById("login-button");
-  loginButton.addEventListener("click", async () => { await Swal.fire({ title:
-  "Iniciar Sesion", html: ` <input id="swal-input1" class="swal2-input"
-  type="email" name="email" placeholder="Email"> <input id="swal-input2"
-  class="swal2-input" type="password" name="password" placeholder="Contraseñas">
-  `, showDenyButton: true, showCancelButton: true, confirmButtonText: "Iniciar
-  Sesion", denyButtonText: "Registrarme", cancelButtonText: "Cancelar",
-  preConfirm: () => { return { email:
-  document.getElementById("swal-input1").value, password:
-  document.getElementById("swal-input2").value, }; }, }).then((result) => {
-  console.log(result); if (result.isConfirmed) { console.log(result);
-  fetch("/api/users/", { method: "post", headers: { "Content-Type":
-  "application/json", }, body: JSON.stringify({data: result.value, type:
-  "login"}), }) .then((res) => res.json()) .then((data) => { if (data.error) {
-  Swal.fire({ icon: "error", title: "Oops...", text: data.error, }); } else {
-  Swal.fire({ icon: "success", title: "Bienvenido", text: data.message, });
-  setTimeout(() => { if (data.user.type === "admin") { window.location.href =
-  `/panel/${data.user._id}`; } else window.location.href = `/`; }, 1000); } });
-  } if (result.isDenied) { Swal.fire({ title: "Registrarse", html: ` <input
-  id="swal-input0" class="swal2-input" type="text" name="username"
-  placeholder="Nombre"> <input id="swal-input1" class="swal2-input" type="email"
-  name="email" placeholder="Email"> <input id="swal-input2" class="swal2-input"
-  type="password" name="password" placeholder="Contraseñas"> `,
-  confirmButtonText: "Registrarme", preConfirm: () => { return { username:
-  document.getElementById("swal-input0").value, email:
-  document.getElementById("swal-input1").value, password:
-  document.getElementById("swal-input2").value, }; }, }).then((result) => {
-  fetch("/api/users/", { method: "post", headers: { "Content-Type":
-  "application/json", }, body: JSON.stringify({data: result.value, type:
-  "register"}), }) .then((res) => res.json()) .then((data) => { if (data.error)
-  { Swal.fire({ icon: "error", title: "Oops...", text: data.error, }); } else {
-  Swal.fire({ icon: "success", title: `Bienvenido ${result.value.username}`,
-  text: data.message, }); } }); }); } }); });
+
+window.addEventListener('scroll', () => {
+    const title = document.getElementById('title');
+    const desc = document.getElementById('desc');
+    if (window.scrollY > 1) {
+        title.style.transition = 'all 300ms ease-in-out';
+        title.style.fontSize = '2rem';
+        desc.style.display = 'none';
+    } else {
+        title.style.transition = 'all 500 ms ease-in-out'; 
+		title.style.fontSize = '3 rem '; 
+      	desc.style.display= 'block';
+    }
+});
+const action_cart = () =>{
+    const container_cart = document.getElementById('container-cart');
+    container_cart.classList.toggle('hidden');
+}
+
+const header = document.getElementById('headertop');
+const view_cart = document.getElementById('view-cart');
+const close_cart = document.getElementById('close-cart');
+view_cart.addEventListener('click',action_cart)
+close_cart.addEventListener('click',action_cart)
+
+
 </script>

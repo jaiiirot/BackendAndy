@@ -1,4 +1,4 @@
-import { Users } from "./schemas/users.schema.js";
+import { Users } from "./users.schema.js";
 
 class UsersDAO {
   async getAll() {

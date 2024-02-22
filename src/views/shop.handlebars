@@ -1,128 +1,101 @@
 {{> header}}
-<main>
-    <section class="bg-cover bg-center bg-no-repeat h-72 rounded-lg"
-        style="background-image: url('image/{{section_title}}.jpg')">
-        <div class="h-full flex flex-col justify-center items-center bg-[#00000090]">
-            <p class="text-white">{{section_title}}</p>
-            <h2 class="title-font text-3xl text-white">
-                + {{section_title}} +
-            </h2>
-        </div>
-    </section>
-    <section class="flex flex-col lg:flex-row w-full p-2 gap-2">
-        <div class="bg-white w-full p-2 lg:w-1/4 ">
-            {{section_area}}
-            <div id="filter-categories">
-                <h6 class="font-bold text-lg">Filtrar</h6>
-                <ul class="clear section-categories mt-2">
-                    <div class="space-y-2">
-                        <details
-                            class="overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
-                            <summary
-                                class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
-                                <span class="text-sm font-medium"> Disponibilidad </span>
-
-                                <span class="transition group-open:-rotate-180">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="h-4 w-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                    </svg>
-                                </span>
-                            </summary>
-
-                            <div class="border-t border-gray-200 bg-white">
-                                <header class="flex items-center justify-between p-4">
-                                    <span class="text-sm text-gray-700"> 0 Selected </span>
-
-                                    <button type="button" class="text-sm text-gray-900 underline underline-offset-4">
-                                        Reset
-                                    </button>
-                                </header>
-
-                                <ul class="space-y-1 border-t border-gray-200 p-4">
-                                    <li>
-                                        <label for="FilterInStock" class="inline-flex items-center gap-2">
-                                            <input type="checkbox" id="FilterInStock"
-                                                class="size-5 rounded border-gray-300" />
-
-                                            <span class="text-sm font-medium text-gray-700"> In Stock (5+) </span>
-                                        </label>
-                                    </li>
-
-                                    <li>
-                                        <label for="FilterPreOrder" class="inline-flex items-center gap-2">
-                                            <input type="checkbox" id="FilterPreOrder"
-                                                class="size-5 rounded border-gray-300" />
-
-                                            <span class="text-sm font-medium text-gray-700"> Pre Order (3+) </span>
-                                        </label>
-                                    </li>
-
-                                    <li>
-                                        <label for="FilterOutOfStock" class="inline-flex items-center gap-2">
-                                            <input type="checkbox" id="FilterOutOfStock"
-                                                class="size-5 rounded border-gray-300" />
-
-                                            <span class="text-sm font-medium text-gray-700"> Out of Stock (10+) </span>
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
-                        </details>
-
-                        <details
-                            class="overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
-                            <summary
-                                class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
-                                <span class="text-sm font-medium"> Precio </span>
-
-                                <span class="transition group-open:-rotate-180">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="h-4 w-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                    </svg>
-                                </span>
-                            </summary>
-
-                            <div class="border-t border-gray-200 bg-white">
-                                <header class="flex items-center justify-between p-4">
-                                    <span class="text-sm text-gray-700"> The highest price is $600 </span>
-
-                                    <button type="button" class="text-sm text-gray-900 underline underline-offset-4">
-                                        Reset
-                                    </button>
-                                </header>
-
-                                <div class="border-t border-gray-200 p-4">
-                                    <div class="flex justify-between gap-4">
-                                        <label for="FilterPriceFrom" class="flex items-center gap-2">
-                                            <span class="text-sm text-gray-600">$</span>
-
-                                            <input type="number" id="FilterPriceFrom" placeholder="From"
-                                                class="w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
-                                        </label>
-
-                                        <label for="FilterPriceTo" class="flex items-center gap-2">
-                                            <span class="text-sm text-gray-600">$</span>
-
-                                            <input type="number" id="FilterPriceTo" placeholder="To"
-                                                class="w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </details>
-                    </div>
-                </ul>
-            </div>
-        </div>
-        <div class="grid grid-cols-1 w-full h-full sm:grid-cols-2 md:grid-cols-4 2xl:grid-cols-5 gap-2 lg:w-3/4">
-            {{#each products}}
+<main class="relative h-max">
+   <section class="bg-cover bg-center bg-no-repeat h-72 rounded-lg"
+      style="background-image: url('image/back.jpg')">
+      <div class="h-full flex flex-col justify-center items-center bg-[#00000090]">
+         <p class="text-white">PRODUCTO</p>
+         <h2 class="title-font text-3xl text-white">
+            + {{section_title}} +
+         </h2>
+      </div>
+   </section>
+   <section class="w-full p-2">
+      <div class="sticky top-16 md:top-24 bg-white p-2 w-full ">
+         <div id="filter-categories" class="flex flex-col items-center justify-center md:flex-row">
+            <h6 class="font-bold text-lg">Filtrar</h6>
+            <ul class="w-full flex justify-center w-full gap-4 md:justify-end">
+               <li class="hidden md:flex">
+                  <div class="relative inline-block text-left">
+                     <button class="dropdown-button inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm ">
+                        Precio
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                           <path fill-rule="evenodd" d="M6.293 9.293a1 1 0 011.414 0L10 11.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                     </button>
+                     <div class="dropdown-menu origin-top-right absolute mt-2 w-max rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
+                        <div class="py-2 p-2 flex flex-col justify-center items-center gap-1" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-button">
+                           <input type="number" placeholder="precio minimo" class="border-none outline-none py-2">
+                           <span>a</span>
+                           <input type="number" placeholder="precio maximo" class="border-none outline-none py-2">
+                           <span class="text-center rounded-md cursor-pointer py-2 bg-red-700 w-full text-white">Filtrar</span>
+                        </div>
+                     </div>
+                  </div>
+               </li>
+               <li class="">
+                  <div class="relative inline-block text-left">
+                     <button class="dropdown-button inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm ">
+                        Destacados
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                           <path fill-rule="evenodd" d="M6.293 9.293a1 1 0 011.414 0L10 11.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                     </button>
+                     <div class="dropdown-menu origin-top-right absolute mt-2 w-max rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
+                        <div class="py-2 p-2" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-button">
+                           <a href="#" class="block px-4 py-2 mb-1 text-sm text-gray-700 rounded-md bg-white hover:bg-gray-100" role="menuitem">Mayor a menor</a>
+                           <a href="#" class="block px-4 py-2 mb-1 text-sm text-gray-700 rounded-md bg-white hover:bg-gray-100" role="menuitem">Menor a mayor</a>
+                           <a href="#" class="block px-4 py-2 mb-1 text-sm text-gray-700 rounded-md bg-white hover:bg-gray-100" role="menuitem">A - Z</a>
+                           <a href="#" class="block px-4 py-2 mb-1 text-sm text-gray-700 rounded-md bg-white hover:bg-gray-100" role="menuitem">Z - A</a>
+                        </div>
+                     </div>
+                  </div>
+               </li>
+               <li class="">
+                  <button id="filter-button" class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm ">
+                     Filtrar
+                  </button>
+               </li>
+            </ul>
+         </div>
+      </div>
+      <div class="grid grid-cols-2 w-full h-full sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-5 gap-2">
+         {{#each products}}
+         <div class="h-max">
             {{> card_product title=this.title price=this.price thumbnails=this.thumbnails }}
-            {{/each}}
-        </div>
-    </section>
+         </div>
+         {{/each}}
+      </div>
+   </section>
+   <section id="container-category" class="fixed z-[101] top-0 left-0 h-full w-full bg-black bg-opacity-50 hidden">
+      <div class="relative w-[300px] h-full bg-white">
+         <div class="bg-white flex justify-end p-2 ">
+            <button id="close-category" class="text-gray-600 transition hover:scale-110">
+               <span class="sr-only">Close cart</span>
+               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+               </svg>
+            </button>
+         </div>
+         <h2 class="text-center text-3xl font-bold">Filtrar</h2>
+      </div>
+   </section>
 </main>
 {{> footer}}
+<script>
+    const dropdownButton = document.querySelectorAll('.dropdown-button');
+    const dropdownMenu = document.querySelectorAll('.dropdown-menu');
+    const filterButton = document.getElementById('filter-button');
+    const closeCategory = document.getElementById('close-category');
+    
+   dropdownButton.forEach((button , i) => {
+       button.addEventListener('click', () => {
+           dropdownMenu[i].classList.toggle('hidden');
+       });
+   });
+   const actionsCategory = () => {
+      const containerCategory = document.getElementById('container-category');
+      containerCategory.classList.toggle('hidden');
+   }
+   filterButton.addEventListener('click',actionsCategory);
+   closeCategory.addEventListener('click',actionsCategory);
+</script>

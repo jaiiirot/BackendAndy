@@ -1,8 +1,13 @@
 {{> header}}
 <section class="text-gray-700 body-font overflow-hidden bg-white">
   <div class="container p-2 mx-auto">
-    <div class="lg:w-4/5 mx-auto flex flex-wrap">
-      <img alt="ecommerce" class="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200" src="../image/products/{{product.photo.[0]}}">
+    <div class="mx-auto flex flex-wrap gap-2 md:flex-nowrap lg:w-11/12 ">
+      <div class="grid grid-cols-2 md:w-2/5 h-max">
+        <img alt="ecommerce" class="h-300px object-cover object-center rounded border border-gray-200" src="../image/products/{{product.photo.[0]}}">
+        <img alt="ecommerce" class="h-300px object-cover object-center rounded border border-gray-200" src="../image/products/{{product.photo.[1]}}">
+        <img alt="ecommerce" class="h-300px object-cover object-center rounded border border-gray-200" src="../image/products/{{product.photo.[2]}}">
+        <img alt="ecommerce" class="h-300px object-cover object-center rounded border border-gray-200" src="../image/products/{{product.photo.[3]}}">
+      </div>
       <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
         <h2 class="text-sm title-font text-gray-500 tracking-widest">{{product.category}}</h2>
         <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{{product.title}}</h1>
@@ -43,7 +48,7 @@
             </a>
           </span>
         </div>
-        <p class="leading-relaxed">{{{product.description}}}</p>
+        <p class="leading-relaxed text-sm">{{{product.description}}}</p>
         <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
           <div class="flex">
             <span class="mr-3">Color</span>
