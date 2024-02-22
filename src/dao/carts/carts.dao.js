@@ -1,3 +1,4 @@
+import { Console } from "console";
 import { Carts } from "./carts.schema.js";
 
 class CartsDAO {
@@ -16,6 +17,14 @@ class CartsDAO {
       console.error("Error al obtener carrito por id:", error);
     }
   }
+
+  static async getByIdPopulate(id) {
+    try {
+      return await Carts.findById(id).populate("products.pid").lean();
+    } catch (error) {
+      console.error("Error al obtener carrito por id:", error);
+    }
+  }
   static async addCart(cart) {
     try {
       return await Carts.create(cart);
@@ -27,22 +36,20 @@ class CartsDAO {
   static async CartAddProduct(cartId, productId) {
     try {
       const exist_cart = await this.getById(cartId);
-      const exist_prod = exist_cart?.products.find(
-        (prod) => prod.pid === productId
+      const exist_prod = exist_cart.products.find((prod) =>
+        prod.pid.equals(productId)
       );
-      console.log(exist_cart, exist_prod);
 
-      if (!exist_cart) {
-        await this.addCart({ products: [{ pid: productId, quantity: 1 }] });
-      } else if (!exist_prod) {
+      if (exist_prod) {
         await Carts.updateOne(
-          { _id: cartId },
-          { $push: { products: { pid: productId, quantity: 1 } } }
+          { _id: cartId, "products.pid": productId },
+          { $inc: { "products.$[elem].quantity": 1 } },
+          { arrayFilters: [{ "elem.pid": productId }] }
         );
       } else {
         await Carts.updateOne(
-          { _id: cartId, "products.pid": productId },
-          { $inc: { "products.$.quantity": 1 } }
+          { _id: cartId },
+          { $push: { products: { pid: productId, quantity: 1 } } }
         );
       }
     } catch (error) {

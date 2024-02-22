@@ -3,13 +3,13 @@ import { Router } from "express";
 const router = Router();
 
 router.post("/", (req, res) => {
-  console.log(req.body);
   const newCart = CartsDAO.addCart(req.body);
   res.status(201).send(newCart);
 });
 
 router.post("/:cid/productos/:pid", async (req, res) => {
   const { cid, pid } = req.params;
+  // console.log(cid, pid);
   if (cid && pid) {
     await CartsDAO.CartAddProduct(cid, pid);
   } else {
@@ -25,8 +25,8 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:cid", async (req, res) => {
-  console.log(req.params.cid);
-  const cart = await CartsDAO.getById(req.params.cid);
+  // console.log(req.params.cid);
+  const cart = await CartsDAO.getByIdPopulate(req.params.cid);
   if (!cart) {
     res.status(404).send({ error: "Carrito no encontrado" });
     return;

@@ -91,7 +91,7 @@
   const params_pid = window.location.pathname.split('/').pop();
   const push_cart = document.getElementById('push-cart');
   push_cart.addEventListener('click', () => {
-    fetch(`/api/carts/65d793bf20b661239b2d5865/productos/${params_pid}`, {
+    fetch(`/api/carts/65d7b3de63c428e285a9c75a/productos/${params_pid}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
