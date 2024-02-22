@@ -11,15 +11,15 @@ router.get("/", async (req, res) => {
     title: "Home || Andy",
     js: "index.js",
     products: await ProductsDAO.getAllWithLimit(10),
+    products_promo: await ProductsDAO.getByCategorys("accesorio"),
   });
 });
 
 router.get("/productos", async (req, res) => {
   try {
     let products;
-    const promocion = req.query.promocion;
-    const categoria = req.query.categoria;
-    if (!!categoria || !!promocion) {
+    const { promocion, categoria } = req.query;
+    if (!!categoria) {
       products = await ProductsDAO.getByCategorys(categoria);
       res.render("shop", {
         title: categoria[0].toLocaleLowerCase() + " || Andy",

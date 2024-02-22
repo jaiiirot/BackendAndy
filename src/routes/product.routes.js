@@ -8,8 +8,9 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   let products;
+  const limit = !!req.query.limit ? parseInt(req.query.limit) : 10;
   if (!!req.query.limit) {
-    const limitProd = ProductsDAO.getAllWithLimit(parseInt(req.query.limit));
+    const limitProd = ProductsDAO.getAllWithLimit(limit);
     limitProd.length > 0
       ? res.status(200).send(limitProd)
       : res.status(404).send({
@@ -44,9 +45,9 @@ router.post("/", upload.array("photo", 4), async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:pid", async (req, res) => {
   try {
-    if (!req.params.id)
+    if (!req.params.pid)
       return res.status(400).send({ msg: `Id no válido: ${req.params.id}` });
     await ProductsDAO.deleteProduct(req.params.id);
     res.status(200).redirect("/panel/productos");
@@ -69,9 +70,9 @@ router.delete("/", async (req, res) => {
   }
 });
 
-router.put("/:id", upload.array("photos", 4), async (req, res) => {
+router.put("/:pid", upload.array("photos", 4), async (req, res) => {
   try {
-    const product = await ProductsDAO.getById(req.params.id);
+    const product = await ProductsDAO.getById(req.params.pid);
     let photos = [];
     if (req.files.length > 0) {
       product.photo.forEach(async (photo) => {
@@ -95,7 +96,7 @@ router.put("/:id", upload.array("photos", 4), async (req, res) => {
       category: categorys,
       photo: photos,
     };
-    await ProductsDAO.updateProduct(req.params.id, newProduct);
+    await ProductsDAO.updateProduct(req.params.pid, newProduct);
     res.status(200).send(newProduct);
   } catch (error) {
     console.error("Error al actualizar el producto:", error);
