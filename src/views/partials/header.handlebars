@@ -12,7 +12,7 @@
         </div>
         <div class="flex w-full justify-center flex-col items-center mx-auto">
           <h1 id="title" class="font-black text-[3rem]"><span
-              class="text-[#FB8996]"
+              class="text-[#EF4444]"
             >A</span>ndy</h1>
           <p id="desc" class="text-xs font-bold">INDUMENTARIA</p>
         </div>
@@ -42,10 +42,10 @@
   </section>
 
   <section
-    class="fixed z-[101] top-0 right-0 w-full bg-black bg-opacity-50 hidden transition-all duration-300 ease-in-out"
+    class="fixed z-[102]  h-dvh top-0 right-0 w-full bg-black bg-opacity-50 hidden transition-all duration-300 ease-in-out"
     id="container-cart"
   >
-    <aside class="relative h-dvh w-full ml-auto border border-gray-600 bg-gray-100 px-6 py-8 md:w-[350px]">
+    <aside class="relative h-full w-full ml-auto border border-gray-600 bg-gray-100 px-6 py-8 md:w-[350px]">
       <button
         id="close-cart"
         class="absolute end-4 top-4 text-gray-600 transition hover:scale-110"
@@ -75,7 +75,7 @@
             href="/carrito"
             class="block w-full rounded border border-gray-600 px-5 py-3 text-sm text-gray-600 transition hover:ring-1 hover:ring-gray-400"
           >
-            Ver mi carrito (2)
+            Ver mi carrito (<span class="count-prod-number"></span>)
           </a>
         </div>
       </div>
@@ -88,7 +88,7 @@
 window.addEventListener('scroll', () => {
     const title = document.getElementById('title');
     const desc = document.getElementById('desc');
-    if (window.scrollY > 1) {
+    if (window.scrollY > 3) {
         title.style.transition = 'all 300ms ease-in-out';
         title.style.fontSize = '2rem';
         desc.style.display = 'none';
@@ -103,7 +103,6 @@ const action_cart = () =>{
     container_cart.classList.toggle('hidden');
 }
 const item_cart = (product,quantity) => {
-  console.log(product,quantity)
     const li = document.createElement('li');
     li.classList.add('py-1',"px-2",'bg-white',"rounded-md");
     li.innerHTML =`
@@ -119,10 +118,9 @@ const item_cart = (product,quantity) => {
     return li;
 }
 
-
 const header = document.getElementById('headertop');
 const open_cart = document.getElementById('open-cart');
-const count_prod_number = document.querySelector('.count-prod-number');
+const count_prod_number = document.querySelectorAll('.count-prod-number');
 const list_prod = document.querySelector('.list-prod-cart');
 const close_cart = document.getElementById('close-cart');
 open_cart.addEventListener('click',action_cart)
@@ -131,12 +129,15 @@ close_cart.addEventListener('click',action_cart)
 fetch('/api/carts/65d7b3de63c428e285a9c75a')
     .then(response => response.json())
     .then(data => {
-        console.log(data);
-        count_prod_number.textContent = data.products.length;
+        count_prod_number.forEach(item => item.textContent = data.products.length);
         data.products.forEach(product => {
             list_prod.appendChild(item_cart(product.pid,product.quantity));
         });
-    });
+        
+    })
+    .catch(error => {
+        console.log(error);
+    })
 
 
 </script>

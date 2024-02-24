@@ -22,8 +22,8 @@ router.get("/productos", async (req, res) => {
     if (!!categoria) {
       products = await ProductsDAO.getByCategorys(categoria);
       res.render("shop", {
-        title: categoria[0].toLocaleLowerCase() + " || Andy",
-        section_title: categoria[0].toLocaleLowerCase(),
+        title: categoria.toLocaleLowerCase() + " || Andy",
+        section_title: categoria.toLocaleLowerCase(),
         products: products,
       });
     } else if (!!promocion) {
@@ -55,7 +55,7 @@ router.get("/productos/:id", async (req, res) => {
       return;
     }
     res.render("product", {
-      title: product.title + " || Andy",
+      title: product.title.toLowerCase() + " || Andy",
       product: product,
     });
   } catch (error) {
