@@ -1,4 +1,3 @@
-import { Console } from "console";
 import { Carts } from "./carts.schema.js";
 
 class CartsDAO {
@@ -54,6 +53,44 @@ class CartsDAO {
       }
     } catch (error) {
       console.error("Error al agregar producto al carrito:", error);
+    }
+  }
+
+  static async updateCart(cartId, cart) {
+    try {
+      return await Carts.findByIdAndUpdate(cartId, cart, { new: true });
+    } catch (error) {
+      console.error("Error al actualizar carrito:", error);
+    }
+  }
+
+  static async CartUpdateProduct(cartId, productId, product) {
+    try {
+      await Carts.updateOne(
+        { _id: cartId, "products.pid": productId },
+        { $set: { "products.$.quantity": product.quantity } }
+      );
+    } catch (error) {
+      console.error("Error al actualizar producto del carrito:", error);
+    }
+  }
+
+  static async deleteCart(cartId) {
+    try {
+      return await Carts.findByIdAndDelete(cartId);
+    } catch (error) {
+      console.error("Error al eliminar carrito:", error);
+    }
+  }
+
+  static async CartDeleteProduct(cartId, productId) {
+    try {
+      await Carts.updateOne(
+        { _id: cartId },
+        { $pull: { products: { pid: productId } } }
+      );
+    } catch (error) {
+      console.error("Error al eliminar producto del carrito:", error);
     }
   }
 }

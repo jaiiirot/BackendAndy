@@ -1,4 +1,5 @@
 import ProductsDAO from "../dao/products/products.dao.js";
+import CartsDAO from "../dao/carts/carts.dao.js";
 import { Router } from "express";
 const router = Router();
 
@@ -71,15 +72,29 @@ router.get("/contacto", (req, res) => {
 });
 
 router.get("/login", (req, res) => {
-  res.render("login", {
-    title: "Login || Andy",
-  });
+  try {
+    res.render("login", {
+      title: "Login || Andy",
+    });
+  } catch (error) {
+    console.error("Error al procesar la solicitud:", error);
+  }
 });
 
-router.get("/carrito", (req, res) => {
-  res.render("cart", {
-    title: "Carrito || Andy",
-  });
+router.get("/carrito/:cid", async (req, res) => {
+  try {
+    const cid = req.params.cid;
+    const total_prod = await CartsDAO.getByIdPopulate(cid);
+    const products = total_prod.products.map((e) => {
+      return { ...e.pid, quantity: e.quantity, _id: e._id };
+    });
+    res.render("cart", {
+      title: "Carrito || Andy",
+      products_cart: products,
+    });
+  } catch (error) {
+    console.error("Error al procesar la solicitud:", error);
+  }
 });
 
 /*PANEL*/

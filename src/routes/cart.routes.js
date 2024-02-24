@@ -24,7 +24,6 @@ router.post("/", (req, res) => {
 
 router.post("/:cid/productos/:pid", async (req, res) => {
   const { cid, pid } = req.params;
-  // console.log(cid, pid);
   if (cid && pid) {
     await CartsDAO.CartAddProduct(cid, pid);
   } else {
