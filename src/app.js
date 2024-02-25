@@ -21,8 +21,8 @@ app.use(express.json());
 //CONFIGURACIONES
 const socket = new Server(httpServer);
 app.set("views", `${__dirname}/views`);
-app.engine("handlebars", handlebars.engine());
-app.set("view engine", "handlebars");
+app.engine('.hbs', handlebars.engine({extname: '.hbs'}));
+app.set('view engine', '.hbs');
 
 //ROUTES
 app.use("/", routerViews);
