@@ -45,7 +45,7 @@
     class="fixed z-[102]  h-dvh top-0 right-0 w-full bg-black bg-opacity-50 hidden transition-all duration-300 ease-in-out"
     id="container-cart"
   >
-    <aside class="relative h-full w-full ml-auto border border-gray-600 bg-gray-100 px-6 py-8 md:w-[350px]">
+    <aside class="relative h-full w-full ml-auto border border-gray-600 bg-gray-100 px-6 py-8 md:w-[450px]">
       <button
         id="close-cart"
         class="absolute end-4 top-4 text-gray-600 transition hover:scale-110"
@@ -88,13 +88,13 @@
 window.addEventListener('scroll', () => {
     const title = document.getElementById('title');
     const desc = document.getElementById('desc');
-    if (window.scrollY > 3) {
+    if (window.scrollY > 1) {
         title.style.transition = 'all 300ms ease-in-out';
         title.style.fontSize = '2rem';
         desc.style.display = 'none';
     } else {
         title.style.transition = 'all 500 ms ease-in-out'; 
-		title.style.fontSize = '3 rem '; 
+		    title.style.fontSize = '3 rem '; 
       	desc.style.display= 'block';
     }
 });

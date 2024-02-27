@@ -22,6 +22,7 @@ buttonDelete.addEventListener("click", async () => {
       ids.push(item.id);
     }
   });
+  console.log(ids.length);
   const inputValue = "";
   const { value: option } = await Swal.fire({
     title: "Elininar productos",
@@ -39,12 +40,21 @@ buttonDelete.addEventListener("click", async () => {
   if (option) {
     Swal.fire(`Productos eliminados: ${ids.length}`);
     if (ids.length == 1) {
+      console.log(`/api/products/${ids[0]}`);
       fetch(`/api/products/${ids[0]}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-      });
+      })
+        .then((res) => {
+          if (res.status === 200) {
+            window.location.reload();
+          }
+        })
+        .catch((error) => {
+          console.error("Error al eliminar producto:", error);
+        });
     } else {
       fetch("/api/products", {
         method: "DELETE",
@@ -52,9 +62,16 @@ buttonDelete.addEventListener("click", async () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(ids),
-      });
+      })
+        .then((res) => {
+          if (res.status === 200) {
+            window.location.reload();
+          }
+        })
+        .catch((error) => {
+          console.error("Error al eliminar productos:", error);
+        });
     }
-    window.location.reload();
   }
 });
 
