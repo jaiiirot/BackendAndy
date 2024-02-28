@@ -3,7 +3,7 @@ import { Products } from "./products.schema.js";
 class ProductsDAO {
   static async getAll() {
     try {
-      return await Products.find().lean();
+      return await Products.paginate({}, { limit: 5 });
     } catch (error) {
       console.error("Error al obtener todos los productos:", error);
       throw error;

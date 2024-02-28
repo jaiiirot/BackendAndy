@@ -3,19 +3,9 @@ import __dirname from "../../utils.js";
 import fs from "fs";
 
 const getProducts = async (req, res) => {
-  let products;
-  const limit = !!req.query.limit ? parseInt(req.query.limit) : 10;
-  if (!!req.query.limit) {
-    const limitProd = ProductsDAO.getAllWithLimit(limit);
-    limitProd.length > 0
-      ? res.status(200).send(limitProd)
-      : res.status(404).send({
-          error: "No se encontraron productos con el límite especificado",
-        });
-  } else {
-    products = await ProductsDAO.getAll();
-    res.status(200).send(products);
-  }
+  let products = await ProductsDAO.getAll();
+  console.log(products);
+  res.status(200).send(products);
 };
 
 const postProducts = async (req, res) => {

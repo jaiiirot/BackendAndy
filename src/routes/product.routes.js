@@ -1,5 +1,5 @@
 import ProductController from "../dao/products/products.controller.js";
-import upload from "../utils/upload.middleware.js";
+import upload from "../utils/upload.js";
 import express from "express";
 
 const router = express.Router();

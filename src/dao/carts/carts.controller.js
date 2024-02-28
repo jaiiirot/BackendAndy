@@ -51,18 +51,18 @@ const putUpdateProductInCart = async (req, res) => {
 };
 
 const deleteCart = async (req, res) => {
-  const deletedCart = await CartsDAO.deleteCart(req.params.cid);
-  if (!deletedCart) {
+  if (!req.params.cid) {
     res.status(404).send({ error: "Carrito no encontrado" });
-    return;
   }
-  res.status(200).send(deletedCart);
+  await CartsDAO.deleteCart(req.params.cid);
+  res.status(200).send({ message: "Carrito eliminado" });
 };
 
 const deleteProductFromCart = async (req, res) => {
   const { cid, pid } = req.params;
   if (cid && pid) {
     await CartsDAO.CartDeleteProduct(cid, pid);
+    res.status(200).send({ message: "Producto eliminado del carrito" });
   } else {
     res
       .status(400)

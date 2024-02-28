@@ -1,5 +1,4 @@
 import { Carts } from "./carts.schema.js";
-
 class CartsDAO {
   static async getAll() {
     try {
@@ -77,7 +76,7 @@ class CartsDAO {
 
   static async deleteCart(cartId) {
     try {
-      return await Carts.findByIdAndDelete(cartId);
+      return await Carts.updateOne({ _id: cartId }, { $set: { products: [] } });
     } catch (error) {
       console.error("Error al eliminar carrito:", error);
     }
