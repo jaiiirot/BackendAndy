@@ -1,4 +1,5 @@
 import ProductsDAO from "../dao/products/products.dao.js";
+import Product from "../dao/products/products.schema.js";
 import CartsDAO from "../dao/carts/carts.dao.js";
 import { Router } from "express";
 const router = Router();
@@ -16,18 +17,52 @@ router.get("/", async (req, res) => {
   });
 });
 
+// router.get("/productos", async (req, res) => {
+//   try {
+//     let { promocion, categoria } = req.query;
+//     let products, section, category;
+//     console.log(promocion, categoria);
+
+//     if (!categoria) {
+//       section = categoria;
+//     }
+//     if (!promocion) {
+//       // promocionV = ;
+//       section = "OFERTA";
+//     }
+//     console.log({ categoria, promocion });
+//     products = await Product.paginate(
+//       {
+//         category: { $in: categoria },
+//         promocion,
+//       },
+//       { limit: 10, lean: true }
+//     );
+//     console.log(products);
+//     res.render("shop", {
+//       title: `${section} || Andy`,
+//       section_title: section,
+//       products: products.docs,
+//     });
+//   } catch (error) {
+//     // Manejo de errores: Imprime el error y envía una respuesta de error al cliente
+//     console.error("Error al procesar la solicitud:", error);
+//     res.status(500).send({ error: "Error interno del servidor" });
+//   }
+// });
 router.get("/productos", async (req, res) => {
   try {
     let products;
     const { promocion, categoria } = req.query;
-    if (!!categoria) {
+    console.log(promocion, categoria);
+    if (categoria) {
       products = await ProductsDAO.getByCategorys(categoria);
       res.render("shop", {
         title: categoria.toLocaleLowerCase() + " || Andy",
         section_title: categoria.toLocaleLowerCase(),
         products: products,
       });
-    } else if (!!promocion) {
+    } else if (promocion) {
       products = await ProductsDAO.getByPromocion(promocion);
       res.render("shop", {
         title: "Ofertas || Andy",
@@ -36,10 +71,11 @@ router.get("/productos", async (req, res) => {
       });
     } else {
       products = await ProductsDAO.getAll();
+      console.log(prods);
       res.render("shop", {
         title: "Productos || Andy",
         section_title: "PRODUCTOS",
-        products: products,
+        products: prods.docs,
       });
     }
   } catch (error) {
@@ -127,9 +163,10 @@ router.get("/panel/productos", async (req, res) => {
     });
   } else {
     products = await ProductsDAO.getAll();
+
     res.render("admin/prod", {
       title: "Panel | Productos",
-      products: products.map((product) => {
+      products: products.docs.map((product) => {
         return {
           ...product,
           quantity_photos: product.photo.length,

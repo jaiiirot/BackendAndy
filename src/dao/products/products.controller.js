@@ -3,7 +3,7 @@ import __dirname from "../../utils.js";
 import fs from "fs";
 
 const getProducts = async (req, res) => {
-  let products = await ProductsDAO.getAll();
+  let products = await ProductsDAO.getAll({}, { limit: 10, lean: true });
   console.log(products);
   res.status(200).send(products);
 };

@@ -1,9 +1,12 @@
-import { Products } from "./products.schema.js";
+import Products from "./products.schema.js";
 
 class ProductsDAO {
   static async getAll() {
     try {
-      return await Products.paginate({}, { limit: 5 });
+      return await Products.paginate(
+        { promocion: true },
+        { limit: 5, lean: true }
+      );
     } catch (error) {
       console.error("Error al obtener todos los productos:", error);
       throw error;
