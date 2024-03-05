@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
 const cartsSchema = new mongoose.Schema({
   products: {
@@ -6,17 +6,17 @@ const cartsSchema = new mongoose.Schema({
       {
         pid: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "products",
+          ref: 'products'
         },
         quantity: {
           type: Number,
-          default: 1,
-        },
-      },
+          default: 1
+        }
+      }
     ],
-    default: [],
-  },
-});
+    default: []
+  }
+})
 
 // Definir un modelo
-export const Carts = mongoose.model("carts", cartsSchema);
+export const Carts = mongoose.model('carts', cartsSchema)

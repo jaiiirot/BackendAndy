@@ -10,12 +10,12 @@
             <i class="fa-solid fa-magnifying-glass"></i>
           </span>
         </div>
-        <div class="flex w-full justify-center flex-col items-center mx-auto">
+        <a href="/" class="flex w-full justify-center flex-col items-center mx-auto">
           <h1 id="title" class="font-black text-[3rem]"><span
               class="text-[#EF4444]"
             >A</span>ndy</h1>
           <p id="desc" class="text-xs font-bold">INDUMENTARIA</p>
-        </div>
+        </a>
         <div class="flex gap-4 relative">
           <a href="/login">
             <i class="fa-regular fa-user"></i>
@@ -126,7 +126,9 @@ const close_cart = document.getElementById('close-cart');
 open_cart.addEventListener('click',action_cart)
 close_cart.addEventListener('click',action_cart)
 
-fetch('/api/carts/65d7b3de63c428e285a9c75a')
+const reloadCart = () => {
+  list_prod.innerHTML = '';
+  fetch('/api/carts/65d7b3de63c428e285a9c75a')
     .then(response => response.json())
     .then(data => {
         count_prod_number.forEach(item => item.textContent = data.products.length);
@@ -138,6 +140,9 @@ fetch('/api/carts/65d7b3de63c428e285a9c75a')
     .catch(error => {
         console.log(error);
     })
+}
+reloadCart()
+
 
 
 </script>

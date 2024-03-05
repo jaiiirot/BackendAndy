@@ -7,10 +7,10 @@
          <h1 class="text-lg font-medium">Agregar un Producto</h1>
       </div>
       <div class="flex-grow p-6 overflow-auto bg-gray-800">
-         <div class="flex gap-4">
+         <div class="flex gap-4 ">
             {{!-- Form --}}
-            <div>
-               <form id="product-form" class="flex flex-col gap-4" method="post" enctype="multipart/form-data" action="/api/products/">
+          
+               <form id="product-form" class="flex flex-col gap-2" method="post" enctype="multipart/form-data" action="/api/products/">
                   <input
                      type="text"
                      name="title"
@@ -61,28 +61,31 @@
                      class="border-none outline-none px-4 py-2 bg-gray-700 text-white cursor-pointer hover:bg-gray-600 transition-all duration-300 ease-in-out"
                      />
                </form>
-            </div>
+         
             {{!-- Preview --}}
-            {{!-CARD--}}
-            <div>
-               <div
-                  class="relative rounded-lg overflow-hidden w-[200px] text-black"
-                  >
-                  <img class="card-img w-full" src="../../image/noimgv.jpg" alt="imagen nuevo producto" id="img-card"/>
+            <section class="flex gap-2 flex-col items-center w-full">
+               <h1>PREVIEW DE LA INFORMACION</h1>
+               {{!-- IMAGES PROD---}}
+               <div class="h-[530px] w-[600px] flex overflow-x-hidden border bg-gray-200" id="image-preview">
+                  <div class="w-full h-full" style="background: url('../../image/noimgh.jpg') no-repeat center center / cover;"></div>
+               </div>
+               {{!-CARD--}}
+               <div>
                   <div
-                     class="absolute w-full bg-white bottom-0 flex flex-col justify-between p-4 min-h-20 gap-2"
+                     class="relative rounded-lg overflow-hidden w-[200px] text-black"
                      >
-                     <div>
-                        <h3 class="text-xs font-bold" id="title-card">Titulo de Producto</h3>
-                        <p id="price-card">$ 112233</p>
+                     <img class="card-img w-full" src="../../image/noimgv.jpg" alt="imagen nuevo producto" id="img-card"/>
+                     <div
+                        class="absolute w-full bg-white bottom-0 flex flex-col justify-between p-4 min-h-20 gap-2"
+                        >
+                        <div>
+                           <h3 class="text-xs font-bold" id="title-card">Titulo de Producto</h3>
+                           <p id="price-card">$ 112233</p>
+                        </div>
                      </div>
                   </div>
                </div>
-            </div>
-            {{!-- IMAGES PROD---}}
-            <div class="h-[530px] w-[600px] flex overflow-x-hidden border bg-gray-200" id="image-preview">
-               <div class="w-full h-full" style="background: url('../../image/noimgh.jpg') no-repeat center center / cover;"></div>
-            </div>
+            </section>
          </div>
          {{!-- SITE PROD---}}
          <div class="w-full h-max">

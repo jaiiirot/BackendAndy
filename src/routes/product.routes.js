@@ -1,17 +1,17 @@
-import ProductController from "../dao/products/products.controller.js";
-import upload from "../utils/upload.js";
-import express from "express";
+import ProductController from '../dao/products/products.controller.js'
+import upload from '../utils/upload.js'
+import express from 'express'
 
-const router = express.Router();
+const router = express.Router()
 
-router.get("/", ProductController.getProducts);
+router.get('/', ProductController.getProducts)
 
-router.post("/", upload.array("photo", 4), ProductController.postProducts);
+router.post('/', upload.array('photo', 4), ProductController.postProducts)
 
-router.delete("/", ProductController.deleteProducts);
+router.delete('/', ProductController.deleteProducts)
 
-router.delete("/:pid", ProductController.deleteProduct);
+router.delete('/:pid', ProductController.deleteProduct)
 
-router.put("/:pid", upload.array("photos", 4), ProductController.putProduct);
+router.put('/:pid', upload.array('photos', 4), ProductController.putProduct)
 
-export default router;
+export default router
