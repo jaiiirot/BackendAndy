@@ -75,7 +75,7 @@
             class="relative rounded-lg overflow-hidden w-[200px] text-black"
           >
             {{#if exist_product}}
-            <img class="card-img w-full" src="../../image/products/{{product.photo.[0]}}" alt="imagen nuevo producto" id="img-card-put"/>
+            <img class="card-img w-full" src="{{product.photo.[0]}}" alt="imagen nuevo producto" id="img-card-put"/>
             {{else}}
             <img class="card-img w-full" src="../../image/noimgh.jpg" alt="imagen nuevo producto" id="img-card-put"/>
             {{/if}}
@@ -95,10 +95,10 @@
           </div>
         </div>
         {{!-- IMAGES PROD---}}
-        <div class="h-[530px] w-[600px] flex overflow-x-hidden border bg-gray-200" id="image-preview-put">
+        <div class="h-[300px] w-[600px] flex overflow-x-hidden border bg-gray-200" id="image-preview-put">
           {{#if exist_product}}
             {{#each product.photo}}
-            <div class="w-full h-full" style="background: url('../../image/products/{{this}}') no-repeat center center / cover"></div>
+            <div class="w-full h-full" style="background: url('{{this}}') no-repeat center center / cover"></div>
             {{/each}}
           {{else}}
             <h1>PREVIEW IMAGENES, SOLO SE PERMITE 4 IMAGENES</h1>

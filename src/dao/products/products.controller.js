@@ -1,26 +1,23 @@
 import ProductsDAO from "./products.dao.js";
-import { postCloudinary } from "../../utils/cloudinary.js";
+import { postCloudinary, deleteCloudinary } from "../../utils/cloudinary.js";
 import __dirname from "../../utils.js";
 import fs from "fs";
 
 const getProducts = async (req, res) => {
 	const products = await ProductsDAO.getAll({}, { limit: 10, lean: true });
-	console.log(products);
 	res.status(200).send(products);
 };
 
 const postProducts = async (req, res) => {
 	const { title, description, code, price, stock, category } = req.body;
 	const categorys = category.split(",");
-	console.log(req.files, req.body);
-	const photos = [];
-	await req.files.forEach(async (file, i) => {
-		const URL = await postCloudinary(file.path);
-		console.log(URL);
-		photos.push(URL);
-		fs.promises.unlink(file.path);
-	});
-	console.log(photos);
+	const photos = await Promise.all(
+		req.files.map(async file => {
+			const URL = await postCloudinary(file.path);
+			fs.promises.unlink(file.path);
+			return URL;
+		})
+	);
 	const product = {
 		title,
 		description: description.replace(/\n/g, "<br>"),
@@ -34,7 +31,7 @@ const postProducts = async (req, res) => {
 	};
 	if (req.body) {
 		await ProductsDAO.addProduct(product);
-		res.status(200).json({ msg: "Producto agregado" });
+		res.status(200).redirect("/panel/productos");
 	} else {
 		res
 			.status(400)
@@ -56,7 +53,7 @@ const deleteProducts = async (req, res) => {
 			});
 		});
 		await ProductsDAO.deleteProducts(IDS);
-		res.status(200).send({ msg: "Productos eliminados" });
+		res.status(200).redirect("/panel/productos");
 	} catch (error) {
 		console.error("Error al eliminar productos:", error);
 		res.status(500).send({ error: "Error interno del servidor" });
@@ -70,8 +67,8 @@ const deleteProduct = async (req, res) => {
 		}
 		const photo = await ProductsDAO.getById(req.params.pid);
 		photo.photo.forEach(async photo => {
-			const imagePath = `${__dirname}/public/image/products/${photo}`;
-			await fs.promises.unlink(imagePath);
+			const response = await deleteCloudinary(photo);
+			console.log(response);
 		});
 		await ProductsDAO.deleteProduct(req.params.pid);
 		res.status(200).redirect("/panel/productos");
@@ -85,14 +82,18 @@ const putProduct = async (req, res) => {
 	try {
 		const product = await ProductsDAO.getById(req.params.pid);
 		let photos = [];
-		if (req.files.length > 0) {
+		if (req.files.length > 0 && req.files.length < 5) {
 			product.photo.forEach(async photo => {
-				const imagePath = `${__dirname}/public/image/products/${photo}`;
-				await fs.promises.unlink(imagePath);
+				const response = await deleteCloudinary(photo);
+				console.log(response);
 			});
-			photos = req.files.map(file => {
-				return file.filename;
-			});
+			photos = await Promise.all(
+				req.files.map(async file => {
+					const URL = await postCloudinary(file.path);
+					fs.promises.unlink(file.path);
+					return URL;
+				})
+			);
 		} else {
 			photos = product.photo;
 		}
@@ -108,10 +109,10 @@ const putProduct = async (req, res) => {
 			photo: photos,
 		};
 		await ProductsDAO.updateProduct(req.params.pid, newProduct);
-		res.status(200).send(newProduct);
+		res.status(200).redirect("/panel/productos");
 	} catch (error) {
 		console.error("Error al actualizar el producto:", error);
-		res.status(500).send({ error: "Error interno del servidor" });
+		res.status(500).json({ error: "Error interno del servidor" });
 	}
 };
 

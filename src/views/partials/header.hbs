@@ -33,9 +33,9 @@
         class="hidden gap-16 items-center justify-center p-2 font-normal text-[14px] md:flex"
       >
         <li><a href="/">Inicio</a></li>
-        <li><a href="/productos?promocion=true">SALE</a></li>
-        <li><a href="/productos?categoria=indumentaria">Indumentaria</a></li>
-        <li><a href="/productos?categoria=accesorio">Accesorios</a></li>
+        <li><a href="/productos/promocion">SALE</a></li>
+        <li><a href="/productos/indumentaria">Indumentaria</a></li>
+        <li><a href="/productos/accesorio">Accesorios</a></li>
         <li><a href="/contacto">Contacto</a></li>
       </ul>
     </nav>
@@ -72,7 +72,7 @@
         </ul>
         <div class=" text-center w-full">
           <a
-            href="/carrito/65d7b3de63c428e285a9c75a"
+            href="/carrito/65e7c75978c4d52a933fd9ef"
             class="block w-full rounded border border-gray-600 px-5 py-3 text-sm text-gray-600 transition hover:ring-1 hover:ring-gray-400"
           >
             Ver mi carrito (<span class="count-prod-number"></span>)
@@ -107,7 +107,7 @@ const item_cart = (product,quantity) => {
     li.classList.add('py-1',"px-2",'bg-white',"rounded-md");
     li.innerHTML =`
     <div class="flex justify-between items-center" >
-        <img src="../image/products/${product.photo[0]}" alt="${product.title}" class="w-16 h-16 object-cover rounded">
+        <img src="${product.photo[0]}" alt="${product.title}" class="w-16 h-16 object-cover rounded">
         <div class="flex flex-col">
            <span class="text-sm">${product.title}</span>
            <span class="text-sm">${product.price}</span>
@@ -128,7 +128,7 @@ close_cart.addEventListener('click',action_cart)
 
 const reloadCart = () => {
   list_prod.innerHTML = '';
-  fetch('/api/carts/65d7b3de63c428e285a9c75a')
+  fetch('/api/carts/65e7c75978c4d52a933fd9ef')
     .then(response => response.json())
     .then(data => {
         count_prod_number.forEach(item => item.textContent = data.products.length);

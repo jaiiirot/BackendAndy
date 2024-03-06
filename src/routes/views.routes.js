@@ -9,7 +9,7 @@ router.get("/inicio", (req, res) => {
 
 router.get("/", async (req, res) => {
 	const selectionProds = async type =>
-		await ProductsDAO.getAll({ category: type }, { limit: 6 });
+		await ProductsDAO.getAll({ genre: type }, { limit: 6 });
 	const products = await selectionProds("mujer");
 	const productspromo = await selectionProds("hombre");
 	res.render("index", {
@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
 	});
 });
 
-router.get("/productos", async (req, res) => {
+router.get("/productos/:section", async (req, res) => {
 	try {
 		console.log("querys:", req.query);
 		const query = {};
@@ -30,14 +30,12 @@ router.get("/productos", async (req, res) => {
 		const pricemax = parseInt(req.query.pricemax) || 1000000;
 		const pricemin = parseInt(req.query.pricemin) || 0;
 		const category = req.query.categoria || "";
-		const promocion = req.query.promocion || null;
 		query.price = { $gte: pricemin, $lte: pricemax };
-		if (category !== "") {
-			query.category = { $in: category };
-		}
-		if (promocion !== null) {
-			query.promocion = promocion === "true";
-		}
+		req.params.section !== "promocion"
+			? (query.type = req.params.section)
+			: (query.promocion = true);
+		if (category !== "") query.category = { $in: category };
+
 		console.log("Consulta de productos:", query);
 		options.page = page;
 		options.limit = limit;
@@ -53,7 +51,7 @@ router.get("/productos", async (req, res) => {
 	}
 });
 
-router.get("/productos/:id", async (req, res) => {
+router.get("/productos/:section/:id", async (req, res) => {
 	try {
 		const product = await ProductsDAO.getById(req.params.id);
 		const stockproduct = product.stock > 0;

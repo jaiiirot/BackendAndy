@@ -9,7 +9,7 @@ cloudinary.config({
 export const postCloudinary = async urlFile => {
 	try {
 		const extension = urlFile.split(".").pop();
-		const validExtensions = ["png", "jpg", "jpeg"];
+		const validExtensions = ["png", "jpg", "jpeg", "webp"];
 		if (!validExtensions.includes(extension)) {
 			return { message: "La extencion no es valida" };
 		}
@@ -18,6 +18,30 @@ export const postCloudinary = async urlFile => {
 		});
 		return result.secure_url;
 	} catch (error) {
-		console.error("Error al subir la imagen a Cloudinary:", error);
+		return { msg: "Error al subir la imagen a Cloudinary:", error };
+	}
+};
+
+export const deleteCloudinary = async urlFile => {
+	try {
+		const pathUrl = urlFile.split("/").pop().split(".").shift();
+		// console.log(urlFile, pathUrl);
+		const response = await cloudinary.uploader.destroy(`ecommerce/${pathUrl}`);
+		return { msg: "Imagen eliminada", response };
+	} catch (error) {
+		return { msg: "Error al eliminar la imagen de Cloudinary:", error };
+	}
+};
+
+export const updateCloudinary = async (urlFile, newUrl) => {
+	try {
+		const publicid = urlFile.split("/").pop().split(".").shift();
+		await cloudinary.uploader.destroy(publicid);
+		const result = await cloudinary.uploader.upload(newUrl, {
+			folder: "ecommerce",
+		});
+		return result.secure_url;
+	} catch (error) {
+		return { msg: "Error al actualizar la imagen en Cloudinary:", error };
 	}
 };
