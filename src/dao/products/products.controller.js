@@ -9,8 +9,19 @@ const getProducts = async (req, res) => {
 };
 
 const postProducts = async (req, res) => {
-	const { title, description, code, price, stock, category } = req.body;
-	const categorys = category.split(",");
+	const {
+		title,
+		description,
+		code,
+		price,
+		stock,
+		category,
+		type,
+		genre,
+		promocion,
+	} = req.body;
+	// const categorys = category?.split(",");
+	const categorys = category;
 	const photos = await Promise.all(
 		req.files.map(async file => {
 			const URL = await postCloudinary(file.path);
@@ -24,8 +35,9 @@ const postProducts = async (req, res) => {
 		code,
 		price,
 		stock,
-		type: "indumentaria",
-		genre: "unisex",
+		promocion,
+		type,
+		genre,
 		category: categorys,
 		photo: photos,
 	};
