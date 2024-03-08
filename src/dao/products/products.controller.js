@@ -20,8 +20,7 @@ const postProducts = async (req, res) => {
 		genre,
 		promocion,
 	} = req.body;
-	// const categorys = category?.split(",");
-	const categorys = category;
+	const categorys = category?.split(",");
 	const photos = await Promise.all(
 		req.files.map(async file => {
 			const URL = await postCloudinary(file.path);
