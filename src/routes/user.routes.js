@@ -13,17 +13,19 @@ router.get("/", async (req, res) => {
 	}
 });
 
-router.post("/", async (req, res) => {
-	console.log(req.body);
-});
-
 router.post("/register", async (req, res) => {
 	const user = req.body;
 	try {
-		const newUser = await UsersDAO.add(user);
-		res.status(201).json(newUser);
+		const userLogged = await UsersDAO.postUser(user);
+		if (userLogged) {
+			res
+				.status(200)
+				.json({ msg: " Se registro correctamente ", user: userLogged });
+		} else {
+			res.status(401).json({ error: "Usuario o contraseña incorrectos" });
+		}
 	} catch (error) {
-		console.error("Error al registrar el usuario:", error);
+		console.error("Error al loguear el usuario:", error);
 		res.status(500).json({ error: "Error interno del servidor" });
 	}
 });
@@ -31,9 +33,11 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
 	const user = req.body;
 	try {
-		const userLogged = await UsersDAO.login(user);
+		const userLogged = await UsersDAO.getByEmailAndPassword(user);
 		if (userLogged) {
-			res.status(200).json(userLogged);
+			res
+				.status(200)
+				.json({ msg: "Se inicio Correctamente ", user: userLogged });
 		} else {
 			res.status(401).json({ error: "Usuario o contraseña incorrectos" });
 		}

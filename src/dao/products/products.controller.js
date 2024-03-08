@@ -1,4 +1,5 @@
 import ProductsDAO from "./products.dao.js";
+import sharp from "sharp";
 import { postCloudinary, deleteCloudinary } from "../../utils/cloudinary.js";
 import __dirname from "../../utils.js";
 import fs from "fs";
@@ -23,11 +24,18 @@ const postProducts = async (req, res) => {
 	const categorys = category?.split(",");
 	const photos = await Promise.all(
 		req.files.map(async file => {
-			const URL = await postCloudinary(file.path);
-			fs.promises.unlink(file.path);
-			return URL;
+			const outputPath = `${__dirname}/public/image/optimize/${file.filename}`;
+			const res = await sharp(file.path).resize(270, 450).toFile(outputPath);
+			if (res) return await postCloudinary(outputPath);
 		})
 	);
+	req.files.forEach(file => {
+		const outputPath = `${__dirname}/public/image/optimize/${file.filename}`;
+		fs.promises.unlink(outputPath);
+	});
+	req.files.forEach(async file => {
+		await fs.promises.unlink(file.path);
+	});
 	const product = {
 		title,
 		description: description.replace(/\n/g, "<br>"),
