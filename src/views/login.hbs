@@ -38,7 +38,7 @@
 			<form
 				class="bg-white rounded-md shadow-2xl py-5 px-2 mt-8 form-login"
 				method="post"
-				action="/api/users/"
+				action="/api/users/login"
 			>
 				<h1 class="text-gray-800 font-bold text-2xl mb-4">Inicia Sesion!</h1>
 				<div class="flex items-center border-2 mb-4 py-2 px-3 rounded-2xl">
@@ -104,7 +104,7 @@
 			<form
 				class="bg-white rounded-md shadow-2xl p-5 mt-8 hidden form-register"
 				method="post"
-				action="/api/users/"
+				action="/api/users/register"
 			>
 				<h1 class="text-gray-800 font-bold text-2xl mb-4">Registrar!</h1>
 				<div class="flex items-center border-2 mb-2 py-2 px-3 rounded-2xl">
@@ -123,10 +123,10 @@
 						/>
 					</svg>
 					<input
-						id="name"
+						id="register-username"
 						class="pl-2 w-full outline-none border-none"
 						type="text"
-						name="name"
+						name="username"
 						placeholder="Nombre"
 					/>
 				</div>
@@ -146,7 +146,7 @@
 						/>
 					</svg>
 					<input
-						id="email"
+						id="register-email"
 						class="pl-2 w-full outline-none border-none"
 						type="email"
 						name="email"
@@ -169,10 +169,10 @@
 						/>
 					</svg>
 					<input
-						id="email"
+						id="register-reemail"
 						class="pl-2 w-full outline-none border-none"
 						type="email"
-						name="email"
+						name="reemail"
 						placeholder="Correo Electronico"
 					/>
 				</div>
@@ -193,7 +193,7 @@
 						class="pl-2 w-full outline-none border-none"
 						type="password"
 						name="password"
-						id="password"
+						id="register-password"
 						placeholder="Contraseña"
 					/>
 
@@ -214,8 +214,8 @@
 					<input
 						class="pl-2 w-full outline-none border-none"
 						type="password"
-						name="password"
-						id="password"
+						name="repassword"
+						id="register-repassword"
 						placeholder="Contraseña"
 					/>
 
@@ -245,4 +245,17 @@
 	}); btnLogin.addEventListener('click', () => {
 	formLogin.classList.remove('hidden'); formRegister.classList.add('hidden');
 	});
+	const formDataRegister = ["register-username", "register-email", "register-reemail", "register-password", "register-repassword"].map(id => document.getElementById(id));
+	const compareInput = (input1, input2) => {
+		console.log(input1.value, input2.value)
+		if(input1.value !== input2.value){
+			input1.style.border = "1px solid red";
+		}else{
+			input1.style.border = "1px solid #e5e7eb";
+		}
+	}
+	formDataRegister[1].addEventListener('input', (e) => compareInput(formDataRegister[2],e.target));
+	formDataRegister[2].addEventListener('input', (e) => compareInput(e.target, formDataRegister[1]));
+	formDataRegister[3].addEventListener('input', (e) => compareInput(formDataRegister[4],e.target));
+	formDataRegister[4].addEventListener('input', (e) => compareInput(e.target, formDataRegister[3]));
 </script>
