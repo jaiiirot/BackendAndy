@@ -8,11 +8,6 @@ cloudinary.config({
 
 export const postCloudinary = async urlFile => {
 	try {
-		const extension = urlFile.split(".").pop();
-		const validExtensions = ["png", "jpg", "jpeg", "webp"];
-		if (!validExtensions.includes(extension)) {
-			return { message: "La extencion no es valida" };
-		}
 		const result = await cloudinary.uploader.upload(urlFile, {
 			folder: "ecommerce",
 		});

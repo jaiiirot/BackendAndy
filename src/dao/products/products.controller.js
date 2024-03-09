@@ -10,51 +10,54 @@ const getProducts = async (req, res) => {
 };
 
 const postProducts = async (req, res) => {
-	const {
-		title,
-		description,
-		code,
-		price,
-		stock,
-		category,
-		type,
-		genre,
-		promocion,
-	} = req.body;
-	const categorys = category?.split(",");
-	const photos = await Promise.all(
-		req.files.map(async file => {
-			const outputPath = `${__dirname}/public/image/optimize/${file.filename}`;
-			const res = await sharp(file.path).resize(270, 450).toFile(outputPath);
-			if (res) return await postCloudinary(outputPath);
-		})
-	);
-	req.files.forEach(file => {
-		const outputPath = `${__dirname}/public/image/optimize/${file.filename}`;
-		fs.promises.unlink(outputPath);
-	});
-	req.files.forEach(async file => {
-		await fs.promises.unlink(file.path);
-	});
-	const product = {
-		title,
-		description: description.replace(/\n/g, "<br>"),
-		code,
-		price,
-		stock,
-		promocion,
-		type,
-		genre,
-		category: categorys,
-		photo: photos,
-	};
-	if (req.body) {
-		await ProductsDAO.addProduct(product);
-		res.status(200).redirect("/panel/productos");
-	} else {
-		res
-			.status(400)
-			.json({ error: "No se pudieron obtener los datos del formulario" });
+	try {
+		const {
+			title,
+			description,
+			code,
+			price,
+			stock,
+			category,
+			type,
+			genre,
+			promocion,
+		} = req.body;
+		const categorys = category?.split(",");
+		const photos = await Promise.all(
+			await req.files.map(async file => {
+				const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+				const outputPath = `${__dirname}/public/image/optimize/${
+					uniqueSuffix + ".webp"
+				}`;
+				await sharp(file.buffer).resize(270, 500).webp().toFile(outputPath);
+				const URL = await postCloudinary(outputPath);
+				fs.promises.unlink(outputPath);
+				return URL;
+			})
+		);
+		const product = {
+			title,
+			description: description.replace(/\n/g, "<br>"),
+			code,
+			price,
+			stock,
+			promocion,
+			type,
+			genre,
+			category: categorys,
+			photo: photos,
+		};
+		if (req.body) {
+			await ProductsDAO.addProduct(product);
+			res.status(200).redirect("/panel/productos");
+		} else {
+			res
+				.status(400)
+				.json({ error: "No se pudieron obtener los datos del formulario" });
+		}
+	} catch (error) {
+		console.error("Error al obtener todos los productos:", error);
+		res.status(500).send({ error: "Error interno del servidor" });
 	}
 };
 
