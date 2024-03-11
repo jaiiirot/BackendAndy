@@ -1,12 +1,19 @@
 import express from "express";
 import mongoose from "mongoose";
+import session from "express-session";
+import MongoStore from "connect-mongo";
+import cookieParser from "cookie-parser";
 import __dirname from "./utils.js";
 import routerProd from "./routes/product.routes.js";
-import routerUser from "./routes/user.routes.js";
+import routerUser from "./routes/sessions.routes.js";
 import routerCart from "./routes/cart.routes.js";
+import routerMessage from "./routes/message.routes.js";
 import routerViews from "./routes/views.routes.js";
 import handlebars from "express-handlebars";
 import { Server } from "socket.io";
+
+const DB_MONGO_LOCAL = "mongodb://localhost:27017/ecommerce";
+// const DB_MONGO_ATLAS = "mongodb+srv://ecommercedb:dbecommercedb@jairotecommerce.wwe0lxx.mongodb.net/ecommerce?retryWrites=true&w=majority";
 
 const app = express();
 const httpServer = app.listen(8080, () => {
@@ -17,6 +24,15 @@ const httpServer = app.listen(8080, () => {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public`));
 app.use(express.json());
+app.use(cookieParser("JhonJairoTumiri"));
+app.use(
+	session({
+		store: MongoStore.create({ mongoUrl: DB_MONGO_LOCAL, ttl: 200 }),
+		secret: "secretCode",
+		resave: true,
+		saveUninitialized: true,
+	})
+);
 
 // CONFIGURACIONES
 const socket = new Server(httpServer);
@@ -27,13 +43,9 @@ app.set("view engine", ".hbs");
 // ROUTES
 app.use("/", routerViews);
 app.use("/api/products", routerProd);
-app.use("/api/users", routerUser);
+app.use("/api/messages", routerMessage);
 app.use("/api/carts", routerCart);
-
-// REGLAS
-app.get("/ping", (req, res) => {
-	res.send("Pong");
-});
+app.use("/api/sessions", routerUser);
 
 // 404
 app.use((req, res, next) => {
@@ -42,11 +54,7 @@ app.use((req, res, next) => {
 
 // jhon@gmail.com --> contraseña: jhon --> admin
 // MONGOOSE
-// mongoose.connect('mongodb://localhost:27017/ecommerce')
-// MONGOOSE ATLAS
-mongoose.connect(
-	"mongodb+srv://ecommercedb:dbecommercedb@jairotecommerce.wwe0lxx.mongodb.net/ecommerce?retryWrites=true&w=majority"
-);
+mongoose.connect(DB_MONGO_LOCAL);
 
 // SOCKET IO
 const messages = [];

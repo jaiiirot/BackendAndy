@@ -24,7 +24,7 @@
         <div class="swiper mySwiper h-full w-full">
             <div class="swiper-wrapper flex flex-nowarp scroll-smooth">
             {{#each products}}
-                <div class="swiper-slide flex-[1_0_auto] w-[200px] h-[450px]">
+                <div class="swiper-slide flex-[1_0_auto] w-[200px] h-full">
                 {{> card_product title=this.title price=this.price thumbnails=this.thumbnails }}
                 </div>
             {{/each}}
