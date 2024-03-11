@@ -16,17 +16,28 @@ router.get("/", async (req, res) => {
 router.post("/register", async (req, res) => {
 	const user = req.body;
 	try {
-		const userLogged = await UsersDAO.postUser(user);
-		if (userLogged) {
-			res
-				.status(200)
-				.json({ msg: " Se registro correctamente ", user: userLogged });
+		if (user.email !== user.reemail)
+			res.status(401).json({ error: "Los correos no coinciden" });
+		if (user.password !== user.repassword)
+			res.status(401).json({ error: "Las contraseñas no coinciden" });
+		if (await UsersDAO.getByEmail(user.email)) {
+			res.status(401).json({ error: "El correo ya esta registrado" });
 		} else {
-			res.status(401).json({ error: "Usuario o contraseña incorrectos" });
+			const userLogged = await UsersDAO.postUser({
+				username: user.username,
+				email: user.email,
+				password: user.password,
+			});
+			if (userLogged) {
+				res
+					.status(200)
+					.json({ msg: " Se registro correctamente ", user: userLogged });
+			} else {
+				res.status(401).json({ error: "No se pudo registrar el usuario" });
+			}
 		}
 	} catch (error) {
-		console.error("Error al loguear el usuario:", error);
-		res.status(500).json({ error: "Error interno del servidor" });
+		res.status(500).send({ error: "Error interno del servidor " + error });
 	}
 });
 
