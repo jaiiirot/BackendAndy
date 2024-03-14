@@ -37,7 +37,7 @@
 			</div>
 			<form
 				class="bg-white rounded-md shadow-2xl py-5 px-2 mt-8 form-login"
-				method="post"
+				method="POST"
 				action="/api/sessions/login"
 			>
 				<h1 class="text-gray-800 font-bold text-2xl mb-4">Inicia Sesion!</h1>
@@ -103,8 +103,8 @@
 			</form>
 			<form
 				class="bg-white rounded-md shadow-2xl p-5 mt-8 hidden form-register"
-				method="post"
-				action="/api/sessions/resgister/"
+				method="POST"
+				action="/api/sessions/register"
 			>
 				<h1 class="text-gray-800 font-bold text-2xl mb-4">Registrar!</h1>
 				<div class="flex items-center border-2 mb-2 py-2 px-3 rounded-2xl">
@@ -235,6 +235,7 @@
 
 	</article>
 </section>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 	const btnRegister = document.querySelector('.btn-register'); 
 	const btnLogin = document.querySelector('.btn-login');
@@ -245,6 +246,7 @@
 	}); btnLogin.addEventListener('click', () => {
 	formLogin.classList.remove('hidden'); formRegister.classList.add('hidden');
 	});
+
 	const formDataRegister = ["register-username", "register-email", "register-reemail", "register-password", "register-repassword"].map(id => document.getElementById(id));
 	const compareInput = (input1, input2) => {
 		console.log(input1.value, input2.value)
@@ -254,8 +256,67 @@
 			input1.style.border = "1px solid #e5e7eb";
 		}
 	}
+
+	const ToastNotification = (message, icon = "warning")=>{
+		const Toast = Swal.mixin({
+		toast: true,
+		position: "top-end",
+		showConfirmButton: false,
+		timer: 3000,
+		timerProgressBar: true,
+		didOpen: (toast) => {
+			toast.onmouseenter = Swal.stopTimer;
+			toast.onmouseleave = Swal.resumeTimer;
+		}
+		});
+		Toast.fire({
+		icon: icon,
+		title: message.msg
+		});
+	}
+
 	formDataRegister[1].addEventListener('input', (e) => compareInput(formDataRegister[2],e.target));
 	formDataRegister[2].addEventListener('input', (e) => compareInput(e.target, formDataRegister[1]));
 	formDataRegister[3].addEventListener('input', (e) => compareInput(formDataRegister[4],e.target));
 	formDataRegister[4].addEventListener('input', (e) => compareInput(e.target, formDataRegister[3]));
+
+	formLogin.addEventListener('submit', (e) => {
+		e.preventDefault();
+		const formData = new FormData(formLogin);
+		const data = Object.fromEntries(formData.entries());
+		let status;
+		fetch('/api/sessions/login', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		}).then(res =>{
+			res.status === 200 
+			? status = "success" 
+			: status = "warning";
+		 	return res.json()
+		}).then(data => {
+			ToastNotification(data,status)
+			if(status === "success") window.location.href = "/";
+		}).catch(err =>console.log(err));
+	});
+	formRegister.addEventListener('submit', (e) => {
+		e.preventDefault();
+		const formData = new FormData(formRegister);
+		const data = Object.fromEntries(formData.entries());
+		fetch('/api/sessions/register', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		}).then(res => {
+			res.status === 200 
+			? status = "success" 
+			: status = "warning";
+			return res.json()}).then(data => {
+			ToastNotification(data);
+		}).catch(err => console.log(err));
+	});
 </script>

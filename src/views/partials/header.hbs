@@ -10,17 +10,26 @@
             <i class="fa-solid fa-magnifying-glass"></i>
           </span>
         </div>
-        <a href="/" class="flex w-full justify-center flex-col items-center mx-auto">
+        <a href="/" class="flex w-min justify-center flex-col items-center mx-auto">
           <h1 id="title" class="font-black text-[3rem]"><span
               class="text-[#EF4444]"
             >A</span>ndy</h1>
           <p id="desc" class="text-xs font-bold">INDUMENTARIA</p>
         </a>
-        <div class="flex gap-4 relative">
+        <div class="flex gap-4 relative items-center justify-center">
+          {{#if exist_user}}
+          <div>
+          <p>{{info.username}}</p>
+          </div>
+          <a href="/logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </a>
+          {{else}}
           <a href="/login">
             <i class="fa-regular fa-user"></i>
           </a>
-          <span id="open-cart" class="cursor-pointer flex">
+          {{/if}}
+          <span id="open-cart" class="cursor-pointer flex items-center justify-center">
             <i class="fa-solid fa-bag-shopping"></i>
             <span class="count-prod-number"></span>
           </span>

@@ -14,14 +14,15 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-	const user = req.body;
 	try {
-		if (user.email !== user.reemail)
-			res.status(401).json({ error: "Los correos no coinciden" });
-		if (user.password !== user.repassword)
-			res.status(401).json({ error: "Las contraseñas no coinciden" });
-		if (await UsersDAO.getByEmail(user.email)) {
-			res.status(401).json({ error: "El correo ya esta registrado" });
+		const user = req.body;
+		console.log(user);
+		if (user.email !== user.reemail) {
+			res.status(400).json({ msg: "Los correos no coinciden" });
+		} else if (user.password !== user.repassword) {
+			res.status(400).json({ msg: "Las contraseñas no coinciden" });
+		} else if (await UsersDAO.getByEmail(user.email)) {
+			res.status(400).json({ msg: "El correo ya esta registrado" });
 		} else {
 			const userLogged = await UsersDAO.postUser({
 				username: user.username,
@@ -29,32 +30,32 @@ router.post("/register", async (req, res) => {
 				password: user.password,
 			});
 			if (userLogged) {
-				res
-					.status(200)
-					.json({ msg: " Se registro correctamente ", user: userLogged });
+				res.status(200).json({ msg: " Se registro correctamente" });
 			} else {
-				res.status(401).json({ error: "No se pudo registrar el usuario" });
+				res.status(400).json({ msg: "Error al registrar el usuario" });
 			}
 		}
 	} catch (error) {
-		res.status(500).send({ error: "Error interno del servidor " + error });
+		res.status(500).json({ msg: "Error interno del servidor" });
 	}
 });
 
 router.post("/login", async (req, res) => {
-	const user = req.body;
 	try {
-		const userLogged = await UsersDAO.getByEmailAndPassword(user);
-		if (userLogged) {
-			res
-				.status(200)
-				.json({ msg: "Se inicio Correctamente ", user: userLogged });
+		if (!req.body.email || !req.body.password) {
+			res.status(400).json({ msg: "Faltan datos" });
 		} else {
-			res.status(401).json({ error: "Usuario o contraseña incorrectos" });
+			const userLogged = await UsersDAO.getByEmailAndPassword(req.body);
+			if (userLogged) {
+				const dataUser = await UsersDAO.getById(userLogged._id);
+				req.session.user = dataUser;
+				res.status(200).json({ msg: "Usuario logueado correctamente" });
+			} else {
+				res.status(400).json({ msg: "Usuario o contraseña incorrectos" });
+			}
 		}
 	} catch (error) {
-		console.error("Error al loguear el usuario:", error);
-		res.status(500).json({ error: "Error interno del servidor" });
+		res.status(500).json({ msg: "Error interno del servidor" });
 	}
 });
 

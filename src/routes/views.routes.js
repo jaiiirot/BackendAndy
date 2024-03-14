@@ -1,13 +1,19 @@
 import ProductsDAO from "../dao/products/products.dao.js";
+import {
+	authSessionAdmin,
+	authSessionUser,
+} from "../middlewares/authsession.js";
 import CartsDAO from "../dao/carts/carts.dao.js";
 import { Router } from "express";
 const router = Router();
 
-router.get("/inicio", (req, res) => {
+router.get("/inicio", authSessionUser, (req, res) => {
 	res.redirect("/");
 });
 
-router.get("/", async (req, res) => {
+router.get("/", authSessionUser, async (req, res) => {
+	let info;
+	if (req.session.user) info = req.session.user;
 	const selectionProds = async type =>
 		await ProductsDAO.getAll({ genre: type }, { limit: 6 });
 	const products = await selectionProds("mujer");
@@ -15,14 +21,29 @@ router.get("/", async (req, res) => {
 	res.render("index", {
 		title: "Home || Andy",
 		js: "index.js",
+		exist_user: !!info,
+		info,
 		products: products.docs,
 		products_promo: productspromo.docs,
 	});
 });
+router.get("/productos/", authSessionUser, async (req, res) => {
+	let info;
+	if (req.session.user) info = req.session.user;
+	const products = await ProductsDAO.getAll({}, { limit: 20 });
+	res.render("shop", {
+		title: "Productos || Andy",
+		section_title: "PRODUCTOS",
+		products: products.docs,
+		exist_user: !!info,
+		info,
+	});
+});
 
-router.get("/productos/:section", async (req, res) => {
+router.get("/productos/:section", authSessionUser, async (req, res) => {
 	try {
-		console.log("querys:", req.query);
+		let info;
+		if (req.session.user) info = req.session.user;
 		const query = {};
 		const options = {};
 		const page = parseInt(req.query.page) || 1;
@@ -35,8 +56,6 @@ router.get("/productos/:section", async (req, res) => {
 			? (query.type = req.params.section)
 			: (query.promocion = true);
 		if (category !== "") query.category = { $in: category };
-
-		console.log("Consulta de productos:", query);
 		options.page = page;
 		options.limit = limit;
 		const paginate = await ProductsDAO.getAll(query, options);
@@ -44,6 +63,8 @@ router.get("/productos/:section", async (req, res) => {
 			title: "Productos || Andy",
 			section_title: "PRODUCTOS",
 			products: paginate.docs,
+			exist_user: !!info,
+			info,
 		});
 	} catch (error) {
 		console.error("Error al procesar la solicitud:", error);
@@ -51,22 +72,34 @@ router.get("/productos/:section", async (req, res) => {
 	}
 });
 
-router.get("/productos/:section/:id", async (req, res) => {
+router.get("/productos/:section/:id", authSessionUser, async (req, res) => {
 	try {
+		let info;
+		if (req.session.user) info = req.session.user;
 		const product = await ProductsDAO.getById(req.params.id);
 		const stockproduct = product.stock > 0;
 		const title = product.title.toLowerCase() + " || Andy";
 		if (!product) res.status(404).send({ error: "Producto no encontrado" });
-		res.render("product", { title, product, stockproduct });
+		res.render("product", {
+			title,
+			product,
+			stockproduct,
+			exist_user: !!info,
+			info,
+		});
 	} catch (error) {
 		console.error("Error al procesar la solicitud:", error);
 		res.status(500).render("404");
 	}
 });
 
-router.get("/contacto", (req, res) => {
+router.get("/contacto", authSessionUser, (req, res) => {
+	let info;
+	if (req.session.user) info = req.session.user;
 	res.render("contact", {
 		title: "Contacto || Andy",
+		exist_user: !!info,
+		info,
 	});
 });
 
@@ -79,9 +112,19 @@ router.get("/login", (req, res) => {
 		console.error("Error al procesar la solicitud:", error);
 	}
 });
-
-router.get("/carrito/:cid", async (req, res) => {
+router.get("/logout", (req, res) => {
 	try {
+		req.session.destroy();
+		res.redirect("/");
+	} catch (error) {
+		console.error("Error al procesar la solicitud:", error);
+	}
+});
+
+router.get("/carrito/:cid", authSessionUser, async (req, res) => {
+	try {
+		let info;
+		if (req.session.user) info = req.session.user;
 		const cid = req.params.cid;
 		const totalProd = await CartsDAO.getByIdPopulate(cid);
 		const products = totalProd.products.map(e => {
@@ -90,6 +133,8 @@ router.get("/carrito/:cid", async (req, res) => {
 		res.render("cart", {
 			title: "Carrito || Andy",
 			products_cart: products,
+			exist_user: !!info,
+			info,
 		});
 	} catch (error) {
 		console.error("Error al procesar la solicitud:", error);
@@ -97,16 +142,19 @@ router.get("/carrito/:cid", async (req, res) => {
 });
 
 /* PANEL */
-router.get("/panel/", async (req, res) => {
+router.get("/panel/", authSessionAdmin, async (req, res) => {
+	const info = req.session.user;
+	// console.log(info);
 	const products = await ProductsDAO.getAll();
 	res.render("admin/dashboard", {
 		title: "Dashboard || Panel",
 		products,
-		js: "dashboard.js",
+		exist_user: !!info,
+		info,
 	});
 });
 
-router.get("/panel/productos", async (req, res) => {
+router.get("/panel/productos", authSessionAdmin, async (req, res) => {
 	let products;
 	const action = req.query.action;
 
@@ -150,7 +198,7 @@ router.get("/panel/productos", async (req, res) => {
 	}
 });
 
-router.get("/panel/mensajes", async (req, res) => {
+router.get("/panel/mensajes", authSessionAdmin, async (req, res) => {
 	res.render("admin/messages_dash", {
 		title: "Mensajes || Panel",
 		messages: [],
