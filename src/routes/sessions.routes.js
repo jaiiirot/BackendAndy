@@ -1,4 +1,5 @@
 import { Router } from "express";
+import passport from "passport";
 import UsersDAO from "../dao/users/users.dao.js";
 
 const router = Router();
@@ -17,7 +18,15 @@ router.post("/register", async (req, res) => {
 	try {
 		const user = req.body;
 		console.log(user);
-		if (user.email !== user.reemail) {
+		if (
+			!user.username ||
+			!user.email ||
+			!user.reemail ||
+			!user.password ||
+			!user.repassword
+		) {
+			res.status(400).json({ msg: "Faltan datos" });
+		} else if (user.email !== user.reemail) {
 			res.status(400).json({ msg: "Los correos no coinciden" });
 		} else if (user.password !== user.repassword) {
 			res.status(400).json({ msg: "Las contraseñas no coinciden" });
@@ -69,5 +78,23 @@ router.get("/:id", async (req, res) => {
 		res.status(500).json({ error: "Error interno del servidor" });
 	}
 });
+
+router.get(
+	"/github",
+	passport.authenticate("github", { scope: ["user:email"] }),
+	async (req, res) => {
+		// Manejar errores adecuadamente
+		res.redirect("/login");
+	}
+);
+
+router.get(
+	"/githubcallback",
+	passport.authenticate("github", { failureRedirect: "/login" }),
+	async (req, res) => {
+		req.session.user = req.user;
+		res.redirect("/"); // Redireccionar al usuario a la página principal
+	}
+);
 
 export default router;

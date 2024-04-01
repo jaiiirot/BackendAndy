@@ -48,8 +48,7 @@ class UsersDAO {
 
 	async postUser(data) {
 		try {
-			console.log(data);
-			return await Users.create(data);
+			return new Users(data).save();
 		} catch (error) {
 			console.error("Error al crear un nuevo usuario:", error);
 			throw error;

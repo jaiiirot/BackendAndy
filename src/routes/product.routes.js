@@ -1,6 +1,6 @@
 import sharp from "sharp";
 import ProductsDAO from "../dao/products/products.dao.js";
-import { postCloudinary, deleteCloudinary } from "../utils/cloudinary.js";
+import { postCloudinary, deleteCloudinary } from "../config/cloudinary.js";
 import __dirname from "../utils.js";
 import fs from "fs";
 import { upload } from "../utils/upload.js";

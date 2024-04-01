@@ -90,6 +90,11 @@
 					type="submit"
 					class="block w-full bg-[#ff3737] mt-5 py-2 rounded-2xl hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2"
 				>Iniciar Sesion</button>
+				<a
+					href="/api/sessions/github"
+					type="submit"
+					class="block w-full bg-[#000] mt-5 py-2 rounded-2xl hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2 cursor-pointer text-center"
+				>GitHub</a>
 				<div class="flex justify-between mt-4 flex-wrap items-center">
 					<span
 						class="text-sm ml-2 hover:text-[#ff3737] cursor-pointer hover:-translate-y-1 duration-500 transition-all"
@@ -249,7 +254,6 @@
 
 	const formDataRegister = ["register-username", "register-email", "register-reemail", "register-password", "register-repassword"].map(id => document.getElementById(id));
 	const compareInput = (input1, input2) => {
-		console.log(input1.value, input2.value)
 		if(input1.value !== input2.value){
 			input1.style.border = "1px solid red";
 		}else{
@@ -305,6 +309,7 @@
 		e.preventDefault();
 		const formData = new FormData(formRegister);
 		const data = Object.fromEntries(formData.entries());
+		let status;
 		fetch('/api/sessions/register', {
 			method: 'POST',
 			headers: {
@@ -316,7 +321,7 @@
 			? status = "success" 
 			: status = "warning";
 			return res.json()}).then(data => {
-			ToastNotification(data);
+			ToastNotification(data,status);
 		}).catch(err => console.log(err));
 	});
 </script>

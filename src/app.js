@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
+import passport from "passport";
 import __dirname from "./utils.js";
 import routerProd from "./routes/product.routes.js";
 import routerUser from "./routes/sessions.routes.js";
@@ -11,6 +12,7 @@ import routerMessage from "./routes/message.routes.js";
 import routerViews from "./routes/views.routes.js";
 import handlebars from "express-handlebars";
 import { Server } from "socket.io";
+import { initializePassport } from "./config/passport.js";
 
 const DB_MONGO_LOCAL = "mongodb://localhost:27017/ecommerce";
 // const DB_MONGO_ATLAS = "mongodb+srv://ecommercedb:dbecommercedb@jairotecommerce.wwe0lxx.mongodb.net/ecommerce?retryWrites=true&w=majority";
@@ -33,6 +35,8 @@ app.use(
 		saveUninitialized: true,
 	})
 );
+app.use(passport.initialize());
+initializePassport();
 
 // CONFIGURACIONES
 const socket = new Server(httpServer);
