@@ -35,6 +35,7 @@ app.use(
 	})
 );
 app.use(passport.initialize());
+app.use(passport.session());
 
 // CONFIGURACIONES
 const socket = new Server(httpServer);

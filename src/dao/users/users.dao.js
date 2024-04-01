@@ -46,6 +46,15 @@ class UsersDAO {
 		}
 	}
 
+	async getByNameUserGithub(username) {
+		try {
+			return await Users.findOne({ username }).lean();
+		} catch (error) {
+			console.error("Error al obtener usuario por nombre de usuario:", error);
+			throw error;
+		}
+	}
+
 	async postUser(data) {
 		try {
 			return new Users(data).save();

@@ -1,18 +1,9 @@
 import { Router } from "express";
 import passport from "passport";
 import UsersDAO from "../dao/users/users.dao.js";
+import { hashPassword, comparePassword } from "../config/crypt.js";
 
 const router = Router();
-
-router.get("/", async (req, res) => {
-	try {
-		const users = await UsersDAO.getAll();
-		res.status(200).json(users);
-	} catch (error) {
-		console.error("Error al obtener todos los usuarios:", error);
-		res.status(500).json({ error: "Error interno del servidor" });
-	}
-});
 
 router.post("/register", async (req, res) => {
 	try {
@@ -36,7 +27,7 @@ router.post("/register", async (req, res) => {
 			const userLogged = await UsersDAO.postUser({
 				username: user.username,
 				email: user.email,
-				password: user.password,
+				password: hashPassword(user.password),
 			});
 			if (userLogged) {
 				res.status(200).json({ msg: " Se registro correctamente" });
@@ -54,10 +45,9 @@ router.post("/login", async (req, res) => {
 		if (!req.body.email || !req.body.password) {
 			res.status(400).json({ msg: "Faltan datos" });
 		} else {
-			const userLogged = await UsersDAO.getByEmailAndPassword(req.body);
-			if (userLogged) {
-				const dataUser = await UsersDAO.getById(userLogged._id);
-				req.session.user = dataUser;
+			const userLogged = await UsersDAO.getByEmail(req.body.email);
+			if (userLogged && comparePassword(userLogged, req.body.password)) {
+				req.session.user = userLogged;
 				res.status(200).json({ msg: "Usuario logueado correctamente" });
 			} else {
 				res.status(400).json({ msg: "Usuario o contraseña incorrectos" });
@@ -68,32 +58,28 @@ router.post("/login", async (req, res) => {
 	}
 });
 
-router.get("/:id", async (req, res) => {
-	const id = req.params.id;
+router.get("/logout", (req, res) => {
 	try {
-		const user = await UsersDAO.getById(id);
-		res.status(200).json(user);
+		req.session.destroy();
+		res.redirect("/");
 	} catch (error) {
-		console.error("Error al obtener el usuario:", error);
-		res.status(500).json({ error: "Error interno del servidor" });
+		console.error("Error al procesar la solicitud:", error);
 	}
 });
 
 router.get(
-	"/github",
+	"/auth/github",
 	passport.authenticate("github", { scope: ["user:email"] }),
-	async (req, res) => {
-		// Manejar errores adecuadamente
-		res.redirect("/login");
-	}
+	async (req, res) => {}
 );
 
 router.get(
-	"/githubcallback",
+	"/auth/github/callback",
 	passport.authenticate("github", { failureRedirect: "/login" }),
-	async (req, res) => {
+	function (req, res) {
 		req.session.user = req.user;
-		res.redirect("/"); // Redireccionar al usuario a la página principal
+		console.log(req.user);
+		res.redirect("/");
 	}
 );
 

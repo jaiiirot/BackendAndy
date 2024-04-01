@@ -112,14 +112,6 @@ router.get("/login", (req, res) => {
 		console.error("Error al procesar la solicitud:", error);
 	}
 });
-router.get("/logout", (req, res) => {
-	try {
-		req.session.destroy();
-		res.redirect("/");
-	} catch (error) {
-		console.error("Error al procesar la solicitud:", error);
-	}
-});
 
 router.get("/carrito/:cid", authSessionUser, async (req, res) => {
 	try {

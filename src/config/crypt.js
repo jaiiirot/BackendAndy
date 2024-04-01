@@ -6,7 +6,7 @@ export const hashPassword = password => {
 	return bcrypt.hashSync(password, salt);
 };
 
-export const comparePassword = (password, hash) => {
-	return bcrypt.compareSync(password, hash);
+export const comparePassword = (user, password) => {
+	return bcrypt.compareSync(password, user.password);
 };
 // Path: src/utils/cloudinary.js
