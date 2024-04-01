@@ -14,7 +14,8 @@ import { Server } from "socket.io";
 import passport from "./config/passport.js";
 
 const DB_MONGO_LOCAL = "mongodb://localhost:27017/ecommerce";
-// const DB_MONGO_ATLAS = "mongodb+srv://ecommercedb:dbecommercedb@jairotecommerce.wwe0lxx.mongodb.net/ecommerce?retryWrites=true&w=majority";
+const DB_MONGO_ATLAS =
+	"mongodb+srv://ecommercedb:dbecommercedb@jairotecommerce.wwe0lxx.mongodb.net/ecommerce?retryWrites=true&w=majority";
 
 const app = express();
 const httpServer = app.listen(8080, () => {
@@ -57,7 +58,7 @@ app.use((req, res, next) => {
 
 // jhon@gmail.com --> contraseña: jhon --> admin
 // MONGOOSE
-mongoose.connect(DB_MONGO_LOCAL);
+mongoose.connect(DB_MONGO_ATLAS);
 
 // SOCKET IO
 const messages = [];
