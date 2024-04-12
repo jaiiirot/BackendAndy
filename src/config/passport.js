@@ -1,6 +1,7 @@
 import UsersDAO from "../dao/users/users.dao.js";
 import passport from "passport";
 import GitHubStrategy from "passport-github2";
+import { Strategy } from "passport-jwt";
 
 passport.serializeUser(function (user, done) {
 	done(null, user);
@@ -9,6 +10,32 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (obj, done) {
 	done(null, obj);
 });
+
+passport.use(
+	"jwt",
+	new Strategy(
+		{
+			jwtFromRequest: req => {
+				let token = null;
+				if (req && req.signedCookies) {
+					token = req.signedCookies.jwt;
+				}
+				return token;
+			},
+			secretOrKey: "JhonJairoTumiri",
+		},
+		async function (jwtPayload, done) {
+			const userId = jwtPayload.id;
+			const user = await UsersDAO.getById(userId);
+
+			if (user) {
+				return done(null, user);
+			} else {
+				return done(null, false);
+			}
+		}
+	)
+);
 
 passport.use(
 	"github",

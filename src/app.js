@@ -11,6 +11,7 @@ import routerMessage from "./routes/message.routes.js";
 import routerViews from "./routes/views.routes.js";
 import handlebars from "express-handlebars";
 import { Server } from "socket.io";
+import { initialSocket } from "./utils/socket.js"; 
 import passport from "./config/passport.js";
 
 const DB_MONGO_LOCAL = "mongodb://localhost:27017/ecommerce";
@@ -40,6 +41,7 @@ app.use(passport.session());
 
 // CONFIGURACIONES
 const socket = new Server(httpServer);
+initialSocket(socket);
 app.set("views", `${__dirname}/views`);
 app.engine(".hbs", handlebars.engine({ extname: ".hbs" }));
 app.set("view engine", ".hbs");
@@ -56,17 +58,16 @@ app.use((req, res, next) => {
 	res.status(404).render("404", { title: "404 || Palermo" });
 });
 
-// jhon@gmail.com --> contraseña: jhon --> admin
 // MONGOOSE
 mongoose.connect(DB_MONGO_ATLAS);
 
-// SOCKET IO
-const messages = [];
-socket.on("connection", io => {
-	console.log("New user connected");
-	io.on("input_chat", data => {
-		console.log(io);
-		messages.push(data);
-		socket.emit("container_chat", messages);
-	});
-});
+// // SOCKET IO
+// const messages = [];
+// socket.on("connection", io => {
+// 	console.log("New user connected");
+// 	io.on("input_chat", data => {
+// 		console.log(io);
+// 		messages.push(data);
+// 		socket.emit("container_chat", messages);
+// 	});
+// });

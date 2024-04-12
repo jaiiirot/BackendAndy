@@ -1,4 +1,5 @@
 import { Router } from "express";
+import jwt from "jsonwebtoken";
 import passport from "passport";
 import UsersDAO from "../dao/users/users.dao.js";
 import { hashPassword, comparePassword } from "../config/crypt.js";
@@ -47,8 +48,19 @@ router.post("/login", async (req, res) => {
 		} else {
 			const userLogged = await UsersDAO.getByEmail(req.body.email);
 			if (userLogged && comparePassword(userLogged, req.body.password)) {
-				req.session.user = userLogged;
-				res.status(200).json({ msg: "Usuario logueado correctamente" });
+				// req.session.user = userLogged;
+				// res.status(200).json({ msg: "Usuario logueado correctamente" });
+				const token = jwt.sign({ id: userLogged._id }, "JhonJairoTumiri", {
+					expiresIn: "1h",
+				});
+				console.log(token);
+				res
+					.cookie("jwt", token, {
+						signed: true,
+						httpOnly: true,
+						maxAge: 1000 * 60 * 60,
+					})
+					.json({ status: 200, msg: "Usuario logueado correctamente" });
 			} else {
 				res.status(400).json({ msg: "Usuario o contraseña incorrectos" });
 			}
@@ -61,6 +73,7 @@ router.post("/login", async (req, res) => {
 router.get("/logout", (req, res) => {
 	try {
 		req.session.destroy();
+		req.clearCookie("jwt");
 		res.redirect("/");
 	} catch (error) {
 		console.error("Error al procesar la solicitud:", error);
@@ -80,6 +93,14 @@ router.get(
 		req.session.user = req.user;
 		console.log(req.user);
 		res.redirect("/");
+	}
+);
+
+router.post(
+	"/auth/current",
+	passport.authenticate("jwt", { session: false }),
+	function (req, res) {
+		res.json(req.user);
 	}
 );
 
