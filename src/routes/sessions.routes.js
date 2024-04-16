@@ -73,7 +73,7 @@ router.post("/login", async (req, res) => {
 router.get("/logout", (req, res) => {
 	try {
 		req.session.destroy();
-		req.clearCookie("jwt");
+		res.clearCookie("jwt");
 		res.redirect("/");
 	} catch (error) {
 		console.error("Error al procesar la solicitud:", error);
@@ -87,7 +87,7 @@ router.get(
 );
 
 router.get(
-	"/auth/github/callback", 
+	"/auth/github/callback",
 	passport.authenticate("github", { failureRedirect: "/login" }),
 	function (req, res) {
 		req.session.user = req.user;
