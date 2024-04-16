@@ -11,6 +11,8 @@ export const authSessionAdmin = (req, res, next) => {
 };
 
 export const authSessionUser = (req, res, next) => {
+	console.log(req.user);
+	// console.log(req.signedCookies.jwt);
 	if (req.user) {
 		if (!req.user.admin) {
 			next();

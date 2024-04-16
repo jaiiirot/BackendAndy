@@ -11,7 +11,7 @@ import routerMessage from "./routes/message.routes.js";
 import routerViews from "./routes/views.routes.js";
 import handlebars from "express-handlebars";
 import { Server } from "socket.io";
-import { initialSocket } from "./utils/socket.js"; 
+import { initialSocket } from "./utils/socket.js";
 import passport from "./config/passport.js";
 
 const DB_MONGO_LOCAL = "mongodb://localhost:27017/ecommerce";
@@ -60,14 +60,3 @@ app.use((req, res, next) => {
 
 // MONGOOSE
 mongoose.connect(DB_MONGO_ATLAS);
-
-// // SOCKET IO
-// const messages = [];
-// socket.on("connection", io => {
-// 	console.log("New user connected");
-// 	io.on("input_chat", data => {
-// 		console.log(io);
-// 		messages.push(data);
-// 		socket.emit("container_chat", messages);
-// 	});
-// });

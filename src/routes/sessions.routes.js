@@ -87,7 +87,7 @@ router.get(
 );
 
 router.get(
-	"/auth/github/callback",
+	"/auth/github/callback", 
 	passport.authenticate("github", { failureRedirect: "/login" }),
 	function (req, res) {
 		req.session.user = req.user;
@@ -96,7 +96,7 @@ router.get(
 	}
 );
 
-router.post(
+router.get(
 	"/auth/current",
 	passport.authenticate("jwt", { session: false }),
 	function (req, res) {
