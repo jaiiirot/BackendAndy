@@ -1,17 +1,16 @@
 import ProductsDAO from "../dao/products.dao.js";
-import { authSession } from "../middlewares/authsession.js";
-// import passport from "../config/passport.config.js";
 import CartsDAO from "../dao/carts.dao.js";
+import { authenticateJWT, authRole } from "../middlewares/authsession.js";
 import { Router } from "express";
 const router = Router();
 
-router.get("/inicio", authSession, (req, res) => {
-	res.redirect("/");
+router.get("/", (req, res) => {
+	res.redirect("/login");
 });
 
-router.get("/", authSession, async (req, res) => {
-	let info;
-	req.session.user ? (info = req.session.user) : (info = req.user);
+router.get("/home", authenticateJWT, async (req, res) => {
+	const info = { username: req.user.username, cart: req.user.cart.cid };
+	req.session.user = req.user._id;
 
 	const products = await ProductsDAO.getAll({}, { limit: 20 });
 	res.render("index", {
@@ -22,9 +21,10 @@ router.get("/", authSession, async (req, res) => {
 		products: products.docs,
 	});
 });
-router.get("/productos/", authSession, async (req, res) => {
-	let info;
-	if (req.session.user) info = req.session.user;
+router.get("/productos/", authenticateJWT, async (req, res) => {
+	const info = { username: req.user.username, cart: req.user.cart.cid };
+	req.session.user = req.user._id;
+
 	const products = await ProductsDAO.getAll({}, { limit: 20 });
 	res.render("shop", {
 		title: "Productos || Andy",
@@ -35,10 +35,11 @@ router.get("/productos/", authSession, async (req, res) => {
 	});
 });
 
-router.get("/productos/:section", authSession, async (req, res) => {
+router.get("/productos/:section", authenticateJWT, async (req, res) => {
 	try {
-		let info;
-		if (req.session.user) info = req.session.user;
+		const info = { username: req.user.username, cart: req.user.cart.cid };
+		req.session.user = req.user._id;
+
 		const query = {};
 		const options = {};
 		const page = parseInt(req.query.page) || 1;
@@ -67,10 +68,11 @@ router.get("/productos/:section", authSession, async (req, res) => {
 	}
 });
 
-router.get("/productos/:section/:id", authSession, async (req, res) => {
+router.get("/productos/:section/:id", authenticateJWT, async (req, res) => {
 	try {
-		let info;
-		if (req.session.user) info = req.session.user;
+		const info = { username: req.user.username, cart: req.user.cart.cid };
+		req.session.user = req.user._id;
+
 		const product = await ProductsDAO.getById(req.params.id);
 		const stockproduct = product.stock > 0;
 		const title = product.title.toLowerCase() + " || Andy";
@@ -88,9 +90,10 @@ router.get("/productos/:section/:id", authSession, async (req, res) => {
 	}
 });
 
-router.get("/contacto", authSession, (req, res) => {
-	let info;
-	if (req.session.user) info = req.session.user;
+router.get("/contacto", authenticateJWT, (req, res) => {
+	const info = { username: req.user.username, cart: req.user.cart.cid };
+	req.session.user = req.user._id;
+
 	res.render("contact", {
 		title: "Contacto || Andy",
 		exist_user: !!info,
@@ -108,10 +111,11 @@ router.get("/login", (req, res) => {
 	}
 });
 
-router.get("/carrito/:cid", authSession, async (req, res) => {
+router.get("/carrito/:cid", authenticateJWT, async (req, res) => {
 	try {
-		let info;
-		if (req.session.user) info = req.session.user;
+		const info = { username: req.user.username, cart: req.user.cart.cid };
+		req.session.user = req.user._id;
+
 		const cid = req.params.cid;
 		const totalProd = await CartsDAO.getByIdPopulate(cid);
 		const products = totalProd.products.map(e => {
@@ -129,9 +133,10 @@ router.get("/carrito/:cid", authSession, async (req, res) => {
 });
 
 /* PANEL */
-router.get("/panel/", authSession, async (req, res) => {
-	const info = req.session.user;
-	// console.log(info);
+router.get("/panel/", authenticateJWT, authRole, async (req, res) => {
+	const info = { username: req.user.username, cart: req.user.cart.cid };
+	req.session.user = req.user._id;
+
 	const products = await ProductsDAO.getAll();
 	res.render("admin/dashboard", {
 		title: "Dashboard || Panel",
@@ -141,7 +146,7 @@ router.get("/panel/", authSession, async (req, res) => {
 	});
 });
 
-router.get("/panel/productos", authSession, async (req, res) => {
+router.get("/panel/productos", authenticateJWT, authRole, async (req, res) => {
 	let products;
 	const action = req.query.action;
 
@@ -185,7 +190,7 @@ router.get("/panel/productos", authSession, async (req, res) => {
 	}
 });
 
-router.get("/panel/mensajes", authSession, async (req, res) => {
+router.get("/panel/mensajes", authenticateJWT, authRole, async (req, res) => {
 	res.render("admin/messages_dash", {
 		title: "Mensajes || Panel",
 		messages: [],

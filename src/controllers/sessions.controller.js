@@ -70,22 +70,28 @@ const logout = async (req, res) => {
 	try {
 		req.session.destroy();
 		res.clearCookie("jwt");
-		res.redirect("/");
+		res.redirect("/login");
 	} catch (error) {
 		console.error("Error al procesar la solicitud:", error);
 	}
 };
 
 const authGitHub = async (req, res) => {
-	// console.log(req.session);
 	console.log("authGitHub");
 };
 
 const authGitHubCallback = (req, res) => {
 	console.log("authGitHubCallback");
-	req.session.user = req.user;
-	console.log(req.user);
-	res.redirect("/");
+	const token = jwt.sign({ id: req.user._id }, SECRET_SESSION, {
+		expiresIn: "1h",
+	});
+	res
+		.cookie("jwt", token, {
+			signed: true,
+			httpOnly: true,
+			maxAge: 1000 * 60 * 60,
+		})
+		.redirect("/home");
 };
 
 export const controllersSessions = {

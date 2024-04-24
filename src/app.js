@@ -18,16 +18,8 @@ import passport from "./config/passport.config.js";
 import { initialSocket } from "./config/socket.js";
 import { ENV } from "./config/config.js";
 
-const {
-	PORT,
-	DB_LOCAL,
-	//	DB_ATLAS,
-	SECRET_COOKIE,
-	TTL,
-	SECRET_SESSION,
-} = ENV;
-
-STARTAPP(PORT, DB_LOCAL, SECRET_COOKIE, TTL, SECRET_SESSION);
+const { PORT, DB_MONGO, SECRET_COOKIE, TTL, SECRET_SESSION } = ENV;
+STARTAPP(PORT, DB_MONGO, SECRET_COOKIE, TTL, SECRET_SESSION);
 
 function STARTAPP(PORT, DATABASE, SECRET_COOKIE, TTL, SECRET_SESSION) {
 	const app = express();

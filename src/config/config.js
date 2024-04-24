@@ -3,9 +3,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const ENV = {
-	PORT: process.env.PORT,
-	DB_ATLAS: process.env.DB_MONGO_ATLAS,
-	DB_LOCAL: process.env.DB_MONGO_LOCAL,
+	PORT: process.env.PORT || 8080,
+	DB_MONGO: process.env.DB_MONGO_ATLAS || 'mongodb://localhost:27017/ecommerce',
 	SECRET_COOKIE: process.env.SECRET_COOKIE,
 	SECRET_SESSION: process.env.SECRET_SESSION,
 	TTL: process.env.TTL,

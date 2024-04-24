@@ -8,14 +8,13 @@ const { SECRET_COOKIE } = ENV;
 const { CLIENT_ID, CLIENT_SECRET, CALLBACK_URL } = ENV.GITHUB;
 
 passport.serializeUser((user, done) => {
-	// console.log("Serialize:", user);
+	console.log("Estoy en serializeUser");
 	done(null, user._id);
 });
 
-passport.deserializeUser((obj, done) => {
-	// console.log("Deserialize:", obj);
-	// console.log("Done:", done);
-	done(null, obj);
+passport.deserializeUser((user, done) => {
+	console.log("Estoy en deserializeUser");
+	done(null, user);
 });
 
 passport.use(
@@ -34,7 +33,7 @@ passport.use(
 		async function (jwtPayload, done) {
 			const userId = jwtPayload.id;
 			const user = await UsersDAO.getById(userId);
-			console.log("User:", user);
+			// console.log("User:", user);
 			if (user) {
 				return done(null, user);
 			} else {
@@ -43,6 +42,7 @@ passport.use(
 		}
 	)
 );
+
 passport.use(
 	"github",
 	new GitHubStrategy(
