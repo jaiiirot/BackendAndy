@@ -1,3 +1,4 @@
+import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
 import session from "express-session";
@@ -38,6 +39,7 @@ function STARTAPP(PORT, DATABASE, SECRET_COOKIE, TTL, SECRET_SESSION) {
 	app.use(express.urlencoded({ extended: true }));
 	app.use(express.static(`${__dirname}/public`));
 	app.use(express.json());
+	app.use(cors());
 	app.use(cookieParser(SECRET_COOKIE));
 	app.use(
 		session({
