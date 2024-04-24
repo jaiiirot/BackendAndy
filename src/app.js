@@ -8,11 +8,11 @@ import handlebars from "express-handlebars";
 import { Server } from "socket.io";
 import __dirname from "./utils.js";
 
+import routerViews from "./routes/views.routes.js";
 import routerProd from "./routes/product.routes.js";
 import routerUser from "./routes/sessions.routes.js";
 import routerCart from "./routes/cart.routes.js";
 import routerMessage from "./routes/message.routes.js";
-import routerViews from "./routes/views.routes.js";
 
 import passport from "./config/passport.config.js";
 import { initialSocket } from "./config/socket.js";
