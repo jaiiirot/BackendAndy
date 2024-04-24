@@ -1,33 +1,28 @@
-import ProductsDAO from "../dao/products/products.dao.js";
-import {
-	authSessionAdmin,
-	authSessionUser,
-} from "../middlewares/authsession.js";
-import CartsDAO from "../dao/carts/carts.dao.js";
+import ProductsDAO from "../dao/products.dao.js";
+import { authSession } from "../middlewares/authsession.js";
+// import passport from "../config/passport.config.js";
+import CartsDAO from "../dao/carts.dao.js";
 import { Router } from "express";
 const router = Router();
 
-router.get("/inicio", authSessionUser, (req, res) => {
+router.get("/inicio", authSession, (req, res) => {
 	res.redirect("/");
 });
 
-router.get("/", authSessionUser, async (req, res) => {
+router.get("/", authSession, async (req, res) => {
 	let info;
-	if (req.session.user) info = req.session.user;
-	const selectionProds = async type =>
-		await ProductsDAO.getAll({ genre: type }, { limit: 6 });
-	const products = await selectionProds("mujer");
-	const productspromo = await selectionProds("hombre");
+	req.session.user ? (info = req.session.user) : (info = req.user);
+
+	const products = await ProductsDAO.getAll({}, { limit: 20 });
 	res.render("index", {
 		title: "Home || Andy",
 		js: "index.js",
 		exist_user: !!info,
 		info,
 		products: products.docs,
-		products_promo: productspromo.docs,
 	});
 });
-router.get("/productos/", authSessionUser, async (req, res) => {
+router.get("/productos/", authSession, async (req, res) => {
 	let info;
 	if (req.session.user) info = req.session.user;
 	const products = await ProductsDAO.getAll({}, { limit: 20 });
@@ -40,7 +35,7 @@ router.get("/productos/", authSessionUser, async (req, res) => {
 	});
 });
 
-router.get("/productos/:section", authSessionUser, async (req, res) => {
+router.get("/productos/:section", authSession, async (req, res) => {
 	try {
 		let info;
 		if (req.session.user) info = req.session.user;
@@ -72,7 +67,7 @@ router.get("/productos/:section", authSessionUser, async (req, res) => {
 	}
 });
 
-router.get("/productos/:section/:id", authSessionUser, async (req, res) => {
+router.get("/productos/:section/:id", authSession, async (req, res) => {
 	try {
 		let info;
 		if (req.session.user) info = req.session.user;
@@ -93,7 +88,7 @@ router.get("/productos/:section/:id", authSessionUser, async (req, res) => {
 	}
 });
 
-router.get("/contacto", authSessionUser, (req, res) => {
+router.get("/contacto", authSession, (req, res) => {
 	let info;
 	if (req.session.user) info = req.session.user;
 	res.render("contact", {
@@ -113,7 +108,7 @@ router.get("/login", (req, res) => {
 	}
 });
 
-router.get("/carrito/:cid", authSessionUser, async (req, res) => {
+router.get("/carrito/:cid", authSession, async (req, res) => {
 	try {
 		let info;
 		if (req.session.user) info = req.session.user;
@@ -134,7 +129,7 @@ router.get("/carrito/:cid", authSessionUser, async (req, res) => {
 });
 
 /* PANEL */
-router.get("/panel/", authSessionAdmin, async (req, res) => {
+router.get("/panel/", authSession, async (req, res) => {
 	const info = req.session.user;
 	// console.log(info);
 	const products = await ProductsDAO.getAll();
@@ -146,7 +141,7 @@ router.get("/panel/", authSessionAdmin, async (req, res) => {
 	});
 });
 
-router.get("/panel/productos", authSessionAdmin, async (req, res) => {
+router.get("/panel/productos", authSession, async (req, res) => {
 	let products;
 	const action = req.query.action;
 
@@ -190,7 +185,7 @@ router.get("/panel/productos", authSessionAdmin, async (req, res) => {
 	}
 });
 
-router.get("/panel/mensajes", authSessionAdmin, async (req, res) => {
+router.get("/panel/mensajes", authSession, async (req, res) => {
 	res.render("admin/messages_dash", {
 		title: "Mensajes || Panel",
 		messages: [],

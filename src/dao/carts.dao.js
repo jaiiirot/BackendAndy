@@ -1,4 +1,4 @@
-import { Carts } from "./carts.schema.js";
+import { Carts } from "../schemas/carts.schema.js";
 class CartsDAO {
 	static async getAll() {
 		try {

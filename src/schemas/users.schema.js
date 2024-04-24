@@ -8,7 +8,6 @@ const userSchema = new mongoose.Schema({
 	password: { type: String, required: false },
 	age: { type: Number, required: false },
 	cart: {
-		type: Array,
 		cid: { type: mongoose.Schema.Types.ObjectId, ref: "carts" },
 	},
 	admin: { type: Boolean, default: false },

@@ -95,7 +95,7 @@
 <script>
   const params_pid = window.location.pathname.split('/').pop();
   const push_cart = async () => {
-    const response = await fetch(`/api/carts/65e7c75978c4d52a933fd9ef/productos/${params_pid}`, {
+    const response = await fetch(`/api/carts/${container_cart.dataset.cid}/productos/${params_pid}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -107,7 +107,6 @@
     })
     console.log(response)
     if(response.ok){
-      const data = await response.json();
       Swal.fire({
         title: 'Producto agregado al carrito',
         icon: 'success',

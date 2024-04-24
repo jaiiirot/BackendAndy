@@ -1,9 +1,11 @@
 import { v2 as cloudinary } from "cloudinary";
+import { ENV } from "./config.js";
 
+const { CLOUD_NAME, API_KEY, API_SECRET } = ENV.CLOUDINARY;
 cloudinary.config({
-	cloud_name: "dcj0jbxcr",
-	api_key: "798346187113546",
-	api_secret: "aVZr91EnmRWjIgYSrswLTdYSIRo",
+	cloud_name: CLOUD_NAME,
+	api_key: API_KEY,
+	api_secret: API_SECRET,
 });
 
 export const postCloudinary = async urlFile => {

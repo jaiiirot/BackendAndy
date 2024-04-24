@@ -9,4 +9,3 @@ export const hashPassword = password => {
 export const comparePassword = (user, password) => {
 	return bcrypt.compareSync(password, user.password);
 };
-// Path: src/utils/cloudinary.js

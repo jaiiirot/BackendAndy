@@ -1,13 +1,20 @@
-import UsersDAO from "../dao/users/users.dao.js";
+import UsersDAO from "../dao/users.dao.js";
 import passport from "passport";
 import GitHubStrategy from "passport-github2";
 import { Strategy } from "passport-jwt";
+import { ENV } from "./config.js";
 
-passport.serializeUser(function (user, done) {
-	done(null, user);
+const { SECRET_COOKIE } = ENV;
+const { CLIENT_ID, CLIENT_SECRET, CALLBACK_URL } = ENV.GITHUB;
+
+passport.serializeUser((user, done) => {
+	// console.log("Serialize:", user);
+	done(null, user._id);
 });
 
-passport.deserializeUser(function (obj, done) {
+passport.deserializeUser((obj, done) => {
+	// console.log("Deserialize:", obj);
+	// console.log("Done:", done);
 	done(null, obj);
 });
 
@@ -22,12 +29,12 @@ passport.use(
 				}
 				return token;
 			},
-			secretOrKey: "JhonJairoTumiri",
+			secretOrKey: SECRET_COOKIE,
 		},
 		async function (jwtPayload, done) {
 			const userId = jwtPayload.id;
 			const user = await UsersDAO.getById(userId);
-
+			console.log("User:", user);
 			if (user) {
 				return done(null, user);
 			} else {
@@ -36,23 +43,22 @@ passport.use(
 		}
 	)
 );
-
 passport.use(
 	"github",
 	new GitHubStrategy(
 		{
-			clientID: "Iv1.fb9e8938b0739791",
-			clientSecret: "e3f1c132f04b4047c476e43394648743ccbe294e",
-			callbackURL: "http://localhost:8080/api/sessions/auth/github/callback",
+			clientID: CLIENT_ID,
+			clientSecret: CLIENT_SECRET,
+			callbackURL: CALLBACK_URL,
 		},
 		async (accessToken, refreshToken, profile, done) => {
 			try {
-				console.log("Profile:", profile);
+				// console.log("Profile:", profile);
 				const user = await UsersDAO.getByNameUserGithub(profile._json.name);
 				if (!user) {
 					const newUser = await UsersDAO.postUser({
 						username: profile._json.name,
-						email: "",
+						email: profile._json.email,
 						password: "",
 					});
 					done(null, newUser);

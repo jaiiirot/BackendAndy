@@ -1,19 +1,19 @@
-import CartsController from '../dao/carts/carts.controller.js'
-import { Router } from 'express'
-const router = Router()
+import { controllersCarts } from "../controllers/carts.controller.js";
+import { Router } from "express";
+const router = Router();
 
 // ALL
-router.get('/', CartsController.getAllCarts)
-router.post('/', CartsController.postCreateCart)
+router.get("/", controllersCarts.getAllCarts);
+router.post("/", controllersCarts.postCreateCart);
 
 // ID CART
-router.get('/:cid', CartsController.getCartById)
-router.put('/:cid', CartsController.putUpdateCart)
-router.delete('/:cid', CartsController.deleteCart)
+router.get("/:cid", controllersCarts.getCartById);
+router.put("/:cid", controllersCarts.putUpdateCart);
+router.delete("/:cid", controllersCarts.deleteCart);
 
 // ID CART - ID PRODUCT
-router.post('/:cid/productos/:pid', CartsController.postAddProductToCart)
-router.put('/:cid/productos/:pid', CartsController.putUpdateProductInCart)
-router.delete('/:cid/productos/:pid', CartsController.deleteProductFromCart)
+router.post("/:cid/productos/:pid", controllersCarts.postAddProductToCart);
+router.put("/:cid/productos/:pid", controllersCarts.putUpdateProductInCart);
+router.delete("/:cid/productos/:pid", controllersCarts.deleteProductFromCart);
 
-export default router
+export default router;

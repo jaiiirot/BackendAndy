@@ -1,4 +1,4 @@
-import CartsDAO from "./carts.dao.js";
+import CartsDAO from "../dao/carts.dao.js";
 
 const getAllCarts = async (req, res) => {
 	const carts = await CartsDAO.getAll();
@@ -71,7 +71,7 @@ const deleteProductFromCart = async (req, res) => {
 	}
 };
 
-export default {
+export const controllersCarts = {
 	getAllCarts,
 	getCartById,
 	postCreateCart,
