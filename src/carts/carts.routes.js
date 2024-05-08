@@ -1,4 +1,4 @@
-import { controllersCarts } from "../controllers/carts.controller.js";
+import { controllersCarts } from "./carts.controller.js";
 import { Router } from "express";
 const router = Router();
 

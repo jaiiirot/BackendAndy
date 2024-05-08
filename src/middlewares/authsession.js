@@ -1,4 +1,4 @@
-import passport from "../config/passport.config.js";
+import passport from "../service/passport.js";
 
 export const authenticateJWT = passport.authenticate("jwt", { session: false });
 

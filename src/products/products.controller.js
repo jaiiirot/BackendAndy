@@ -1,8 +1,8 @@
 import sharp from "sharp";
-import ProductsDAO from "../dao/products.dao.js";
-import { postCloudinary, deleteCloudinary } from "../config/cloudinary.js";
+import ProductsDAO from "./products.dao.js";
+import { postCloudinary, deleteCloudinary } from "../service/cloudinary.js";
 import fs from "fs";
-import __dirname from "../utils.js";
+import __dirname from "../utils/utils.js";
 
 const postImages = async (req, res) => {
 	try {

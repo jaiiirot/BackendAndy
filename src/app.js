@@ -6,16 +6,16 @@ import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
 import handlebars from "express-handlebars";
 import { Server } from "socket.io";
-import __dirname from "./utils.js";
+import __dirname from "./utils/utils.js";
 
-import routerViews from "./routes/views.routes.js";
-import routerProd from "./routes/product.routes.js";
-import routerUser from "./routes/sessions.routes.js";
-import routerCart from "./routes/cart.routes.js";
-import routerMessage from "./routes/message.routes.js";
+import routerViews from "./handlebars/views.routes.js";
+import routerProd from "./products/products.routes.js";
+import routerUser from "./users/sessions.routes.js";
+import routerCart from "./carts/carts.routes.js";
+import routerMessage from "./messages/messages.routes.js";
 
-import passport from "./config/passport.config.js";
-import { initialSocket } from "./config/socket.js";
+import passport from "./service/passport.js";
+import { initialSocket } from "./service/socket.js";
 import { ENV } from "./config/config.js";
 
 const { PORT, DB_MONGO, SECRET_COOKIE, TTL, SECRET_SESSION } = ENV;
@@ -48,6 +48,7 @@ function STARTAPP(PORT, DATABASE, SECRET_COOKIE, TTL, SECRET_SESSION) {
 	app.set("views", `${__dirname}/views`);
 	app.engine(".hbs", handlebars.engine({ extname: ".hbs" }));
 	app.set("view engine", ".hbs");
+
 	// ROUTES
 	app.use("/", routerViews);
 	app.use("/api/products", routerProd);

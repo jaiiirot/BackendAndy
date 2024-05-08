@@ -1,5 +1,5 @@
-import { Users } from "../schemas/users.schema.js";
-import CartsDAO from "./carts.dao.js";
+import { Users } from "./users.schema.js";
+import CartsDAO from "../carts/carts.dao.js";
 
 class UsersDAO {
 	async getAll() {

@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import UsersDAO from "../dao/users.dao.js";
-import { hashPassword, comparePassword } from "../config/crypt.js";
+import UsersDAO from "./users.dao.js";
+import { hashPassword, comparePassword } from "../service/crypt.js";
 import { ENV } from "../config/config.js";
 
 const { SECRET_SESSION } = ENV;

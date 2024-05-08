@@ -1,4 +1,4 @@
-import { controllersProducts } from "../controllers/products.controller.js";
+import { controllersProducts } from "./products.controller.js";
 import { upload } from "../utils/upload.js";
 import express from "express";
 const router = express.Router();

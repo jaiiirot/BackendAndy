@@ -1,4 +1,4 @@
-import Products from "../schemas/products.schema.js";
+import Products from "./products.schema.js";
 
 class ProductsDAO {
 	static async getAll(query, options) {

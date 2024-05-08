@@ -1,5 +1,5 @@
-import ProductsDAO from "../dao/products.dao.js";
-import CartsDAO from "../dao/carts.dao.js";
+import ProductsDAO from "../products/products.dao.js";
+import CartsDAO from "../carts/carts.dao.js";
 import { authenticateJWT, authRole } from "../middlewares/authsession.js";
 import { Router } from "express";
 const router = Router();

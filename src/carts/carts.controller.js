@@ -1,4 +1,4 @@
-import CartsDAO from "../dao/carts.dao.js";
+import CartsDAO from "./carts.dao.js";
 
 const getAllCarts = async (req, res) => {
 	const carts = await CartsDAO.getAll();

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import passport from "../config/passport.config.js";
-import { controllersSessions } from "../controllers/sessions.controller.js";
+import passport from "../service/passport.js";
+import { controllersSessions } from "./sessions.controller.js";
 
 const router = Router();
 
