@@ -22,7 +22,6 @@ export const postCloudinary = async urlFile => {
 export const deleteCloudinary = async urlFile => {
 	try {
 		const pathUrl = urlFile.split("/").pop().split(".").shift();
-		// console.log(urlFile, pathUrl);
 		const response = await cloudinary.uploader.destroy(`ecommerce/${pathUrl}`);
 		return { msg: "Imagen eliminada", response };
 	} catch (error) {
