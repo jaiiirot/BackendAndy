@@ -2,6 +2,7 @@ import UsersDAO from "../users/users.dao.js";
 import passport from "passport";
 import GitHubStrategy from "passport-github2";
 import { Strategy } from "passport-jwt";
+// import { Strategy as localStrategy } from "passport-local";
 import { ENV } from "../config/config.js";
 
 const { SECRET_COOKIE } = ENV;
@@ -16,6 +17,23 @@ passport.deserializeUser((user, done) => {
 	console.log("Estoy en deserializeUser");
 	done(null, user);
 });
+
+// passport.use(
+// 	new localStrategy.LocalStrategy(function (username, password, done) {
+// 		User.findOne({ username }, function (err, user) {
+// 			if (err) {
+// 				return done(err);
+// 			}
+// 			if (!user) {
+// 				return done(null, false);
+// 			}
+// 			if (!user.verifyPassword(password)) {
+// 				return done(null, false);
+// 			}
+// 			return done(null, user);
+// 		});
+// 	})
+// );
 
 passport.use(
 	"jwt",
@@ -32,12 +50,15 @@ passport.use(
 		},
 		async function (jwtPayload, done) {
 			const userId = jwtPayload.id;
-			const user = await UsersDAO.getById(userId);
-			// console.log("User:", user);
+			let user = await UsersDAO.getById(userId);
+			console.log(user);
 			if (user) {
+				console.log("Estoy en passport.use done");
 				return done(null, user);
 			} else {
-				return done(null, false);
+				console.log("Estoy en passport.use false");
+				user = { role: "USER" };
+				return done(null, done);
 			}
 		}
 	)
@@ -50,17 +71,21 @@ passport.use(
 			clientID: CLIENT_ID,
 			clientSecret: CLIENT_SECRET,
 			callbackURL: CALLBACK_URL,
+			scope: "user:email",
 		},
 		async (accessToken, refreshToken, profile, done) => {
 			try {
-				// console.log("Profile:", profile);
-				const user = await UsersDAO.getByNameUserGithub(profile._json.name);
+				const user = await UsersDAO.getByEmailUserGithub(
+					profile.emails[0].value
+				);
 				if (!user) {
 					const newUser = await UsersDAO.postUser({
-						username: profile._json.name,
-						email: profile._json.email,
+						username: profile.username,
+						first_name: profile.displayName,
+						email: profile.emails[0].value,
 						password: "",
 					});
+					console.log(newUser);
 					done(null, newUser);
 				} else {
 					done(null, user);

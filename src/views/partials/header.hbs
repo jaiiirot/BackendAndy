@@ -1,51 +1,51 @@
 <header
   id="headertop"
-  class="bg-[#fdfdfd] sticky top-0 z-[100] w-full relative"
+  class="bg-[#121212] sticky top-0 z-[100] w-full relative"
 >
-  <section class="w-full">
-    <nav class="">
-      <div class="flex items-center px-4">
-        <div>
-          <span>
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </span>
-        </div>
-        <a href="/" class="flex w-min justify-center flex-col items-center mx-auto">
-          <h1 id="title" class="font-black text-[3rem]"><span
-              class="text-[#EF4444]"
-            >A</span>ndy</h1>
-          <p id="desc" class="text-xs font-bold">INDUMENTARIA</p>
+  <section class="w-full text-white">
+    <nav class="px-6">
+      <div class="relative flex items-center py-4 justify-between">
+        <a href="/" class="absolute left-0 flex w-min justify-center flex-col items-center">
+          <h1 id="title" class="text-[3rem] font-brygada style-logo" style="transform:scaleY(0.75)">ILICITO</h1>
         </a>
-        <div class="flex gap-4 relative items-center justify-center">
+        <div class="m-auto flex bg-white rounded-full overflow-hidden w-4/12">
+          <input
+            type="text"
+            placeholder="Buscar"
+            class="w-full px-4 py-2 rounded-md border-none outline-none text-black"
+          />
+          <button class="text-black w-min px-4 hover:bg-black hover:text-white">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+        <div class="flex gap-4 absolute right-0 w-max items-center justify-center">
           {{#if exist_user}}
-          <div>
-          <p>{{info.username}}</p>
-          </div>
-          <a href="/api/sessions/logout">
-            <i class="fa-solid fa-right-from-bracket"></i>
+          <a href="/api/sessions/logout" class="flex flex-col justify-center items-center">
+            {{> icons/user_close x="30" y="30"}}
+            <p class="text-xs" >{{info.username}}</p>
           </a>
           {{else}}
           <a href="/login">
-            <i class="fa-regular fa-user"></i>
+            {{> icons/user x="30" y="30"}}
+            <p class="text-xs">Login</p>
           </a>
           {{/if}}
-          <span id="open-cart" class="cursor-pointer flex items-center justify-center">
-            <i class="fa-solid fa-bag-shopping"></i>
-            <span class="count-prod-number"></span>
+          <span id="open-cart" class="relative cursor-pointer flex items-center justify-center flex-col">
+            {{> icons/cart x="30" y="30"}}
+            <span class="count-prod-number absolute top-0 right-0 bg-black"></span>
+            <p class="text-xs">Mi Carrito</p>
           </span>
         </div>
       </div>
-      <div class="w-10/12 mx-auto py-2">
-        <hr class="border-black border-1" />
-      </div>
+      <hr class="border-gray-700 border-1" />
       <ul
-        class="hidden gap-16 items-center justify-center p-2 font-normal text-[14px] md:flex"
+        class="hidden gap-16 items-center justify-center py-4 font-bold text-base md:flex font-josefin"
       >
-        <li><a href="/">Inicio</a></li>
-        <li><a href="/productos/promocion">SALE</a></li>
-        <li><a href="/productos/indumentaria">Indumentaria</a></li>
-        <li><a href="/productos/accesorio">Accesorios</a></li>
-        <li><a href="/contacto">Contacto</a></li>
+        <li><a href="/">inicio</a></li>
+        <li><a href="/productos/promocion">sale</a></li>
+        <li><a href="/productos/indumentaria">productos</a></li>
+        <li><a href="/productos/accesorio">accesorios</a></li>
+        <li><a href="/contacto">contacto</a></li>
       </ul>
     </nav>
   </section>

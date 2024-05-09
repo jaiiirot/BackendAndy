@@ -47,9 +47,9 @@ class UsersDAO {
 		}
 	}
 
-	async getByNameUserGithub(username) {
+	async getByEmailUserGithub(email) {
 		try {
-			return await Users.findOne({ username }).lean();
+			return await Users.findOne({ email }).lean();
 		} catch (error) {
 			console.error("Error al obtener usuario por nombre de usuario:", error);
 			throw error;

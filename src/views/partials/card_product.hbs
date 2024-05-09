@@ -1,4 +1,4 @@
-<a
+{{!-- <a
   class="overflow-hidden w-full h-full text-black block shadow-md hover:shadow-lg hover:-translate-y-1 hover:-translate-x-1 transition duration-300 ease-in-out"
   href="/productos/{{type}}/{{_id}}"
 >
@@ -10,5 +10,36 @@
       <h3 class="text-xs font-bold">{{title}}</h3>
       <p>$ {{price}}</p>
     </div>
+  </div>
+</a> --}}
+
+<a href="/productos/{{type}}/{{_id}}" class="relative flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+  <div class="relative mx-4 mt-4 h-96 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700 flex justify-center">
+    <img
+      src="{{photo.[0]}}"
+      class="h-full object-cover"
+      alt="imagen {{title}}"
+    />
+  </div>
+  <div class="p-6">
+    <div class="mb-2 flex items-center justify-between">
+    <p class="block font-sans text-sm font-normal leading-normal text-gray-700 antialiased opacity-75">
+      remera
+    </p>
+      <p class="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
+        $ {{price}}
+      </p>
+    </div>
+      <p class="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
+        {{title}}
+      </p>
+  </div>
+  <div class="p-6 pt-0">
+    <button
+      class="relative block w-full select-none rounded-lg bg-blue-gray-900/10 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-blue-gray-900 transition-all outline outline-2 outline-offset-2 hover:scale-105 focus:scale-105 focus:opacity-[0.85] active:scale-100 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none hover:bg-[#121212] hover:text-white focus:bg-[#121212] focus:text-white active:bg-[#121212] active:text-white focus:shadow-md active:shadow-md transition-all duration-300 ease-in-out"
+      type="button"
+    >
+      sumar carrito
+    </button>
   </div>
 </a>

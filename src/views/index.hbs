@@ -1,9 +1,9 @@
 {{> header}}
 <main>
-    <section class="flex flex-col gap-2 w-11/12 items-center m-auto">
-        <h2 class="text-3xl font-normal py-8 text-center">ROPA</h2>
+    <section class="flex flex-col gap-2 items-center mx-4">
+        <h2 class="text-3xl font-normal py-8 text-center font-anton">ROPA</h2>
         <div class="swiper mySwiper h-full w-full">
-            <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-5 lg:gap-8">
+            <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
                 {{#each products}}
                     {{> card_product title=this.title price=this.price thumbnails=this.thumbnails }}
                 {{/each}}

@@ -1,12 +1,17 @@
 {{> header}}
 <section class="text-gray-700 body-font overflow-hidden bg-white">
   <div class="container p-2 mx-auto">
-    <div class="mx-auto flex flex-wrap gap-2 md:flex-nowrap lg:w-11/12 ">
-      <div class="grid grid-cols-2 md:w-2/5 h-max">
-        <img alt="ecommerce" class="h-300px object-cover object-center rounded border border-gray-200" src="{{product.photo.[0]}}">
-        <img alt="ecommerce" class="h-300px object-cover object-center rounded border border-gray-200" src="{{product.photo.[1]}}">
-        <img alt="ecommerce" class="h-300px object-cover object-center rounded border border-gray-200" src="{{product.photo.[2]}}">
-        <img alt="ecommerce" class="h-300px object-cover object-center rounded border border-gray-200" src="{{product.photo.[3]}}">
+    <div class="mx-auto flex flex-wrap gap-2 md:flex-nowrap lg:w-11/12 justify-center">
+      <div class="flex">
+        <div class="flex flex-col w-[100px] max-h-[500px] overflow-y-scroll">
+          <img alt="ecommerce" class="w-full object-cover object-center rounded border border-gray-200" src="{{product.photo.[0]}}">
+          <img alt="ecommerce" class="w-full object-cover object-center rounded border border-gray-200" src="{{product.photo.[1]}}">
+          <img alt="ecommerce" class="w-full object-cover object-center rounded border border-gray-200" src="{{product.photo.[2]}}">
+          <img alt="ecommerce" class="w-full object-cover object-center rounded border border-gray-200" src="{{product.photo.[3]}}">
+        </div>
+        <div class="max-h-[500px]">
+          <img alt="ecommerce" class="h-min object-cover object-center rounded border border-gray-200" src="{{product.photo.[0]}}">
+        </div>
       </div>
       <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
         <h2 class="text-sm title-font text-gray-500 tracking-widest">{{product.category}}</h2>
@@ -73,10 +78,10 @@
             </div>
           </div>
         </div>
-        <div class="flex">
+        <div class="flex justify-between">
           <span class="title-font font-medium text-2xl text-gray-900">$ {{product.price}}</span>
           {{#if stockproduct}}
-          <button id="push-cart" class="flex ml-auto text-white text-sm bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded" onclick="push_cart()">Agregar al Carrito</button>
+          <button id="push-cart" class="flex border-none w-max select-none rounded-lg bg-blue-gray-900/10 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-blue-gray-900 transition-all outline outline-2 outline-offset-2 hover:scale-105 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none hover:bg-[#121212] hover:text-white focus:bg-[#121212] focus:text-white active:bg-[#121212] active:text-white focus:shadow-md active:shadow-md transition-all duration-300 ease-in-out" onclick="push_cart()">Agregar al Carrito</button>
           {{else}}
           <button class="flex ml-auto text-white text-sm bg-gray-500 border-0 py-2 px-6 focus:outline-none rounded">Sin Stock</button>
           {{/if}}
@@ -91,7 +96,7 @@
   </div>
 </section>
 {{> footer}}
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
 <script>
   const params_pid = window.location.pathname.split('/').pop();
   const push_cart = async () => {
