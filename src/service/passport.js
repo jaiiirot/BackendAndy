@@ -18,23 +18,6 @@ passport.deserializeUser((user, done) => {
 	done(null, user);
 });
 
-// passport.use(
-// 	new localStrategy.LocalStrategy(function (username, password, done) {
-// 		User.findOne({ username }, function (err, user) {
-// 			if (err) {
-// 				return done(err);
-// 			}
-// 			if (!user) {
-// 				return done(null, false);
-// 			}
-// 			if (!user.verifyPassword(password)) {
-// 				return done(null, false);
-// 			}
-// 			return done(null, user);
-// 		});
-// 	})
-// );
-
 passport.use(
 	"jwt",
 	new Strategy(
@@ -85,7 +68,7 @@ passport.use(
 						email: profile.emails[0].value,
 						password: "",
 					});
-					console.log(newUser);
+					// console.log(newUser);
 					done(null, newUser);
 				} else {
 					done(null, user);

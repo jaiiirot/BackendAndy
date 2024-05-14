@@ -4,24 +4,31 @@ export const authenticateJWT = passport.authenticate("jwt", {
 	session: false,
 });
 
-export const authenticate = () => {
-	return (req, res, next) => {
-		console.log(req);
+export const authentication = (req, res, next) => {
+	const existJwt = !!req.signedCookies.jwt;
+
+	if (existJwt) {
+		return authenticateJWT(req, res, next);
+	} else {
+		console.log("authenticate: ", existJwt);
+		req.user = { role: "USER" };
 		next();
-		// if (req.isAuthenticated()) {
-		// return next();
-		// }
-		// res.redirect("/login");
-	};
+	}
 };
 
-export const authRole = (ROLE = []) => {
+export const authorization = (ROLE = []) => {
 	return (req, res, next) => {
 		const { role } = req.user;
+		console.log("authRole:", role, ROLE);
 		if (ROLE.includes(role)) {
+			req.sessionUser = null;
+			if (req.user.role !== "USER") {
+				req.sessionUser = {
+					username: req.user.username,
+					cart: req.user.cart.cid,
+				};
+			}
 			next();
-		} else if (role === "ADMIN") {
-			res.redirect("/panel");
 		} else {
 			res.status(401).redirect("/login");
 		}

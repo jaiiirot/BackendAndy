@@ -1,4 +1,4 @@
-import sharp from "sharp";
+// import sharp from "sharp";
 import ProductsDAO from "./products.dao.js";
 import { postCloudinary, deleteCloudinary } from "../service/cloudinary.js";
 import fs from "fs";
@@ -24,7 +24,7 @@ const postImages = async (req, res) => {
 				const outputPath = `${__dirname}/public/image/optimize/${
 					uniqueSuffix + ".webp"
 				}`;
-				await sharp(file.buffer).resize(270, 500).webp().toFile(outputPath);
+				// await sharp(file.buffer).resize(270, 500).webp().toFile(outputPath);
 				const URL = await postCloudinary(outputPath);
 				fs.promises.unlink(outputPath);
 				return URL;

@@ -100,7 +100,8 @@
 <script>
   const params_pid = window.location.pathname.split('/').pop();
   const push_cart = async () => {
-    const response = await fetch(`/api/carts/${container_cart.dataset.cid}/productos/${params_pid}`, {
+    if(!!container_cart.dataset.cid ){
+      const response = await fetch(`/api/carts/${container_cart.dataset.cid}/productos/${params_pid}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -128,6 +129,14 @@
       })
       console.error(response);
     }
+    }
+      return Swal.fire({
+        title: 'Primero debes iniciar sesión',
+        icon: 'warning',
+        showConfirmButton: false,
+        timer: 1500
+      })
+
   };
 
     
