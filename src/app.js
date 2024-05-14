@@ -8,7 +8,7 @@ import handlebars from "express-handlebars";
 import { Server } from "socket.io";
 import __dirname from "./utils/utils.js";
 
-import routerViews from "./handlebars/views.routes.js";
+import routerViews from "./client/views.routes.js";
 import routerProd from "./products/products.routes.js";
 import routerUser from "./users/sessions.routes.js";
 import routerCart from "./carts/carts.routes.js";
