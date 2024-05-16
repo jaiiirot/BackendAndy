@@ -3,7 +3,7 @@ import UsersDAO from "./users.dao.js";
 import { hashPassword, comparePassword } from "../service/crypt.js";
 import { ENV } from "../config/config.js";
 
-const { SECRET_SESSION } = ENV;
+const { SECRET_COOKIE } = ENV;
 
 const register = async (req, res) => {
 	try {
@@ -47,7 +47,7 @@ const login = async (req, res) => {
 		} else {
 			const userLogged = await UsersDAO.getByEmail(req.body.email);
 			if (userLogged && comparePassword(userLogged, req.body.password)) {
-				const token = jwt.sign({ id: userLogged._id }, SECRET_SESSION, {
+				const token = jwt.sign({ id: userLogged._id }, SECRET_COOKIE, {
 					expiresIn: "1h",
 				});
 				res
@@ -56,6 +56,7 @@ const login = async (req, res) => {
 						httpOnly: true,
 						maxAge: 1000 * 60 * 60,
 					})
+					// .redirect("/");
 					.json({ status: 200, msg: "Usuario logueado correctamente" });
 			} else {
 				res.status(400).json({ msg: "Usuario o contraseña incorrectos" });
@@ -82,7 +83,7 @@ const authGitHub = async (req, res) => {
 
 const authGitHubCallback = (req, res) => {
 	console.log("authGitHubCallback");
-	const token = jwt.sign({ id: req.user._id }, SECRET_SESSION, {
+	const token = jwt.sign({ id: req.user._id }, SECRET_COOKIE, {
 		expiresIn: "1h",
 	});
 	res
@@ -91,7 +92,7 @@ const authGitHubCallback = (req, res) => {
 			httpOnly: true,
 			maxAge: 1000 * 60 * 60,
 		})
-		.redirect("/home");
+		.redirect("/");
 };
 
 export const controllersSessions = {

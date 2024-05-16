@@ -67,7 +67,7 @@
         <div class="mt-8">
           <ul class="space-y-4 list-item-cart">
             {{#each products_cart}}
-              <li class="flex justify-between items-center">
+              <li class="flex justify-between items-center" data-prod-id="{{this.pid}}">
                 <div class="flex items-center space-x-4">
                   <img
                     src="{{this.photo.[0]}}"
@@ -120,7 +120,7 @@
                   Eliminar carrito
                 </span>
                 <a
-                  href="#"
+                  href="/api/carts/{{cart_id}}/purchase"
                   class="block rounded bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600"
                 >
                   Finalizar compra

@@ -302,7 +302,7 @@
 		 	return res.json()
 		}).then(data => {
 			ToastNotification(data,status)
-			if(status === "success") window.location.href = "/home";
+			if(status === "success") window.location.href = "/";
 		}).catch(err =>console.log(err));
 	});
 	formRegister.addEventListener('submit', (e) => {

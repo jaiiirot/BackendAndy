@@ -19,7 +19,7 @@
           </button>
         </div>
         <div class="flex gap-4 absolute right-0 w-max items-center justify-center">
-          {{#if exist_user}}
+          {{#if exist}}
           <a href="/api/sessions/logout" class="flex flex-col justify-center items-center">
             {{> icons/user_close x="30" y="30"}}
             <p class="text-xs" >{{info.username}}</p>
@@ -53,7 +53,7 @@
   <section
     class="fixed z-[102]  h-dvh top-0 right-0 w-full bg-black bg-opacity-50 hidden transition-all duration-300 ease-in-out"
     id="container-cart"
-    {{#if exist_user}}
+    {{#if exist}}
       data-cid="{{info.cart}}"
     {{/if}}
   >
@@ -84,7 +84,7 @@
         </ul>
         <div class=" text-center w-full">
           <a
-            href="/carrito/{{info.cart}}"
+            href="/carrito/{{info.cart}}/purchase"
             class="block w-full rounded border border-gray-600 px-5 py-3 text-sm text-gray-600 transition hover:ring-1 hover:ring-gray-400"
           >
             Ver mi carrito (<span class="count-prod-number"></span>)
@@ -100,6 +100,7 @@
 const action_cart = () =>{
     container_cart.classList.toggle('hidden');
 }
+
 const item_cart = (product,quantity) => {
     const li = document.createElement('li');
     li.classList.add('py-1',"px-2",'bg-white',"rounded-md");
@@ -125,6 +126,7 @@ const close_cart = document.getElementById('close-cart');
 open_cart.addEventListener('click',action_cart)
 close_cart.addEventListener('click',action_cart)
 
+const cartId = !!container_cart.dataset.cid;
 const reloadCart = () => {
   list_prod.innerHTML = '';
   fetch(`/api/carts/${container_cart.dataset.cid}`)
@@ -140,8 +142,9 @@ const reloadCart = () => {
         console.log(error);
     })
   }
+if (cartId) {
 reloadCart()
-
+}
 
 
 </script>

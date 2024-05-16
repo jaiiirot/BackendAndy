@@ -98,46 +98,48 @@
 {{> footer}}
 
 <script>
-  const params_pid = window.location.pathname.split('/').pop();
-  const push_cart = async () => {
-    if(!!container_cart.dataset.cid ){
-      const response = await fetch(`/api/carts/${container_cart.dataset.cid}/productos/${params_pid}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-            pid: params_pid,
-            quantity: 1
-      })
-    })
-    console.log(response)
-    if(response.ok){
-      Swal.fire({
-        title: 'Producto agregado al carrito',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500
-      })
-      reloadCart()
-    }else{
-      Swal.fire({
-        title: 'Error al agregar el producto al carrito',
-        icon: 'error',
-        showConfirmButton: false,
-        timer: 1500
-      })
-      console.error(response);
-    }
-    }
-      return Swal.fire({
-        title: 'Primero debes iniciar sesión',
-        icon: 'warning',
-        showConfirmButton: false,
-        timer: 1500
-      })
+const params_pid = window.location.pathname.split("/").pop();
 
-  };
-
-    
+	const push_cart = async () => {
+if (cartId) {
+		const response = await fetch(
+			`/api/carts/${container_cart.dataset.cid}/productos/${params_pid}`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					pid: params_pid,
+					quantity: 1,
+				}),
+			}
+		);
+		console.log(response);
+		if (response.ok) {
+			Swal.fire({
+				title: "Producto agregado al carrito",
+				icon: "success",
+				showConfirmButton: false,
+				timer: 1500,
+			});
+			reloadCart();
+		} else {
+			Swal.fire({
+				title: "Error al agregar el producto al carrito",
+				icon: "error",
+				showConfirmButton: false,
+				timer: 1500,
+			});
+			console.error(response);
+		}
+} else {
+	Swal.fire({
+		title: "Primero debes iniciar sesión",
+		icon: "warning",
+		showConfirmButton: false,
+		timer: 1500,
+	});
+}
+	};
 </script>

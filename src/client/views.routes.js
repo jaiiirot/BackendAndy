@@ -1,13 +1,17 @@
-import { authentication, authorization } from "../middlewares/authsession.js";
+import { authorization } from "../middlewares/authorization.js";
+import {
+	authentication,
+	// authenticateJWT,
+} from "../middlewares/authencations.js	";
 import { controllersViewClient } from "./views.client.controller.js";
 import { controllersViewAdmin } from "./views.admin.controller.js";
 import { Router } from "express";
 const router = Router();
 
-router.get("/", controllersViewClient.Home);
+router.get("/inicio", controllersViewClient.RedirectHome);
 
 router.get(
-	"/home",
+	"/",
 	authentication,
 	authorization(["CLIENT", "USER"]),
 	controllersViewClient.Home
@@ -44,7 +48,7 @@ router.get(
 router.get("/login", controllersViewClient.Login);
 
 router.get(
-	"/carrito/:cid",
+	"/carrito/:cid/purchase",
 	authentication,
 	authorization(["CLIENT"]),
 	controllersViewClient.CardID
