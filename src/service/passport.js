@@ -2,19 +2,18 @@ import UsersDAO from "../users/users.dao.js";
 import passport from "passport";
 import GitHubStrategy from "passport-github2";
 import { Strategy } from "passport-jwt";
-// import { Strategy as localStrategy } from "passport-local";
 import { ENV } from "../config/config.js";
 
 const { SECRET_COOKIE } = ENV;
 const { CLIENT_ID, CLIENT_SECRET, CALLBACK_URL } = ENV.GITHUB;
 
 passport.serializeUser((user, done) => {
-	console.log("Estoy en serializeUser");
+	console.log(" serializeUser", user);
 	done(null, user._id);
 });
 
 passport.deserializeUser((user, done) => {
-	console.log("Estoy en deserializeUser");
+	console.log(" deserializeUser", user);
 	done(null, user);
 });
 
@@ -34,14 +33,12 @@ passport.use(
 		async function (jwtPayload, done) {
 			const userId = jwtPayload.id;
 			let user = await UsersDAO.getById(userId);
-			console.log(user);
 			if (user) {
-				console.log("Estoy en passport.use done");
 				return done(null, user);
 			} else {
-				console.log("Estoy en passport.use false");
-				user = { role: "USER" };
-				return done(null, done);
+				user = { role: "USER", cart: null, username: null };
+				console.log("user:", user);
+				return done(null, user);
 			}
 		}
 	)
@@ -68,7 +65,6 @@ passport.use(
 						email: profile.emails[0].value,
 						password: "",
 					});
-					// console.log(newUser);
 					done(null, newUser);
 				} else {
 					done(null, user);
