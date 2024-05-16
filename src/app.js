@@ -56,10 +56,16 @@ function STARTAPP(PORT, DATABASE, SECRET_COOKIE, TTL, SECRET_SESSION) {
 	app.use("/api/carts", routerCart);
 	app.use("/api/sessions", routerUser);
 
-	// 404
+	// // 404
 	app.use((req, res, next) => {
-		res.status(404).render("404", { title: "404 || Palermo" });
+		try {
+			res.status(404).render("404", { title: "404" });
+		} catch (e) {
+			console.error("Error al procesar la solicitud:", e);
+			res.status(500).send({ error: "Error interno del servidor" });
+		}
 	});
+
 	// MONGOOSE
 	mongoose.connect(DATABASE);
 }
