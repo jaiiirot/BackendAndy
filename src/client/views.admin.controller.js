@@ -1,15 +1,15 @@
 import ProductsDAO from "../products/products.dao.js";
 
 const Panel = async (req, res) => {
-	const info = { username: req.user.username, cart: req.user.cart.cid };
+	const infoUser = req.sessionUser || false;
 	req.session.user = req.user._id;
 
 	const products = await ProductsDAO.getAll();
 	res.render("admin/dashboard", {
 		title: "Dashboard || Panel",
 		products,
-		exist_user: !!info,
-		info,
+		info: infoUser,
+		exist_user: infoUser,
 	});
 };
 
