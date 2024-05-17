@@ -24,7 +24,7 @@ const login = async (req, res) => {
 			.cookie("jwt", token, {
 				signed: true,
 				httpOnly: true,
-				maxAge: 1000 * 60 * 10,
+				maxAge: 1000 * 60 * 30,
 			})
 			.json({ status: 200, msg: "Usuario logueado correctamente" });
 	} catch (error) {
@@ -42,7 +42,7 @@ const authGitHubCallback = (req, res) => {
 		.cookie("jwt", token, {
 			signed: true,
 			httpOnly: true,
-			maxAge: 1000 * 60 * 10,
+			maxAge: 1000 * 60 * 30,
 		})
 		.redirect("/");
 };

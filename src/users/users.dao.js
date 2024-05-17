@@ -13,7 +13,7 @@ class UsersDAO {
 
 	async getById(id) {
 		try {
-			return await Users.findById({ _id: id }, { password: 0 });
+			return await Users.findById({ _id: id }, { password: 0 }).lean();
 		} catch (error) {
 			console.error("Error al obtener usuario por id:", error);
 			throw error;
@@ -22,7 +22,7 @@ class UsersDAO {
 
 	async getByEmail(email) {
 		try {
-			return await Users.findOne({ email });
+			return await Users.findOne({ email }).lean();
 		} catch (error) {
 			console.error(
 				`Error al obtener usuario con correo electrónico ${email}:`,

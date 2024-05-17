@@ -10,7 +10,12 @@ export const authorization = (ROLE = []) => {
 				req.infoUser = {
 					exist: false,
 				};
-			} else {
+			} else if (role === "ADMIN") {
+				req.infoUser = {
+					exist: true,
+					info: { username: req.user.username },
+				};
+			} else if (role === "CLIENT") {
 				req.infoUser = {
 					exist: true,
 					info: { username: req.user.username, cart: req.user.cart.cid },

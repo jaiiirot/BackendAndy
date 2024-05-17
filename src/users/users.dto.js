@@ -1,4 +1,4 @@
-import { hashPassword } from "../service/crypt.js";
+import { hashPassword } from "../utils/crypt.js";
 import UsersDAO from "./users.dao.js";
 import CartsDAO from "../carts/carts.dao.js";
 class UsersDTO {

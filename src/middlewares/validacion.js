@@ -1,5 +1,5 @@
 import UsersDAO from "../users/users.dao.js";
-import { comparePassword } from "../service/crypt.js";
+import { comparePassword } from "../utils/crypt.js";
 
 export const validateData = option => {
 	if (option === "register") {

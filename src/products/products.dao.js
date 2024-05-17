@@ -1,7 +1,7 @@
 import Products from "./products.schema.js";
 
 class ProductsDAO {
-	static async getAll(query, options) {
+	async getAll(query, options) {
 		try {
 			return await Products.paginate(query, { ...options, lean: true });
 		} catch (error) {
@@ -10,7 +10,7 @@ class ProductsDAO {
 		}
 	}
 
-	static async getAllWithLimit(query, limit) {
+	async getAllWithLimit(query, limit) {
 		try {
 			limit = limit || 25;
 			return await Products.paginate(query, { limit, lean: true });
@@ -20,7 +20,7 @@ class ProductsDAO {
 		}
 	}
 
-	static async getByCategorys(categorys) {
+	async getByCategorys(categorys) {
 		try {
 			return await Products.paginate(
 				{ category: { $in: categorys } },
@@ -35,7 +35,7 @@ class ProductsDAO {
 		}
 	}
 
-	static async getByPromocion(promocion) {
+	async getByPromocion(promocion) {
 		try {
 			return await Products.paginate({ promocion }, { limit: 25, lean: true });
 		} catch (error) {
@@ -47,7 +47,7 @@ class ProductsDAO {
 		}
 	}
 
-	static async getById(id) {
+	async getById(id) {
 		try {
 			return await Products.findOne({ _id: id }).lean();
 		} catch (error) {
@@ -56,7 +56,7 @@ class ProductsDAO {
 		}
 	}
 
-	static async addProduct(product) {
+	async addProduct(product) {
 		try {
 			return await Products.create(product);
 		} catch (error) {
@@ -65,7 +65,7 @@ class ProductsDAO {
 		}
 	}
 
-	static async deleteProduct(id) {
+	async deleteProduct(id) {
 		try {
 			return await Products.findByIdAndDelete(id);
 		} catch (error) {
@@ -74,7 +74,7 @@ class ProductsDAO {
 		}
 	}
 
-	static async deleteProducts(ids) {
+	async deleteProducts(ids) {
 		try {
 			return await Products.deleteMany({ _id: { $in: ids } });
 		} catch (error) {
@@ -83,7 +83,7 @@ class ProductsDAO {
 		}
 	}
 
-	static async updateProduct(id, product) {
+	async updateProduct(id, product) {
 		try {
 			return await Products.findByIdAndUpdate(id, product, {
 				new: true,
@@ -95,4 +95,4 @@ class ProductsDAO {
 	}
 }
 
-export default ProductsDAO;
+export default new ProductsDAO();

@@ -18,6 +18,7 @@ const postImages = async (req, res) => {
 			promocion,
 		} = req.body;
 		const categorys = category?.split(",");
+
 		const photos = await Promise.all(
 			await req.files.map(async file => {
 				const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -30,6 +31,7 @@ const postImages = async (req, res) => {
 				return URL;
 			})
 		);
+		
 		const product = {
 			title,
 			description: description.replace(/\n/g, "<br>"),
