@@ -12,7 +12,7 @@ router.post(
 	validateData("register"),
 	controllersSessions.register
 );
-router.post("/login", controllersSessions.login);
+router.post("/login", validateData("login"), controllersSessions.login);
 router.get("/logout", controllersSessions.logout);
 router.get(
 	"/auth/github",

@@ -1,18 +1,13 @@
 <header class="py-4 px-8 flex">
   <div>
-    <div
-      class="mr-5 h-max sm:h-9 flex w-full justify-center flex-col items-center"
-    >
-      <h1 class="font-black text-[2rem]"><span
-          class="text-[#EF4444]"
-        >A</span>ndy</h1=>
-      <p class="text-xs font-bold">INDUMENTARIA</p>
+    <div class="absolute left-0 flex w-min justify-center flex-col items-center">
+      <h1 id="title" class="text-[3rem] font-brygada style-logo" style="transform:scaleY(0.75)">ILICITO</h1>
     </div>
   </div>
   <div class="ml-auto">
     <div class="flex">
       <span class="d-inline-block">
-        <img alt="Compra Segura" src="../image/guard.svg" class="h-[2rem]" />
+        <img alt="Compra Segura" src="/image/guard.svg" class="h-[2rem]" />
       </span>
       <span class="flex flex-col">
         <span class="text-uppercase text-xs">Compra Segura</span>
@@ -138,8 +133,6 @@
   const item_quantity = document.querySelectorAll('.quantity-item-prod');
   const total_price = document.getElementById('total-price');
   const itemActionButtons = document.querySelectorAll('.reduce-item, .increase-item');
-  console.log(itemActionButtons)
-
   let total = 0;
   item_price.forEach((item,i) => {
     const price = parseInt(item.textContent) * parseInt(item_quantity[i].textContent);

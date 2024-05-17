@@ -1,8 +1,9 @@
 import UsersDAO from "../users/users.dao.js";
+import { comparePassword } from "../service/crypt.js";
 
 export const validateData = option => {
-	return async (req, res, next) => {
-		if (option === "register") {
+	if (option === "register") {
+		return async (req, res, next) => {
 			const user = req.body;
 			if (
 				!user.username ||
@@ -21,6 +22,24 @@ export const validateData = option => {
 			} else {
 				next();
 			}
-		}
-	};
+		};
+	}
+	if (option === "login") {
+		return async (req, res, next) => {
+			if (!req.body.email || !req.body.password) {
+				res.status(400).json({ msg: "Faltan datos" });
+			} else {
+				const database = await UsersDAO.getByEmail(req.body.email);
+				if (database) {
+					if (!comparePassword(database, req.body.password)) {
+						res.status(400).json({ msg: "Contraseña incorrecta" });
+					}
+					req.loginUserID = database._id;
+					next();
+				} else {
+					res.status(400).json({ msg: "Datos incorrectos" });
+				}
+			}
+		};
+	}
 };

@@ -1,11 +1,9 @@
 import UsersDAO from "../users/users.dao.js";
 import UsersDTO from "../users/users.dto.js";
-
 import passport from "passport";
 import GitHubStrategy from "passport-github2";
 import { Strategy as JtwStrategy } from "passport-jwt";
 import { ENV } from "../config/config.js";
-
 const { SECRET_COOKIE } = ENV;
 const { CLIENT_ID, CLIENT_SECRET, CALLBACK_URL } = ENV.GITHUB;
 

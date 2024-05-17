@@ -1,7 +1,5 @@
 import jwt from "jsonwebtoken";
-import UsersDAO from "./users.dao.js";
 import UsersDTO from "./users.dto.js";
-import { comparePassword } from "../service/crypt.js";
 import { ENV } from "../config/config.js";
 const { SECRET_COOKIE } = ENV;
 
@@ -19,27 +17,16 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
 	try {
-		if (!req.body.email || !req.body.password) {
-			res.status(400).json({ msg: "Faltan datos" });
-		} else {
-			const userLogged = await UsersDAO.getByEmail(req.body.email);
-
-			if (userLogged && comparePassword(userLogged, req.body.password)) {
-				const token = jwt.sign({ id: userLogged._id }, SECRET_COOKIE, {
-					expiresIn: "2min",
-				});
-				res
-					.cookie("jwt", token, {
-						signed: true,
-						httpOnly: true,
-						maxAge: 1000 * 60 * 10,
-					})
-					// .redirect("/");
-					.json({ status: 200, msg: "Usuario logueado correctamente" });
-			} else {
-				res.status(400).json({ msg: "Usuario o contraseña incorrectos" });
-			}
-		}
+		const token = jwt.sign({ id: req.loginUserID._id }, SECRET_COOKIE, {
+			expiresIn: "2min",
+		});
+		res
+			.cookie("jwt", token, {
+				signed: true,
+				httpOnly: true,
+				maxAge: 1000 * 60 * 10,
+			})
+			.json({ status: 200, msg: "Usuario logueado correctamente" });
 	} catch (error) {
 		res.status(500).json({ msg: "Error interno del servidor" });
 	}
