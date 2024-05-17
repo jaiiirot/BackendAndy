@@ -1,5 +1,5 @@
 import { Users } from "./users.schema.js";
-import CartsDAO from "../carts/carts.dao.js";
+// import CartsDAO from "../carts/carts.dao.js";
 
 class UsersDAO {
 	async getAll() {
@@ -58,8 +58,7 @@ class UsersDAO {
 
 	async postUser(data) {
 		try {
-			const CartId = await CartsDAO.addCart();
-			return new Users({ ...data, cart: { cid: CartId } }).save();
+			return new Users(data).save();
 		} catch (error) {
 			console.error("Error al crear un nuevo usuario:", error);
 			throw error;
