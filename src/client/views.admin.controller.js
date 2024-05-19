@@ -3,10 +3,13 @@ import ProductsDAO from "../products/products.dao.js";
 const Panel = async (req, res) => {
 	req.session.user = req.user._id;
 	const products = await ProductsDAO.getAll();
-	res.render("admin/dashboard", {
-		title: "Dashboard || Panel",
-		products,
-		...req.infoUser,
+	res.render("admin/index", {
+		layout: "admin",
+		admin: {
+			title: "Panel",
+			products,
+			...req.infoUser,
+		},
 	});
 };
 
@@ -38,18 +41,22 @@ const PanelProducts = async (req, res) => {
 			? `/panel/productos?page=${products.nextPage}`
 			: "";
 
-		res.render("admin/prod", {
-			title: "Panel | Productos",
-			products: products.docs.map(product => {
-				return {
-					...product,
-					quantity_photos: product.photo.length,
-				};
-			}),
-			prevLink: products.prevLink,
-			nextLink: products.nextLink,
-			actualLink: page,
-			js: "actionProduct.js",
+		res.render("admin/products", {
+			layout: "admin",
+			admin: {
+				title: "Panel | Productos",
+				products: products.docs.map(product => {
+					return {
+						...product,
+						quantity_photos: product.photo.length,
+					};
+				}),
+				prevLink: products.prevLink,
+				nextLink: products.nextLink,
+				actualLink: page,
+				...req.infoUser,
+				js: "actionProduct.js",
+			},
 		});
 	}
 };

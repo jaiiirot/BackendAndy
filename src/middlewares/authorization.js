@@ -4,6 +4,7 @@ export const authorization = (ROLE = []) => {
 	return (req, res, next) => {
 		const { role } = req.user;
 		const redirect = role === "ADMIN" ? "panel" : "";
+		const msg = role === "ADMIN" ? "?msg=bienvenido" : "";
 		if (ROLE.includes(role)) {
 			req.infoUser = false;
 			if (role === "USER") {
@@ -23,7 +24,7 @@ export const authorization = (ROLE = []) => {
 			}
 			next();
 		} else {
-			res.status(401).redirect(`/${redirect}`);
+			res.status(401).redirect(`/${redirect}${msg}`);
 		}
 	};
 };

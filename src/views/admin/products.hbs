@@ -1,0 +1,113 @@
+<div class="flex w-full h-full text-gray-400">
+	<div class="flex flex-col gap-8">
+		<div class="shadow overflow-hidden sm:rounded-lg">
+			<table class="min-w-full text-sm text-gray-400">
+				<thead class="bg-gray-800 text-xs uppercase font-medium">
+					<tr class="bg-gray-900">
+						<th></th>
+						<th scope="col" class="px-6 py-3 text-left tracking-wider">
+							Titulo
+						</th>
+						<th scope="col" class="px-6 py-3 text-left tracking-wider">
+							N° IMG
+						</th>
+						<th scope="col" class="px-6 py-3 text-left tracking-wider">
+							Precio
+						</th>
+						<th scope="col" class="px-6 py-3 text-left tracking-wider">
+							Estado
+						</th>
+						<th scope="col" class="px-6 py-3 text-left tracking-wider">
+							Stock
+						</th>
+					</tr>
+				</thead>
+				<tbody class="bg-gray-800">
+					{{#each admin.products}}
+						<tr
+							class="bg-black bg-opacity-20 tr_item hover:bg-opacity-10 cursor-pointer"
+							id="tr_{{this._id}}"
+						>
+							<td class="pl-4">
+								<input type="checkbox" id="{{this._id}}" />
+							</td>
+							<td class="px-6 py-4 whitespace-nowrap overflow-hidden">
+								<p
+									style="white-space: nowrap; overflow: hidden; width: 200px; text-overflow:ellipsis;"
+								>
+									{{this.title}}
+								</p>
+							</td>
+							<td class="px-6 py-4 whitespace-nowrap overflow-hidden">
+								<p
+									style="white-space: nowrap; overflow: hidden; width: min; text-overflow:ellipsis;"
+								>
+									{{this.quantity_photos}}
+								</p>
+							</td>
+							<td class="px-6 py-4 whitespace-nowrap overflow-hidden">
+								<p
+									style="white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;"
+								>
+									$
+									{{this.price}}
+								</p>
+							</td>
+							<td class="px-6 py-4 whitespace-nowrap overflow-hidden">
+								<p
+									style="white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;"
+								>
+									{{this.status}}
+								</p>
+							</td>
+							<td class="px-6 py-4 whitespace-nowrap overflow-hidden">
+								<p
+									style="white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;"
+								>
+									{{this.stock}}
+								</p>
+							</td>
+						</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+		<div class="flex justify-between items-center">
+			<div class="flex gap-4">
+				<a
+					class="p-4 text-sm font-medium rounded bg-sky-950 text-white"
+					href="{{admin.prevLink}}"
+				>Anterior</a>
+				<span
+					class="p-4 text-sm font-medium rounded bg-blue-950 text-white"
+				>{{admin.actualLink}}</span>
+				<a
+					class="p-4 ml-auto text-sm font-medium rounded bg-sky-950 text-white"
+					href="{{admin.nextLink}}"
+				>Siguiente</a>
+			</div>
+			<div class="flex items-center w-max gap-4">
+				<button
+					id="add-item"
+					class="flex items-center justify-center p-4 text-sm font-medium rounded bg-green-500 text-black"
+				>
+					Agregar
+				</button>
+				<button
+					id="delete-item"
+					class="flex items-center justify-center p-4 text-sm font-medium rounded bg-red-500 text-black"
+				>
+					Eliminar
+				</button>
+				<button
+					id="update-item"
+					class="flex items-center justify-center p-4 text-sm font-medium rounded bg-yellow-500 text-black"
+				>
+					Actualizar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../js/admin/{{admin.js}}"></script>

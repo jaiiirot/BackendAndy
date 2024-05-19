@@ -4,7 +4,7 @@ dotenv.config();
 
 export const ENV = {
 	PORT: process.env.PORT || 8080,
-	DB_MONGO: process.env.DB_MONGO_ATLAS || 'mongodb://localhost:27017/ecommerce',
+	DB_MONGO: process.env.DB_MONGO_ATLAS || "mongodb://localhost:27017/ecommerce",
 	SECRET_COOKIE: process.env.SECRET_COOKIE,
 	SECRET_SESSION: process.env.SECRET_SESSION,
 	TTL: process.env.TTL,
@@ -14,8 +14,8 @@ export const ENV = {
 		CALLBACK_URL: process.env.GITHUB_CALLBACK_URL,
 	},
 	CLOUDINARY: {
-		CLOUD_NAME: process.env.CLOUD_NAME,
-		API_KEY: process.env.API_KEY,
-		API_SECRET: process.env.API_SECRET,
+		CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
+		API_KEY: process.env.CLOUDINARY_API_KEY,
+		API_SECRET: process.env.CLOUDINARY_API_SECRET,
 	},
 };

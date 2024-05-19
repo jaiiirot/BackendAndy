@@ -2,6 +2,7 @@ import passport from "../service/passport.js";
 
 export const authenticateJWT = passport.authenticate("jwt", {
 	session: false,
+	failureRedirect: "/login",
 });
 
 export const authentication = (req, res, next) => {

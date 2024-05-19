@@ -21,12 +21,12 @@
         <div class="flex gap-4 absolute right-0 w-max items-center justify-center">
           {{#if exist}}
           <a href="/api/sessions/logout" class="flex flex-col justify-center items-center">
-            {{> icons/user_close x="30" y="30"}}
+            {{> icons/logout x="30" y="30"}}
             <p class="text-xs" >{{info.username}}</p>
           </a>
           {{else}}
           <a href="/login">
-            {{> icons/user x="30" y="30"}}
+            {{> icons/login x="30" y="30"}}
             <p class="text-xs">Login</p>
           </a>
           {{/if}}

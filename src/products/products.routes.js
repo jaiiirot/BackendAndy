@@ -10,26 +10,26 @@ router.post(
 	authentication,
 	authorization(["ADMIN"]),
 	upload.array("photo", 4),
-	controllersProducts.postImages
+	controllersProducts.postProduct
 );
 router.delete(
 	"/",
 	authentication,
 	authorization(["ADMIN"]),
-	controllersProducts.deleteImages
+	controllersProducts.deleteProduct
 );
 router.delete(
 	"/:pid",
 	authentication,
 	authorization(["ADMIN"]),
-	controllersProducts.deleteImagesProduct
+	controllersProducts.deleteProducts
 );
 router.put(
 	"/:pid",
 	authentication,
 	authorization(["ADMIN"]),
 	upload.array("photos", 4),
-	controllersProducts.putImagesProduct
+	controllersProducts.putProduct
 );
 
 export default router;

@@ -1,10 +1,10 @@
-// import sharp from "sharp";
+import sharp from "sharp";
 import ProductsDAO from "./products.dao.js";
 import { postCloudinary, deleteCloudinary } from "../service/cloudinary.js";
 import fs from "fs";
 import __dirname from "../utils/utils.js";
 
-const postImages = async (req, res) => {
+const postProduct = async (req, res) => {
 	try {
 		const {
 			title,
@@ -12,12 +12,11 @@ const postImages = async (req, res) => {
 			code,
 			price,
 			stock,
-			category,
-			type,
-			genre,
-			promocion,
+			/* type, genre, */ category,
 		} = req.body;
 		const categorys = category?.split(",");
+
+		console.log(req.body);
 
 		const photos = await Promise.all(
 			await req.files.map(async file => {
@@ -25,40 +24,36 @@ const postImages = async (req, res) => {
 				const outputPath = `${__dirname}/public/image/optimize/${
 					uniqueSuffix + ".webp"
 				}`;
-				// await sharp(file.buffer).resize(270, 500).webp().toFile(outputPath);
+				await sharp(file.buffer).resize(270, 500).webp().toFile(outputPath);
 				const URL = await postCloudinary(outputPath);
 				fs.promises.unlink(outputPath);
 				return URL;
 			})
 		);
-		
 		const product = {
 			title,
 			description: description.replace(/\n/g, "<br>"),
 			code,
 			price,
 			stock,
-			promocion,
-			type,
-			genre,
+			type: "acessorio",
+			genre: "unisex",
 			category: categorys,
 			photo: photos,
 		};
 		if (req.body) {
 			await ProductsDAO.addProduct(product);
-			res.status(200).redirect("/panel/productos");
+			res.status(200).redirect("/panel/productos?st=postsuccess");
 		} else {
-			res
-				.status(400)
-				.json({ error: "No se pudieron obtener los datos del formulario" });
+			res.status(400).redirect("/panel/productos?st=postfailed");
 		}
 	} catch (error) {
 		console.error("Error al obtener todos los productos:", error);
-		res.status(500).send({ error: "Error interno del servidor" });
+		res.status(500).redirect("/panel/productos?st=failed");
 	}
 };
 
-const deleteImages = async (req, res) => {
+const deleteProduct = async (req, res) => {
 	try {
 		const IDS = req.body;
 		if (!Array.isArray(IDS) || IDS.length === 0) {
@@ -72,14 +67,14 @@ const deleteImages = async (req, res) => {
 			});
 		});
 		await ProductsDAO.deleteProducts(IDS);
-		res.status(200).redirect("/panel/productos");
+		res.status(200).redirect("/panel/productos?st=deletesuccess");
 	} catch (error) {
 		console.error("Error al eliminar productos:", error);
-		res.status(500).send({ error: "Error interno del servidor" });
+		res.status(500).redirect("/panel/productos?st=deletefailed");
 	}
 };
 
-const deleteImagesProduct = async (req, res) => {
+const deleteProducts = async (req, res) => {
 	try {
 		if (!req.params.pid) {
 			return res.status(400).send({ msg: `Id no válido: ${req.params.pid}` });
@@ -93,11 +88,11 @@ const deleteImagesProduct = async (req, res) => {
 		res.status(200).redirect("/panel/productos");
 	} catch (error) {
 		console.error("Error al eliminar producto:", error);
-		res.status(500).send({ error: "Error interno del servidor" });
+		res.status(500).redirect("/panel/productos?st=deletefailed");
 	}
 };
 
-const putImagesProduct = async (req, res) => {
+const putProduct = async (req, res) => {
 	try {
 		const product = await ProductsDAO.getById(req.params.pid);
 		let photos = [];
@@ -128,16 +123,16 @@ const putImagesProduct = async (req, res) => {
 			photo: photos,
 		};
 		await ProductsDAO.updateProduct(req.params.pid, newProduct);
-		res.status(200).redirect("/panel/productos");
+		res.status(200).redirect("/panel/productos?st=updatesuccess");
 	} catch (error) {
 		console.error("Error al actualizar el producto:", error);
-		res.status(500).json({ error: "Error interno del servidor" });
+		res.status(500).redirect("/panel/productos?st=updatefailed");
 	}
 };
 
 export const controllersProducts = {
-	postImages,
-	deleteImages,
-	deleteImagesProduct,
-	putImagesProduct,
+	postProduct,
+	deleteProduct,
+	putProduct,
+	deleteProducts,
 };

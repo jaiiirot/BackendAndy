@@ -1,0 +1,95 @@
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="https://a-static.mlcdn.com.br/450x450/letras-em-eva-alfabeto-rosa-escuro-14cm-extra-festas/extrafestas/2281/5f9d99a712282ceb1e28f04e31ea5e26.jpeg" type="image/jpeg" />
+    {{! ICONS }}
+    <script
+      src="https://kit.fontawesome.com/de8fe1cee1.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="//cdn.tailwindcss.com"></script>
+    {{!Link Swiper's CSS }}
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <title>{{ admin.title }}</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Anton&family=Brygada+1918:ital,wght@0,400..700;1,400..700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+      * {
+        margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Josefin Sans", sans-serif;
+      text-decoration: none;
+      }
+
+      * .font-brygada {
+        font-family: "Brygada 1918", sans-serif;
+      }
+
+      * .font-josefin {
+        font-family: "Josefin Sans", sans-serif;
+      }
+      * .font-anton {
+        font-family: "Anton", sans-serif;
+      }
+      * .style-logo {
+        text-shadow: 0px 0px 15px rgb(255, 255, 255);
+      }
+
+      *::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      *::-webkit-scrollbar-track {
+        background: rgb(255, 255, 255);
+      }
+
+      *::-webkit-scrollbar-thumb {
+        background-color: rgb(0, 0, 0);
+        border: 3px solid rgb(0, 0, 0);
+      }
+    </style>
+  </head>
+  <body class="h-screen w-full bg-white relative flex overflow-hidden">
+      <!-- Sidebar -->
+      <aside class="h-full w-0 flex flex-col space-y-10 items-center justify-center relative bg-[#121212] text-white sm:w-max sm:px-4">
+        <!-- Profile -->
+        <a class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-[#121212] hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
+        </a>
+
+        <!-- Courses -->
+        <a href="/panel/productos" class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+          {{>icons/store x="30" y="30"}}
+        </a>
+
+        <!-- Theme -->
+        <a class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+          </svg>
+        </a>
+
+        <!-- logout -->
+        <a class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+          {{>icons/logout x="30" y="30"}}
+        </a>
+      </aside>
+
+      <div class="w-full h-full flex flex-col justify-between">
+        <!-- Header -->
+        {{>admin/header user=admin.info}}
+
+        <!-- Main -->
+        <main  id="layout-admin" class="max-w-full h-full flex relative overflow-y-hidden">
+            <!-- Container -->
+            <div class="h-full w-full m-4 flex flex-wrap items-start justify-start rounded-tl grid-flow-col auto-cols-max gap-4 overflow-y-scroll">
+                <!-- Container -->
+                {{{body}}}
+            </div>
+        </main>
+  </body>
+</html>

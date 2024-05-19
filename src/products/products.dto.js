@@ -15,7 +15,7 @@ class ProductsDTO {
 		category,
 		photo
 	) {
-		return {
+		console.log({
 			title: title || "",
 			description: description || "",
 			code: code || "",
@@ -27,7 +27,7 @@ class ProductsDTO {
 			genre: genre || "",
 			category: category || [],
 			photo: photo || [],
-		};
+		});
 	}
 }
 

@@ -10,11 +10,13 @@ cloudinary.config({
 
 export const postCloudinary = async urlFile => {
 	try {
+		// console.log(urlFile);
 		console.log(urlFile);
-		// const result = await cloudinary.uploader.upload(urlFile, {
-		// 	folder: "ecommerce",
-		// });
-		// return result.secure_url;
+		const result = await cloudinary.uploader.upload(urlFile, {
+			folder: "ecommerce",
+		});
+		console.log(result);
+		return result.secure_url;
 	} catch (error) {
 		return { msg: "Error al subir la imagen a Cloudinary:", error };
 	}

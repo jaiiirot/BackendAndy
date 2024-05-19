@@ -16,12 +16,18 @@ router.post("/login", validateData("login"), controllersSessions.login);
 router.get("/logout", controllersSessions.logout);
 router.get(
 	"/auth/github",
-	passport.authenticate("github", { scope: ["user:email"] }),
+	passport.authenticate("github", {
+		scope: ["user:email"],
+		failureRedirect: "/login",
+	}),
 	controllersSessions.authGitHub
 );
 router.get(
 	"/auth/github/callback",
-	passport.authenticate("github", { failureRedirect: "/" }),
+	passport.authenticate("github", {
+		failureRedirect: "/login",
+		successRedirect: "/",
+	}),
 	controllersSessions.authGitHubCallback
 );
 
