@@ -18,4 +18,11 @@ export const ENV = {
 		API_KEY: process.env.CLOUDINARY_API_KEY,
 		API_SECRET: process.env.CLOUDINARY_API_SECRET,
 	},
+	NODEMAILER: {
+		USER: process.env.NODEMAILER_USER,
+		KEY: process.env.NODEMAILER_KEY,
+	},
 };
+
+// hacer algo on nodemailer
+// https://www.youtube.com/watch?v=rleozFydcKk
