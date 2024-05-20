@@ -7,12 +7,16 @@ const RedirectHome = (req, res) => {
 
 const Home = async (req, res) => {
 	try {
+		console.log(req.infoUser);
 		const products = await ProductsDAO.getAll({}, { limit: 20 });
-		res.render("index", {
-			title: "Home || Andy",
-			js: "index.js",
-			products: products.docs,
-			...req.infoUser,
+		res.render("components/user/index", {
+			layout: "main",
+			user: {
+				title: "Home || Andy",
+				js: "index.js",
+				products: products.docs,
+				...req.infoUser,
+			},
 		});
 	} catch (error) {
 		console.error("Error al procesar la solicitud:", error);
@@ -23,11 +27,14 @@ const Products = async (req, res) => {
 	try {
 		const products = await ProductsDAO.getAll({}, { limit: 20 });
 
-		res.render("shop", {
-			title: "Productos || Andy",
-			section_title: "PRODUCTOS",
-			products: products.docs,
-			...req.infoUser,
+		res.render("components/user/shop", {
+			layout: "main",
+			user: {
+				title: "Productos || Andy",
+				section_title: "PRODUCTOS",
+				products: products.docs,
+				...req.infoUser,
+			},
 		});
 	} catch (error) {
 		console.error("Error al procesar la solicitud:", error);
@@ -52,11 +59,14 @@ const ProductsSection = async (req, res) => {
 		options.page = page;
 		options.limit = limit;
 		const paginate = await ProductsDAO.getAll(query, options);
-		res.render("shop", {
-			title: "Productos || Andy",
-			section_title: "PRODUCTOS",
-			products: paginate.docs,
-			...req.infoUser,
+		res.render("components/user/shop", {
+			layout: "main",
+			user: {
+				title: "Productos || Andy",
+				section_title: "PRODUCTOS",
+				products: paginate.docs,
+				...req.infoUser,
+			},
 		});
 	} catch (error) {
 		console.error("Error al procesar la solicitud:", error);
@@ -83,20 +93,13 @@ const ProductDetail = async (req, res) => {
 };
 
 const Contact = (req, res) => {
-	res.render("contact", {
-		title: "Contacto || Andy",
-		...req.infoUser,
+	res.render("components/user/contact", {
+		layout: "main",
+		user: {
+			title: "Contacto || Andy",
+			...req.infoUser,
+		},
 	});
-};
-
-const Login = (req, res) => {
-	try {
-		res.render("login", {
-			title: "Login || Andy",
-		});
-	} catch (error) {
-		console.error("Error al procesar la solicitud:", error);
-	}
 };
 
 const CardID = async (req, res) => {
@@ -107,16 +110,18 @@ const CardID = async (req, res) => {
 			return { ...e.pid, quantity: e.quantity, _id: e._id };
 		});
 		console.log(req.infoUser, products);
-		res.render("cart", {
-			title: "Carrito || Andy",
-			products_cart: products,
-			...req.infoUser,
+		res.render("components/user/cart", {
+			layout: "main",
+			user: {
+				title: "Carrito || Andy",
+				products_cart: products,
+				...req.infoUser,
+			},
 		});
 	} catch (error) {
 		console.error("Error al procesar la solicitud:", error);
 	}
 };
-
 export const controllersViewClient = {
 	RedirectHome,
 	Home,
@@ -124,6 +129,5 @@ export const controllersViewClient = {
 	ProductsSection,
 	ProductDetail,
 	Contact,
-	Login,
 	CardID,
 };

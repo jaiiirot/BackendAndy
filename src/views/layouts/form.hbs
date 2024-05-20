@@ -1,0 +1,99 @@
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="shortcut icon"
+			href="https://a-static.mlcdn.com.br/450x450/letras-em-eva-alfabeto-rosa-escuro-14cm-extra-festas/extrafestas/2281/5f9d99a712282ceb1e28f04e31ea5e26.jpeg"
+			type="image/jpeg"
+		/>
+		{{! ICONS }}
+		<script
+			src="https://kit.fontawesome.com/de8fe1cee1.js"
+			crossorigin="anonymous"
+		></script>
+		<script src="//cdn.tailwindcss.com"></script>
+		{{!Link Swiper's CSS }}
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+		/>
+		<title>{{login.title}}</title>
+		<style>
+                @import url('https://fonts.googleapis.com/css2?family=Anton&family=Brygada+1918:ital,wght@0,400..700;1,400..700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Josefin Sans", sans-serif;
+      text-decoration: none;
+    }
+
+    * .font-brygada {
+      font-family: "Brygada 1918", sans-serif;
+    }
+
+    * .font-josefin {
+      font-family: "Josefin Sans", sans-serif;
+    }
+
+    * .font-anton {
+      font-family: "Anton", sans-serif;
+    }
+
+    * .style-logo {
+      text-shadow: 0px 0px 15px rgb(255, 255, 255);
+    }
+
+    body::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    body::-webkit-scrollbar-track {
+      background: rgb(255, 255, 255);
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background-color: rgb(0, 0, 0);
+      border: 3px solid rgb(0, 0, 0);
+    }
+		</style>
+	</head>
+
+	<body>
+		<main class="h-screen flex">
+            {{{body}}}
+		</main>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script>
+		const compareInput = (input1, input2) => {
+		if (input1.value !== input2.value) {
+			input1.style.border = "1px solid red";
+		} else {
+			input1.style.border = "1px solid #e5e7eb";
+		}
+		}
+
+		const ToastNotification = (message, icon = "warning") => {
+		const Toast = Swal.mixin({
+			toast: true,
+			position: "top-end",
+			showConfirmButton: false,
+			timer: 3000,
+			timerProgressBar: true,
+			didOpen: (toast) => {
+				toast.onmouseenter = Swal.stopTimer;
+				toast.onmouseleave = Swal.resumeTimer;
+			}
+		});
+		Toast.fire({
+			icon: icon,
+			title: message.msg
+		});
+		}
+	</script>
+	</body>
+
+</html>

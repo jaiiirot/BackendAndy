@@ -1,9 +1,11 @@
 import { hashPassword } from "../utils/crypt.js";
 import UsersDAO from "./users.dao.js";
 import CartsDAO from "../carts/carts.dao.js";
+import MessagesDAO from "../messages/messages.dao.js";
 class UsersDTO {
 	async createUserData(username, photo, first, last, email, password, age) {
 		const CartId = await CartsDAO.addCart();
+		const MessageId = await MessagesDAO.addMessage();
 		return {
 			username: username || "",
 			photo_user: photo || "",
@@ -13,6 +15,7 @@ class UsersDTO {
 			password: password || "",
 			age: age || "",
 			cart: { cid: CartId },
+			messages: { mid: MessageId}
 		};
 	}
 

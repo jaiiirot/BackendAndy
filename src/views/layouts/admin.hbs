@@ -58,7 +58,7 @@
       <aside class="h-full w-0 flex flex-col space-y-10 items-center justify-center relative bg-[#121212] text-white sm:w-max sm:px-4">
         <!-- Profile -->
         <a class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-[#121212] hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
+          <svg class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
         </a>
 
         <!-- Courses -->
@@ -67,14 +67,12 @@
         </a>
 
         <!-- Theme -->
-        <a class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-          </svg>
+        <a href="/panel/chat" class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+          {{> icons/message x="30" y="30"}}
         </a>
 
         <!-- logout -->
-        <a class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+        <a href="/api/sessions/logout" class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
           {{>icons/logout x="30" y="30"}}
         </a>
       </aside>
@@ -86,7 +84,7 @@
         <!-- Main -->
         <main  id="layout-admin" class="max-w-full h-full flex relative overflow-y-hidden">
             <!-- Container -->
-            <div class="h-full w-full m-4 flex flex-wrap items-start justify-start rounded-tl grid-flow-col auto-cols-max gap-4 overflow-y-scroll">
+            <div class="h-full w-full flex flex-wrap items-start justify-start rounded-tl grid-flow-col auto-cols-max gap-4 overflow-y-scroll">
                 <!-- Container -->
                 {{{body}}}
             </div>

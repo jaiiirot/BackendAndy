@@ -1,28 +1,22 @@
     <header class="h-16 w-full flex items-center relative justify-between px-5 space-x-10 bg-[#121212]">
       <!-- Bar -->
-      <div class="flex flex-row w-max">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white cursor-pointer sm:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div class="flex flex-row w-max items-center justify-center">
+        <svg class="h-6 w-6 text-white cursor-pointer sm:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
         </svg>
         <a href="/panel" class="w-min justify-center flex-col items-center">
-          <h1 class="text-[3rem] font-brygada style-logo text-white" style="transform:scaleY(0.75)">ILICITO</h1>
+          <h1 class="text-[2rem] font-brygada style-logo text-white md:text-[2.5rem]" style="transform:scaleY(0.75)">ILICITO</h1>
         </a>
       </div>
 
-      <!-- Informação -->
+      <!-- Informacion -->
       <div class="flex items-center space-x-4 text-white">
-        
         <!-- Texto -->
-        <div class="flex flex-col items-end ">
+        <div class="flex flex-col items-end">
           <!-- Nome -->
-          <div class="text-md font-medium ">{{user.username}}</div>
+          <div class="text-sm md:text-base font-medium ">{{user.username}}</div>
           <!-- Título -->
-          <div class="text-sm font-regular">Panel de Control</div>
-        </div>
-        
-        <!-- Foto -->
-        <div class="h-10 w-10 rounded-full cursor-pointer bg-gray-200 border-2 border-blue-400 overflow-hidden">
-          <img src="https://www.shareicon.net/data/512x512/2016/09/15/829452_user_512x512.png" alt="" class="h-full w-full object-cover rounded-full" />
+          <div class="text-xs md:text-sm font-regular">Panel de Control</div>
         </div>
       </div>
     </header>

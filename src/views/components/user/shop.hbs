@@ -1,11 +1,10 @@
-{{> header}}
-<main class="relative h-max">
+<section class="relative h-max">
    <section class="bg-cover bg-center bg-no-repeat h-72 rounded-lg"
       style="background-image: url('../image/back.jpg')">
       <div class="h-full flex flex-col justify-center items-center bg-[#00000090]">
          <p class="text-white">SECCION</p>
          <h2 class="title-font text-3xl text-white">
-            + {{section_title}} +
+            + {{user.section_title}} +
          </h2>
       </div>
    </section>
@@ -59,7 +58,7 @@
          </div>
       </div>
       <div class="grid grid-cols-2 w-full h-full sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-5 gap-2">
-         {{#each products}}
+         {{#each user.products}}
          <div class="h-max">
             {{> card_product _id=this._id title=this.title price=this.price photo=this.photo }}
          </div>
@@ -79,8 +78,7 @@
          <h2 class="text-center text-3xl font-bold">Filtrar</h2>
       </div>
    </section>
-</main>
-{{> footer}}
+</section>
 <script>
     const dropdownButton = document.querySelectorAll('.dropdown-button');
     const dropdownMenu = document.querySelectorAll('.dropdown-menu');

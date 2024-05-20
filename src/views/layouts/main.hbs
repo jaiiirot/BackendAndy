@@ -1,60 +1,218 @@
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="https://a-static.mlcdn.com.br/450x450/letras-em-eva-alfabeto-rosa-escuro-14cm-extra-festas/extrafestas/2281/5f9d99a712282ceb1e28f04e31ea5e26.jpeg" type="image/jpeg" />
-    {{! ICONS }}
-    <script
-      src="https://kit.fontawesome.com/de8fe1cee1.js"
-      crossorigin="anonymous"
-    ></script>
-    <script src="//cdn.tailwindcss.com"></script>
-    {{!Link Swiper's CSS }}
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-    />
-    <title>{{title}}</title>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Anton&family=Brygada+1918:ital,wght@0,400..700;1,400..700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Josefin Sans", sans-serif;
-        text-decoration: none;
-      }
 
-      * .font-brygada {
-        font-family: "Brygada 1918", sans-serif;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon"
+    href="https://a-static.mlcdn.com.br/450x450/letras-em-eva-alfabeto-rosa-escuro-14cm-extra-festas/extrafestas/2281/5f9d99a712282ceb1e28f04e31ea5e26.jpeg"
+    type="image/jpeg" />
+  {{! ICONS }}
+  <script src="https://kit.fontawesome.com/de8fe1cee1.js" crossorigin="anonymous"></script>
+  <script src="//cdn.tailwindcss.com"></script>
+  {{!Link Swiper's CSS }}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <title>{{user.title}}</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Anton&family=Brygada+1918:ital,wght@0,400..700;1,400..700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 
-      * .font-josefin {
-        font-family: "Josefin Sans", sans-serif;
-      }
-      * .font-anton {
-        font-family: "Anton", sans-serif;
-      }
-      * .style-logo {
-        text-shadow: 0px 0px 15px rgb(255, 255, 255);
-      }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Josefin Sans", sans-serif;
+      text-decoration: none;
+    }
 
-      body::-webkit-scrollbar {
-        width: 8px;
-      }
+    * .font-brygada {
+      font-family: "Brygada 1918", sans-serif;
+    }
 
-      body::-webkit-scrollbar-track {
-        background: rgb(255, 255, 255);
-      }
+    * .font-josefin {
+      font-family: "Josefin Sans", sans-serif;
+    }
 
-      body::-webkit-scrollbar-thumb {
-        background-color: rgb(0, 0, 0);
-        border: 3px solid rgb(0, 0, 0);
-      }
+    * .font-anton {
+      font-family: "Anton", sans-serif;
+    }
 
-    </style>
-  </head>
-  <body>
+    * .style-logo {
+      text-shadow: 0px 0px 15px rgb(255, 255, 255);
+    }
+
+    body::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    body::-webkit-scrollbar-track {
+      background: rgb(255, 255, 255);
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background-color: rgb(0, 0, 0);
+      border: 3px solid rgb(0, 0, 0);
+    }
+  </style>
+</head>
+
+<body>
+  <header id="headertop" class="bg-[#121212] sticky top-0 z-[100] w-full relative">
+    <section class="w-full text-white">
+      <nav class="px-6">
+        <div class="relative flex items-center py-4 justify-between">
+          <a href="/" class="absolute left-0 flex w-min justify-center flex-col items-center">
+            <h1 id="title" class="text-[3rem] font-brygada style-logo" style="transform:scaleY(0.75)">ILICITO</h1>
+          </a>
+          <div class="m-auto flex bg-white rounded-full overflow-hidden w-4/12">
+            <input
+            type="text"
+            placeholder="Buscar"
+            class="w-full px-4 py-2 rounded-md border-none outline-none text-black"
+          />
+            <button class="text-black w-min px-4 hover:bg-black hover:text-white">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+          </div>
+          <div class="flex gap-4 absolute right-0 w-max items-center justify-center">
+            {{#if user.exist}}
+            <a href="/api/sessions/logout" class="flex flex-col justify-center items-center">
+              {{> icons/logout x="30" y="30"}}
+              <p class="text-xs">{{user.info.username}}</p>
+            </a>
+            {{else}}
+            <a href="/login">
+              {{> icons/login x="30" y="30"}}
+              <p class="text-xs">Login</p>
+            </a>
+            {{/if}}
+            <span id="open-cart" class="relative cursor-pointer flex items-center justify-center flex-col">
+            {{> icons/cart x="30" y="30"}}
+            <span class="count-prod-number absolute top-0 right-0 bg-black"></span>
+            <p class="text-xs">Mi Carrito</p>
+            </span>
+          </div>
+        </div>
+        <hr class="border-gray-700 border-1" />
+        <ul class="hidden gap-16 items-center justify-center py-4 font-bold text-base md:flex font-josefin">
+          <li><a href="/">inicio</a></li>
+          <li><a href="/productos/promocion">sale</a></li>
+          <li><a href="/productos/indumentaria">productos</a></li>
+          <li><a href="/productos/accesorio">accesorios</a></li>
+          <li><a href="/contacto">contacto</a></li>
+        </ul>
+      </nav>
+    </section>
+
+    <section
+      class="fixed z-[102]  h-dvh top-0 right-0 w-full bg-black bg-opacity-50 hidden transition-all duration-300 ease-in-out"
+      id="container-cart" {{#if user.exist}} data-cid="{{user.info.cart}}" {{/if}}>
+      <aside class="relative h-full w-full ml-auto border border-gray-600 bg-gray-100 px-6 py-8 md:w-[450px]">
+        <button
+        id="close-cart"
+        class="absolute end-4 top-4 text-gray-600 transition hover:scale-110"
+      >
+        <span class="sr-only">Close cart</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="h-5 w-5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+        <div class="space-y-6 h-full flex flex-col justify-between items-center">
+          <ul class="space-y-4 h-full w-full overflow-y-scroll list-prod-cart">
+            {{!-- Products --}}
+          </ul>
+          <div class=" text-center w-full">
+            <a href="/carrito/{{user.info.cart}}/purchase"
+              class="block w-full rounded border border-gray-600 px-5 py-3 text-sm text-gray-600 transition hover:ring-1 hover:ring-gray-400">
+              Ver mi carrito (<span class="count-prod-number"></span>)
+            </a>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </header>
+  
+  <main class="relative">
     {{{body}}}
-  </body>
+    {{#if user.exist}}
+      {{>circlechat}}
+    {{/if}}
+  </main>
+
+  <footer class="flex justify-center bg-[#121212] flex-col items-center p-12 gap-4 text-white">
+    <div class="flex justify-between items-center">
+      <a href="https://github.com/jaiiirot" target="_black">{{>icons/github x="30" y="30"}}</a>
+      <a href="https://linkedin.com/in/jairotumiri/" target="_black">{{>icons/linkedin x="30" y="30"}}</a>
+    </div>
+    <p class="m-auto text-xs">
+      © 2023 Andy - Indumentaria. Todos los derechos reservados. by
+      <a class="hover:opacity-75" href target="_blank" rel="noreferrer">Jairo</a>
+    </p>
+  </footer>
+
+
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    const action_cart = () =>{
+    container_cart.classList.toggle('hidden');
+}
+
+const item_cart = (product,quantity) => {
+    const li = document.createElement('li');
+    li.classList.add('py-1',"px-2",'bg-white',"rounded-md");
+    li.innerHTML =`
+    <div class="flex justify-between items-center" >
+        <img src="${product.photo[0]}" alt="${product.title}" class="w-16 h-16 object-cover rounded">
+        <div class="flex flex-col">
+           <span class="text-sm">${product.title}</span>
+           <span class="text-sm">${product.price}</span>
+        </div>
+        <span class="text-sm">${quantity}</span>
+    </div>
+    `;
+    return li;
+}
+
+const container_cart = document.getElementById('container-cart');
+const header = document.getElementById('headertop');
+const open_cart = document.getElementById('open-cart');
+const count_prod_number = document.querySelectorAll('.count-prod-number');
+const list_prod = document.querySelector('.list-prod-cart');
+const close_cart = document.getElementById('close-cart');
+open_cart.addEventListener('click',action_cart)
+close_cart.addEventListener('click',action_cart)
+
+const cartId = !!container_cart.dataset.cid;
+const reloadCart = () => {
+  list_prod.innerHTML = '';
+  fetch(`/api/carts/${container_cart.dataset.cid}`)
+    .then(response => response.json())
+    .then(data => {
+        count_prod_number.forEach(item => item.textContent = data.products.length);
+        data.products.forEach(product => {
+            list_prod.appendChild(item_cart(product.pid,product.quantity));
+        });
+        
+    })
+    .catch(error => {
+        console.log(error);
+    })
+  }
+if (cartId) {
+reloadCart()
+}
+
+
+  </script>
+</body>
+
 </html>

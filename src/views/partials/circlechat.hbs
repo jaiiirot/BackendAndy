@@ -1,0 +1,66 @@
+<div class="fixed bottom-0 right-0 z-10 max-w-md mx-auto p-4" data-mid="{{user.info.chat}}" id="container-chat">
+  <!-- Chat Container -->
+  <div class="bg-white rounded-lg shadow-md p-4">
+    <!-- Chat Header -->
+    <div class="flex items-center mb-4">
+      <div class="ml-3">
+        <p class="text-xl font-medium">Your AI Assistant</p>
+        <p class="text-gray-500">Online</p>
+      </div>
+    </div>
+
+    <!-- Chat Messages -->
+    <div class="space-y-4 max-h-[200px] overflow-y-scroll" id="on-messages-container">
+    <!--
+       Received Message 
+      <div class="flex items-start">
+       
+        <div class="ml-3 bg-gray-100 p-3 rounded-lg">
+          <p class="text-sm text-gray-800">Hello! How can I help you today?</p>
+        </div>
+      </div>
+
+       Sent Message
+      <div class="flex items-end justify-end">
+        <div class="bg-[#010101] p-3 rounded-lg">
+          <p class="text-sm text-white">Sure, I have a question.</p>
+        </div>
+      </div>
+    -->
+    </div> 
+
+    <!-- Chat Input -->
+    <div class="mt-4 flex items-center">
+      <input
+        type="text"
+        placeholder="Type your message..."
+        id="message-input"
+        class="flex-1 py-2 px-3 rounded-full bg-gray-100 focus:outline-none"
+      />
+        <input type="button" value="Enviar" class="bg-[#222222] text-white px-4 py-2 rounded-full ml-3 hover:bg-[#000000]" />
+    </div>
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+  const messageId = document.getElementById("container-chat");
+  const messageInput = document.getElementById("message-input");
+  const messagesContainer = document.getElementById("on-messages-container");
+
+  messageInput.addEventListener("keypress",async (e) => {
+    if (e.key === "Enter") {
+      socket.emit("input_chat", {mid: messageId.dataset.mid ,msg:e.target.value});
+      e.target.value = "";
+    }
+  });
+  socket.on("container_chat", (messages) => {
+    console.log("user",messages);
+    messagesContainer.innerHTML = "";
+    messages.forEach((msg) => {;
+      const div = `<div><p>${msg}</p></div>`
+      messagesContainer.innerHTML += div;
+    });
+  });
+  
+</script>

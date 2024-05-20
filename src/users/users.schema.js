@@ -11,6 +11,9 @@ const userSchema = new mongoose.Schema({
 	cart: {
 		cid: { type: mongoose.Schema.Types.ObjectId, ref: "carts" },
 	},
+	messages: {
+		mid: { type: mongoose.Schema.Types.ObjectId, ref: "messages" },
+	},
 	role: { type: String, default: "CLIENT" },
 });
 

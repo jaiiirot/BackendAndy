@@ -1,10 +1,8 @@
 import { authorization } from "../middlewares/authorization.js";
-import {
-	authentication,
-	// authenticateJWT,
-} from "../middlewares/authencations.js	";
+import { authentication } from "../middlewares/authencations.js	";
 import { controllersViewClient } from "./views.client.controller.js";
 import { controllersViewAdmin } from "./views.admin.controller.js";
+import { controllersViewforms } from "./views.form.controller.js";
 import { Router } from "express";
 const router = Router();
 
@@ -45,14 +43,15 @@ router.get(
 	controllersViewClient.Contact
 );
 
-router.get("/login", controllersViewClient.Login);
-
 router.get(
 	"/carrito/:cid/purchase",
 	authentication,
 	authorization(["CLIENT"]),
 	controllersViewClient.CardID
 );
+
+router.get("/login", controllersViewforms.Login);
+router.get("/register", controllersViewforms.Register);
 
 /* PANEL */
 router.get(
@@ -70,7 +69,7 @@ router.get(
 );
 
 router.get(
-	"/panel/mensajes",
+	"/panel/chat",
 	authentication,
 	authorization(["ADMIN"]),
 	controllersViewAdmin.PanelMessages

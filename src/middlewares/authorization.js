@@ -14,12 +14,16 @@ export const authorization = (ROLE = []) => {
 			} else if (role === "ADMIN") {
 				req.infoUser = {
 					exist: true,
-					info: { username: req.user.username },
+					info: { username: req.user.username, chat: req.user.messages.mid },
 				};
 			} else if (role === "CLIENT") {
 				req.infoUser = {
 					exist: true,
-					info: { username: req.user.username, cart: req.user.cart.cid },
+					info: {
+						username: req.user.username,
+						cart: req.user.cart.cid,
+						chat: req.user.messages.mid,
+					},
 				};
 			}
 			next();

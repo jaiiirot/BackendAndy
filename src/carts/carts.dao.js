@@ -35,6 +35,9 @@ class CartsDAO {
 	static async CartAddProduct(cartId, productId) {
 		try {
 			const existcart = await this.getById(cartId);
+			if (!existcart) {
+				console.error("Carrito no encontrado");
+			}
 			// console.log(cartId, productId, existcart);
 			const existprod = existcart.products.find(prod =>
 				prod.pid.equals(productId)

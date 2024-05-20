@@ -7,7 +7,7 @@ export const hashPassword = password => {
 };
 
 export const comparePassword = (user, password) => {
-	console.log(user.password, password);
+	// console.log(user.password, password);
 	return bcrypt.compareSync(password, user.password);
 };
-// 
+//

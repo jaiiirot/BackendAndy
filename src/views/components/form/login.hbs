@@ -1,0 +1,97 @@
+  <div class="flex flex-col-reverse gap-4 w-full md:flex-row md:gap-0">
+
+      <!-- Sidebar -->
+      <div class=' flex flex-col justify-between items-center md:items-start bg-[#000] md:p-8 md:w-2/4 text-white'>
+        <a href="/" class="hidden md:flex items-center  justify-start space-x-3 w-max">
+          <span class="bg-white rounded-full w-8 h-8"></span>
+          <span class="flex w-min justify-center flex-col items-center">
+            <h1 id="title" class="text-[3rem] font-brygada style-logo" style="transform:scaleY(0.75)">ILICITO</h1>
+          </span>
+        </a>
+        <div class='p-4 flex flex-col items-center md:px-12 md:items-start gap-4'>
+          <h1 class="hidden md:block text-3xl md:text-4xl md:leading-snug font-extrabold lg:text-5xl">
+            No dejes para mañana, lo que puedes comprar hoy.
+          </h1>
+          <p class="text-lg">¿No tienes una Cuenta aun?</p>
+          <a
+            href="/register"
+            class="w-max px-4 py-3 border-2 rounded-lg font-medium border-black bg-white text-black">Crear cuenta aquí</a>
+        </div>
+        <p class="font-medium">© 2022 ILICITO by <a href="https://github.com/jaiiirot">jaiiirot</a></p>
+      </div>
+
+      <!-- Login -->
+      <form class="w-full md:w-2/4 flex flex-col items-center justify-center px-10 form-login h-full">
+        <!-- Login container -->
+        <div class="flex flex-col  justify-center space-y-5 max-w-md">  
+
+          <div class="flex flex-col space-y-2 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold">Iniciar Sesión</h2>
+            <span class="text-sm ml-2 hover:text-[#ff3737] cursor-pointer hover:-translate-y-1 duration-500 transition-all">Has olvidado tu contraseña ?</span>
+          </div>
+
+          <div class="flex flex-col max-w-[300px] gap-2">
+
+            <input id="email" type="email" name="email" placeholder="Email"
+              class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" />
+
+            <input type="password" name="password" id="password" placeholder="Contraseña" class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" />
+
+            <button type="submit" class="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white">Iniciar Sesión</button>
+
+            <div class="flex justify-center items-center">
+              <span class="w-full border border-black"></span>
+              <span class="px-4">O</span>
+              <span class="w-full border border-black"></span>
+            </div>
+
+            <a href="/api/sessions/auth/github" class="flex w-max items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black relative">
+              <span>
+                {{>icons/github x="24" y="24"}}
+              </span>
+              <span>Iniciar Sesion con GitHub</span>
+            </a>
+
+          </div>
+        </div>
+      </form>
+
+      <div class="flex bg-[#000] text-white justify-center md:hidden">
+        <a href="/" class="flex items-center justify-center space-x-3 w-max">
+          <span class="bg-white rounded-full w-8 h-8"></span>
+          <span class="flex w-min justify-center flex-col items-center">
+            <h1 id="title" class="text-[3rem] font-brygada style-logo" style="transform:scaleY(0.75)">ILICITO</h1>
+          </span>
+        </a>
+      </div>
+
+  </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    
+const formLogin = document.querySelector('.form-login');
+
+formLogin.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(formLogin);
+    const data = Object.fromEntries(formData.entries());
+    let status;
+    fetch('/api/sessions/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(res => {
+        res.status === 200 ? status = "success" : status = "warning";
+        return res.json();
+    })
+    .then(data => {
+        ToastNotification(data, status);
+        if (status === "success") window.location.href = "/";
+    })
+    .catch(err => console.log(err));
+});
+  </script>

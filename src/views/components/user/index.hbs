@@ -1,14 +1,11 @@
-{{> header}}
-<main>
+
     <section class="flex flex-col gap-2 items-center mx-4">
         <h2 class="text-3xl font-normal py-8 text-center font-anton">ROPA</h2>
         <div class="swiper mySwiper h-full w-full">
             <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-                {{#each products}}
+                {{#each user.products}}
                     {{> card_product title=this.title price=this.price thumbnails=this.thumbnails }}
                 {{/each}}
             </div>
         </div>
     </section>
-</main>
-{{> footer}}

@@ -3,7 +3,7 @@ import ProductsDAO from "../products/products.dao.js";
 const Panel = async (req, res) => {
 	req.session.user = req.user._id;
 	const products = await ProductsDAO.getAll();
-	res.render("admin/index", {
+	res.render("components/admin/index", {
 		layout: "admin",
 		admin: {
 			title: "Panel",
@@ -18,18 +18,24 @@ const PanelProducts = async (req, res) => {
 	const action = req.query.action;
 
 	if (action === "agregar") {
-		res.render("admin/add_prod", {
-			title: "Panel | Agregar",
-			js: "addProduct.js",
+		res.render("components/admin/addprod", {
+			layout: "admin",
+			admin: {
+				title: "Panel | Agregar",
+				js: "addProduct.js",
+			},
 		});
 	} else if (action === "editar") {
 		products = await ProductsDAO.getById(req.query.pid);
-		res.render("admin/put_prod", {
-			title: "Panel | Editar",
-			product: products,
-			prodesc: products.description.replace(/<br>/g, "\n"),
-			js: "putProduct.js",
-			exist_product: true,
+		res.render("components/admin/putprod", {
+			layout: "admin",
+			admin: {
+				title: "Panel | Editar",
+				product: products,
+				prodesc: products.description.replace(/<br>/g, "\n"),
+				js: "putProduct.js",
+				exist_product: true,
+			},
 		});
 	} else {
 		const page = parseInt(req.query.page) || 1;
@@ -41,7 +47,7 @@ const PanelProducts = async (req, res) => {
 			? `/panel/productos?page=${products.nextPage}`
 			: "";
 
-		res.render("admin/products", {
+		res.render("components/admin/products", {
 			layout: "admin",
 			admin: {
 				title: "Panel | Productos",
@@ -62,10 +68,13 @@ const PanelProducts = async (req, res) => {
 };
 
 const PanelMessages = async (req, res) => {
-	res.render("admin/messages_dash", {
-		title: "Mensajes || Panel",
-		messages: [],
-		chat: [],
+	res.render("components/admin/chats", {
+		layout: "admin",
+		admin: {
+			title: "Mensajes || Panel",
+			messages: [],
+			chat: [],
+		},
 	});
 };
 
