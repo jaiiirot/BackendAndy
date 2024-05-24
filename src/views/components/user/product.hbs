@@ -3,18 +3,18 @@
     <div class="mx-auto flex flex-wrap gap-2 md:flex-nowrap lg:w-11/12 justify-center">
       <div class="flex">
         <div class="flex flex-col w-[100px] max-h-[500px] overflow-y-scroll">
-          <img alt="ecommerce" class="w-full object-cover object-center rounded border border-gray-200" src="{{product.photo.[0]}}">
-          <img alt="ecommerce" class="w-full object-cover object-center rounded border border-gray-200" src="{{product.photo.[1]}}">
-          <img alt="ecommerce" class="w-full object-cover object-center rounded border border-gray-200" src="{{product.photo.[2]}}">
-          <img alt="ecommerce" class="w-full object-cover object-center rounded border border-gray-200" src="{{product.photo.[3]}}">
+          <img alt="ecommerce" class="w-full object-cover object-center rounded border border-gray-200" src="{{user.product.photo.[0]}}">
+          <img alt="ecommerce" class="w-full object-cover object-center rounded border border-gray-200" src="{{user.product.photo.[1]}}">
+          <img alt="ecommerce" class="w-full object-cover object-center rounded border border-gray-200" src="{{user.product.photo.[2]}}">
+          <img alt="ecommerce" class="w-full object-cover object-center rounded border border-gray-200" src="{{user.product.photo.[3]}}">
         </div>
         <div class="max-h-[500px]">
-          <img alt="ecommerce" class="h-min object-cover object-center rounded border border-gray-200" src="{{product.photo.[0]}}">
+          <img alt="ecommerce" class="h-min object-cover object-center rounded border border-gray-200" src="{{user.product.photo.[0]}}">
         </div>
       </div>
       <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-        <h2 class="text-sm title-font text-gray-500 tracking-widest">{{product.category}}</h2>
-        <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{{product.title}}</h1>
+        <h2 class="text-sm title-font text-gray-500 tracking-widest">{{user.product.category}}</h2>
+        <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{{user.product.title}}</h1>
         <div class="flex mb-4">
           <span class="flex items-center">
             <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-red-500" viewBox="0 0 24 24">
@@ -52,7 +52,7 @@
             </a>
           </span>
         </div>
-        <p class="leading-relaxed text-sm">{{{product.description}}}</p>
+        <p class="leading-relaxed text-sm">{{{user.product.description}}}</p>
         <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
           <div class="flex">
             <span class="mr-3">Color</span>
@@ -78,8 +78,8 @@
           </div>
         </div>
         <div class="flex justify-between">
-          <span class="title-font font-medium text-2xl text-gray-900">$ {{product.price}}</span>
-          {{#if stockproduct}}
+          <span class="title-font font-medium text-2xl text-gray-900">$ {{user.product.price}}</span>
+          {{#if user.stockproduct}}
           <button id="push-cart" class="flex border-none w-max select-none rounded-lg bg-blue-gray-900/10 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-blue-gray-900 transition-all outline outline-2 outline-offset-2 hover:scale-105 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none hover:bg-[#121212] hover:text-white focus:bg-[#121212] focus:text-white active:bg-[#121212] active:text-white focus:shadow-md active:shadow-md transition-all duration-300 ease-in-out" onclick="push_cart()">Agregar al Carrito</button>
           {{else}}
           <button class="flex ml-auto text-white text-sm bg-gray-500 border-0 py-2 px-6 focus:outline-none rounded">Sin Stock</button>

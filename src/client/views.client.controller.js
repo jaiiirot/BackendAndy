@@ -12,7 +12,7 @@ const Home = async (req, res) => {
 		res.render("components/user/index", {
 			layout: "main",
 			user: {
-				title: "Home || Andy",
+				title: "ILICITO	||	HOME",
 				js: "index.js",
 				products: products.docs,
 				...req.infoUser,
@@ -30,7 +30,7 @@ const Products = async (req, res) => {
 		res.render("components/user/shop", {
 			layout: "main",
 			user: {
-				title: "Productos || Andy",
+				title: "Productos",
 				section_title: "PRODUCTOS",
 				products: products.docs,
 				...req.infoUser,
@@ -62,7 +62,7 @@ const ProductsSection = async (req, res) => {
 		res.render("components/user/shop", {
 			layout: "main",
 			user: {
-				title: "Productos || Andy",
+				title: "Productos",
 				section_title: "PRODUCTOS",
 				products: paginate.docs,
 				...req.infoUser,
@@ -78,13 +78,16 @@ const ProductDetail = async (req, res) => {
 	try {
 		const product = await ProductsDAO.getById(req.params.id);
 		const stockproduct = product.stock > 0;
-		const title = product.title.toLowerCase() + " || Andy";
+		const title = product.title.toLowerCase();
 		if (!product) res.status(404).send({ error: "Producto no encontrado" });
-		res.render("product", {
-			title,
-			product,
-			stockproduct,
-			...req.infoUser,
+		res.render("components/user/product", {
+			layout: "main",
+			user: {
+				title,
+				product,
+				stockproduct,
+				...req.infoUser,
+			},
 		});
 	} catch (error) {
 		console.error("Error al procesar la solicitud:", error);
@@ -96,7 +99,7 @@ const Contact = (req, res) => {
 	res.render("components/user/contact", {
 		layout: "main",
 		user: {
-			title: "Contacto || Andy",
+			title: "Contacto",
 			...req.infoUser,
 		},
 	});
@@ -113,7 +116,7 @@ const CardID = async (req, res) => {
 		res.render("components/user/cart", {
 			layout: "main",
 			user: {
-				title: "Carrito || Andy",
+				title: "Carrito",
 				products_cart: products,
 				...req.infoUser,
 			},
