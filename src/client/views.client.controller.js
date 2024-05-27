@@ -109,17 +109,17 @@ const CardID = async (req, res) => {
 	try {
 		const cid = req.params.cid;
 		const totalProd = await CartsDAO.getByIdPopulate(cid);
+		// TRAER LOS PRODUCTOS Y VERIFICAR QUE TODOS ESTEN DISPONIBLES
+		// const stockProd = await
 		const products = totalProd.products.map(e => {
 			return { ...e.pid, quantity: e.quantity, _id: e._id };
 		});
-		console.log(req.infoUser, products);
-		res.render("components/user/cart", {
-			layout: "main",
-			user: {
-				title: "Carrito",
-				products_cart: products,
-				...req.infoUser,
-			},
+		console.log("todos los productos: ", totalProd.products);
+		console.log("productos user: ", products);
+		res.render("cart", {
+			title: "Carrito",
+			products_cart: products,
+			...req.infoUser,
 		});
 	} catch (error) {
 		console.error("Error al procesar la solicitud:", error);
