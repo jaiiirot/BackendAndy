@@ -15,7 +15,7 @@ class ProductsDTO {
 		category,
 		photo
 	) {
-		console.log({
+		return {
 			title: title || "",
 			description: description || "",
 			code: code || "",
@@ -27,7 +27,26 @@ class ProductsDTO {
 			genre: genre || "",
 			category: category || [],
 			photo: photo || [],
-		});
+		};
+	}
+
+	async postProduct(data) {
+		const { title, description, code, price, stock, category, photo } = data;
+		const newProduct = await this.createProductData(
+			title,
+			description,
+			code,
+			price,
+			null,
+			null,
+			stock,
+			null,
+			null,
+			category,
+			photo
+		);
+		console.log("DTO: ", newProduct);
+		// return newProduct;
 	}
 }
 

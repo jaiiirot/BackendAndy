@@ -116,10 +116,9 @@ const CardID = async (req, res) => {
 		});
 		console.log("todos los productos: ", totalProd.products);
 		console.log("productos user: ", products);
-		res.render("cart", {
-			title: "Carrito",
-			products_cart: products,
-			...req.infoUser,
+		res.render("components/user/cart", {
+			layout: "main",
+			user: { title: "Carrito", products_cart: products, ...req.infoUser },
 		});
 	} catch (error) {
 		console.error("Error al procesar la solicitud:", error);

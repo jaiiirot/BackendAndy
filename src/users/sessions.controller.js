@@ -18,7 +18,7 @@ const register = async (req, res) => {
 const login = async (req, res) => {
 	try {
 		const token = jwt.sign({ id: req.loginUserID._id }, SECRET_COOKIE, {
-			expiresIn: "2min",
+			expiresIn: "30min",
 		});
 		res
 			.cookie("jwt", token, {
@@ -36,7 +36,7 @@ const authGitHub = async (req, res) => {};
 
 const authGitHubCallback = (req, res) => {
 	const token = jwt.sign({ id: req.user._id }, SECRET_COOKIE, {
-		expiresIn: "1h",
+		expiresIn: "30min",
 	});
 	res
 		.cookie("jwt", token, {

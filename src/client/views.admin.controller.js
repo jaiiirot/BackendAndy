@@ -22,7 +22,7 @@ const PanelProducts = async (req, res) => {
 			layout: "admin",
 			admin: {
 				title: "Panel | Agregar",
-				js: "addProduct.js",
+				...req.infoUser,
 			},
 		});
 	} else if (action === "editar") {
@@ -33,7 +33,7 @@ const PanelProducts = async (req, res) => {
 				title: "Panel | Editar",
 				product: products,
 				prodesc: products.description.replace(/<br>/g, "\n"),
-				js: "putProduct.js",
+				...req.infoUser,
 				exist_product: true,
 			},
 		});
@@ -61,7 +61,6 @@ const PanelProducts = async (req, res) => {
 				nextLink: products.nextLink,
 				actualLink: page,
 				...req.infoUser,
-				js: "actionProduct.js",
 			},
 		});
 	}

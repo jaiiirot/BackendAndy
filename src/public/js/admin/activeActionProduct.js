@@ -1,3 +1,7 @@
+const params = new URLSearchParams(window.location.search);
+const typeAction = params.get("action");
+console.log("typeAction:", typeAction);
+
 const formElements = [
 	"title-input",
 	"description-input",
@@ -47,4 +51,38 @@ function previewImages(event) {
 function updateProductCard() {
 	titleCard.textContent = formElements[0].value;
 	priceCard.textContent = "$ " + formElements[3].value;
+}
+
+if (typeAction === "editar") {
+	document.getElementById("submit-put").addEventListener("click", function () {
+		const formData = new FormData();
+
+		formElements.forEach(input => {
+			if (input.type === "file") {
+				[...input.files].forEach(file => formData.append("photos", file));
+			} else {
+				formData.append(input.name, input.value);
+			}
+		});
+
+		const url = new URL(window.location.href);
+		const id = url.searchParams.get("pid");
+		fetch(`/api/products/${id}`, {
+			method: "PUT",
+			body: formData,
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error("Hubo un problema al actualizar el producto.");
+				}
+				return response.json();
+			})
+			.then(data => {
+				console.log("Producto actualizado:", data);
+				window.location.href = "/panel/productos";
+			})
+			.catch(error => {
+				console.error("Error al actualizar el producto:", error.message);
+			});
+	});
 }

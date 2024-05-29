@@ -7,7 +7,7 @@
   <div class="ml-auto">
     <div class="flex">
       <span class="d-inline-block">
-        <img alt="Compra Segura" src="/image/guard.svg" class="h-[2rem]" />
+        {{> icons/segurity x="2rem" y="2rem"}}
       </span>
       <span class="flex flex-col">
         <span class="text-uppercase text-xs">Compra Segura</span>
@@ -61,7 +61,7 @@
 
         <div class="mt-8">
           <ul class="space-y-4 list-item-cart">
-            {{#each products_cart}}
+            {{#each user.products_cart}}
               <li class="flex justify-between items-center" data-prod-id="{{this.pid}}">
                 <div class="flex items-center space-x-4">
                   <img
@@ -115,7 +115,7 @@
                   Eliminar carrito
                 </span>
                 <a
-                  href="/api/carts/{{cart_id}}/purchase"
+                  href="/api/carts/{{user.cart_id}}/purchase"
                   class="block rounded bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600"
                 >
                   Finalizar compra
