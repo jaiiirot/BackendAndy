@@ -50,7 +50,7 @@
 
   messageInput.addEventListener("keypress",async (e) => {
     if (e.key === "Enter") {
-      socket.emit("input_chat", {mid: messageId.dataset.mid ,msg:e.target.value});
+      socket.emit("input_chat", {mid: messageId.dataset.mid ,content: {uid:"asdasdasd" ,message: e.target.value}});
       e.target.value = "";
     }
   });

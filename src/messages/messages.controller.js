@@ -1,12 +1,10 @@
 // hace enpoints para ,amejar mensajes con soketio y https, este es el  controlador de los mensajes
 import MessagesDAO from "./messages.dao.js";
-import { initialSocket } from "../service/socket.js";
 
 const postMessage = async (req, res) => {
 	try {
-		const { name, email, message } = req.body;
-		const newMessage = await MessagesDAO.addMessage({ name, email, message });
-		initialSocket();
+		const newMessage = await MessagesDAO.addMessage(req.body.mid);
+		console.log(newMessage);
 		res.status(201).json(newMessage);
 	} catch (error) {
 		console.error("Error al procesar la solicitud:", error);

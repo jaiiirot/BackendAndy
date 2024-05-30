@@ -35,7 +35,7 @@ class MessagesDAO {
 			if (existChat) {
 				await Messages.updateOne(
 					{ _id: messageId },
-					{ $push: { uidmessages: message } }
+					{ $push: { messages: message } }
 				);
 			} else {
 				throw new Error("Chat no encontrado");
