@@ -1,4 +1,5 @@
-<div class="flex w-full h-full text-gray-400">
+<section class="flex flex-col">
+	<div class="flex w-full h-full text-gray-400">
 	<div class="flex flex-col gap-8">
 		<div class="shadow overflow-hidden sm:rounded-lg">
 			<table class="min-w-full text-sm text-gray-400">
@@ -109,5 +110,80 @@
 		</div>
 	</div>
 </div>
+<section>
+	<table class="border-collapse w-full">
+		<thead>
+			<tr>
+				<th
+					class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell"
+				>Company name</th>
+				<th
+					class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell"
+				>Country</th>
+				<th
+					class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell"
+				>Status</th>
+				<th
+					class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell"
+				>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr
+				class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0"
+			>
+				<td
+					class="flex w-full lg:w-auto text-gray-800 text-center border border-b lg:table-cell lg:static"
+				>
+					<span
+						class="lg:hidden bg-blue-200 px-2 py-1 text-xs font-bold uppercase h-full w-6/12"
+					>Company name</span>
+					<span>
+
+					KnobHome
+					</span>
+				</td>
+				<td
+					class="flex w-full lg:w-auto text-gray-800 text-center border border-b text-center lg:table-cell lg:static"
+				>
+					<span
+						class="lg:hidden bg-blue-200 px-2 py-1 text-xs font-bold uppercase h-full w-6/12"
+					>Country</span>
+					<span>
+					German
+					</span>
+				</td>
+				<td
+					class="flex w-full lg:w-auto text-gray-800 text-center border border-b text-center lg:table-cell lg:static"
+				>
+					<span
+						class="lg:hidden bg-blue-200 px-2 py-1 text-xs font-bold uppercase h-full w-6/12"
+					>Status</span>
+					<span
+						class="rounded bg-red-400 py-1 px-3 text-xs font-bold"
+					>deleted</span>
+				</td>
+				<td
+					class="flex  w-full lg:w-auto text-gray-800 text-center border border-b text-center lg:table-cell lg:static"
+				>
+					<span
+						class="lg:hidden bg-blue-200 px-2 py-1 text-xs font-bold uppercase h-full w-6/12"
+					>Actions</span>
+					<span>
+					<a
+						href="#"
+						class="text-blue-400 hover:text-blue-600 underline"
+					>Edit</a>
+					<a
+						href="#"
+						class="text-blue-400 hover:text-blue-600 underline pl-6"
+					>Remove</a>
+					</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</section>
+</section>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/js/admin/actionProduct.js"></script>

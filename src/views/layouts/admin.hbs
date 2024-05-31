@@ -57,7 +57,7 @@
       <!-- Sidebar -->
       <aside class="h-full w-0 flex flex-col space-y-10 items-center justify-center relative bg-[#121212] text-white sm:w-max sm:px-4">
         <!-- Profile -->
-        <a class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-[#121212] hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+        <a href="/panel/" class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-[#121212] hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
           <svg class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
         </a>
 
@@ -82,9 +82,12 @@
         {{>admin/header user=admin.info}}
 
         <!-- Main -->
-        <main  id="layout-admin" class="w-full h-full flex relative overflow-y-scroll">
+        <main  id="layout-admin" class="w-full h-full flex relative overflow-y-scroll p-2">
             <!-- Container -->
                 {{{body}}}
         </main>
   </body>
 </html>
+
+
+{{!-- https://tailwindcomponents.com/component/product-card-12 --}}
