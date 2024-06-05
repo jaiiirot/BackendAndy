@@ -56,38 +56,27 @@
                   />
             </div>
             <div class="flex gap-2 flex-col w-6/12">
-               <select name="option-photos" id="option-photos" class="border-none outline-none text-black px-4 py-3">
+               <select name="optionPhotos" id="option-photos" class="border-none outline-none text-black px-4 py-3">
+                  <option>Selecciona una opcion</option>
                   <option value="myimg">Mis Imagenes</option>
                   <option value="nomyimg">Imagenes Externas</option>
                </select>
-               <div class="w-full">
-                  <input
-                     class="myimg "
-                     id="file-input"
-                     type="file"
-                     name="photo"
-                     multiple
-                     onchange="previewImages(event)"
-                     />
-                  <div id="photos-input" class="nomyimg hidden flex flex-col gap-2">
-                     <input name="photo-url" type="text" class="border-none outline-none text-black px-4 py-2"
-					 placeholder="imagen 1">
-                     <input name="photo-url" type="text" class="border-none outline-none text-black px-4 py-2"
-					 placeholder="imagen 2">
-                     <input name="photo-url" type="text" class="border-none outline-none text-black px-4 py-2"
-					 placeholder="imagen 3">
-                     <input name="photo-url" type="text" class="border-none outline-none text-black px-4 py-2"
-					 placeholder="imagen 4">
-                  </div>
+               <div class="w-full" id="photos-input">
+                  {{!-- IMG --}}
                </div>
             </div>
          </div>
 		 <br>
-         <input
+         <div>
+            <input
             type="submit"
             value="Crear Producto"
             class="border-none outline-none px-4 py-2 bg-gray-700 text-white cursor-pointer hover:bg-gray-600 transition-all duration-300 ease-in-out"
             />
+            <a href="/panel/productos" class="border-none outline-none px-4 py-2 bg-red-700 text-white cursor-pointer hover:bg-red-600 transition-all duration-300 ease-in-out">
+            Cancelar
+            </a>
+         </div>
       </form>
    </section>
    {{! Preview }}
@@ -108,7 +97,7 @@
          <div>
             <div class="relative rounded-lg overflow-hidden w-[200px] text-black">
                <img
-                  class="card-img w-full"
+                  class="card-img w-full h-full"
                   src="../../image/noimgv.jpg"
                   alt="imagen nuevo producto"
                   id="img-card"
@@ -127,16 +116,37 @@
    </section>
 </aside>
 <script type="module">
-	function stateOption(uno,dos){
-		document.querySelector(uno).classList.toggle("hidden")
-		document.querySelector(dos).classList.toggle("hidden")
+	function createInputs(){
+      document.getElementById("photos-input").innerHTML = ""
+      for (let i = 0; i < 4; i++) {
+         let input = document.createElement("input")
+         input.classList.add("border-none","outline-none","text-black","px-4","py-2","w-full")
+         input.setAttribute("name","photoUrl")
+         input.setAttribute("type","text")
+         input.setAttribute("placeholder","imagen "+(i+1))
+         document.getElementById("photos-input").appendChild(input)
+      }
 	}
+   function createFile(){
+      document.getElementById("photos-input").innerHTML = ""
+      let input = document.createElement("input")
+      input.classList.add("myimg")
+      input.setAttribute("id","file-input")
+      input.setAttribute("type","file")
+      input.setAttribute("name","photo")
+      input.setAttribute("multiple","")
+      input.setAttribute("onchange","previewImages(event)")
+      document.getElementById("photos-input").appendChild(input)
+   }
+
 	document.getElementById("option-photos").addEventListener("input",(e)=>{
 		if (e.target.value === "myimg"){
-			stateOption(".myimg",".nomyimg")
+         createFile()
 		}else if(e.target.value === "nomyimg"){
-			stateOption(".nomyimg",".myimg")
-		}
+         createInputs()
+		}else{
+         document.getElementById("photos-input").innerHTML = ""
+      }
 	})
 </script>
 <script src="/js/admin/activeActionProduct.js"></script>

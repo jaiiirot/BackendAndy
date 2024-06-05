@@ -1,189 +1,136 @@
-<section class="flex flex-col">
+<section class="flex flex-col w-full">
+	<div >
+		<h1 class="text-2xl">PRODUCTOS</h1>
+		<p >Administra tus productos</p>
+	</div>
 	<div class="flex w-full h-full text-gray-400">
-	<div class="flex flex-col gap-8">
-		<div class="shadow overflow-hidden sm:rounded-lg">
-			<table class="min-w-full text-sm text-gray-400">
-				<thead class="bg-gray-800 text-xs uppercase font-medium">
-					<tr class="bg-gray-900">
-						<th></th>
-						<th scope="col" class="px-6 py-3 text-left tracking-wider">
-							Titulo
-						</th>
-						<th scope="col" class="px-6 py-3 text-left tracking-wider">
-							N° IMG
-						</th>
-						<th scope="col" class="px-6 py-3 text-left tracking-wider">
-							Precio
-						</th>
-						<th scope="col" class="px-6 py-3 text-left tracking-wider">
-							Estado
-						</th>
-						<th scope="col" class="px-6 py-3 text-left tracking-wider">
-							Stock
-						</th>
-					</tr>
-				</thead>
-				<tbody class="bg-gray-800">
-					{{#each admin.products}}
-						<tr
-							class="bg-black bg-opacity-20 tr_item hover:bg-opacity-10 cursor-pointer"
-							id="tr_{{this._id}}"
-						>
-							<td class="pl-4">
-								<input type="checkbox" id="{{this._id}}" />
-							</td>
-							<td class="px-6 py-4 whitespace-nowrap overflow-hidden">
-								<p
-									style="white-space: nowrap; overflow: hidden; width: 200px; text-overflow:ellipsis;"
-								>
-									{{this.title}}
-								</p>
-							</td>
-							<td class="px-6 py-4 whitespace-nowrap overflow-hidden">
-								<p
-									style="white-space: nowrap; overflow: hidden; width: min; text-overflow:ellipsis;"
-								>
-									{{this.quantity_photos}}
-								</p>
-							</td>
-							<td class="px-6 py-4 whitespace-nowrap overflow-hidden">
-								<p
-									style="white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;"
-								>
-									$
-									{{this.price}}
-								</p>
-							</td>
-							<td class="px-6 py-4 whitespace-nowrap overflow-hidden">
-								<p
-									style="white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;"
-								>
-									{{this.status}}
-								</p>
-							</td>
-							<td class="px-6 py-4 whitespace-nowrap overflow-hidden">
-								<p
-									style="white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;"
-								>
-									{{this.stock}}
-								</p>
-							</td>
-						</tr>
-					{{/each}}
-				</tbody>
-			</table>
-		</div>
-		<div class="flex justify-between items-center">
-			<div class="flex gap-4">
+		<div class="flex flex-col w-full">
+			<div class="text-end">
 				<a
-					class="p-4 text-sm font-medium rounded bg-sky-950 text-white"
+					class="p-2 bg-blue-500 text-white rounded cursor-pointer"
+					href="/panel/productos?action=agregar"
+				>
+					Crear Producto
+				</a>
+			</div>
+			<div class="shadow  rounded-lg">
+				<table class="shadow text-sm text-gray-400 w-full">
+					<thead class="bg-gray-800 text-xs uppercase font-medium">
+						<tr class="bg-gray-900">
+							<th scope="col" class="px-4 py-2">
+								Titulo
+							</th>
+							<th scope="col" class="px-4 py-2">
+								Promocion
+							</th>
+							<th scope="col" class="px-4 py-2">
+								Precio
+							</th>
+							<th scope="col" class="px-4 py-2">
+								Stock
+							</th>
+							<th scope="col" class="px-4 py-2">
+								Acciones
+							</th>
+						</tr>
+					</thead>
+					<tbody class="text-black">
+						{{#each admin.products}}
+							<tr>
+								<td class="overflow-hidden px-2 py-1">
+									<p
+										style="white-space: nowrap; overflow: hidden; width: 225px; text-overflow:ellipsis;"
+									>
+										{{this.title}}
+									</p>
+								</td>
+								<td class="overflow-hidden px-2 py-1">
+									{{#if this.promocion}}
+										<p
+											class="bg-green-500 w-min py-1 px-4 rounded-full text-white"
+										>
+											Esta
+										</p>
+									{{else}}
+										<p
+											class="bg-red-500 w-min py-1 px-4 rounded-full text-white whitespace-nowrap overflow-hidden text-overflow"
+										>
+											No esta
+										</p>
+									{{/if}}
+								</td>
+								<td class="overflow-hidden px-2 py-1">
+									<p
+										style="white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;"
+									>
+										$
+										{{this.price}}
+									</p>
+								</td>
+								<td class="overflow-hidden px-4 py-2">
+									<p
+										style="white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;"
+									>
+										{{this.stock}}
+									</p>
+								</td>
+								<td class="overflow-hidden px-4 py-2">
+									<button
+										class="p-2 bg-yellow-500 text-black rounded cursor-pointer"
+										onclick="putProduct('{{this._id}}')"
+									>
+										Actualizar
+									</button>
+									<button
+										class="p-2 bg-red-500 text-black rounded border-none outline-none"
+										onclick="deleteProduct('{{this._id}}')"
+									>
+										Eliminar
+									</button>
+								</td>
+							</tr>
+						{{/each}}
+					</tbody>
+				</table>
+			</div>
+			<div class="flex gap-6 justify-center items-center mt-2">
+				<a class="p-2 text-sm font-medium rounded bg-sky-950 text-white"
 					href="{{admin.prevLink}}"
 				>Anterior</a>
 				<span
-					class="p-4 text-sm font-medium rounded bg-blue-950 text-white"
+					class="p-2 text-sm font-medium rounded bg-blue-950 text-white"
 				>{{admin.actualLink}}</span>
 				<a
-					class="p-4 ml-auto text-sm font-medium rounded bg-sky-950 text-white"
+					class="p-2  text-sm font-medium rounded bg-sky-950 text-white"
 					href="{{admin.nextLink}}"
 				>Siguiente</a>
 			</div>
-			<div class="flex items-center w-max gap-4">
-				<button
-					id="add-item"
-					class="flex items-center justify-center p-4 text-sm font-medium rounded bg-green-500 text-black"
-				>
-					Agregar
-				</button>
-				<button
-					id="delete-item"
-					class="flex items-center justify-center p-4 text-sm font-medium rounded bg-red-500 text-black"
-				>
-					Eliminar
-				</button>
-				<button
-					id="update-item"
-					class="flex items-center justify-center p-4 text-sm font-medium rounded bg-yellow-500 text-black"
-				>
-					Actualizar
-				</button>
-			</div>
 		</div>
 	</div>
-</div>
-<section>
-	<table class="border-collapse w-full">
-		<thead>
-			<tr>
-				<th
-					class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell"
-				>Company name</th>
-				<th
-					class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell"
-				>Country</th>
-				<th
-					class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell"
-				>Status</th>
-				<th
-					class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell"
-				>Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr
-				class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0"
-			>
-				<td
-					class="flex w-full lg:w-auto text-gray-800 text-center border border-b lg:table-cell lg:static"
-				>
-					<span
-						class="lg:hidden bg-blue-200 px-2 py-1 text-xs font-bold uppercase h-full w-6/12"
-					>Company name</span>
-					<span>
-
-					KnobHome
-					</span>
-				</td>
-				<td
-					class="flex w-full lg:w-auto text-gray-800 text-center border border-b text-center lg:table-cell lg:static"
-				>
-					<span
-						class="lg:hidden bg-blue-200 px-2 py-1 text-xs font-bold uppercase h-full w-6/12"
-					>Country</span>
-					<span>
-					German
-					</span>
-				</td>
-				<td
-					class="flex w-full lg:w-auto text-gray-800 text-center border border-b text-center lg:table-cell lg:static"
-				>
-					<span
-						class="lg:hidden bg-blue-200 px-2 py-1 text-xs font-bold uppercase h-full w-6/12"
-					>Status</span>
-					<span
-						class="rounded bg-red-400 py-1 px-3 text-xs font-bold"
-					>deleted</span>
-				</td>
-				<td
-					class="flex  w-full lg:w-auto text-gray-800 text-center border border-b text-center lg:table-cell lg:static"
-				>
-					<span
-						class="lg:hidden bg-blue-200 px-2 py-1 text-xs font-bold uppercase h-full w-6/12"
-					>Actions</span>
-					<span>
-					<a
-						href="#"
-						class="text-blue-400 hover:text-blue-600 underline"
-					>Edit</a>
-					<a
-						href="#"
-						class="text-blue-400 hover:text-blue-600 underline pl-6"
-					>Remove</a>
-					</span>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-</section>
 </section>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="/js/admin/actionProduct.js"></script>
+<script>
+	const putProduct = (id) => {
+		window.location.href = `/panel/productos?action=editar&pid=${id}`;
+	};
+	const deleteProduct = (id) => {
+		Swal.fire({
+			title: '¿Estas seguro?',
+			text: 'No podras revertir esta accion',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Si, eliminar',
+			cancelButtonText: 'Cancelar'
+		}).then(async (result) => {
+			if (!result.isConfirmed) return;
+			await fetch(`/api/products/${id}`, {
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			})
+		});
+	};
+</script>

@@ -16,6 +16,22 @@ class CartsDAO {
 		}
 	}
 
+	static async getProductToCart(cartId, productId) {
+		try {
+			const cart = await this.getById(cartId);
+			if (!cart) {
+				console.error("Carrito no encontrado");
+			}
+			const product = cart.products.find(prod => prod.pid.equals(productId));
+			if (!product) {
+				console.error("Producto no encontrado en el carrito");
+			}
+			return product;
+		} catch (error) {
+			console.error("Error al obtener producto del carrito:", error);
+		}
+	}
+
 	static async getByIdPopulate(id) {
 		try {
 			return await Carts.findById(id).populate("products.pid").lean();
@@ -68,14 +84,27 @@ class CartsDAO {
 		}
 	}
 
-	static async CartUpdateProduct(cartId, productId, product) {
+	static async CartUpdateProduct(cartId, productId, action) {
 		try {
-			await Carts.updateOne(
-				{ _id: cartId, "products.pid": productId },
-				{ $set: { "products.$.quantity": product.quantity } }
-			);
+			let update = {};
+
+			switch (action) {
+				case "add":
+					update = { $inc: { "products.$.quantity": 1 } };
+					break;
+				case "less":
+					update = { $inc: { "products.$.quantity": -1 } };
+					break;
+				default:
+					console.error("Error: Acción inválida");
+					return;
+			}
+			await Carts.updateOne({ _id: cartId, "products.pid": productId }, update);
 		} catch (error) {
-			console.error("Error al actualizar producto del carrito:", error);
+			console.error(
+				"Error al actualizar la cantidad del producto en el carrito:",
+				error
+			);
 		}
 	}
 

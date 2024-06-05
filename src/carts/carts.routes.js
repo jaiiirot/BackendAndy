@@ -39,12 +39,21 @@ router.delete(
 );
 
 // ID CART - ID PRODUCT
+
+router.get(
+	"/:cid/productos/:pid",
+	authentication,
+	authorization(["CLIENT"]),
+	controllersCarts.getProductToCart
+);
+
 router.post(
 	"/:cid/productos/:pid",
 	authentication,
 	authorization(["CLIENT"]),
 	controllersCarts.postAddProductToCart
 );
+// put
 router.put(
 	"/:cid/productos/:pid",
 	authentication,

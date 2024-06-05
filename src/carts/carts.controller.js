@@ -14,6 +14,20 @@ const getCartById = async (req, res) => {
 	res.status(200).send(cart);
 };
 
+const getProductToCart = async (req, res) => {
+	try {
+		const { cid, pid } = req.params;
+		const product = await CartsDAO.getProductToCart(cid, pid);
+		if (!product) {
+			res.status(404).send({ error: "Producto no encontrado en el carrito" });
+			return;
+		}
+		res.status(200).send(product);
+	} catch {
+		res.status(404).send({ error: "Producto no encontrado en el carrito" });
+	}
+};
+
 const postCreateCart = async (req, res) => {
 	const newCart = await CartsDAO.addCart(req.body);
 	res.status(201).send(newCart);
@@ -41,10 +55,19 @@ const putUpdateCart = async (req, res) => {
 };
 
 const putUpdateProductInCart = async (req, res) => {
-	const { cid, pid } = req.params;
-	if (cid && pid) {
-		await CartsDAO.CartUpdateProduct(cid, pid, req.body);
-	} else {
+	try {
+		const { cid, pid } = req.params;
+		if (cid && pid) {
+			await CartsDAO.CartUpdateProduct(cid, pid, req.query.action);
+			res.status(200).send({
+				msg: "Producto actualizado en el carrito",
+			});
+		} else {
+			res
+				.status(400)
+				.send({ error: "No se pudo actualizar el producto del carrito" });
+		}
+	} catch {
 		res
 			.status(400)
 			.send({ error: "No se pudo actualizar el producto del carrito" });
@@ -74,6 +97,7 @@ const deleteProductFromCart = async (req, res) => {
 export const controllersCarts = {
 	getAllCarts,
 	getCartById,
+	getProductToCart,
 	postCreateCart,
 	postAddProductToCart,
 	putUpdateCart,

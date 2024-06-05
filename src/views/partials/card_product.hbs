@@ -2,20 +2,20 @@
   <div class="relative mx-4 mt-4 h-[150px] overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700 flex justify-center md:h-[250px]">
     <img
       src="{{photo.[0]}}"
-      class="h-full object-cover"
+      class="w-full object-contain"
       alt="imagen {{title}}"
     />
   </div>
   <div class="p-6">
     <div class="mb-2 flex items-center justify-between">
-    <p class="block font-sans text-sm font-normal leading-normal text-gray-700 antialiased opacity-75">
-      remera
+    <p class="block text-sm font-normal leading-normal text-gray-700 antialiased opacity-75 ">
+      stock: {{stock}}
     </p>
-      <p class="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
+      <p class="block text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
         $ {{price}}
       </p>
-    </div class="overflow-hidden">
-      <p class="block font-sans text-xs font-medium leading-relaxed text-blue-gray-900 antialiased md:text-base">
+    </div>
+      <p class="text-xs h-[4.5rem] overflow-hidden text-ellipsis font-medium text-blue-gray-900 antialiased md:text-base">
         {{title}}
       </p>
   </div>

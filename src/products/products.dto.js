@@ -1,6 +1,6 @@
-// import ProductsDAO from "./products.dao.js";
+import ProductsDAO from "./products.dao.js";
 // import CartsDAO from "../carts/carts.dao.js";
-
+import { postImages } from "../service/cloudImage.js";
 class ProductsDTO {
 	async createProductData(
 		title,
@@ -17,7 +17,7 @@ class ProductsDTO {
 	) {
 		return {
 			title: title || "",
-			description: description || "",
+			description: description.replace(/\n/g, "<br>") || "",
 			code: code || "",
 			price: price || "",
 			status: status || true,
@@ -25,13 +25,16 @@ class ProductsDTO {
 			stock: stock || "",
 			type: type || "",
 			genre: genre || "",
-			category: category || [],
-			photo: photo || [],
+			category: category.split(",") || [],
+			photo: photo.map(e => e) || [],
 		};
 	}
 
-	async postProduct(data) {
-		const { title, description, code, price, stock, category, photo } = data;
+	async postProduct(data, photoFiles) {
+		const { title, description, code, price, stock, category, photoUrl } = data;
+		const photos = !photoUrl
+			? await Promise.all(photoFiles.map(file => postImages(file, 300, 300)))
+			: photoUrl;
 		const newProduct = await this.createProductData(
 			title,
 			description,
@@ -40,13 +43,18 @@ class ProductsDTO {
 			null,
 			null,
 			stock,
-			null,
-			null,
+			"accesorio",
+			"masculino",
 			category,
-			photo
+			photos
 		);
-		console.log("DTO: ", newProduct);
-		// return newProduct;
+		return newProduct;
+	}
+
+	async getProduct(id) {
+		const product = await ProductsDAO.getById(id);
+		const { title, description, code, price, stock, category, photo } = product;
+		return {title, description: description.replace(/<br>/g,"\n"), code, price, stock, category, photo};
 	}
 }
 

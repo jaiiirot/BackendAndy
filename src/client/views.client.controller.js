@@ -7,7 +7,6 @@ const RedirectHome = (req, res) => {
 
 const Home = async (req, res) => {
 	try {
-		console.log(req.infoUser);
 		const products = await ProductsDAO.getAll({}, { limit: 20 });
 		res.render("components/user/index", {
 			layout: "main",
@@ -48,16 +47,20 @@ const ProductsSection = async (req, res) => {
 		const options = {};
 		const page = parseInt(req.query.page) || 1;
 		const limit = parseInt(req.query.limit) || 20;
-		const pricemax = parseInt(req.query.pricemax) || 1000000;
+
+		const pricemax = parseInt(req.query.pricemax) || 100000000;
 		const pricemin = parseInt(req.query.pricemin) || 0;
+
 		const category = req.query.categoria || "";
 		query.price = { $gte: pricemin, $lte: pricemax };
 		req.params.section !== "promocion"
 			? (query.type = req.params.section)
 			: (query.promocion = true);
+
 		if (category !== "") query.category = { $in: category };
 		options.page = page;
 		options.limit = limit;
+		console.log(query, options);
 		const paginate = await ProductsDAO.getAll(query, options);
 		res.render("components/user/shop", {
 			layout: "main",
@@ -109,16 +112,23 @@ const CardID = async (req, res) => {
 	try {
 		const cid = req.params.cid;
 		const totalProd = await CartsDAO.getByIdPopulate(cid);
-		// TRAER LOS PRODUCTOS Y VERIFICAR QUE TODOS ESTEN DISPONIBLES
-		// const stockProd = await
 		const products = totalProd.products.map(e => {
-			return { ...e.pid, quantity: e.quantity, _id: e._id };
+			return {
+				...e.pid,
+				quantity: e.quantity,
+				confirm: e.quantity > e.pid.stock,
+				cid: totalProd._id,
+			};
 		});
-		console.log("todos los productos: ", totalProd.products);
-		console.log("productos user: ", products);
+		console.log(!products.find(e => e.confirm));
 		res.render("components/user/cart", {
 			layout: "main",
-			user: { title: "Carrito", products_cart: products, ...req.infoUser },
+			user: {
+				title: "Carrito",
+				products_cart: products,
+				...req.infoUser,
+				permit: !products.find(e => e.confirm),
+			},
 		});
 	} catch (error) {
 		console.error("Error al procesar la solicitud:", error);

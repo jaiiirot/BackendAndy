@@ -1,50 +1,15 @@
-import sharp from "sharp";
 import productsDto from "./products.dto.js";
 import ProductsDAO from "./products.dao.js";
-import { postCloudinary, deleteCloudinary } from "../service/cloudinary.js";
+import { postCloudinary, deleteCloudinary } from "../utils/cloudinary.js";
 import fs from "fs";
 import __dirname from "../utils/utils.js";
 
 const postProduct = async (req, res) => {
 	try {
 		if (!req.body) res.status(400).redirect("/panel/productos?st=postfailed");
-		const {
-			title,
-			description,
-			code,
-			price,
-			stock,
-			/* type, genre, */ category,
-		} = req.body;
-		const categorys = category?.split(",");
 
-		const photos = await Promise.all(
-			await req.files.map(async file => {
-				const URL = await file.path;
-				// const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-				// const outputPath = `${__dirname}/public/image/optimize/${
-				// 	uniqueSuffix + ".webp"
-				// }`;
-				// await sharp(file.buffer).resize(270, 500).webp().toFile(outputPath);
-				// const URL = await postCloudinary(outputPath);
-				// fs.promises.unlink(outputPath);
-				return URL;
-			})
-		);
-		console.log(req.files);
-		const product = {
-			title,
-			description: description.replace(/\n/g, "<br>"),
-			code,
-			price,
-			stock,
-			type: "accesorio",
-			genre: "unisex",
-			category: categorys,
-			photo: photos,
-		};
-		console.log(await productsDto.postProduct(product));
-		// await ProductsDAO.addProduct(product);
+		const newProducto = await productsDto.postProduct(req.body, req.files);
+		await ProductsDAO.addProduct(newProducto);
 		res.status(200).redirect("/panel/productos?st=postsuccess");
 	} catch (error) {
 		console.error("Error al obtener todos los productos:", error);
@@ -75,16 +40,16 @@ const deleteProduct = async (req, res) => {
 
 const deleteProducts = async (req, res) => {
 	try {
-		if (!req.params.pid) {
+		if (!req.params.pid)
 			return res.status(400).send({ msg: `Id no válido: ${req.params.pid}` });
-		}
+
 		const photo = await ProductsDAO.getById(req.params.pid);
 		photo.photo.forEach(async photo => {
 			const response = await deleteCloudinary(photo);
 			console.log(response);
 		});
 		await ProductsDAO.deleteProduct(req.params.pid);
-		res.status(200).redirect("/panel/productos");
+		res.status(200).redirect("/panel/");
 	} catch (error) {
 		console.error("Error al eliminar producto:", error);
 		res.status(500).redirect("/panel/productos?st=deletefailed");

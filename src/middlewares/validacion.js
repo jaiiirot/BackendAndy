@@ -32,14 +32,12 @@ export const validateData = option => {
 				const database = await UsersDAO.getByEmail(req.body.email);
 				if (database) {
 					if (!comparePassword(database, req.body.password)) {
-						console.log("1Datos incorrectos");
-						res.status(400).json({ msg: "Contraseña incorrecta" });
+						res.status(400).json({ msg: "¡Datos incorrectos!" });
 					} else {
 						req.loginUserID = database._id;
 						next();
 					}
 				} else {
-					console.log("3Datos incorrectos");
 					res.status(400).json({ msg: "Datos incorrectos" });
 				}
 			}

@@ -3,6 +3,7 @@ import Products from "./products.schema.js";
 class ProductsDAO {
 	async getAll(query, options) {
 		try {
+			console.log(query, options);
 			return await Products.paginate(query, { ...options, lean: true });
 		} catch (error) {
 			console.error("Error al obtener todos los productos:", error);

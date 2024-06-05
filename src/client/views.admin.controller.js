@@ -1,4 +1,5 @@
 import ProductsDAO from "../products/products.dao.js";
+import ProductsDTO from "../products/products.dto.js";
 
 const Panel = async (req, res) => {
 	req.session.user = req.user._id;
@@ -26,20 +27,19 @@ const PanelProducts = async (req, res) => {
 			},
 		});
 	} else if (action === "editar") {
-		products = await ProductsDAO.getById(req.query.pid);
+		products = await ProductsDTO.getProduct(req.query.pid);
 		res.render("components/admin/putprod", {
 			layout: "admin",
 			admin: {
 				title: "Panel | Editar",
 				product: products,
-				prodesc: products.description.replace(/<br>/g, "\n"),
 				...req.infoUser,
 				exist_product: true,
 			},
 		});
 	} else {
 		const page = parseInt(req.query.page) || 1;
-		products = await ProductsDAO.getAll({}, { page, limit: 6 });
+		products = await ProductsDAO.getAll({}, { page, limit: 10 });
 		products.prevLink = products.hasPrevPage
 			? `/panel/productos?page=${products.prevPage}`
 			: "";
