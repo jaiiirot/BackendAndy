@@ -1,7 +1,7 @@
-import { authorization } from "../middlewares/authorization.js";
-import { authentication } from "../middlewares/authencations.js";
+import { authorization } from "../../middlewares/authorization.js";
+import { authentication } from "../../middlewares/authencations.js";
+import { upload } from "../../utils/upload.js";
 import { controllersProducts } from "./products.controller.js";
-import { upload } from "../utils/upload.js";
 import express from "express";
 const router = express.Router();
 

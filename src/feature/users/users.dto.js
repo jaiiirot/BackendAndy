@@ -1,4 +1,4 @@
-import { hashPassword } from "../utils/crypt.js";
+import { hashPassword } from "../../utils/crypt.js";
 import UsersDAO from "./users.dao.js";
 import CartsDAO from "../carts/carts.dao.js";
 import MessagesDAO from "../messages/messages.dao.js";
@@ -15,7 +15,7 @@ class UsersDTO {
 			password: password || "",
 			age: age || "",
 			cart: { cid: CartId },
-			messages: { mid: MessageId}
+			messages: { mid: MessageId },
 		};
 	}
 

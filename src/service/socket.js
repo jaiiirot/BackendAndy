@@ -1,4 +1,4 @@
-import messagesDao from "../messages/messages.dao.js";
+import messagesDao from "../feature/messages/messages.dao.js";
 export const initialSocket = socket => {
 	const messages = [];
 	socket.on("connection", io => {

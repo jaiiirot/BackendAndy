@@ -9,10 +9,10 @@ import { Server } from "socket.io";
 import __dirname from "./utils/utils.js";
 
 import routerViews from "./client/views.routes.js";
-import routerProd from "./products/products.routes.js";
-import routerUser from "./users/sessions.routes.js";
-import routerCart from "./carts/carts.routes.js";
-import routerMessage from "./messages/messages.routes.js";
+import routerProd from "./feature/products/products.routes.js";
+import routerUser from "./feature/users/sessions.routes.js";
+import routerCart from "./feature/carts/carts.routes.js";
+import routerMessage from "./feature/messages/messages.routes.js";
 
 import passport from "./service/passport.js";
 import { initialSocket } from "./service/socket.js";

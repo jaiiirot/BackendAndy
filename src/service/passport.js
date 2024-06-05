@@ -1,5 +1,5 @@
-import UsersDAO from "../users/users.dao.js";
-import UsersDTO from "../users/users.dto.js";
+import UsersDAO from "../feature/users/users.dao.js";
+import UsersDTO from "../feature/users/users.dto.js";
 import passport from "passport";
 import GitHubStrategy from "passport-github2";
 import { Strategy as JtwStrategy } from "passport-jwt";

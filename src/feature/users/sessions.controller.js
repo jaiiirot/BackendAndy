@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import UsersDTO from "./users.dto.js";
-import { ENV } from "../config/config.js";
+import { ENV } from "../../config/config.js";
 const { SECRET_COOKIE } = ENV;
 
 const register = async (req, res) => {

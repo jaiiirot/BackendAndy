@@ -1,8 +1,8 @@
 import productsDto from "./products.dto.js";
 import ProductsDAO from "./products.dao.js";
-import { postCloudinary, deleteCloudinary } from "../utils/cloudinary.js";
+import { postCloudinary, deleteCloudinary } from "../../utils/cloudinary.js";
 import fs from "fs";
-import __dirname from "../utils/utils.js";
+import __dirname from "../../utils/utils.js";
 
 const postProduct = async (req, res) => {
 	try {

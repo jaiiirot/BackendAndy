@@ -1,5 +1,5 @@
-import ProductsDAO from "../products/products.dao.js";
-import CartsDAO from "../carts/carts.dao.js";
+import ProductsDAO from "../feature/products/products.dao.js";
+import CartsDAO from "../feature/carts/carts.dao.js";
 
 const RedirectHome = (req, res) => {
 	res.redirect("/");

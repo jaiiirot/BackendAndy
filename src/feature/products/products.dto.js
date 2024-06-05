@@ -1,6 +1,6 @@
 import ProductsDAO from "./products.dao.js";
 // import CartsDAO from "../carts/carts.dao.js";
-import { postImages } from "../service/cloudImage.js";
+import { postImages } from "../../service/cloudImage.js";
 class ProductsDTO {
 	async createProductData(
 		title,
@@ -54,7 +54,15 @@ class ProductsDTO {
 	async getProduct(id) {
 		const product = await ProductsDAO.getById(id);
 		const { title, description, code, price, stock, category, photo } = product;
-		return {title, description: description.replace(/<br>/g,"\n"), code, price, stock, category, photo};
+		return {
+			title,
+			description: description.replace(/<br>/g, "\n"),
+			code,
+			price,
+			stock,
+			category,
+			photo,
+		};
 	}
 }
 

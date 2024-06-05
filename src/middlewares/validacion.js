@@ -1,4 +1,4 @@
-import UsersDAO from "../users/users.dao.js";
+import UsersDAO from "../feature/users/users.dao.js";
 import { comparePassword } from "../utils/crypt.js";
 
 export const validateData = option => {

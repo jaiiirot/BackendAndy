@@ -1,8 +1,8 @@
 import { Router } from "express";
-import passport from "../service/passport.js";
-import { validateData } from "../middlewares/validacion.js";
-import { authorization } from "../middlewares/authorization.js";
-import { authentication } from "../middlewares/authencations.js";
+import passport from "../../service/passport.js";
+import { validateData } from "../../middlewares/validacion.js";
+import { authorization } from "../../middlewares/authorization.js";
+import { authentication } from "../../middlewares/authencations.js";
 import { controllersSessions } from "./sessions.controller.js";
 
 const router = Router();

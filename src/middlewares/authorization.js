@@ -1,5 +1,3 @@
-// import { viewMessageStatus } from "./viewStatus.js";
-
 export const authorization = (ROLE = []) => {
 	return (req, res, next) => {
 		const { role } = req.user;

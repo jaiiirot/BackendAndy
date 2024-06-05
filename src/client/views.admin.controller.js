@@ -1,5 +1,5 @@
-import ProductsDAO from "../products/products.dao.js";
-import ProductsDTO from "../products/products.dto.js";
+import ProductsDAO from "../feature/products/products.dao.js";
+import ProductsDTO from "../feature/products/products.dto.js";
 
 const Panel = async (req, res) => {
 	req.session.user = req.user._id;

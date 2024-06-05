@@ -1,5 +1,5 @@
-import { authorization } from "../middlewares/authorization.js";
-import { authentication } from "../middlewares/authencations.js	";
+import { authorization } from "../../middlewares/authorization.js";
+import { authentication } from "../../middlewares/authencations.js	";
 import { controllersCarts } from "./carts.controller.js";
 import { Router } from "express";
 const router = Router();
