@@ -1,4 +1,4 @@
-import { Products } from "../../factoryDAO.js";
-import ProductRepository from "./product.repository.js";
+import ProductsDAO from "../products.dao.js";
+import ProductRepository from "./products.repository.js";
 
-export const productsService = new ProductRepository(new Products());
+export const productsService = new ProductRepository(new ProductsDAO());

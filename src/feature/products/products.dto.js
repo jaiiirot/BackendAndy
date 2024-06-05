@@ -1,69 +1,15 @@
-import ProductsDAO from "./products.dao.js";
-// import CartsDAO from "../carts/carts.dao.js";
-import { postImages } from "../../service/cloudImage.js";
-class ProductsDTO {
-	async createProductData(
-		title,
-		description,
-		code,
-		price,
-		status,
-		promocion,
-		stock,
-		type,
-		genre,
-		category,
-		photo
-	) {
-		return {
-			title: title || "",
-			description: description.replace(/\n/g, "<br>") || "",
-			code: code || "",
-			price: price || "",
-			status: status || true,
-			promocion: promocion || false,
-			stock: stock || "",
-			type: type || "",
-			genre: genre || "",
-			category: category.split(",") || [],
-			photo: photo.map(e => e) || [],
-		};
-	}
-
-	async postProduct(data, photoFiles) {
-		const { title, description, code, price, stock, category, photoUrl } = data;
-		const photos = !photoUrl
-			? await Promise.all(photoFiles.map(file => postImages(file, 300, 300)))
-			: photoUrl;
-		const newProduct = await this.createProductData(
-			title,
-			description,
-			code,
-			price,
-			null,
-			null,
-			stock,
-			"accesorio",
-			"masculino",
-			category,
-			photos
-		);
-		return newProduct;
-	}
-
-	async getProduct(id) {
-		const product = await ProductsDAO.getById(id);
-		const { title, description, code, price, stock, category, photo } = product;
-		return {
-			title,
-			description: description.replace(/<br>/g, "\n"),
-			code,
-			price,
-			stock,
-			category,
-			photo,
-		};
+export default class ProductsDTO {
+	constructor(product) {
+		this.title = product.title || " ";
+		this.description = product.description || " ";
+		this.code = product.code || " ";
+		this.price = product.price || " ";
+		this.status = product.status || true;
+		this.promocion = product.promocion || false;
+		this.stock = product.stock || " ";
+		this.type = product.type || " ";
+		this.genre = product.genre || " ";
+		this.category = product.category || [];
+		this.photo = product.photo || [];
 	}
 }
-
-export default new ProductsDTO();

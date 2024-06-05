@@ -1,6 +1,6 @@
 import Products from "./products.schema.js";
 
-class ProductsDAO {
+export default class ProductsDAO {
 	async getAll(query, options) {
 		try {
 			console.log(query, options);
@@ -75,15 +75,6 @@ class ProductsDAO {
 		}
 	}
 
-	async deleteProducts(ids) {
-		try {
-			return await Products.deleteMany({ _id: { $in: ids } });
-		} catch (error) {
-			console.error("Error al eliminar varios productos:", error);
-			throw error;
-		}
-	}
-
 	async updateProduct(id, product) {
 		try {
 			return await Products.findByIdAndUpdate(id, product, {
@@ -95,5 +86,3 @@ class ProductsDAO {
 		}
 	}
 }
-
-export default new ProductsDAO();

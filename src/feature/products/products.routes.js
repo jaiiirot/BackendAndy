@@ -13,17 +13,12 @@ router.post(
 	controllersProducts.postProduct
 );
 router.delete(
-	"/",
+	"/:pid",
 	authentication,
 	authorization(["ADMIN"]),
 	controllersProducts.deleteProduct
 );
-router.delete(
-	"/:pid",
-	authentication,
-	authorization(["ADMIN"]),
-	controllersProducts.deleteProducts
-);
+
 router.put(
 	"/:pid",
 	authentication,

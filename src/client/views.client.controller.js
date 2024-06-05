@@ -1,4 +1,4 @@
-import ProductsDAO from "../feature/products/products.dao.js";
+import { productsService } from "../feature/products/repository/products.service.js";
 import CartsDAO from "../feature/carts/carts.dao.js";
 
 const RedirectHome = (req, res) => {
@@ -7,7 +7,7 @@ const RedirectHome = (req, res) => {
 
 const Home = async (req, res) => {
 	try {
-		const products = await ProductsDAO.getAll({}, { limit: 20 });
+		const products = await productsService.getAll({}, { limit: 20 });
 		res.render("components/user/index", {
 			layout: "main",
 			user: {
@@ -24,7 +24,7 @@ const Home = async (req, res) => {
 
 const Products = async (req, res) => {
 	try {
-		const products = await ProductsDAO.getAll({}, { limit: 20 });
+		const products = await productsService.getAll({}, { limit: 20 });
 
 		res.render("components/user/shop", {
 			layout: "main",
@@ -61,7 +61,7 @@ const ProductsSection = async (req, res) => {
 		options.page = page;
 		options.limit = limit;
 		console.log(query, options);
-		const paginate = await ProductsDAO.getAll(query, options);
+		const paginate = await productsService.getAll(query, options);
 		res.render("components/user/shop", {
 			layout: "main",
 			user: {
@@ -79,7 +79,7 @@ const ProductsSection = async (req, res) => {
 
 const ProductDetail = async (req, res) => {
 	try {
-		const product = await ProductsDAO.getById(req.params.id);
+		const product = await productsService.getById(req.params.id);
 		const stockproduct = product.stock > 0;
 		const title = product.title.toLowerCase();
 		if (!product) res.status(404).send({ error: "Producto no encontrado" });
@@ -112,6 +112,7 @@ const CardID = async (req, res) => {
 	try {
 		const cid = req.params.cid;
 		const totalProd = await CartsDAO.getByIdPopulate(cid);
+		console.log(totalProd);
 		const products = totalProd.products.map(e => {
 			return {
 				...e.pid,
@@ -120,7 +121,7 @@ const CardID = async (req, res) => {
 				cid: totalProd._id,
 			};
 		});
-		console.log(!products.find(e => e.confirm));
+
 		res.render("components/user/cart", {
 			layout: "main",
 			user: {

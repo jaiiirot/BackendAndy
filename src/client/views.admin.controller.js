@@ -1,9 +1,7 @@
-import ProductsDAO from "../feature/products/products.dao.js";
-import ProductsDTO from "../feature/products/products.dto.js";
+import { productsService } from "../feature/products/repository/products.service.js";
 
 const Panel = async (req, res) => {
-	req.session.user = req.user._id;
-	const products = await ProductsDAO.getAll();
+	const products = await productsService.getAll();
 	res.render("components/admin/index", {
 		layout: "admin",
 		admin: {
@@ -17,7 +15,6 @@ const Panel = async (req, res) => {
 const PanelProducts = async (req, res) => {
 	let products;
 	const action = req.query.action;
-
 	if (action === "agregar") {
 		res.render("components/admin/addprod", {
 			layout: "admin",
@@ -27,7 +24,7 @@ const PanelProducts = async (req, res) => {
 			},
 		});
 	} else if (action === "editar") {
-		products = await ProductsDTO.getProduct(req.query.pid);
+		products = await productsService.getById(req.query.pid);
 		res.render("components/admin/putprod", {
 			layout: "admin",
 			admin: {
@@ -39,7 +36,7 @@ const PanelProducts = async (req, res) => {
 		});
 	} else {
 		const page = parseInt(req.query.page) || 1;
-		products = await ProductsDAO.getAll({}, { page, limit: 10 });
+		products = await productsService.getAll({}, { page, limit: 10 });
 		products.prevLink = products.hasPrevPage
 			? `/panel/productos?page=${products.prevPage}`
 			: "";

@@ -51,7 +51,7 @@ const logout = async (req, res) => {
 	try {
 		req.session.destroy();
 		res.clearCookie("jwt");
-		res.redirect("/login");
+		res.redirect("/");
 	} catch (error) {
 		console.error("Error al procesar la solicitud:", error);
 	}
