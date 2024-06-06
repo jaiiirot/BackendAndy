@@ -1,5 +1,4 @@
 import { Messages } from "./messages.schema.js";
-import { usersService } from "../users/repository/users.service.js";
 export default class MessagesDAO {
 	async getAll() {
 		try {

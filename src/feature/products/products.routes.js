@@ -5,6 +5,13 @@ import { controllersProducts } from "./products.controller.js";
 import express from "express";
 const router = express.Router();
 
+router.get(
+	"/mockingproducts",
+	authentication,
+	authorization(["ADMIN"]),
+	controllersProducts.getAllMockingProducts
+);
+
 router.post(
 	"/",
 	authentication,
@@ -12,6 +19,7 @@ router.post(
 	upload.array("photo", 4),
 	controllersProducts.postProduct
 );
+
 router.delete(
 	"/:pid",
 	authentication,

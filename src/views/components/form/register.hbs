@@ -127,7 +127,7 @@ formRegister.addEventListener('submit', (e) => {
         return res.json();
     })
     .then(data => {
-        ToastNotification(data, status);
+        ToastNotification(data.msg, status);
     })
     .catch(err => console.log(err));
 });

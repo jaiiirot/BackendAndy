@@ -12,6 +12,7 @@ import routerProd from "./feature/products/products.routes.js";
 import routerUser from "./feature/users/sessions.routes.js";
 import routerCart from "./feature/carts/carts.routes.js";
 import routerMessage from "./feature/messages/messages.routes.js";
+import routerTicket from "./feature/tickets/tickets.routes.js";
 
 import { ENV } from "./config/config.js";
 
@@ -55,6 +56,7 @@ function STARTAPP(PORT, DATABASE, SECRET_COOKIE, TTL, SECRET_SESSION) {
 	app.use("/api/messages", routerMessage);
 	app.use("/api/carts", routerCart);
 	app.use("/api/sessions", routerUser);
+	app.use("/api/tickets", routerTicket);
 	app.use("/", routerViews);
 
 	// // 404

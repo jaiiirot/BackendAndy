@@ -1,4 +1,5 @@
 import { productsService } from "./repository/products.service.js";
+import { generateListProducts } from "../../utils/mocks.js";
 
 const redirectToPanel = (res, status, message) => {
 	const redirectUrl = `/panel/productos?st=${message}`;
@@ -44,8 +45,20 @@ const putProduct = async (req, res) => {
 	}
 };
 
+const getAllMockingProducts = async (req, res, next) => {
+	try {
+		const result = await generateListProducts();
+
+		res.send({ status: "sucess", payload: [...result] });
+	} catch (error) {
+		next(error);
+	}
+};
+
 export const controllersProducts = {
 	postProduct,
 	deleteProduct,
 	putProduct,
+
+	getAllMockingProducts,
 };
