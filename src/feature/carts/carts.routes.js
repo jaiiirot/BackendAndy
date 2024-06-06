@@ -25,12 +25,14 @@ router.get(
 	authorization(["CLIENT"]),
 	controllersCarts.getCartById
 );
+
 router.put(
 	"/:cid",
 	authentication,
 	authorization(["CLIENT"]),
 	controllersCarts.putUpdateCart
 );
+
 router.delete(
 	"/:cid",
 	authentication,

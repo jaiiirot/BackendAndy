@@ -1,5 +1,6 @@
 <div
   class="border-b border-gray-600 flex px-6 py-2 items-center flex-none shadow-xl"
+  data-mid="6661334bb516de6c4a6e0876" id="container-chat"
 >
   <div class="flex flex-col">
     <h3 class="text-white mb-1 font-bold text-xl text-gray-100">
@@ -9,21 +10,7 @@
   </div>
 </div>
 <div class="px-6 py-4 flex-1 overflow-y-scroll" id="on-messages-container">
-  {{!-- <div class="border-b border-gray-600 py-3 flex items-start mb-4 text-sm">
-    <img
-      src="https://cdn.discordapp.com/embed/avatars/0.png"
-      class="cursor-pointer w-10 h-10 rounded-3xl mr-3"
-    />
-    <div class="flex-1 overflow-hidden">
-      <div>
-        <span
-          class="font-bold text-red-300 cursor-pointer hover:underline"
-        >User</span>
-        <span class="font-bold text-gray-400 text-xs">09:23</span>
-      </div>
-      <p class="text-white leading-normal">Discord is awesome!</p>
-    </div>
-  </div> --}}
+  {{!-- MESSAGE --}}
 </div>
 <div class="p-4 flex">
   <input
@@ -41,20 +28,27 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
   const socket = io();
+  const messageId = document.getElementById("container-chat");
   const messageInput = document.getElementById("message-input");
   const messagesContainer = document.getElementById("on-messages-container");
 
   messageInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
-      socket.emit("input_chat", e.target.value);
+      socket.emit("input_chat",{mid: messageId.dataset.mid , role: "admin" ,message: e.target.value});
       e.target.value = "";
     }
   });
+  
   socket.on("container_chat", (messages) => {
     messagesContainer.innerHTML = "";
     messages.forEach((msg) => {;
-      const div = `<div><p>${msg}</p></div>`
-      messagesContainer.innerHTML += div;
+      if(msg.role !== "user"){
+        const div = `<div class="flex items-start justify-end"><div class="bg-[#010101] p-3 rounded-lg"><p class="text-sm text-white">${msg.message}</p></div></div>`;
+        messagesContainer.innerHTML += div;
+      }else{
+        const div = `<div class="flex items-end"><div class="ml-3 bg-gray-100 p-3 rounded-lg"><p class="text-sm text-gray-800">${msg.message}</p></div></div>`;
+        messagesContainer.innerHTML += div;
+      }
     });
   });
   

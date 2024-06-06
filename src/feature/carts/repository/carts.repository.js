@@ -3,66 +3,50 @@ export default class CartRepository {
 		this.dao = dao;
 	}
 
-	getAll = async () => {
-		const result = await this.dao.getAll();
-		return result;
+	getAll = async (query, options) => {
+		const carts = await this.dao.getAll(query, options);
+		return carts;
 	};
 
 	getById = async id => {
-		const result = await this.dao.getById(id);
-		return result;
+		const cart = await this.dao.getById(id);
+		return cart;
 	};
 
-	add = async products => {
-		const result = await this.dao.add(products);
-		return result;
+	getProductToCart = async (cartId, productId) => {
+		const product = await this.dao.getProductToCart(cartId, productId);
+		return product;
 	};
 
-	addNewProductInCartById = async (cartId, productID, quantity) => {
-		const result = await this.dao.addNewProductInCartById(
-			cartId,
-			productID,
-			quantity
-		);
-		return result;
+	getByIdPopulate = async id => {
+		const cart = await this.dao.getByIdPopulate(id);
+		return cart;
 	};
 
-	updateOneProductInCart = async (cartId, productID, quantity) => {
-		const result = await this.dao.updateOneProductInCart(
-			cartId,
-			productID,
-			quantity
-		);
-		return result;
+	post = async cart => {
+		const newCart = await this.dao.addCart(cart);
+		return newCart;
 	};
 
-	updateAllProductsInCart = async (cartId, products) => {
-		const result = await this.dao.updateAllProductsInCart(cartId, products);
-		return result;
+	postAddProductToCart = async (cartId, productId) => {
+		await this.dao.CartAddProduct(cartId, productId);
 	};
 
-	removeProductInCartById = async (cartId, productID) => {
-		const result = await this.dao.removeProductInCartById(cartId, productID);
-		return result;
+	put = async (id, data) => {
+		const updatedCart = await this.dao.updateCart(id, data);
+		return updatedCart;
 	};
 
-	update = async (id, data) => {
-		const result = await this.dao.update(id, data);
-		return result;
+	putUpdateProductInCart = async (cartId, productId, action) => {
+		await this.dao.CartUpdateProduct(cartId, productId, action);
 	};
 
-	remove = async id => {
-		const result = await this.dao.remove(id);
-		return result;
+	delete = async id => {
+		const deletedCart = await this.dao.deleteCart(id);
+		return deletedCart;
 	};
 
-	getAllWithLimit = async (limit, skip = 0) => {
-		const result = await this.dao.getAllWithLimit(limit, (skip = 0));
-		return result;
-	};
-
-	createCartEmpty = async () => {
-		const result = await this.dao.createCartEmpty();
-		return result;
+	deleteProductInCart = async (cartId, productId) => {
+		await this.dao.CartDeleteProduct(cartId, productId);
 	};
 }

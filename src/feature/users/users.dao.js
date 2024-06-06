@@ -1,7 +1,5 @@
 import { Users } from "./users.schema.js";
-// import CartsDAO from "../carts/carts.dao.js";
-
-class UsersDAO {
+export default class UsersDAO {
 	async getAll() {
 		try {
 			return await Users.find();
@@ -64,6 +62,13 @@ class UsersDAO {
 			throw error;
 		}
 	}
-}
 
-export default new UsersDAO();
+	async deleteUser(id) {
+		try {
+			return await Users.findByIdAndDelete(id);
+		} catch (error) {
+			console.error("Error al eliminar usuario por id:", error);
+			throw error;
+		}
+	}
+}

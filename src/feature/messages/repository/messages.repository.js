@@ -3,48 +3,30 @@ export default class MessagesRepository {
 		this.dao = dao;
 	}
 
-	getAll = async () => {
-		const result = await this.dao.getAll();
-		return result;
-	};
-
-	getById = async id => {
-		const result = await this.dao.getById(id);
-		return result;
-	};
-
-	getByUser = async userMail => {
-		const result = await this.dao.getByUser(userMail);
-		return result;
-	};
-
-	add = async (userMail, message) => {
-		const result = await this.dao.add(userMail, message);
-		return result;
-	};
-
-	async addMany(collection) {
-		const result = await this.dao.addMany(collection);
-		return result;
+	async getAll() {
+		return await this.dao.getAll();
 	}
 
-	addNewMessageByUserMail = async (userMail, message) => {
-		const result = await this.dao.addNewMessageByUserMail(userMail, message);
-		return result;
-	};
+	async getById(mid) {
+		return await this.dao.getById(mid);
+	}
 
-	update = async (id, message) => {
-		const result = await this.dao.update(id, message);
-		return result;
-	};
+	async getChatById(mid) {
+		const chat = await this.dao.getById(mid);
+		console.log(chat.messages);
+		return chat.messages;
+	}
 
-	remove = async id => {
-		const result = await this.dao.remove(id);
-		return result;
-	};
+	async postAddMessageInChat(id, role, message) {
+		// console.log(id, email, message);
+		return await this.dao.postMessage(id, role, message);
+	}
 
-	removeByUser = async userMail => {
-		const result = await this.dao.removeByUser(userMail);
-		return result;
-	};
+	async delete(mid) {
+		return await this.dao.delete(mid);
+	}
+
+	async deleteClearMessageInChat(messageId) {
+		return await this.dao.deleteClearMessage(messageId);
+	}
 }

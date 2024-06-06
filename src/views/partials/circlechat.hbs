@@ -1,4 +1,4 @@
-{{!-- <div class="fixed bottom-0 right-0 z-10 max-w-md mx-auto p-4" data-mid="{{user.info.chat}}" id="container-chat">
+<div class="fixed bottom-0 right-0 z-10 max-w-md mx-auto p-4" data-mid="{{user.info.chat}}" id="container-chat">
   <!-- Chat Container -->
   <div class="bg-white rounded-lg shadow-md p-4">
     <!-- Chat Header -->
@@ -9,32 +9,18 @@
       </div>
     </div>
 
-    <!-- Chat Messages -->
+     {{!-- Chat Messages  --}}
     <div class="space-y-4 max-h-[200px] overflow-y-scroll" id="on-messages-container">
-    <!--
-       Received Message 
-      <div class="flex items-start">
-       
-        <div class="ml-3 bg-gray-100 p-3 rounded-lg">
-          <p class="text-sm text-gray-800">Hello! How can I help you today?</p>
-        </div>
-      </div>
-
-       Sent Message
-      <div class="flex items-end justify-end">
-        <div class="bg-[#010101] p-3 rounded-lg">
-          <p class="text-sm text-white">Sure, I have a question.</p>
-        </div>
-      </div>
-    -->
+      {{!-- MEESAGE --}}
     </div> 
 
-    <!-- Chat Input -->
+     {{!-- Chat Input --}}
     <div class="mt-4 flex items-center">
       <input
         type="text"
         placeholder="Type your message..."
         id="message-input"
+        data-email="{{user.info.email}}"
         class="flex-1 py-2 px-3 rounded-full bg-gray-100 focus:outline-none"
       />
         <input type="button" value="Enviar" class="bg-[#222222] text-white px-4 py-2 rounded-full ml-3 hover:bg-[#000000]" />
@@ -50,17 +36,22 @@
 
   messageInput.addEventListener("keypress",async (e) => {
     if (e.key === "Enter") {
-      socket.emit("input_chat", {mid: messageId.dataset.mid ,content: {uid:"asdasdasd" ,message: e.target.value}});
+      socket.emit("input_chat", {mid: messageId.dataset.mid , role: "user" ,message: e.target.value});
       e.target.value = "";
     }
   });
+
   socket.on("container_chat", (messages) => {
-    console.log("user",messages);
     messagesContainer.innerHTML = "";
     messages.forEach((msg) => {;
-      const div = `<div><p>${msg}</p></div>`
-      messagesContainer.innerHTML += div;
+      if(msg.role === "user"){
+        const div = `<div class="flex items-end justify-end"><div class="bg-[#010101] p-3 rounded-lg"><p class="text-sm text-white">${msg.message}</p></div></div>`;
+        messagesContainer.innerHTML += div;
+      }else{
+        const div = `<div class="flex items-start"><div class="ml-3 bg-gray-100 p-3 rounded-lg"><p class="text-sm text-gray-800">${msg.message}</p></div></div>`;
+        messagesContainer.innerHTML += div;
+      }
     });
   });
   
-</script> --}}
+</script>

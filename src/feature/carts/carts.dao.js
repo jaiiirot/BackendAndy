@@ -1,6 +1,6 @@
 import { Carts } from "./carts.schema.js";
-class CartsDAO {
-	static async getAll() {
+export default class CartsDAO {
+	async getAll() {
 		try {
 			return await Carts.find({}).lean();
 		} catch (error) {
@@ -8,7 +8,7 @@ class CartsDAO {
 		}
 	}
 
-	static async getById(id) {
+	async getById(id) {
 		try {
 			return await Carts.findById(id).lean();
 		} catch (error) {
@@ -16,23 +16,19 @@ class CartsDAO {
 		}
 	}
 
-	static async getProductToCart(cartId, productId) {
+	async getProductToCart(cartId, productId) {
 		try {
 			const cart = await this.getById(cartId);
-			if (!cart) {
-				console.error("Carrito no encontrado");
-			}
+			if (!cart) console.error("Carrito no encontrado");
 			const product = cart.products.find(prod => prod.pid.equals(productId));
-			if (!product) {
-				console.error("Producto no encontrado en el carrito");
-			}
+			if (!product) console.error("Producto no encontrado en el carrito");
 			return product;
 		} catch (error) {
 			console.error("Error al obtener producto del carrito:", error);
 		}
 	}
 
-	static async getByIdPopulate(id) {
+	async getByIdPopulate(id) {
 		try {
 			return await Carts.findById(id).populate("products.pid").lean();
 		} catch (error) {
@@ -40,7 +36,7 @@ class CartsDAO {
 		}
 	}
 
-	static async addCart(cart) {
+	async addCart(cart) {
 		try {
 			return await Carts.create(cart);
 		} catch (error) {
@@ -48,7 +44,7 @@ class CartsDAO {
 		}
 	}
 
-	static async CartAddProduct(cartId, productId) {
+	async CartAddProduct(cartId, productId) {
 		try {
 			const existcart = await this.getById(cartId);
 			if (!existcart) {
@@ -76,7 +72,7 @@ class CartsDAO {
 		}
 	}
 
-	static async updateCart(cartId, cart) {
+	async updateCart(cartId, cart) {
 		try {
 			return await Carts.findByIdAndUpdate(cartId, cart, { new: true });
 		} catch (error) {
@@ -84,7 +80,7 @@ class CartsDAO {
 		}
 	}
 
-	static async CartUpdateProduct(cartId, productId, action) {
+	async CartUpdateProduct(cartId, productId, action) {
 		try {
 			let update = {};
 
@@ -108,7 +104,15 @@ class CartsDAO {
 		}
 	}
 
-	static async deleteCart(cartId) {
+	async delete(cartId) {
+		try {
+			return await Carts.findByIdAndDelete(cartId);
+		} catch (error) {
+			console.error("Error al eliminar carrito:", error);
+		}
+	}
+
+	async deleteCart(cartId) {
 		try {
 			return await Carts.updateOne({ _id: cartId }, { $set: { products: [] } });
 		} catch (error) {
@@ -116,7 +120,7 @@ class CartsDAO {
 		}
 	}
 
-	static async CartDeleteProduct(cartId, productId) {
+	async CartDeleteProduct(cartId, productId) {
 		try {
 			await Carts.updateOne(
 				{ _id: cartId },
@@ -127,5 +131,3 @@ class CartsDAO {
 		}
 	}
 }
-
-export default CartsDAO;

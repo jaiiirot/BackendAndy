@@ -1,5 +1,5 @@
 import { productsService } from "../feature/products/repository/products.service.js";
-import CartsDAO from "../feature/carts/carts.dao.js";
+import { cartsService } from "../feature/carts/repository/carts.service.js";
 
 const RedirectHome = (req, res) => {
 	res.redirect("/");
@@ -60,7 +60,7 @@ const ProductsSection = async (req, res) => {
 		if (category !== "") query.category = { $in: category };
 		options.page = page;
 		options.limit = limit;
-		console.log(query, options);
+		// console.log(query, options);
 		const paginate = await productsService.getAll(query, options);
 		res.render("components/user/shop", {
 			layout: "main",
@@ -111,8 +111,7 @@ const Contact = (req, res) => {
 const CardID = async (req, res) => {
 	try {
 		const cid = req.params.cid;
-		const totalProd = await CartsDAO.getByIdPopulate(cid);
-		console.log(totalProd);
+		const totalProd = await cartsService.getByIdPopulate(cid);
 		const products = totalProd.products.map(e => {
 			return {
 				...e.pid,

@@ -12,7 +12,11 @@ export const authorization = (ROLE = []) => {
 			} else if (role === "ADMIN") {
 				req.infoUser = {
 					exist: true,
-					info: { username: req.user.username, chat: req.user.messages.mid },
+					info: {
+						username: req.user.username,
+						chat: req.user.messages.mid,
+						email: req.user.email,
+					},
 				};
 			} else if (role === "CLIENT") {
 				req.infoUser = {
@@ -21,6 +25,7 @@ export const authorization = (ROLE = []) => {
 						username: req.user.username,
 						cart: req.user.cart.cid,
 						chat: req.user.messages.mid,
+						email: req.user.email,
 					},
 				};
 			}

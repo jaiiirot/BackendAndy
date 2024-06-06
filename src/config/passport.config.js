@@ -1,9 +1,8 @@
-import UsersDAO from "../feature/users/users.dao.js";
-import UsersDTO from "../feature/users/users.dto.js";
 import passport from "passport";
 import GitHubStrategy from "passport-github2";
 import { Strategy as JtwStrategy } from "passport-jwt";
 import { ENV } from "./config.js";
+import { usersService } from "../feature/users/repository/users.service.js";
 const { SECRET_COOKIE } = ENV;
 const { CLIENT_ID, CLIENT_SECRET, CALLBACK_URL } = ENV.GITHUB;
 
@@ -30,7 +29,7 @@ export const configPassport = app => {
 				secretOrKey: SECRET_COOKIE,
 			},
 			async function (jwtPayload, done) {
-				const user = await UsersDAO.getById(jwtPayload.id);
+				const user = await usersService.getById(jwtPayload.id);
 				if (user) {
 					return done(null, user);
 				} else {
@@ -51,13 +50,11 @@ export const configPassport = app => {
 			},
 			async (accessToken, refreshToken, profile, done) => {
 				try {
-					const user = await UsersDAO.getByEmailUserGithub(
-						profile.emails[0].value
-					);
+					const user = await usersService.getByEmail(profile.emails[0].value);
 					if (user) {
 						done(null, user);
 					} else {
-						done(null, await UsersDTO.fromGithub(await profile));
+						done(null, await usersService.postFromGithub(await profile));
 					}
 				} catch (error) {
 					console.error("Error al loguear con github:", error);

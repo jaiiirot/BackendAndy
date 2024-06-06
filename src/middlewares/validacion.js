@@ -1,5 +1,4 @@
-import UsersDAO from "../feature/users/users.dao.js";
-import { comparePassword } from "../utils/crypt.js";
+import { usersService } from "../feature/users/repository/users.service.js";
 
 export const validateData = option => {
 	if (option === "register") {
@@ -17,7 +16,7 @@ export const validateData = option => {
 				res.status(400).json({ msg: "Los correos no coinciden" });
 			} else if (user.password !== user.repassword) {
 				res.status(400).json({ msg: "Las contraseñas no coinciden" });
-			} else if (await UsersDAO.getByEmail(user.email)) {
+			} else if (await usersService.getByEmail(user.email)) {
 				res.status(400).json({ msg: "El correo ya esta registrado" });
 			} else {
 				next();
@@ -29,17 +28,7 @@ export const validateData = option => {
 			if (!req.body.email || !req.body.password) {
 				res.status(400).json({ msg: "Faltan datos" });
 			} else {
-				const database = await UsersDAO.getByEmail(req.body.email);
-				if (database) {
-					if (!comparePassword(database, req.body.password)) {
-						res.status(400).json({ msg: "¡Datos incorrectos!" });
-					} else {
-						req.loginUserID = database._id;
-						next();
-					}
-				} else {
-					res.status(400).json({ msg: "Datos incorrectos" });
-				}
+				next();
 			}
 		};
 	}

@@ -1,13 +1,17 @@
-import messagesDao from "../feature/messages/messages.dao.js";
+import { messagesService } from "../feature/messages/repository/messages.service.js";
 export const initialSocket = socket => {
-	const messages = [];
 	socket.on("connection", io => {
 		console.log("New user connected");
 		io.on("input_chat", async data => {
-			console.log(data.mid, data.msg);
-			const newMessage = await messagesDao.postMessage(data.mid, data.content);
-			console.log(newMessage);
-			socket.emit("container_chat", messages);
+			await messagesService.postAddMessageInChat(
+				data.mid,
+				data.role,
+				data.message
+			);
+			socket.emit(
+				"container_chat",
+				await messagesService.getChatById(data.mid)
+			);
 		});
 	});
 };

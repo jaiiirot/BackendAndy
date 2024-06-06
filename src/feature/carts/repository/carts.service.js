@@ -1,4 +1,4 @@
-import { Carts } from "../../factoryDAO.js";
+import CartsDAO from "../carts.dao.js";
 import CartRepository from "./carts.repository.js";
 
-export const cartsService = new CartRepository(new Carts());
+export const cartsService = new CartRepository(new CartsDAO());

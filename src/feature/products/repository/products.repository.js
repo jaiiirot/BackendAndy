@@ -78,7 +78,6 @@ export default class ProductRepository {
 				}
 			} else {
 				photos = photoUrls.photo;
-				console.log("else: ", photos);
 			}
 			data.photo = photos;
 			const result = new ProductDTO(data);
@@ -91,10 +90,9 @@ export default class ProductRepository {
 
 	delete = async id => {
 		const photoUrls = await this.dao.getById(id);
-		const result = photoUrls.photo.forEach(async element => {
+		photoUrls.photo.forEach(async element => {
 			await deleteCloudinary(element);
 		});
-		console.log(result);
 		return await this.dao.deleteProduct(id);
 	};
 }

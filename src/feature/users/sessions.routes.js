@@ -28,7 +28,6 @@ router.get(
 	}),
 	controllersSessions.authGitHubCallback
 );
-
 router.get(
 	"/current",
 	authentication,
@@ -36,5 +35,12 @@ router.get(
 	function (req, res) {
 		res.json(req.user);
 	}
+);
+
+router.delete(
+	"/:uid",
+	authentication,
+	authorization(["ADMIN"]),
+	controllersSessions.deleteUser
 );
 export default router;
