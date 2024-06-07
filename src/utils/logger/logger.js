@@ -1,8 +1,6 @@
 import winston, { format } from "winston";
-
-import envConfig from "../../config/config.js";
-
-const customLevelsOptions = {
+import { ENV } from "../../config/config.js";
+const loggerconfig = {
 	levels: {
 		fatal: 0,
 		error: 1,
@@ -22,12 +20,12 @@ const customLevelsOptions = {
 };
 
 export const logger = winston.createLogger({
-	levels: customLevelsOptions.levels,
+	levels: loggerconfig.levels,
 	transports: [
 		new winston.transports.Console({
-			level: envConfig.ENTORNO === "production" ? "info" : "debug",
+			level: ENV.ENTORNO === "production" ? "info" : "debug",
 			format: winston.format.combine(
-				winston.format.colorize({ colors: customLevelsOptions.colors }),
+				winston.format.colorize({ colors: loggerconfig.colors }),
 				winston.format.simple(),
 				winston.format.errors({ stack: true })
 			),
@@ -40,6 +38,7 @@ export const logger = winston.createLogger({
 		}),
 	],
 });
+// console.log(logger.);
 
 export const addLogger = (req, res, next) => {
 	req.logger = logger;

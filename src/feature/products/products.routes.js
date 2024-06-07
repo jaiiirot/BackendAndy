@@ -8,7 +8,7 @@ const router = express.Router();
 router.get(
 	"/mockingproducts",
 	authentication,
-	authorization(["ADMIN"]),
+	authorization(["ADMIN", "USER"]),
 	controllersProducts.getAllMockingProducts
 );
 

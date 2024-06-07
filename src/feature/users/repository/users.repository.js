@@ -46,6 +46,11 @@ export default class UsersRepository {
 		return user;
 	};
 
+	putPasswordByEmail = async data => {
+		const user = await this.dao.putPasswordByEmail(data);
+		return user;
+	};
+
 	delete = async id => {
 		try {
 			const user = await this.dao.getById(id);

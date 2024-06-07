@@ -1,5 +1,5 @@
 import { productsService } from "./repository/products.service.js";
-import { generateListProducts } from "../../utils/mocks.js";
+import { generateListProducts } from "../../utils/mocks/mocks.js";
 
 const redirectToPanel = (res, status, message) => {
 	const redirectUrl = `/panel/productos?st=${message}`;

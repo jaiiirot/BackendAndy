@@ -63,6 +63,18 @@ export default class UsersDAO {
 		}
 	}
 
+	async putPasswordByEmail(data) {
+		try {
+			return await Users.findOne.update(
+				{ email: data.email },
+				{ password: data.password }
+			);
+		} catch (error) {
+			console.error("Error al actualizar la contraseña del usuario:", error);
+			throw error;
+		}
+	}
+
 	async deleteUser(id) {
 		try {
 			return await Users.findByIdAndDelete(id);
