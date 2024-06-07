@@ -26,7 +26,7 @@ STARTAPP(PORT, DB_MONGO, SECRET_COOKIE, TTL, SECRET_SESSION);
 function STARTAPP(PORT, DATABASE, SECRET_COOKIE, TTL, SECRET_SESSION) {
 	const app = express();
 	const httpServer = app.listen(PORT, () => {
-		console.log("Server on port http://localhost:8080");
+		console.log(`Server on port http://localhost:${PORT}`);
 	});
 
 	// MIDDLAWARES

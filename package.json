@@ -5,7 +5,9 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/app.js"
+    "start": "node ./src/app.js",
+    "dev": "set NODE_ENV=dev&& npx nodemon src/app.js",
+    "prod": "set NODE_ENV=production&& node ./src/app.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,7 +15,10 @@
     "eslint-config-prettier": "^9.1.0",
     "nodemon": "^3.0.3",
     "npm-run-all": "^4.1.5",
-    "standard": "^17.1.0"
+    "standard": "^17.1.0",
+    "supertest": "^7.0.0",
+    "chai": "^5.1.1",
+    "mocha": "^10.4.0"
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
@@ -39,7 +44,13 @@
     "session-file-store": "^1.5.0",
     "sharp": "^0.33.3",
     "socket.io": "^4.7.4",
-    "winston": "^3.13.0"
+    "winston": "^3.13.0",
+    "inquirer": "^9.2.17",
+    "joi": "^17.12.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
+    "commander": "^12.0.0",
+    "connect-flash": "^0.1.1"
   },
   "eslintConfig": {
     "extends": [
