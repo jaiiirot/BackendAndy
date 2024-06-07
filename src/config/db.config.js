@@ -10,7 +10,7 @@ export const configMongoose = url => {
 	}
 	const dbConnection = mongoose.connection;
 	dbConnection.once("open", _ => {
-		logger.info(`⚡️[Database] Database connected: ${url}`);
+		logger.info(`🛢️ [ Database connected: ${url}`);
 	});
 
 	dbConnection.on("error", err => {
