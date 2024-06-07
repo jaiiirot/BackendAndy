@@ -61,12 +61,6 @@ export const validateData = method => {
 			async (req, res, next) => {
 				const errores = validationResult(req);
 				if (!errores.isEmpty()) {
-					console.log(
-						errores
-							.array()
-							.map(e => e.msg)
-							.join("\n")
-					);
 					return res.status(400).json({
 						msg: errores
 							.array()
@@ -89,7 +83,12 @@ export const validateData = method => {
 			async (req, res, next) => {
 				const errores = validationResult(req);
 				if (!errores.isEmpty()) {
-					return res.status(400).json({ errores: errores.array() });
+					return res.status(400).json({
+						msg: errores
+							.array()
+							.map(e => e.msg)
+							.join("\n"),
+					});
 				}
 				next();
 			},

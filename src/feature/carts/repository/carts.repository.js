@@ -1,6 +1,8 @@
 export default class CartRepository {
-	constructor(dao) {
+	constructor(dao, productDao, ticketDao) {
 		this.dao = dao;
+		this.productDao = productDao;
+		this.ticketDao = ticketDao;
 	}
 
 	getAll = async (query, options) => {
@@ -21,6 +23,28 @@ export default class CartRepository {
 	getByIdPopulate = async id => {
 		const cart = await this.dao.getByIdPopulate(id);
 		return cart;
+	};
+
+	getPurchaseCart = async (cid, email) => {
+		const cart = await this.dao.getByIdPopulate(cid);
+		let amount = 0;
+		for (const product of cart.products) {
+			if (product.quantity < product.pid.stock) {
+				amount += product.pid.price * product.quantity;
+			}
+		}
+		const result = await this.ticketDao.post({ amount, purchaser: email });
+		if (result) {
+			cart.products.forEach(async product => {
+				await this.productDao.putStockByProduct(
+					"less",
+					product.pid._id,
+					product.quantity
+				);
+			});
+			await this.dao.deleteCart(cid);
+		}
+		return result;
 	};
 
 	post = async cart => {

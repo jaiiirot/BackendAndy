@@ -69,12 +69,12 @@
               Eliminar carrito
             </span>
             {{#if user.permit}}
-              <a
-                href="/api/carts/{{user.indo.cid}}/purchase"
+              <button
+                onclick="postTicket('{{user.info.cart}}')"
                 class="block rounded bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600"
               >
                 Finalizar compra
-              </a>
+              </button>
             {{/if}}
           </div>
         </div>
@@ -118,5 +118,29 @@
     window.location.reload();
   }
 
-
+  const postTicket = async (cid) => {
+    console.log(cid)
+    const response = await fetch(`/api/carts/${cid}/purchase`,{
+      method: 'post'
+    })
+    const data = await response.json();
+    console.log(data)
+    if(data.status === 'success'){
+      Swal.fire({
+        title: 'Compra realizada',
+        text: `Gracias por tu compra \n Nos pondremos en contacto contigo para coordinar la entrega \n ${data.message}`,
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      }).then((e) => {
+        if(e.isConfirmed) window.location.href = '/'
+      })
+    }else{
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudo realizar la compra',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      })
+    }
+  }
 </script>

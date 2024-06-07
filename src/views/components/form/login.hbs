@@ -89,7 +89,7 @@ formLogin.addEventListener('submit', (e) => {
         return res.json();
     })
     .then(data => {
-        ToastNotification(data, status);
+        ToastNotification(data.msg, status);
         if (status === "success") window.location.href = "/";
     })
     .catch(err => console.log(err));

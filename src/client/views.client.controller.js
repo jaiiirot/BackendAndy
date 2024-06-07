@@ -120,7 +120,6 @@ const CardID = async (req, res) => {
 				cid: totalProd._id,
 			};
 		});
-
 		res.render("components/user/cart", {
 			layout: "main",
 			user: {

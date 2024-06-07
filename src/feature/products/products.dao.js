@@ -48,11 +48,49 @@ export default class ProductsDAO {
 		}
 	}
 
+	async getStockByProduct(id) {
+		try {
+			return await Products.findById(id, { stock: 1 }).lean();
+		} catch (error) {
+			console.error(`Error al obtener stock de producto con ID ${id}:`, error);
+			throw error;
+		}
+	}
+
 	async getById(id) {
 		try {
 			return await Products.findOne({ _id: id }).lean();
 		} catch (error) {
 			console.error(`Error al obtener producto con ID ${id}:`, error);
+			throw error;
+		}
+	}
+
+	async putStockByProduct(accion, id, quantity) {
+		try {
+			let putStock = {};
+			switch (accion) {
+				case "more":
+					putStock = { $inc: { stock: quantity } };
+					break;
+				case "less":
+					putStock = { $inc: { stock: -quantity } };
+					break;
+				default:
+					break;
+			}
+			const updatedProduct = await Products.findByIdAndUpdate(id, putStock, {
+				new: true,
+			});
+			if (!updatedProduct) {
+				throw new Error(`Producto con ID ${id} no encontrado`);
+			}
+			return updatedProduct;
+		} catch (error) {
+			console.error(
+				`Error al actualizar stock de producto con ID ${id}:`,
+				error
+			);
 			throw error;
 		}
 	}

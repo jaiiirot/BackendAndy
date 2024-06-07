@@ -11,6 +11,7 @@ router.get(
 	authorization(["CLIENT", "USER", "ADMIN"]),
 	controllersCarts.getAllCarts
 );
+
 router.post(
 	"/",
 	authentication,
@@ -24,6 +25,13 @@ router.get(
 	authentication,
 	authorization(["CLIENT"]),
 	controllersCarts.getCartById
+);
+
+router.post(
+	"/:cid/purchase",
+	authentication,
+	authorization(["CLIENT"]),
+	controllersCarts.getPurchaseCart
 );
 
 router.put(

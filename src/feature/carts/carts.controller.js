@@ -27,6 +27,22 @@ const getProductToCart = async (req, res) => {
 	}
 };
 
+const getPurchaseCart = async (req, res) => {
+	const { cid } = req.params;
+	const ticket = await cartsService.getPurchaseCart(
+		cid,
+		req.infoUser.info.email
+	);
+	if (!ticket) {
+		res.status(400).send({ error: "No se pudo realizar la compra" });
+		return;
+	}
+	res.status(200).send({
+		status: "success",
+		message: `, codigo de ticket: ${ticket.code}`,
+	});
+};
+
 const postCreateCart = async (req, res) => {
 	const newCart = await cartsService.post(req.body);
 	res.status(201).send(newCart);
@@ -97,6 +113,7 @@ export const controllersCarts = {
 	getAllCarts,
 	getCartById,
 	getProductToCart,
+	getPurchaseCart,
 	postCreateCart,
 	postAddProductToCart,
 	putUpdateCart,

@@ -19,21 +19,21 @@ router.post(
 );
 
 router.get(
-	"/:id",
+	"/:tid",
 	authentication,
 	authorization(["ADMIN", "CLIENT"]),
 	controllersTickets.getTicket
 );
 
 router.put(
-	"/:id",
+	"/:tid",
 	authentication,
 	authorization(["ADMIN"]),
 	controllersTickets.putTicket
 );
 
 router.delete(
-	"/:id",
+	"/:tid",
 	authentication,
 	authorization(["ADMIN", "CLIENT"]),
 	controllersTickets.deleteTicket
