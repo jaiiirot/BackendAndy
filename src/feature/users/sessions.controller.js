@@ -1,4 +1,5 @@
 import { usersService } from "./repository/users.service.js";
+import { logger } from "../../utils/logger/logger.js";
 
 const register = async (req, res) => {
 	try {
@@ -9,6 +10,7 @@ const register = async (req, res) => {
 			res.status(400).json({ msg: "Error al registrar el usuario" });
 		}
 	} catch (error) {
+		logger.error("🔴 Error al registrar el usuario:", error);
 		res.status(500).json({ msg: "Error interno del servidor" });
 	}
 };
@@ -24,6 +26,7 @@ const login = async (req, res) => {
 			res.status(400).send({ status: 400, msg: user.msg });
 		}
 	} catch (error) {
+		logger.error("🔴 Error al realizar el inicio de sesión:", error);
 		res.status(500).send({ msg: "Error interno del servidor" });
 	}
 };
@@ -35,6 +38,10 @@ const authGitHubCallback = async (req, res) => {
 		const user = await usersService.getLoginGithub(req.user);
 		res.cookie("jwt", user.token, user.time).redirect("/");
 	} catch (error) {
+		logger.error(
+			"🔴 Error al realizar el callback de autenticación de GitHub:",
+			error
+		);
 		res.status(500).send({ msg: "Error interno del servidor" });
 	}
 };
@@ -45,7 +52,7 @@ const logout = async (req, res) => {
 		res.clearCookie("jwt");
 		res.redirect("/");
 	} catch (error) {
-		console.error("Error al procesar la solicitud:", error);
+		logger.error("🔴 Error al cerrar sesión:", error);
 	}
 };
 
@@ -58,6 +65,7 @@ const deleteUser = async (req, res) => {
 			res.status(400).json({ msg: "Error al eliminar el usuario" });
 		}
 	} catch (error) {
+		logger.error("🔴 Error al eliminar el usuario:", error);
 		res.status(500).json({ msg: "Error interno del servidor" });
 	}
 };
@@ -71,6 +79,7 @@ const resetPassword = async (req, res) => {
 			res.status(400).json({ msg: "Error al actualizar la contraseña" });
 		}
 	} catch (error) {
+		logger.error("🔴 Error al restablecer la contraseña:", error);
 		res.status(500).json({ msg: "Error interno del servidor" });
 	}
 };

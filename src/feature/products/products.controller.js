@@ -1,5 +1,6 @@
 import { productsService } from "./repository/products.service.js";
 import { generateListProducts } from "../../utils/mocks/mocks.js";
+import { logger } from "../../utils/logger/logger.js";
 
 const redirectToPanel = (res, status, message) => {
 	const redirectUrl = `/panel/productos?st=${message}`;
@@ -14,7 +15,7 @@ const postProduct = async (req, res) => {
 		await productsService.post(req.body, req.files);
 		redirectToPanel(res, 200, "postsuccess");
 	} catch (error) {
-		console.error("Error al obtener todos los productos:", error);
+		logger.error("🔴 Error al agregar producto:", error);
 		redirectToPanel(res, 500, "failed");
 	}
 };
@@ -27,7 +28,7 @@ const deleteProduct = async (req, res) => {
 		await productsService.delete(req.params.pid);
 		redirectToPanel(res, 200, "deletesuccess");
 	} catch (error) {
-		console.error("Error al eliminar productos:", error);
+		logger.error("🔴 Error al eliminar producto:", error);
 		redirectToPanel(res, 500, "deletefailed");
 	}
 };
@@ -40,7 +41,7 @@ const putProduct = async (req, res) => {
 		await productsService.put(req.params.pid, req.body, req.files);
 		redirectToPanel(res, 200, "updatesuccess");
 	} catch (error) {
-		console.error("Error al actualizar el producto:", error);
+		logger.error("🔴 Error al actualizar producto:", error);
 		redirectToPanel(res, 500, "updatefailed");
 	}
 };
@@ -49,8 +50,9 @@ const getAllMockingProducts = async (req, res, next) => {
 	try {
 		const result = await generateListProducts();
 
-		res.send({ status: "sucess", payload: [...result] });
+		res.send({ status: "success", payload: [...result] });
 	} catch (error) {
+		logger.error("🔴 Error al obtener todos los productos mock:", error);
 		next(error);
 	}
 };
@@ -59,6 +61,5 @@ export const controllersProducts = {
 	postProduct,
 	deleteProduct,
 	putProduct,
-
 	getAllMockingProducts,
 };

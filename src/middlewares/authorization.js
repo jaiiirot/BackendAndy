@@ -1,3 +1,4 @@
+import { logger } from "../utils/logger/logger.js";
 export const authorization = (ROLE = []) => {
 	return (req, res, next) => {
 		const { role } = req.user;
@@ -31,7 +32,9 @@ export const authorization = (ROLE = []) => {
 			}
 			next();
 		} else {
+			const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 			res.status(401).redirect(`/${redirect}${msg}`);
+			logger.error(`❌ Autorización fallida. IP: ${ip}`);
 		}
 	};
 };

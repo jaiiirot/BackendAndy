@@ -1,7 +1,9 @@
 import { messagesService } from "../feature/messages/repository/messages.service.js";
-export const initialSocket = socket => {
-	socket.on("connection", io => {
-		console.log("New user connected");
+import { logger } from "./logger/logger.js";
+
+export const initialSocket = (socket, ENV) => {
+	socket.on("connection", async io => {
+		logger.info("🟢 usuario conectado");
 		io.on("input_chat", async data => {
 			await messagesService.postAddMessageInChat(
 				data.mid,

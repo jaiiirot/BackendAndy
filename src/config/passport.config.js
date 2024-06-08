@@ -3,10 +3,12 @@ import GitHubStrategy from "passport-github2";
 import { Strategy as JtwStrategy } from "passport-jwt";
 import { ENV } from "./config.js";
 import { usersService } from "../feature/users/repository/users.service.js";
+import { logger } from "../utils/logger/logger.js";
+
 const { SECRET_COOKIE } = ENV;
 const { CLIENT_ID, CLIENT_SECRET, CALLBACK_URL } = ENV.GITHUB;
 
-export const configPassport = app => {
+export const configPassport = (app, ENV) => {
 	passport.serializeUser((user, done) => {
 		done(null, user._id);
 	});
@@ -29,11 +31,16 @@ export const configPassport = app => {
 				secretOrKey: SECRET_COOKIE,
 			},
 			async function (jwtPayload, done) {
-				const user = await usersService.getById(jwtPayload.id);
-				if (user) {
-					return done(null, user);
-				} else {
-					return done(null, { role: "USER", cart: null, username: null });
+				try {
+					const user = await usersService.getById(jwtPayload.id);
+					if (user) {
+						return done(null, user);
+					} else {
+						return done(null, { role: "USER", cart: null, username: null });
+					}
+				} catch (error) {
+					logger.error("🔴 Error al autenticar con JWT:", error); // Usar el logger para registrar el error
+					return done(error, null);
 				}
 			}
 		)
@@ -57,7 +64,7 @@ export const configPassport = app => {
 						done(null, await usersService.postFromGithub(await profile));
 					}
 				} catch (error) {
-					console.error("Error al loguear con github:", error);
+					logger.error("🔴 Error al autenticar con GitHub:", error);
 					done(error, null);
 				}
 			}

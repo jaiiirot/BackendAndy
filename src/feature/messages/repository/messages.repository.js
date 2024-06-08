@@ -3,6 +3,10 @@ export default class MessagesRepository {
 		this.dao = dao;
 	}
 
+	async post(data) {
+		return await this.dao.addMessage(data);
+	}
+
 	async getAll() {
 		return await this.dao.getAll();
 	}

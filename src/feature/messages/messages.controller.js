@@ -1,23 +1,22 @@
-// hace enpoints para ,amejar mensajes con soketio y https, este es el  controlador de los mensajes
-import MessagesDAO from "./messages.dao.js";
+import { messagesService } from "./repository/messages.service.js";
+import { logger } from "../../utils/logger/logger.js";
 
 const postMessage = async (req, res) => {
 	try {
-		const newMessage = await MessagesDAO.addMessage(req.body.mid);
-		console.log(newMessage);
+		const newMessage = await messagesService.addMessage(req.body.mid);
 		res.status(201).json(newMessage);
 	} catch (error) {
-		console.error("Error al procesar la solicitud:", error);
+		logger.error("🔴 Error al procesar la solicitud:", error);
 		res.status(500).json({ error });
 	}
 };
 
 const getMessages = async (req, res) => {
 	try {
-		const messages = await MessagesDAO.getMessages();
+		const messages = await messagesService.getMessages();
 		res.status(200).json(messages);
 	} catch (error) {
-		console.error("Error al procesar la solicitud:", error);
+		logger.error("🔴 Error al procesar la solicitud:", error);
 		res.status(500).json({ error });
 	}
 };
@@ -25,10 +24,10 @@ const getMessages = async (req, res) => {
 const deleteMessage = async (req, res) => {
 	try {
 		const { id } = req.params;
-		const message = await MessagesDAO.deleteMessage(id);
+		const message = await messagesService.deleteMessage(id);
 		res.status(200).json(message);
 	} catch (error) {
-		console.error("Error al procesar la solicitud:", error);
+		logger.error("🔴 Error al procesar la solicitud:", error);
 		res.status(500).json({ error });
 	}
 };
@@ -37,14 +36,14 @@ const putMessage = async (req, res) => {
 	try {
 		const { id } = req.params;
 		const { name, email, message } = req.body;
-		const messageUpdated = await MessagesDAO.updateMessage(id, {
+		const messageUpdated = await messagesService.updateMessage(id, {
 			name,
 			email,
 			message,
 		});
 		res.status(200).json(messageUpdated);
 	} catch (error) {
-		console.error("Error al procesar la solicitud:", error);
+		logger.error("🔴 Error al procesar la solicitud:", error);
 		res.status(500).json({ error });
 	}
 };

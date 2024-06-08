@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import { ENV } from "../config/config.js";
+import { logger } from "./logger/logger.js"; // Importa el logger
 
 const { CLOUD_NAME, API_KEY, API_SECRET } = ENV.CLOUDINARY;
 cloudinary.config({
@@ -13,9 +14,10 @@ export const postCloudinary = async urlFile => {
 		const result = await cloudinary.uploader.upload(urlFile, {
 			folder: "ecommerce",
 		});
-		console.log(result);
+		logger.info("🟢 Imagen subida a Cloudinary:", result); // Registra la imagen subida en Cloudinary
 		return result.secure_url;
 	} catch (error) {
+		logger.error("🔴 Error al subir la imagen a Cloudinary:", error); // Registra el error al subir la imagen
 		return { msg: "Error al subir la imagen a Cloudinary:", error };
 	}
 };
@@ -38,8 +40,10 @@ export const deleteCloudinary = async urlFile => {
 	try {
 		const pathUrl = urlFile.split("/").pop().split(".").shift();
 		const response = await cloudinary.uploader.destroy(`ecommerce/${pathUrl}`);
+		logger.info("🟢 Imagen eliminada de Cloudinary:", response);
 		return { msg: "Imagen eliminada", response };
 	} catch (error) {
+		logger.error("🔴 Error al eliminar la imagen de Cloudinary:", error);
 		return { msg: "Error al eliminar la imagen de Cloudinary:", error };
 	}
 };
@@ -51,8 +55,10 @@ export const updateCloudinary = async (urlFile, newUrl) => {
 		const result = await cloudinary.uploader.upload(newUrl, {
 			folder: "ecommerce",
 		});
+		logger.info("🟢 Imagen actualizada en Cloudinary:", result);
 		return result.secure_url;
 	} catch (error) {
+		logger.error("🔴 Error al actualizar la imagen en Cloudinary:", error);
 		return { msg: "Error al actualizar la imagen en Cloudinary:", error };
 	}
 };

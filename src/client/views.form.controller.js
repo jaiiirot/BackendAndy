@@ -1,3 +1,5 @@
+import { logger } from "../utils/logger/logger.js";
+
 const Login = (req, res) => {
 	try {
 		res.render("components/form/login", {
@@ -7,9 +9,10 @@ const Login = (req, res) => {
 			},
 		});
 	} catch (error) {
-		console.error("Error al procesar la solicitud:", error);
+		logger.error("🔴 Error al procesar la solicitud:", error);
 	}
 };
+
 const Register = (req, res) => {
 	try {
 		res.render("components/form/register", {
@@ -19,9 +22,10 @@ const Register = (req, res) => {
 			},
 		});
 	} catch (error) {
-		console.error("Error al procesar la solicitud:", error);
+		logger.error("🔴 Error al procesar la solicitud:", error);
 	}
 };
+
 export const controllersViewforms = {
 	Login,
 	Register,
