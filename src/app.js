@@ -11,7 +11,7 @@ import { configMongoose } from "./config/db.config.js";
 import { configPassport } from "./config/passport.config.js";
 import { configHandebars } from "./config/hbs.config.js";
 import { configSocketIo } from "./config/socket.config.js";
-import { logger } from "./utils/logger/logger.js";
+import { logger, loggerServer } from "./utils/logger/logger.js";
 
 const app = express();
 const httpServer = app.listen(ENV.PORT, () => {
@@ -21,6 +21,7 @@ const httpServer = app.listen(ENV.PORT, () => {
 // MIDDLAWARES
 app.use(cors());
 app.set("trust proxy", true);
+app.use(loggerServer);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public`));
 app.use(express.json());
