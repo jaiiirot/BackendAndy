@@ -16,7 +16,7 @@ export const initialSocket = (socket, ENV) => {
 					await messagesService.getChatById(data.mid)
 				);
 			} catch (error) {
-				logger.warning("🔴 Error al enviar mensaje:", error);
+				logger.warning("⚠️ Error al enviar mensaje:", error);
 			}
 		});
 	});

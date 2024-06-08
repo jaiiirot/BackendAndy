@@ -39,7 +39,7 @@ export const configPassport = (app, ENV) => {
 						return done(null, { role: "USER", cart: null, username: null });
 					}
 				} catch (error) {
-					logger.warning("🔴 Error al autenticar con JWT:", error); // Usar el logger para registrar el error
+					logger.warning("⚠️ Error al autenticar con JWT:", error); // Usar el logger para registrar el error
 					return done(error, null);
 				}
 			}
@@ -64,7 +64,7 @@ export const configPassport = (app, ENV) => {
 						done(null, await usersService.postFromGithub(await profile));
 					}
 				} catch (error) {
-					logger.warning("🔴 Error al autenticar con GitHub:", error);
+					logger.warning("⚠️ Error al autenticar con GitHub:", error);
 					done(error, null);
 				}
 			}

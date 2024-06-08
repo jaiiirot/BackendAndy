@@ -8,6 +8,6 @@ export const configSocketIo = (httpServer, ENV) => {
 		initialSocket(socket, ENV);
 		logger.info("🟢 Socket.io inicializado correctamente.");
 	} catch (error) {
-		logger.warning("🔴 Error en Socket.io:", error);
+		logger.warning("⚠️ Error en Socket.io:", error);
 	}
 };
