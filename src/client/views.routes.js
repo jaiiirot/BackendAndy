@@ -52,6 +52,8 @@ router.get(
 
 router.get("/login", controllersViewforms.Login);
 router.get("/register", controllersViewforms.Register);
+router.get("/forget", controllersViewforms.Forget);
+router.get("/reset/password/:token", controllersViewforms.Reset);
 
 /* PANEL */
 router.get(
