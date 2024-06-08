@@ -7,6 +7,7 @@ import __dirname from "./utils/utils.js";
 import routesApi from "./feature/api.routes.js";
 import routesViews from "./client/views.routes.js";
 import { ENV } from "./config/config.js";
+import { configSwagger } from "./config/swagger.config.js";
 import { configMongoose } from "./config/db.config.js";
 import { configPassport } from "./config/passport.config.js";
 import { configHandebars } from "./config/hbs.config.js";
@@ -34,6 +35,8 @@ app.use(
 		saveUninitialized: true,
 	})
 );
+// DOCS
+configSwagger(app);
 // MONGO
 configMongoose(ENV.DB_MONGO);
 // PASSPORT

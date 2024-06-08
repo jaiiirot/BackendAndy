@@ -1,5 +1,5 @@
 import winston, { format } from "winston";
-import { ENV } from "../../config/config.js";
+
 const loggerconfig = {
 	levels: {
 		fatal: 0,
@@ -18,12 +18,13 @@ const loggerconfig = {
 		debug: "white",
 	},
 };
+const level = process.env.NODE_ENV === "production" ? "debug" : "info";
 
 export const logger = winston.createLogger({
 	levels: loggerconfig.levels,
 	transports: [
 		new winston.transports.Console({
-			level: ENV.ENTORNO === "production" ? "info" : "debug",
+			level,
 			format: winston.format.combine(
 				winston.format.colorize({ colors: loggerconfig.colors }),
 				winston.format.simple(),

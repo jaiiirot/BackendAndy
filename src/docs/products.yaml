@@ -1,0 +1,270 @@
+openapi: 3.0.0
+info:
+  title: API de Productos
+  version: 1.0.0
+  description: API para la gestión de productos
+
+servers:
+  - url: http://localhost:8080/api/products
+    description: Servidor local
+
+paths:
+  /mockingproducts:
+    get:
+      summary: Obtener todos los productos simulados
+      description: Recuperar una lista de todos los productos simulados.
+      security:
+        - bearerAuth: []
+      tags:
+        - Productos
+      responses:
+        '200':
+          description: Respuesta exitosa
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /:
+    post:
+      summary: Crear un nuevo producto
+      description: Agregar un nuevo producto a la base de datos.
+      security:
+        - bearerAuth: []
+      tags:
+        - Productos
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                code:
+                  type: string
+                price:
+                  type: number
+                status:
+                  type: boolean
+                promocion:
+                  type: boolean
+                stock:
+                  type: number
+                type:
+                  type: string
+                genre:
+                  type: string
+                category:
+                  type: array
+                  items:
+                    type: string
+                photo:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+              required:
+                - title
+                - description
+                - code
+                - price
+                - stock
+                - type
+                - genre
+                - category
+      responses:
+        '200':
+          description: Producto creado con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Solicitud incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /{pid}:
+    delete:
+      summary: Eliminar un producto
+      description: Eliminar un producto de la base de datos por ID.
+      security:
+        - bearerAuth: []
+      tags:
+        - Productos
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID del producto
+      responses:
+        '200':
+          description: Producto eliminado con éxito
+        '400':
+          description: Solicitud incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      summary: Actualizar un producto
+      description: Actualizar los detalles de un producto existente por ID.
+      security:
+        - bearerAuth: []
+      tags:
+        - Productos
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID del producto
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                code:
+                  type: string
+                price:
+                  type: number
+                status:
+                  type: boolean
+                promocion:
+                  type: boolean
+                stock:
+                  type: number
+                type:
+                  type: string
+                genre:
+                  type: string
+                category:
+                  type: array
+                  items:
+                    type: string
+                photo:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+              required:
+                - title
+                - description
+                - code
+                - price
+                - stock
+                - type
+                - genre
+                - category
+      responses:
+        '200':
+          description: Producto actualizado con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Solicitud incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          description: El ID del producto
+        title:
+          type: string
+          description: El título del producto
+        description:
+          type: string
+          description: La descripción del producto
+        code:
+          type: string
+          description: El código del producto
+        price:
+          type: number
+          description: El precio del producto
+        status:
+          type: boolean
+          description: El estado del producto (disponible o no)
+        promocion:
+          type: boolean
+          description: Indica si el producto está en promoción
+        stock:
+          type: number
+          description: La cantidad en stock del producto
+        type:
+          type: string
+          description: El tipo de producto
+        genre:
+          type: string
+          description: El género del producto
+        category:
+          type: array
+          items:
+            type: string
+          description: La categoría del producto
+        photo:
+          type: array
+          items:
+            type: string
+          description: URLs de las fotos del producto

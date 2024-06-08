@@ -1,0 +1,129 @@
+/tickets:
+  get:
+    summary: Obtener todos los tickets
+    description: Retorna una lista de todos los tickets.
+    tags:
+      - Tickets
+    security:
+      - JWT: []
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Ticket'
+      '500':
+        description: Error interno del servidor
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ErrorResponse'
+
+/tickets/{tid}:
+  get:
+    summary: Obtener un ticket por ID
+    description: Retorna un ticket basado en su ID.
+    tags:
+      - Tickets
+    parameters:
+      - in: path
+        name: tid
+        required: true
+        description: ID del ticket a obtener
+        schema:
+          type: string
+    security:
+      - JWT: []
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ticket'
+      '500':
+        description: Error interno del servidor
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ErrorResponse'
+
+  put:
+    summary: Actualizar un ticket por ID
+    description: Actualiza un ticket existente basado en su ID.
+    tags:
+      - Tickets
+    parameters:
+      - in: path
+        name: tid
+        required: true
+        description: ID del ticket a actualizar
+        schema:
+          type: string
+      - in: body
+        name: body
+        required: true
+        description: Datos del ticket a actualizar
+        schema:
+          $ref: '#/components/schemas/Ticket'
+    security:
+      - JWT: []
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ticket'
+      '500':
+        description: Error interno del servidor
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ErrorResponse'
+
+  delete:
+    summary: Eliminar un ticket por ID
+    description: Elimina un ticket basado en su ID.
+    tags:
+      - Tickets
+    parameters:
+      - in: path
+        name: tid
+        required: true
+        description: ID del ticket a eliminar
+        schema:
+          type: string
+    security:
+      - JWT: []
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ticket'
+      '500':
+        description: Error interno del servidor
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    Ticket:
+      type: object
+      properties:
+        code:
+          type: string
+        purchase_datetime:
+          type: string
+          format: date-time
+        amount:
+          type: number
+        purchaser:
+          type: string
