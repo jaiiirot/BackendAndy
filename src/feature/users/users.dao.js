@@ -1,10 +1,12 @@
 import { Users } from "./users.schema.js";
+import { logger } from "../../utils/logger/logger.js";
+
 export default class UsersDAO {
 	async getAll() {
 		try {
 			return await Users.find();
 		} catch (error) {
-			console.error("Error al obtener todos los usuarios:", error);
+			logger.error("🔴 Error al obtener todos los usuarios:", error);
 			throw error;
 		}
 	}
@@ -13,7 +15,7 @@ export default class UsersDAO {
 		try {
 			return await Users.findById({ _id: id }, { password: 0 }).lean();
 		} catch (error) {
-			console.error("Error al obtener usuario por id:", error);
+			logger.error("🔴 Error al obtener usuario por id:", error);
 			throw error;
 		}
 	}
@@ -22,8 +24,8 @@ export default class UsersDAO {
 		try {
 			return await Users.findOne({ email }).lean();
 		} catch (error) {
-			console.error(
-				`Error al obtener usuario con correo electrónico ${email}:`,
+			logger.error(
+				`🔴 Error al obtener usuario con correo electrónico ${email}:`,
 				error
 			);
 			throw error;
@@ -37,8 +39,8 @@ export default class UsersDAO {
 				password: data.password,
 			});
 		} catch (error) {
-			console.error(
-				"Error al obtener usuario por correo electrónico y contraseña:",
+			logger.error(
+				"🔴 Error al obtener usuario por correo electrónico y contraseña:",
 				error
 			);
 			throw error;
@@ -49,7 +51,7 @@ export default class UsersDAO {
 		try {
 			return await Users.findOne({ email }).lean();
 		} catch (error) {
-			console.error("Error al obtener usuario por nombre de usuario:", error);
+			logger.error("🔴 Error al obtener usuario por nombre de usuario:", error);
 			throw error;
 		}
 	}
@@ -58,7 +60,7 @@ export default class UsersDAO {
 		try {
 			return new Users(data).save();
 		} catch (error) {
-			console.error("Error al crear un nuevo usuario:", error);
+			logger.error("🔴 Error al crear un nuevo usuario:", error);
 			throw error;
 		}
 	}
@@ -70,7 +72,7 @@ export default class UsersDAO {
 				{ password: data.password }
 			);
 		} catch (error) {
-			console.error("Error al actualizar la contraseña del usuario:", error);
+			logger.error("🔴 Error al actualizar la contraseña del usuario:", error);
 			throw error;
 		}
 	}
@@ -79,7 +81,7 @@ export default class UsersDAO {
 		try {
 			return await Users.findByIdAndDelete(id);
 		} catch (error) {
-			console.error("Error al eliminar usuario por id:", error);
+			logger.error("🔴 Error al eliminar usuario por id:", error);
 			throw error;
 		}
 	}

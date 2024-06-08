@@ -1,4 +1,5 @@
 import { Tickets } from "./tickets.schema.js";
+import { logger } from "../../utils/logger/logger.js";
 
 export default class TicketsDAO {
 	getAll = async () => {
@@ -6,7 +7,7 @@ export default class TicketsDAO {
 			const tickets = await Tickets.find().lean();
 			return tickets;
 		} catch (error) {
-			console.log("❌ ~ TicketDao ~ get= ~ error:", error);
+			logger.error("🔴 Error al obtener todos los tickets:", error);
 			throw error;
 		}
 	};
@@ -16,7 +17,7 @@ export default class TicketsDAO {
 			const ticket = await Tickets.findById(id).lean();
 			return ticket;
 		} catch (error) {
-			console.log("❌ ~ TicketDao ~ get= ~ error:", error);
+			logger.error(`🔴 Error al obtener el ticket con ID ${id}:`, error);
 			throw error;
 		}
 	};
@@ -26,7 +27,7 @@ export default class TicketsDAO {
 			const newTicket = await new Tickets(ticket).save();
 			return newTicket;
 		} catch (error) {
-			console.log("❌ ~ TicketDao ~ create= ~ error:", error);
+			logger.error("🔴 Error al crear un nuevo ticket:", error);
 			throw error;
 		}
 	};
@@ -38,7 +39,7 @@ export default class TicketsDAO {
 			});
 			return ticketUpdated;
 		} catch (error) {
-			console.log("❌ ~ TicketDao ~ update= ~ error:", error);
+			logger.error(`🔴 Error al actualizar el ticket con ID ${id}:`, error);
 			throw error;
 		}
 	};
@@ -48,7 +49,7 @@ export default class TicketsDAO {
 			const ticketDeleted = await Tickets.findByIdAndDelete(id);
 			return ticketDeleted;
 		} catch (error) {
-			console.log("❌ ~ TicketDao ~ delete= ~ error:", error);
+			logger.error(`🔴 Error al eliminar el ticket con ID ${id}:`, error);
 			throw error;
 		}
 	};

@@ -47,35 +47,35 @@
 
 2. **DESARROLLAR UN MECANISMO PARA PERSONALIZAR LOS ERRORES QUE EL SERVIDOR PUEDE DEVOLVER EN DIFERENTES SITUACIONES.**
 
-- [] Este customizador de errores debe ser flexible y capaz de manejar errores comunes en acciones como crear un producto, agregarlo al carrito, etc.
-- [] Implementar un diccionario para almacenar los errores más comunes y asociarlos con códigos de error apropiados.
+- [✅] Este customizador de errores debe ser flexible y capaz de manejar errores comunes en acciones como crear un producto, agregarlo al carrito, etc.
+- [✅] Implementar un diccionario para almacenar los errores más comunes y asociarlos con códigos de error apropiados.
 
 ## LOGGING Y TESTING DE PERFORMANCE
 
 1. **DEFINIR EL SISTEMA DE NIVELES DE REGISTRO:**
 
-   - [] Definir los niveles de registro en orden de prioridad: debug, http, info, warning, error, fatal.
+   - [✅] Definir los niveles de registro en orden de prioridad: debug, http, info, warning, error, fatal.
 
 2. **IMPLEMENTAR EL LOGGER PARA DESARROLLO:**
 
-   - [] Configurar una instancia de Winston para el entorno de desarrollo.
-   - [] Establecer el nivel de registro mínimo en debug.
-   - [] Configurar el transporte para registrar en la consola.
+   - [✅] Configurar una instancia de Winston para el entorno de desarrollo.
+   - [✅] Establecer el nivel de registro mínimo en debug.
+   - [✅] Configurar el transporte para registrar en la consola.
 
 3. **IMPLEMENTAR EL LOGGER PARA PRODUCCIÓN:**
 
-   - [] Configurar una instancia de Winston para el entorno de producción.
-   - [] Establecer el nivel de registro mínimo en info.
-   - [] Configurar el transporte para registrar en un archivo "errors.log" a partir del nivel de error.
+   - [✅] Configurar una instancia de Winston para el entorno de producción.
+   - [✅] Establecer el nivel de registro mínimo en info.
+   - [✅] Configurar el transporte para registrar en un archivo "errors.log" a partir del nivel de error.
 
 4. **AGREGAR LOGS EN PUNTOS IMPORTANTES DEL SERVIDOR:**
 
-   - [] Añadir registros de valor alto en puntos críticos del servidor, como errores, advertencias, etc.
-   - [] Modificar las llamadas a `console.log()` existentes para utilizar las instancias de Winston y registrar todos los niveles a partir de Winston.
+   - [✅] Añadir registros de valor alto en puntos críticos del servidor, como errores, advertencias, etc.
+   - [✅] Modificar las llamadas a `console.log()` existentes para utilizar las instancias de Winston y registrar todos los niveles a partir de Winston.
 
 5. **CREAR EL ENDPOINT /LOGGERTEST:**
-   - [] Implementar un endpoint /loggerTest en el servidor.
-   - [] Utilizar este endpoint para probar todos los niveles de registro y verificar que los registros se realicen correctamente según la configuración de desarrollo o producción.
+   - [✅] Implementar un endpoint /loggerTest en el servidor.
+   - [✅] Utilizar este endpoint para probar todos los niveles de registro y verificar que los registros se realicen correctamente según la configuración de desarrollo o producción.
 
 ## TERCERA PRÁCTICA INTEGRADORA
 

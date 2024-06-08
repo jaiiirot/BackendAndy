@@ -38,7 +38,6 @@ export const logger = winston.createLogger({
 		}),
 	],
 });
-// console.log(logger.);
 
 export const addLogger = (req, res, next) => {
 	req.logger = logger;
