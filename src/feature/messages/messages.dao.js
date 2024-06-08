@@ -32,7 +32,7 @@ export default class MessagesDAO {
 
 	async postMessage(mid, role, message) {
 		try {
-			console.log(mid, role, message);
+			// console.log(mid, role, message);
 			const content = { role, message };
 			const existChat = await this.getById(mid);
 			if (existChat) {

@@ -5,15 +5,22 @@ export const initialSocket = (socket, ENV) => {
 	socket.on("connection", async io => {
 		logger.info("🟢 usuario conectado");
 		io.on("input_chat", async data => {
-			await messagesService.postAddMessageInChat(
-				data.mid,
-				data.role,
-				data.message
-			);
-			socket.emit(
-				"container_chat",
-				await messagesService.getChatById(data.mid)
-			);
+			try {
+				await messagesService.postAddMessageInChat(
+					data.mid,
+					data.role,
+					data.message
+				);
+				socket.emit(
+					"container_chat",
+					await messagesService.getChatById(data.mid)
+				);
+			} catch (error) {
+				logger.warning("🔴 Error al enviar mensaje:", error);
+			}
 		});
+	});
+	socket.on("disconnect", () => {
+		logger.info("⛔ usuario desconectado");
 	});
 };

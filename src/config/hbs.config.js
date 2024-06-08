@@ -8,7 +8,7 @@ export const configHandebars = app => {
 		app.set("views", `${__dirname}/views`);
 		app.set("view engine", ".hbs");
 	} catch (err) {
-		logger.error(`🔴 ${err.message}`);
+		logger.warning(`🔴 ${err.message}`);
 		process.exit(1);
 	}
 };

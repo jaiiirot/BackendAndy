@@ -5,7 +5,7 @@ export const configMongoose = url => {
 	try {
 		mongoose.connect(url);
 	} catch (err) {
-		logger.error(`🔴 ${err.message}`);
+		logger.warning(`🔴 ${err.message}`);
 		process.exit(1);
 	}
 	const dbConnection = mongoose.connection;
@@ -14,6 +14,6 @@ export const configMongoose = url => {
 	});
 
 	dbConnection.on("error", err => {
-		logger.error(`🔴 connection error ${err}`);
+		logger.warning(`🔴 connection error ${err}`);
 	});
 };
