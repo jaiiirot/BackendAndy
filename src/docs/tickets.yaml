@@ -127,3 +127,11 @@ components:
           type: number
         purchaser:
           type: string
+
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
