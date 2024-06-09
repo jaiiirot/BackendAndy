@@ -421,3 +421,13 @@ components:
           description: Las URLs de las fotos del producto
           items:
             type: string
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Código de error
+        message:
+          type: string
+          description: Mensaje de error
