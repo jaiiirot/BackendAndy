@@ -1,4 +1,5 @@
 import { servicesExternal } from "../../../services/repository/external.service.js";
+import { emailResetPassword } from "../../../utils/emailtermplate.js";
 export default class MessagesRepository {
 	constructor(dao) {
 		this.dao = dao;
@@ -35,39 +36,12 @@ export default class MessagesRepository {
 		return await this.dao.deleteClearMessage(messageId);
 	}
 
-	async postMessageByEmail(email) {
+	async postMessageByEmail(email,token) {
 		await servicesExternal.sendMail(
 			email,
+			`Recuperar contraseña <${email}>`,
 			"Recuperar contraseña",
-			"Recuperar contraseña",
-			` 
-<div style="width:100%; text-align:center; ">
-<div style="max-width:600px;padding:20px;text-align:center;margin:auto;">
-    <header style="margin: auto;justify-content: center;text-align:center;align-items: center;">
-      <a href="http://localhost:8080/" style="color:#000000;text-decoration:none;font-size:2rem" target="_blank" data-saferedirecturl="https://www.google.com/url?q=http://localhost:8080/&amp;source=gmail&amp;ust=1718085780557000&amp;usg=AOvVaw1eXv_DC61u5KGVsOHjmBwf">
-        <img src="https://raw.githubusercontent.com/jaiiirot/backend-ilicito/main/src/public/image/logo.png" alt="ILICITO" style="width: 175px;">
-      </a>
-    </header>
-    <div style="margin-bottom:25px">
-      <h1 style="margin:0;padding:0">Recuperación de Contraseña</h1>
-      <p style="margin:0;padding:0"><a href="mailto:tumiricha123@gmail.com" target="_blank">tumiricha123@gmail.com</a></p>
-      <h4 style="margin:0;padding:0">Usted Solicitó Recuperación de su contraseña</h4>
-      <p>Haga clic en el siguiente botón o copie y pegue el siguiente enlace en el navegador:</p>
-      <a href="http://localhost:8080/reset/password/asdhh12g78dhs17wgd7idhsu1idhwp1udhwpm1dhp1hdup1uwhd1w0892hd98wdh1w8dh1wd9wh98dsd" style="display:inline-block;padding:10px 20px;background-color:#000000;color:#ffffff;text-decoration:none;border-radius:15px;margin:5px 0" target="_blank" data-saferedirecturl="https://www.google.com/url?q=http://localhost:8080/reset/password/asdhh12g78dhs17wgd7idhsu1idhwp1udhwpm1dhp1hdup1uwhd1w0892hd98wdh1w8dh1wd9wh98dsd&amp;source=gmail&amp;ust=1718085780557000&amp;usg=AOvVaw00kCBf_-b_k6E3vVMLTJ-Z">Recuperar Contraseña</a>
-      <div>
-        <p>Si usted no puede ingresar por el botón, este es el enlace:</p>
-        <a href="http://localhost:8080/reset/password/asdhh12g78dhs17wgd7idhsu1idhwp1udhwpm1dhp1hdup1uwhd1w0892hd98wdh1w8dh1wd9wh98dsd" style="word-break:break-all" target="_blank" data-saferedirecturl="https://www.google.com/url?q=http://localhost:8080/reset/password/asdhh12g78dhs17wgd7idhsu1idhwp1udhwpm1dhp1hdup1uwhd1w0892hd98wdh1w8dh1wd9wh98dsd&amp;source=gmail&amp;ust=1718085780557000&amp;usg=AOvVaw00kCBf_-b_k6E3vVMLTJ-Z">
-          http://localhost:8080/reset/<wbr>password/<wbr>asdhh12g78dhs17wgd7idhsu1idhwp<wbr>1udhwpm1dhp1hdup1uwhd1w0892hd9<wbr>8wdh1w8dh1wd9wh98dsd
-        </a>
-      </div>
-      <p>Si usted no solicitó la recuperación de su contraseña, ignore este mensaje.</p>
-    </div>
-    <footer style="margin-top:20px;font-size:0.9em;color:#666666">
-      © 2024 ILICITO. Todos los derechos reservados.
-    </footer>
-  </div>
-</div>
-  `
+			emailResetPassword(email,token)
 		);
 		return email;
 	}
