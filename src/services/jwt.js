@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { logger } from "../utils/logger/logger.js";
 
 const createToken = (data, time) => {
 	const token = jwt.sign(data, process.env.SECRET_COOKIE, {
@@ -13,14 +14,17 @@ const createToken = (data, time) => {
 };
 
 const verifyToken = token => {
-	const result = jwt.verify(token, process.env.SECRET_COOKIE);
-	console.log(result);
-	return result;
+	try {
+		const result = jwt.verify(token, process.env.SECRET_COOKIE);
+		logger.info(`🔓 usuario ${result.email} en estado para cambiar contraseña`);
+		return result.email;
+	} catch (error) {
+		logger.warning("❌ TOKEN INCORRECTO de usuario: ", error);
+	}
 };
 
 const decodeToken = token => {
 	const result = jwt.decode(token);
-	console.log(result);
 	return result;
 };
 

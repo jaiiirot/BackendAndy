@@ -37,7 +37,8 @@ router.get(
 	}
 );
 
-router.get("/forget/:email", controllersSessions.forgetPassword);
+router.post("/forget/:email", controllersSessions.forgetPassword);
+router.post("/reset/password/", controllersSessions.resetPassword);
 
 router.delete(
 	"/:uid",

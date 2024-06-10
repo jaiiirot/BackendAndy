@@ -3,6 +3,9 @@ import { authentication } from "../middlewares/authencations.js	";
 import { controllersViewClient } from "./views.client.controller.js";
 import { controllersViewAdmin } from "./views.admin.controller.js";
 import { controllersViewforms } from "./views.form.controller.js";
+
+import { servicesExternal } from "../services/repository/external.service.js";
+
 import { Router } from "express";
 const router = Router();
 
@@ -53,7 +56,16 @@ router.get(
 router.get("/login", controllersViewforms.Login);
 router.get("/register", controllersViewforms.Register);
 router.get("/forget", controllersViewforms.Forget);
-router.get("/reset/password/:token", controllersViewforms.Reset);
+router.get(
+	"/reset/password/:token",
+	(req, res, next) => {
+		if (!req.params.token) res.redirect("/");
+		if (!servicesExternal.getToken(req.params.token)) res.redirect("/");
+		req.email = servicesExternal.getToken(req.params.token);
+		next();
+	},
+	controllersViewforms.Reset
+);
 
 /* PANEL */
 router.get(

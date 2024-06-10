@@ -1,10 +1,10 @@
-export const emailResetPassword = (email, token) => {
+export const emailResetPassword = (host, email, token) => {
 	return `
         <div style="max-width:600px;padding:20px;margin:auto;">
         <header style="margin:0; overflow:hidden;">
-            <a href="http://localhost:8080/" style="display:inline-block; color:#000000;text-decoration:none; float:left; margin:0;padding:0;"
+            <a href="http://${host}/" style="display:inline-block; color:#000000;text-decoration:none; float:left; margin:0;padding:0;"
             target="_blank"
-            data-saferedirecturl="https://www.google.com/url?q=http://localhost:8080/&amp;source=gmail&amp;ust=1718085780557000&amp;usg=AOvVaw1eXv_DC61u5KGVsOHjmBwf">
+            data-saferedirecturl="https://www.google.com/url?q=http://${host}/&amp;source=gmail&amp;ust=1718085780557000&amp;usg=AOvVaw1eXv_DC61u5KGVsOHjmBwf">
             <img src="https://raw.githubusercontent.com/jaiiirot/backend-ilicito/main/src/public/image/logo.png" alt="ILICITO" style="height: 2rem;">
             </a>
             <div style="float:right; font-size:1.6rem;">
@@ -20,17 +20,17 @@ export const emailResetPassword = (email, token) => {
                 Haga clic en el siguiente botón o copie y pegue el siguiente enlace en el navegador:
             </p>
             </div>
-            <a href="http://localhost:8080/reset/password/${token}"
+            <a href="http://${host}/reset/password/${token}"
             style="display:inline-block;padding:10px 20px;background-color:#000000;color:#ffffff;text-decoration:none;margin:20px 0"
             target="_blank"
-            data-saferedirecturl="https://www.google.com/url?q=http://localhost:8080/reset/password/${token}">Recuperar
+            data-saferedirecturl="https://www.google.com/url?q=http://${host}/reset/password/${token}">Recuperar
             contraseña</a>
             <div>
             <p style="margin:5px 0;padding:0;">Si usted no puede ingresar por el botón, este es el enlace:</p>
-            <a href="http://localhost:8080/reset/password/${token}"
+            <a href="http://${host}/reset/password/${token}"
                 style="display:inline-block;margin:5px 0;padding:0;color: #555555; font-size: 13px;" target="_blank"
-                data-saferedirecturl="https://www.google.com/url?q=http://localhost:8080/reset/password/asdhh12g78dhs17wgd7idhsu1idhwp1udhwpm1dhp1hdup1uwhd1w0892hd98wdh1w8dh1wd9wh98dsd&amp;source=gmail&amp;ust=1718085780557000&amp;usg=AOvVaw00kCBf_-b_k6E3vVMLTJ-Z">
-                http://localhost:8080/reset/password/${token}
+                data-saferedirecturl="https://www.google.com/url?q=http://${host}/reset/password/asdhh12g78dhs17wgd7idhsu1idhwp1udhwpm1dhp1hdup1uwhd1w0892hd98wdh1w8dh1wd9wh98dsd&amp;source=gmail&amp;ust=1718085780557000&amp;usg=AOvVaw00kCBf_-b_k6E3vVMLTJ-Z">
+                http://${host}/reset/password/${token}
             </a>
             </div>
             <p style="margin:5px 0;padding:0;">Si usted no solicitó la recuperación de su contraseña, ignore este mensaje.
@@ -43,7 +43,12 @@ export const emailResetPassword = (email, token) => {
     `;
 };
 
-export const emailPurchaseConfirmation = (email, orderNumber, products) => {
+export const emailPurchaseConfirmation = (
+	host,
+	email,
+	orderNumber,
+	products
+) => {
 	const productItems = products
 		.map(
 			product => `
@@ -70,7 +75,7 @@ export const emailPurchaseConfirmation = (email, orderNumber, products) => {
 	return `
         <div style="max-width:600px;padding:20px;margin:auto;font-family:Arial,sans-serif;">
             <header style="margin:0; overflow:hidden; border-bottom: 2px solid #000;">
-                <a href="http://localhost:8080/" style="display:inline-block; color:#000000;text-decoration:none; float:left; margin:0;padding:0;" target="_blank">
+                <a href="http://${host}/" style="display:inline-block; color:#000000;text-decoration:none; float:left; margin:0;padding:0;" target="_blank">
                     <img src="https://raw.githubusercontent.com/jaiiirot/backend-ilicito/main/src/public/image/logo.png" alt="ILICITO" style="height: 3rem;">
                 </a>
             </header>

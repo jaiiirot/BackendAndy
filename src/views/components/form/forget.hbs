@@ -3,31 +3,59 @@
         <a href="/" class="flex items-center justify-center space-x-3 w-max">
             <span class="bg-black rounded-full w-8 h-8"></span>
             <span class="flex w-min justify-center flex-col items-center">
-                <h1
-                    id="title"
-                    class="text-[3rem] font-brygada style-logo"
-                    style="transform:scaleY(0.75)"
-                >ILICITO</h1>
+                <h1 id="title" class="text-[3rem] font-brygada style-logo" style="transform:scaleY(0.75)">ILICITO</h1>
             </span>
         </a>
     </header>
     <aside class="max-w-lg p-4 mx-auto">
         <div class="text-center mb-8">
             <h2 class="text-3xl md:text-4xl font-extrabold mb-2">¿Olvidaste tu contraseña?</h2>
-			<p>Lo entendemos, suceden cosas. ¡Simplemente ingrese su dirección de correo electrónico a continuación y le enviaremos un enlace para restablecer su contraseña!</p>
+            <p>Lo entendemos, suceden cosas. ¡Simplemente ingrese su dirección de correo electrónico a continuación y le enviaremos un enlace para restablecer su contraseña!</p>
         </div>
-        <form action="" class="flex flex-col gap-4">
+        <form id="reset-password-form" class="flex flex-col gap-4">
             <input
                 class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
                 type="email"
                 name="email"
                 placeholder="Correo de recuperación"
+                required
             />
             <button
                 type="submit"
                 class="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white"
             >Confirmar</button>
-
         </form>
+        <div id="response-message" class="text-center mt-4 hidden"></div>
     </aside>
 </section>
+
+<script>
+document.getElementById('reset-password-form').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const email = event.target.email.value;
+    const responseMessage = document.getElementById('response-message');
+
+    try {
+        const response = await fetch(`/api/sessions/forget/${encodeURIComponent(email)}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            responseMessage.textContent = '¡El enlace para restablecer la contraseña ha sido enviado!';
+            responseMessage.className = 'text-center mt-4 text-green-500';
+        } else {
+            responseMessage.textContent = 'Hubo un problema al enviar el enlace para restablecer la contraseña. Por favor, inténtelo de nuevo.';
+            responseMessage.className = 'text-center mt-4 text-red-500';
+        }
+    } catch (error) {
+        responseMessage.textContent = 'Hubo un error al intentar comunicarse con el servidor. Por favor, inténtelo de nuevo.';
+        responseMessage.className = 'text-center mt-4 text-red-500';
+    }
+
+    responseMessage.classList.remove('hidden');
+});
+</script>

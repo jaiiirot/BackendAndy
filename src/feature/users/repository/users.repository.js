@@ -74,8 +74,8 @@ export default class UsersRepository {
 
 	putPasswordByEmail = async data => {
 		try {
-			const user = await this.dao.putPasswordByEmail(data);
-			return user;
+			data.password = await servicesExternal.hashPassword(data.password);
+			return await this.dao.putPasswordByEmail(data);
 		} catch (error) {
 			logger.error(
 				"🔴 Error al actualizar contraseña de usuario por email:",

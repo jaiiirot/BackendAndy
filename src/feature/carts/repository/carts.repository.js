@@ -27,7 +27,7 @@ export default class CartRepository {
 		return cart;
 	};
 
-	getPurchaseCart = async (cid, email) => {
+	getPurchaseCart = async (hostANDport, cid, email) => {
 		const cart = await this.dao.getByIdPopulate(cid);
 		const amount = cart.products.reduce((total, product) => {
 			if (product.quantity < product.pid.stock) {
@@ -38,6 +38,7 @@ export default class CartRepository {
 		const result = await this.ticketDao.post({ amount, purchaser: email });
 		if (result) {
 			await messagesService.postMailPurchaseCartByEmail(
+				hostANDport,
 				email,
 				result.code,
 				cart.products

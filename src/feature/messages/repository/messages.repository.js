@@ -39,22 +39,24 @@ export default class MessagesRepository {
 		return await this.dao.deleteClearMessage(messageId);
 	}
 
-	async postMessageByEmail(email, token) {
+	async postMessageByEmail(hostANDport, id, email) {
+		const result = await servicesExternal.postToken(id, 60);
+		// console.log(result);
 		await servicesExternal.sendMail(
 			email,
 			`Recuperar contraseña <${email}>`,
 			"Recuperar contraseña",
-			emailResetPassword(email, token)
+			emailResetPassword(hostANDport, email, result.token)
 		);
 		return email;
 	}
 
-	async postMailPurchaseCartByEmail(email, codeTicket, products) {
+	async postMailPurchaseCartByEmail(hostANDport, email, codeTicket, products) {
 		await servicesExternal.sendMailPurchase(
 			email,
 			`Compra Finalizada ${email} - codigo:${codeTicket}`,
 			"Compra Finalizada",
-			emailPurchaseConfirmation(email, codeTicket, products)
+			emailPurchaseConfirmation(hostANDport, email, codeTicket, products)
 		);
 	}
 }

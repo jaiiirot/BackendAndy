@@ -73,9 +73,17 @@ const deleteUser = async (req, res) => {
 
 const forgetPassword = async (req, res) => {
 	try {
+		const hostmoreport = req.rawHeaders[1];
 		const result = await usersService.getByEmail(req.params.email);
 		if (result) {
-			await messagesService.postMessageByEmail(req.params.email);
+			await messagesService.postMessageByEmail(
+				hostmoreport,
+				result,
+				req.params.email
+			);
+			logger.warning(
+				`🔐 Solicitud de restablecer contraseña correcto usuario ${result._id}`
+			);
 			res.status(200).json({ msg: "Correo enviado correctamente" });
 		} else {
 			res.status(400).json({ msg: "Error al enviar el correo" });
@@ -88,7 +96,9 @@ const forgetPassword = async (req, res) => {
 
 const resetPassword = async (req, res) => {
 	try {
+		// console.log(req.body); // token password repassaword email
 		const user = await usersService.putPasswordByEmail(req.body);
+
 		if (user) {
 			res.status(200).json({ msg: "Contraseña actualizada correctamente" });
 		} else {
