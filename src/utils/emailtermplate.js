@@ -13,10 +13,10 @@ export const emailResetPassword = (email, token) => {
         </header>
         <div style="margin-bottom:25px">
             <div>
-            <h1 style="">Recuperación de contraseña</h1>
-            <h4 style="margin:5px 0;padding 0;">Usted Solicitó Recuperación de su contraseña</h4>
-            <p style="margin:5px 0;padding 0;">${email}</p>
-            <p style="margin:5px 0;padding:0;">
+            <h1 style="margin:5px 0;padding: 0;">Recuperación de contraseña</h1>
+            <h4 style="margin:0;padding: 0;">Usted Solicitó Recuperación de su contraseña</h4>
+            <p style="margin:0;padding 0;">${email}</p>
+            <p style="margin:0;padding:0;">
                 Haga clic en el siguiente botón o copie y pegue el siguiente enlace en el navegador:
             </p>
             </div>
@@ -43,10 +43,68 @@ export const emailResetPassword = (email, token) => {
     `;
 };
 
-export const emailTicket = (data) =>{
-    return `
-    <div class="" >
-    
-    </div>
+export const emailPurchaseConfirmation = (email, orderNumber, products) => {
+	const productItems = products
+		.map(
+			product => `
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #ddd;">
+                <strong>${product.pid.title}</strong>
+            </td>
+            <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;">
+                ${product.quantity}
+            </td>
+            <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: right;">
+                $${product.pid.price.toFixed(2)}
+            </td>
+        </tr>
     `
-}
+		)
+		.join("");
+
+	const total = products.reduce(
+		(sum, product) => sum + product.pid.price * product.quantity,
+		0
+	);
+
+	return `
+        <div style="max-width:600px;padding:20px;margin:auto;font-family:Arial,sans-serif;">
+            <header style="margin:0; overflow:hidden; border-bottom: 2px solid #000;">
+                <a href="http://localhost:8080/" style="display:inline-block; color:#000000;text-decoration:none; float:left; margin:0;padding:0;" target="_blank">
+                    <img src="https://raw.githubusercontent.com/jaiiirot/backend-ilicito/main/src/public/image/logo.png" alt="ILICITO" style="height: 3rem;">
+                </a>
+            </header>
+            <div style="margin-bottom:25px; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
+                <h1 style="margin:5px 0;padding: 0; color: #333;">Compra Finalizada</h1>
+                <h4 style="margin:0;padding: 0; color: #666;">Gracias por su compra</h4>
+                <p style="margin:0;padding: 0; color: #666;">${email}</p>
+                <p style="margin:0;padding:0; color: #666;">Número de orden: ${orderNumber}</p>
+                <table style="width:100%;border-collapse:collapse;margin-top:20px;">
+                    <thead>
+                        <tr style="background-color: #f5f5f5;">
+                            <th style="padding: 10px; border-bottom: 2px solid #ddd; text-align: left;">Producto</th>
+                            <th style="padding: 10px; border-bottom: 2px solid #ddd; text-align: center;">Cantidad</th>
+                            <th style="padding: 10px; border-bottom: 2px solid #ddd; text-align: right;">Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${productItems}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2" style="padding: 10px; border-top: 2px solid #ddd; text-align: right; font-weight: bold;">Total</td>
+                            <td style="padding: 10px; border-top: 2px solid #ddd; text-align: right; font-weight: bold;">$${total.toFixed(
+															2
+														)}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <p style="margin:20px 0 5px 0;padding:0; color: #666;">Su pedido será procesado y enviado a la brevedad.</p>
+                <p style="margin:5px 0;padding:0; color: #666;">Si tiene alguna pregunta, por favor contacte a nuestro soporte técnico.</p>
+            </div>
+            <footer style="margin-top:20px;font-size:0.9em;color:#666666;text-align:center;">
+                © 2024 ILICITO. Todos los derechos reservados by <a href="https://github.com/jaiiirot" target="_blank" style="color: #000;">jaiiirot</a>.
+            </footer>
+        </div>
+    `;
+};

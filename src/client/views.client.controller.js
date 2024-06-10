@@ -156,7 +156,7 @@ const CardID = async (req, res) => {
 				title: "Carrito",
 				products_cart: products,
 				...req.infoUser,
-				permit: !products.find(e => e.confirm),
+				permit: !products.find(e => e.confirm) && totalProd.products.length > 0,
 			},
 		});
 		// logger.info("🟢 Carrito renderizado con éxito");

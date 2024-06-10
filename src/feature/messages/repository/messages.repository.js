@@ -1,5 +1,8 @@
 import { servicesExternal } from "../../../services/repository/external.service.js";
-import { emailResetPassword } from "../../../utils/emailtermplate.js";
+import {
+	emailPurchaseConfirmation,
+	emailResetPassword,
+} from "../../../utils/emailtermplate.js";
 export default class MessagesRepository {
 	constructor(dao) {
 		this.dao = dao;
@@ -36,13 +39,22 @@ export default class MessagesRepository {
 		return await this.dao.deleteClearMessage(messageId);
 	}
 
-	async postMessageByEmail(email,token) {
+	async postMessageByEmail(email, token) {
 		await servicesExternal.sendMail(
 			email,
 			`Recuperar contraseña <${email}>`,
 			"Recuperar contraseña",
-			emailResetPassword(email,token)
+			emailResetPassword(email, token)
 		);
 		return email;
+	}
+
+	async postMailPurchaseCartByEmail(email, codeTicket, products) {
+		await servicesExternal.sendMailPurchase(
+			email,
+			`Compra Finalizada ${email} - codigo:${codeTicket}`,
+			"Compra Finalizada",
+			emailPurchaseConfirmation(email, codeTicket, products)
+		);
 	}
 }

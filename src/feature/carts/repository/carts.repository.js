@@ -1,3 +1,5 @@
+// import { servicesExternal } from "../../../services/repository/external.service";
+import { messagesService } from "../../messages/repository/messages.service.js";
 export default class CartRepository {
 	constructor(dao, productDao, ticketDao) {
 		this.dao = dao;
@@ -27,14 +29,19 @@ export default class CartRepository {
 
 	getPurchaseCart = async (cid, email) => {
 		const cart = await this.dao.getByIdPopulate(cid);
-		let amount = 0;
-		for (const product of cart.products) {
+		const amount = cart.products.reduce((total, product) => {
 			if (product.quantity < product.pid.stock) {
-				amount += product.pid.price * product.quantity;
+				return total + product.pid.price * product.quantity;
 			}
-		}
+			return total;
+		}, 0);
 		const result = await this.ticketDao.post({ amount, purchaser: email });
 		if (result) {
+			await messagesService.postMailPurchaseCartByEmail(
+				email,
+				result.code,
+				cart.products
+			);
 			cart.products.forEach(async product => {
 				await this.productDao.putStockByProduct(
 					"less",

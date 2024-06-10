@@ -38,6 +38,10 @@ export default class ExternalRepository {
 		return await this.nodemailer.sendMail(to, subject, text, html);
 	}
 
+	async sendMailPurchase(to, subject, text, html) {
+		return await this.nodemailer.sendMail(to, subject, text, html);
+	}
+
 	async resizeImageBuffer(file, width, height) {
 		return await this.sharp.resizeImageBuffer(file, width, height);
 	}
