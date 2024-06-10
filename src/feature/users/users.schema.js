@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
 		mid: { type: mongoose.Schema.Types.ObjectId, ref: "messages" },
 	},
 	role: { type: String, default: "CLIENT" },
+	lastConnection: { type: Date, default: Date.now(), required: false },
 });
 
 export const Users = mongoose.model("users", userSchema);

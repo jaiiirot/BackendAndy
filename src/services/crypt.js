@@ -1,9 +1,9 @@
 import bcrypt from "bcrypt";
-import { logger } from "./logger/logger.js";
+import { logger } from "../utils/logger/logger.js";
 
 const saltRounds = 10;
 
-export const hashPassword = password => {
+const hashPassword = password => {
 	try {
 		const salt = bcrypt.genSaltSync(saltRounds);
 		const hashedPassword = bcrypt.hashSync(password, salt);
@@ -17,7 +17,7 @@ export const hashPassword = password => {
 	}
 };
 
-export const comparePassword = (inputPassword, dbPassword) => {
+const comparePassword = (inputPassword, dbPassword) => {
 	try {
 		const isMatch = bcrypt.compareSync(inputPassword, dbPassword);
 		return isMatch;
@@ -27,4 +27,9 @@ export const comparePassword = (inputPassword, dbPassword) => {
 		});
 		return false;
 	}
+};
+
+export const cryptService = {
+	hashPassword,
+	comparePassword,
 };

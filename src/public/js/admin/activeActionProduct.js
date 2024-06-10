@@ -9,7 +9,6 @@ const formElements = [
 	"price-input",
 	"stock-input",
 	"category-input",
-	"file-input",
 ].map(id => document.getElementById(id));
 
 const [imgCard, titleCard, priceCard] = [
@@ -18,9 +17,10 @@ const [imgCard, titleCard, priceCard] = [
 	"price-card",
 ].map(id => document.getElementById(id));
 
-formElements.forEach(input =>
-	input.addEventListener("input", updateProductCard)
-);
+formElements.forEach(input => {
+	console.log("input:", input);
+	input.addEventListener("input", updateProductCard);
+});
 
 function previewImages(event) {
 	const files = event.target.files;

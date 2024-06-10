@@ -1,7 +1,7 @@
 import { messagesService } from "../feature/messages/repository/messages.service.js";
-import { logger } from "./logger/logger.js";
+import { logger } from "../utils/logger/logger.js";
 
-export const initialSocket = (socket, ENV) => {
+const initialSocket = (socket, ENV) => {
 	socket.on("connection", async io => {
 		logger.info("🟢 usuario conectado");
 		io.on("input_chat", async data => {
@@ -23,4 +23,8 @@ export const initialSocket = (socket, ENV) => {
 	socket.on("disconnect", () => {
 		logger.info("⛔ usuario desconectado");
 	});
+};
+
+export const socketService = {
+	initialSocket,
 };

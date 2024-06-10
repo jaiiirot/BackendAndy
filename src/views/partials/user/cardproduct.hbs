@@ -1,0 +1,35 @@
+<a
+	href="/productos/{{type}}/{{_id}}"
+	class="relative flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
+>
+	<div
+		class="relative mx-4 mt-4 h-[100px] md:h-[150px] overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700 flex justify-center md:h-[250px]"
+	>
+		<img
+			src="{{photo.[0]}}"
+			class="w-full object-contain"
+			alt="imagen {{title}}"
+		/>
+	</div>
+	<div class="p-1 md:p-4 flex flex-col-reverse">
+		<div class="mb-2 flex items-center justify-between flex-col md:flex-row">
+			<p
+				class="block text-sm font-normal leading-normal text-gray-700 antialiased opacity-75"
+			>
+				stock:
+				{{stock}}
+			</p>
+			<p
+				class="block text-base font-medium leading-relaxed text-blue-gray-900 antialiased"
+			>
+				$
+				{{price}}
+			</p>
+		</div>
+		<p
+			class="text-xs h-[3.2rem] md:h-[4.5rem] overflow-hidden text-ellipsis font-medium text-blue-gray-900 antialiased md:text-base"
+		>
+			{{title}}
+		</p>
+	</div>
+</a>

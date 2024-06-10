@@ -9,7 +9,8 @@ const redirectToPanel = (res, status, message) => {
 
 const postProduct = async (req, res) => {
 	try {
-		if (!req.body || !req.body.photoUrl) {
+		console.log(!req.body && (!req.body.photoUrl || !req.files));
+		if (!req.body && (!req.body.photoUrl || !req.files)) {
 			return redirectToPanel(res, 400, "postfailed");
 		}
 		await productsService.post(req.body, req.files);
@@ -49,7 +50,10 @@ const putProduct = async (req, res) => {
 const getAllMockingProducts = async (req, res, next) => {
 	try {
 		const result = await generateListProducts();
-
+		if (!result) {
+			logger.error("🔴 Error al obtener todos los productos mock");
+			return res.send({ status: "error", payload: [] });
+		}
 		res.send({ status: "success", payload: [...result] });
 	} catch (error) {
 		logger.error("🔴 Error al obtener todos los productos mock:", error);

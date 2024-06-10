@@ -1,5 +1,5 @@
-import cors from "cors";
 import express from "express";
+import cors from "cors";
 import MongoStore from "connect-mongo";
 import session from "express-session";
 import cookieParser from "cookie-parser";
@@ -35,16 +35,11 @@ app.use(
 		saveUninitialized: true,
 	})
 );
-// DOCS
-configSwagger(app);
-// MONGO
-configMongoose(ENV.DB_MONGO);
-// PASSPORT
-configPassport(app, ENV);
-// SOCKET IO
-configSocketIo(httpServer, ENV);
-// HANDLEBARS
-configHandebars(app);
+configMongoose(ENV.DB_MONGO); // MONGO
+configHandebars(app); // HANDLEBARS
+configPassport(app, ENV); // PASSPORT
+configSocketIo(httpServer, ENV); // SOCKET
+configSwagger(app); // DOCS
 
 // ROUTES
 app.use("/api/products", routesApi.products);

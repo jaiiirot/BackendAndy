@@ -14,7 +14,6 @@
   <title>{{user.title}}</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Anton&family=Brygada+1918:ital,wght@0,400..700;1,400..700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
-
     * {
       margin: 0;
       padding: 0;
@@ -55,106 +54,13 @@
 </head>
 
 <body>
-  <header id="headertop" class="bg-[#121212] sticky top-0 z-[100] w-full relative">
-    <section class="w-full text-white">
-      <nav class="px-6">
-        <div class="relative flex flex-col-reverse md:flex-col items-center py-4 justify-between">
-          <div class="m-auto flex bg-white rounded-full overflow-hidden md:absolute md:top-0 md:bottom-0 md:h-min md:w-max">
-              <input
-              type="text"
-              placeholder="Buscar"
-              class="w-full px-4 py-2 rounded-md border-none outline-none text-black"
-            />
-              <button class="text-black w-min px-4 hover:bg-black hover:text-white">
-              <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-          </div>
-          <div class="flex justify-between w-full">
-            <div class="flex w-max justify-center items-center gap-4 md:gap-0">
-            
-                {{>icons/menu x="30" y="30"}}
-              
-              <a href="/">
-                <h1 id="title" class="text-[2rem] md:text-[3rem] font-brygada style-logo" style="transform:scaleY(0.75)">ILICITO</h1>
-              </a>
-            </div>
-            <div class="flex gap-4 w-max items-center justify-center">
-              {{#if user.exist}}
-              <a href="/api/sessions/logout" class="flex flex-col justify-center items-center">
-                {{> icons/logout x="30" y="30"}}
-                <p class="text-xs">{{user.info.username}}</p>
-              </a>
-              {{else}}
-              <a href="/login">
-                {{> icons/login x="30" y="30"}}
-                <p class="text-xs">Login</p>
-              </a>
-              {{/if}}
-              <span id="open-cart" class="relative cursor-pointer flex items-center justify-center flex-col">
-              {{> icons/cart x="30" y="30"}}
-              <span class="count-prod-number absolute top-0 right-0 bg-black"></span>
-              <p class="text-xs">Mi Carrito</p>
-              </span>
-            </div>
-          </div>
-        </div>
-        <hr class="border-gray-700 border-1" />
-        <ul class="hidden gap-16 items-center justify-center py-4 font-bold text-base md:flex font-josefin">
-          <li><a href="/">inicio</a></li>
-          <li><a href="/productos/promocion">sale</a></li>
-          <li><a href="/productos/indumentaria">productos</a></li>
-          <li><a href="/productos/accesorio">accesorios</a></li>
-          <li><a href="/contacto">contacto</a></li>
-        </ul>
-      </nav>
-    </section>
-
-    <section
-      class="fixed z-[102]  h-dvh top-0 right-0 w-full bg-black bg-opacity-50 hidden transition-all duration-300 ease-in-out"
-      id="container-cart" {{#if user.exist}} data-cid="{{user.info.cart}}" {{/if}}>
-      <aside class="relative h-full w-full ml-auto border border-gray-600 bg-gray-100 px-6 py-8 md:w-[450px]">
-        <button
-        id="close-cart"
-        class="absolute end-4 top-4 text-gray-600 transition hover:scale-110"
-      >
-        <span class="sr-only">Close cart</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="h-5 w-5"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </button>
-        <div class="space-y-6 h-full flex flex-col justify-between items-center">
-          <ul class="space-y-4 h-full w-full overflow-y-scroll list-prod-cart">
-            {{!-- Products --}}
-          </ul>
-          <div class=" text-center w-full">
-            <a href="/carrito/{{user.info.cart}}/purchase"
-              class="block w-full rounded border border-gray-600 px-5 py-3 text-sm text-gray-600 transition hover:ring-1 hover:ring-gray-400">
-              Ver mi carrito (<span class="count-prod-number"></span>)
-            </a>
-          </div>
-        </div>
-      </aside>
-    </section>
-  </header>
-  
+  {{>user/header user=user}}
   <main class="relative py-2">
     {{{body}}}
     {{#if user.exist}}
-      {{>circlechat}}
+      {{>user/circlechat}}
     {{/if}}
   </main>
-
   <footer class="flex justify-center bg-[#121212] flex-col items-center p-12 gap-4 text-white">
     <div class="flex justify-between items-center">
       <a href="https://github.com/jaiiirot" target="_black">{{>icons/github x="30" y="30"}}</a>
@@ -165,61 +71,7 @@
       <a class="hover:opacity-75" href target="_blank" rel="noreferrer">Jairo</a>
     </p>
   </footer>
-
-
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>
-    const action_cart = () =>{
-    container_cart.classList.toggle('hidden');
-}
-
-const item_cart = (product,quantity) => {
-    const li = document.createElement('li');
-    li.classList.add('py-1',"px-2",'bg-white',"rounded-md");
-    li.innerHTML =`
-    <div class="flex justify-between items-center" >
-        <img src="${product.photo[0]}" alt="${product.title}" class="w-16 h-16 object-cover rounded">
-        <div class="flex flex-col">
-           <span class="text-sm">${product.title}</span>
-           <span class="text-sm">${product.price}</span>
-        </div>
-        <span class="text-sm">${quantity}</span>
-    </div>
-    `;
-    return li;
-}
-
-const container_cart = document.getElementById('container-cart');
-const header = document.getElementById('headertop');
-const open_cart = document.getElementById('open-cart');
-const count_prod_number = document.querySelectorAll('.count-prod-number');
-const list_prod = document.querySelector('.list-prod-cart');
-const close_cart = document.getElementById('close-cart');
-open_cart.addEventListener('click',action_cart)
-close_cart.addEventListener('click',action_cart)
-
-const cartId = !!container_cart.dataset.cid;
-const reloadCart = () => {
-  list_prod.innerHTML = '';
-  fetch(`/api/carts/${container_cart.dataset.cid}`)
-    .then(response => response.json())
-    .then(data => {
-        count_prod_number.forEach(item => item.textContent = data.products.length);
-        data.products.forEach(product => {
-            list_prod.appendChild(item_cart(product.pid,product.quantity));
-        });
-        
-    })
-    .catch(error => {
-        console.log(error);
-    })
-  }
-if (cartId) {
-reloadCart()
-}
-
-
-  </script>
 </body>
 
 </html>

@@ -4,7 +4,7 @@
         <div class="swiper mySwiper h-full w-full">
             <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
                 {{#each user.products}}
-                    {{> card_product title=this.title price=this.price thumbnails=this.thumbnails }}
+                    {{> user/cardproduct title=this.title price=this.price thumbnails=this.thumbnails }}
                 {{/each}}
             </div>
         </div>

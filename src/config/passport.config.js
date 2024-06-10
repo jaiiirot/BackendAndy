@@ -1,12 +1,8 @@
 import passport from "passport";
 import GitHubStrategy from "passport-github2";
 import { Strategy as JtwStrategy } from "passport-jwt";
-import { ENV } from "./config.js";
 import { usersService } from "../feature/users/repository/users.service.js";
 import { logger } from "../utils/logger/logger.js";
-
-const { SECRET_COOKIE } = ENV;
-const { CLIENT_ID, CLIENT_SECRET, CALLBACK_URL } = ENV.GITHUB;
 
 export const configPassport = (app, ENV) => {
 	passport.serializeUser((user, done) => {
@@ -28,7 +24,7 @@ export const configPassport = (app, ENV) => {
 					}
 					return token;
 				},
-				secretOrKey: SECRET_COOKIE,
+				secretOrKey: ENV.SECRET_COOKIE,
 			},
 			async function (jwtPayload, done) {
 				try {
@@ -50,9 +46,9 @@ export const configPassport = (app, ENV) => {
 		"github",
 		new GitHubStrategy(
 			{
-				clientID: CLIENT_ID,
-				clientSecret: CLIENT_SECRET,
-				callbackURL: CALLBACK_URL,
+				clientID: ENV.GITHUB.CLIENT_ID,
+				clientSecret: ENV.GITHUB.CLIENT_SECRET,
+				callbackURL: ENV.GITHUB.CALLBACK_URL,
 				scope: "user:email",
 			},
 			async (accessToken, refreshToken, profile, done) => {

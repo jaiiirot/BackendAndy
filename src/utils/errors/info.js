@@ -1,6 +1,14 @@
 export const generateUserErrorInfo = user => {
-	return `One o more properties where incomplete or not valid.
-    list of required properties:
-    * email         : needs to be a String, received  ${user.email}
-    * password      : needs to be a String, received  ${user.password}`;
+	return `Una o más propiedades estaban incompletas o no eran válidas.
+    Lista de propiedades requeridas:
+    * email    : debe ser un String, se recibió ${
+			typeof user.email === "string"
+				? user.email
+				: `tipo inválido ${typeof user.email}`
+		}
+    * contraseña : debe ser un String, se recibió ${
+			typeof user.password === "string"
+				? user.password
+				: `tipo inválido ${typeof user.password}`
+		}`;
 };

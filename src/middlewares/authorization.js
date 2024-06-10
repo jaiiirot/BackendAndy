@@ -5,7 +5,6 @@ export const authorization = (ROLE = []) => {
 		const redirect = role === "ADMIN" ? "panel" : "";
 		const msg = role === "ADMIN" ? "?msg=bienvenido" : "";
 		if (ROLE.includes(role)) {
-			req.infoUser = false;
 			if (role === "USER") {
 				req.infoUser = {
 					exist: false,
@@ -34,7 +33,7 @@ export const authorization = (ROLE = []) => {
 		} else {
 			const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 			res.status(401).redirect(`/${redirect}${msg}`);
-			logger.error(`❌ Autorización fallida. IP: ${ip}`);
+			logger.warning(`🚧 Autorización fallida. IP: ${ip}`);
 		}
 	};
 };

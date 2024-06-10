@@ -1,6 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import { ENV } from "../config/config.js";
-import { logger } from "./logger/logger.js"; // Importa el logger
+import { logger } from "../utils/logger/logger.js";
 
 const { CLOUD_NAME, API_KEY, API_SECRET } = ENV.CLOUDINARY;
 cloudinary.config({
@@ -9,7 +9,7 @@ cloudinary.config({
 	api_secret: API_SECRET,
 });
 
-export const postCloudinary = async urlFile => {
+const postCloudinary = async urlFile => {
 	try {
 		const result = await cloudinary.uploader.upload(urlFile, {
 			folder: "ecommerce",
@@ -22,7 +22,7 @@ export const postCloudinary = async urlFile => {
 	}
 };
 
-export const postCloudinaryBuffer = imageBuffer => {
+const postCloudinaryBuffer = imageBuffer => {
 	try {
 		return new Promise((resolve, reject) => {
 			cloudinary.uploader
@@ -36,7 +36,7 @@ export const postCloudinaryBuffer = imageBuffer => {
 	}
 };
 
-export const deleteCloudinary = async urlFile => {
+const deleteCloudinary = async urlFile => {
 	try {
 		const pathUrl = urlFile.split("/").pop().split(".").shift();
 		const response = await cloudinary.uploader.destroy(`ecommerce/${pathUrl}`);
@@ -48,7 +48,7 @@ export const deleteCloudinary = async urlFile => {
 	}
 };
 
-export const updateCloudinary = async (urlFile, newUrl) => {
+const updateCloudinary = async (urlFile, newUrl) => {
 	try {
 		const publicid = urlFile.split("/").pop().split(".").shift();
 		await cloudinary.uploader.destroy(publicid);
@@ -61,4 +61,11 @@ export const updateCloudinary = async (urlFile, newUrl) => {
 		logger.error("🔴 Error al actualizar la imagen en Cloudinary:", error);
 		return { msg: "Error al actualizar la imagen en Cloudinary:", error };
 	}
+};
+
+export const cloudinaryService = {
+	postCloudinaryBuffer,
+	deleteCloudinary,
+	postCloudinary,
+	updateCloudinary,
 };

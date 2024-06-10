@@ -1,9 +1,5 @@
 import ProductDTO from "../products.dto.js";
-import { resizeImageBuffer } from "../../../utils/sharp.js";
-import {
-	postCloudinaryBuffer,
-	deleteCloudinary,
-} from "../../../utils/cloudinary.js";
+import { servicesExternal } from "../../../services/repository/external.service.js";
 
 export default class ProductRepository {
 	constructor(dao) {
@@ -29,10 +25,15 @@ export default class ProductRepository {
 
 	post = async (data, photoFiles) => {
 		let photos = [];
+		console.log("data", data, "photoFiles", photoFiles);
 		if (!data.photoUrl) {
 			for (const photo of photoFiles) {
-				const buffer = await resizeImageBuffer(photo.buffer, 300, 300);
-				const result = await postCloudinaryBuffer(buffer);
+				const buffer = await servicesExternal.resizeImageBuffer(
+					photo.buffer,
+					300,
+					300
+				);
+				const result = await servicesExternal.postCloudinaryBuffer(buffer);
 				photos.push(result.secure_url);
 			}
 		} else {
@@ -53,8 +54,12 @@ export default class ProductRepository {
 			if (data.photoUrl || photoFiles.length > 0) {
 				if (!data.photoUrl) {
 					for (const photo of photoFiles) {
-						const buffer = await resizeImageBuffer(photo.buffer, 300, 300);
-						const result = await postCloudinaryBuffer(buffer);
+						const buffer = await servicesExternal.resizeImageBuffer(
+							photo.buffer,
+							300,
+							300
+						);
+						const result = await servicesExternal.postCloudinaryBuffer(buffer);
 						photos.push(result.secure_url);
 					}
 				} else {
@@ -71,7 +76,7 @@ export default class ProductRepository {
 					await Promise.all(
 						photoUrls.photo.map(async element => {
 							if (element.includes("res.cloudinary.com")) {
-								await deleteCloudinary(element);
+								await servicesExternal.deleteCloudinary(element);
 							}
 						})
 					);
@@ -91,7 +96,8 @@ export default class ProductRepository {
 	delete = async id => {
 		const photoUrls = await this.dao.getById(id);
 		photoUrls.photo.forEach(async element => {
-			await deleteCloudinary(element);
+			await servicesExternal.deleteCloudinary(element);
+			// await deleteCloudinary(element);
 		});
 		return await this.dao.deleteProduct(id);
 	};

@@ -1,16 +1,11 @@
 import { authorization } from "../../middlewares/authorization.js";
 import { authentication } from "../../middlewares/authencations.js";
-import { upload } from "../../utils/upload.js";
+import { upload } from "../../services/upload.js";
 import { controllersProducts } from "./products.controller.js";
 import express from "express";
 const router = express.Router();
 
-router.get(
-	"/mockingproducts",
-	authentication,
-	authorization(["ADMIN", "USER"]),
-	controllersProducts.getAllMockingProducts
-);
+router.get("/mocking/productos", controllersProducts.getAllMockingProducts);
 
 router.post(
 	"/",

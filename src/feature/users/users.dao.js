@@ -85,4 +85,20 @@ export default class UsersDAO {
 			throw error;
 		}
 	}
+
+	async putLastConnection(userId) {
+		try {
+			return await Users.findByIdAndUpdate(
+				userId,
+				{ lastConnection: Date.now() },
+				{ new: true }
+			);
+		} catch (error) {
+			logger.error(
+				`🔴 Error al actualizar la última conexión para el usuario con ID ${userId}:`,
+				error
+			);
+			throw error;
+		}
+	}
 }

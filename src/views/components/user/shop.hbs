@@ -51,7 +51,7 @@
       <div class="grid grid-cols-2 w-full h-full sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-5 gap-2">
          {{#each user.products}}
          <div class="h-max">
-            {{> card_product _id=this._id title=this.title price=this.price photo=this.photo }}
+            {{> user/cardproduct _id=this._id title=this.title price=this.price photo=this.photo }}
          </div>
          {{/each}}
       </div>

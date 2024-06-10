@@ -1,14 +1,15 @@
 import { productsService } from "../feature/products/repository/products.service.js";
+import { ticketsService } from "../feature/tickets/repository/tickets.service.js";
 import { logger } from "../utils/logger/logger.js";
 
 const Panel = async (req, res) => {
 	try {
-		const products = await productsService.getAll();
+		const tickets = await ticketsService.getAll();
 		res.render("components/admin/index", {
 			layout: "admin",
 			admin: {
 				title: "Panel",
-				products,
+				tickets,
 				...req.infoUser,
 			},
 		});

@@ -1,9 +1,9 @@
 <section class="flex flex-col w-full">
-	<div >
+	<div>
 		<h1 class="text-2xl">Tickets</h1>
-		<p >Administra los tickets de los pedidos</p>
+		<p>Administra los tickets de los pedidos</p>
 	</div>
-	{{!-- <div class="flex w-full h-full text-gray-400">
+	<div class="flex w-full h-full text-gray-400">
 		<div class="flex flex-col w-full">
 			<div class="text-end">
 				<a
@@ -13,7 +13,7 @@
 					Crear Producto
 				</a>
 			</div>
-			<div class="shadow  rounded-lg">
+			<div class="shadow rounded-lg">
 				<table class="shadow text-sm text-gray-400 w-full">
 					<thead class="bg-gray-800 text-xs uppercase font-medium">
 						<tr class="bg-gray-900">
@@ -21,13 +21,16 @@
 								#id
 							</th>
 							<th scope="col" class="px-4 py-2">
-								total
+								fecha
 							</th>
-							<th>
+							<th scope="col" class="px-4 py-2">
+								code
+							</th>
+							<th scope="col" class="px-4 py-2">
 								correo
 							</th>
 							<th scope="col" class="px-4 py-2">
-								estado
+								total
 							</th>
 							<th scope="col" class="px-4 py-2">
 								Acciones
@@ -41,37 +44,36 @@
 									<p
 										style="white-space: nowrap; overflow: hidden; width: 225px; text-overflow:ellipsis;"
 									>
-										{{this.title}}
+										{{this._id}}
 									</p>
 								</td>
 								<td class="overflow-hidden px-2 py-1">
-									{{#if this.promocion}}
-										<p
-											class="bg-green-500 w-min py-1 px-4 rounded-full text-white"
-										>
-											Esta
-										</p>
-									{{else}}
-										<p
-											class="bg-red-500 w-min py-1 px-4 rounded-full text-white whitespace-nowrap overflow-hidden text-overflow"
-										>
-											No esta
-										</p>
-									{{/if}}
+									<p
+										style="white-space: nowrap; overflow: hidden; width: 225px; text-overflow:ellipsis;"
+									>
+										{{this.purchase_datetime}}
+									</p>
+								</td>
+								<td class="overflow-hidden px-2 py-1">
+									<p
+										class="bg-green-500 w-min py-1 px-4 rounded-full text-white"
+									>
+										{{this.code}}
+									</p>
 								</td>
 								<td class="overflow-hidden px-2 py-1">
 									<p
 										style="white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;"
 									>
-										$
-										{{this.price}}
+										{{this.purchaser}}
 									</p>
 								</td>
 								<td class="overflow-hidden px-4 py-2">
 									<p
 										style="white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;"
 									>
-										{{this.stock}}
+										$
+										{{this.amount}}
 									</p>
 								</td>
 								<td class="overflow-hidden px-4 py-2">
@@ -94,17 +96,18 @@
 				</table>
 			</div>
 			<div class="flex gap-6 justify-center items-center mt-2">
-				<a class="p-2 text-sm font-medium rounded bg-sky-950 text-white"
+				<a
+					class="p-2 text-sm font-medium rounded bg-sky-950 text-white"
 					href="{{admin.prevLink}}"
 				>Anterior</a>
 				<span
 					class="p-2 text-sm font-medium rounded bg-blue-950 text-white"
 				>{{admin.actualLink}}</span>
 				<a
-					class="p-2  text-sm font-medium rounded bg-sky-950 text-white"
+					class="p-2 text-sm font-medium rounded bg-sky-950 text-white"
 					href="{{admin.nextLink}}"
 				>Siguiente</a>
 			</div>
 		</div>
-	</div> --}}
+	</div>
 </section>

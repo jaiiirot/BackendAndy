@@ -3,25 +3,32 @@ import { cartsService } from "../feature/carts/repository/carts.service.js";
 import { logger } from "../utils/logger/logger.js";
 
 const RedirectHome = (req, res) => {
-	res.redirect("/");
-	// logger.info("🟢 Redireccionado a la página de inicio");
+	try {
+		res.redirect("/");
+		// logger.info("🟢 Redireccionado a la página de inicio");
+	} catch (error) {
+		logger.warning(`🔴 Error al procesar la solicitud: ${error.message}`, {
+			stack: error.stack,
+		});
+	}
 };
 
 const Home = async (req, res) => {
 	try {
-		const products = await productsService.getAll({}, { limit: 20 });
+		const productsAll = await productsService.getAll({}, { limit: 20 });
+		const products = productsAll.docs.filter(e => e.stock > 0);
 		res.render("components/user/index", {
 			layout: "main",
 			user: {
 				title: "ILICITO || HOME",
 				js: "index.js",
-				products: products.docs,
+				products,
 				...req.infoUser,
 			},
 		});
 		// logger.info("🟢 Página de inicio renderizada con éxito");
 	} catch (error) {
-		logger.error(`🔴 Error al procesar la solicitud: ${error.message}`, {
+		logger.warning(`🔴 Error al procesar la solicitud: ${error.message}`, {
 			stack: error.stack,
 		});
 	}
@@ -29,19 +36,20 @@ const Home = async (req, res) => {
 
 const Products = async (req, res) => {
 	try {
-		const products = await productsService.getAll({}, { limit: 20 });
+		const productsAll = await productsService.getAll({}, { limit: 20 });
+		const products = productsAll.docs.filter(e => e.stock > 0);
 		res.render("components/user/shop", {
 			layout: "main",
 			user: {
 				title: "Productos",
 				section_title: "PRODUCTOS",
-				products: products.docs,
+				products,
 				...req.infoUser,
 			},
 		});
 		// logger.info("🟢 Página de productos renderizada con éxito");
 	} catch (error) {
-		logger.error(`🔴 Error al procesar la solicitud: ${error.message}`, {
+		logger.warning(`🔴 Error al procesar la solicitud: ${error.message}`, {
 			stack: error.stack,
 		});
 		res.redirect("/login");
@@ -68,19 +76,20 @@ const ProductsSection = async (req, res) => {
 		options.page = page;
 		options.limit = limit;
 
-		const paginate = await productsService.getAll(query, options);
+		const productsAll = await productsService.getAll(query, options);
+		const products = productsAll.docs.filter(e => e.stock > 0);
 		res.render("components/user/shop", {
 			layout: "main",
 			user: {
 				title: "Productos",
 				section_title: "PRODUCTOS",
-				products: paginate.docs,
+				products,
 				...req.infoUser,
 			},
 		});
 		// logger.info("🟢 Sección de productos renderizada con éxito");
 	} catch (error) {
-		logger.error(`🔴 Error al procesar la solicitud: ${error.message}`, {
+		logger.warning(`🔴 Error al procesar la solicitud: ${error.message}`, {
 			stack: error.stack,
 		});
 		res.status(500).send({ error: "Error interno del servidor" });
@@ -104,7 +113,7 @@ const ProductDetail = async (req, res) => {
 		});
 		// logger.info(`🟢 Detalle del producto ${title} renderizado con éxito`);
 	} catch (error) {
-		logger.error(`🔴 Error al procesar la solicitud: ${error.message}`, {
+		logger.warning(`🔴 Error al procesar la solicitud: ${error.message}`, {
 			stack: error.stack,
 		});
 		res.status(500).render("404");
@@ -112,14 +121,21 @@ const ProductDetail = async (req, res) => {
 };
 
 const Contact = (req, res) => {
-	res.render("components/user/contact", {
-		layout: "main",
-		user: {
-			title: "Contacto",
-			...req.infoUser,
-		},
-	});
-	// logger.info("🟢 Página de contacto renderizada con éxito");
+	try {
+		res.render("components/user/contact", {
+			layout: "main",
+			user: {
+				title: "Contacto",
+				...req.infoUser,
+			},
+		});
+		// logger.info("🟢 Página de contacto renderizada con éxito");
+	} catch (error) {
+		logger.warning(`🔴 Error al procesar la solicitud: ${error.message}`, {
+			stack: error.stack,
+		});
+		res.status(500).render("404");
+	}
 };
 
 const CardID = async (req, res) => {
@@ -145,9 +161,10 @@ const CardID = async (req, res) => {
 		});
 		// logger.info("🟢 Carrito renderizado con éxito");
 	} catch (error) {
-		logger.error(`🔴 Error al procesar la solicitud: ${error.message}`, {
+		logger.warning(`🔴 Error al procesar la solicitud: ${error.message}`, {
 			stack: error.stack,
 		});
+		res.status(500).render("404");
 	}
 };
 

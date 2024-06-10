@@ -18,9 +18,9 @@ const register = async (req, res) => {
 const login = async (req, res) => {
 	try {
 		const user = await usersService.getLogin(req.body);
-		if (user.token && user.time) {
+		if (user.token && user.cookieOptions) {
 			res
-				.cookie("jwt", user.token, user.time)
+				.cookie("jwt", user.token, user.cookieOptions)
 				.send({ status: 200, msg: "Usuario logueado correctamente" });
 		} else {
 			res.status(400).send({ status: 400, msg: user.msg });
@@ -36,7 +36,7 @@ const authGitHub = async (req, res) => {};
 const authGitHubCallback = async (req, res) => {
 	try {
 		const user = await usersService.getLoginGithub(req.user);
-		res.cookie("jwt", user.token, user.time).redirect("/");
+		res.cookie("jwt", user.token, user.cookieOptions).redirect("/");
 	} catch (error) {
 		logger.error(
 			"🔴 Error al realizar el callback de autenticación de GitHub:",
