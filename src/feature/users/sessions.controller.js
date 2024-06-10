@@ -1,4 +1,5 @@
 import { usersService } from "./repository/users.service.js";
+import { messagesService } from "../messages/repository/messages.service.js";
 import { logger } from "../../utils/logger/logger.js";
 
 const register = async (req, res) => {
@@ -70,6 +71,21 @@ const deleteUser = async (req, res) => {
 	}
 };
 
+const forgetPassword = async (req, res) => {
+	try {
+		const result = await usersService.getByEmail(req.params.email);
+		if (result) {
+			await messagesService.postMessageByEmail(req.params.email);
+			res.status(200).json({ msg: "Correo enviado correctamente" });
+		} else {
+			res.status(400).json({ msg: "Error al enviar el correo" });
+		}
+	} catch (error) {
+		logger.error("🔴 Error al enviar el correo:", error);
+		res.status(500).json({ msg: "Error interno del servidor" });
+	}
+};
+
 const resetPassword = async (req, res) => {
 	try {
 		const user = await usersService.putPasswordByEmail(req.body);
@@ -90,6 +106,7 @@ export const controllersSessions = {
 	logout,
 	authGitHub,
 	authGitHubCallback,
+	forgetPassword,
 	resetPassword,
 	deleteUser,
 };

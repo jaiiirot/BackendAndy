@@ -1,17 +1,30 @@
 import nodemailer from "nodemailer";
 import { ENV } from "../config/config.js";
-
 const { USER, KEY } = ENV.NODEMAILER;
 const transporter = nodemailer.createTransport({
-	host: "smtp.ethereal.email",
-	port: 587,
-	secure: false,
+	service: "gmail",
 	auth: {
 		user: USER,
 		pass: KEY,
 	},
 });
 
+const sendMail = async (to, subject, text, html) => {
+	try {
+		const info = await transporter.sendMail({
+			from: `"ILICITO" <ilicito.forgot@gmail.com>`,
+			to,
+			subject,
+			text,
+			html,
+		});
+		return info;
+	} catch (error) {
+		console.error("Error: ", error);
+		return error;
+	}
+};
+
 export const nodemailerService = {
-	transporter,
+	sendMail,
 };
