@@ -41,10 +41,11 @@ export default class MessagesRepository {
 			"Recuperar contraseña",
 			"Recuperar contraseña",
 			` 
-<div style="max-width:600px;padding:20px;text-align:center">
+<div style="width:100%; text-align:center; ">
+<div style="max-width:600px;padding:20px;text-align:center;margin:auto;">
     <header style="margin: auto;justify-content: center;text-align:center;align-items: center;">
       <a href="http://localhost:8080/" style="color:#000000;text-decoration:none;font-size:2rem" target="_blank" data-saferedirecturl="https://www.google.com/url?q=http://localhost:8080/&amp;source=gmail&amp;ust=1718085780557000&amp;usg=AOvVaw1eXv_DC61u5KGVsOHjmBwf">
-        <span style="width:2rem;height:2rem;background-color:#000000;color:#ffffff;display:flex;border-radius:50%;font-size:1.5rem"></span>ILICITO
+        <img src="https://raw.githubusercontent.com/jaiiirot/backend-ilicito/main/src/public/image/logo.png" alt="ILICITO" style="width: 175px;">
       </a>
     </header>
     <div style="margin-bottom:25px">
@@ -65,6 +66,7 @@ export default class MessagesRepository {
       © 2024 ILICITO. Todos los derechos reservados.
     </footer>
   </div>
+</div>
   `
 		);
 		return email;
