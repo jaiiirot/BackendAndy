@@ -62,4 +62,10 @@ export default class ExternalRepository {
 	decodeToken(token) {
 		return this.jwt.decodeToken(token);
 	}
+
+	async postResizeCloudBuffer(buffer, width, height) {
+		const resizeImage = await this.resizeImageBuffer(buffer, 300, 300);
+		const result = await this.postCloudinaryBuffer(resizeImage);
+		return result.secure_url;
+	}
 }

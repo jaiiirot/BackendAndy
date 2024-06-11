@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import __dirname from "./utils/utils.js";
 import routesApi from "./feature/api.routes.js";
 import routesViews from "./client/views.routes.js";
+import compression from "express-compression";
 import { ENV } from "./config/config.js";
 import { configSwagger } from "./config/swagger.config.js";
 import { configMongoose } from "./config/db.config.js";
@@ -20,6 +21,7 @@ const httpServer = app.listen(ENV.PORT, () => {
 });
 
 // MIDDLAWARES
+app.use(compression());
 app.use(cors());
 app.set("trust proxy", true);
 app.use(loggerServer);

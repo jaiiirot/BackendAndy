@@ -28,7 +28,7 @@ const PanelProducts = async (req, res) => {
 		let products;
 		const action = req.query.action;
 		if (action === "agregar") {
-			res.render("components/admin/addprod", {
+			res.render("components/admin/actionprod", {
 				layout: "admin",
 				admin: {
 					title: "Panel | Agregar",
@@ -38,7 +38,7 @@ const PanelProducts = async (req, res) => {
 			// logger.info("🟢 Renderizado el formulario para agregar productos");
 		} else if (action === "editar") {
 			products = await productsService.getById(req.query.pid);
-			res.render("components/admin/putprod", {
+			res.render("components/admin/actionprod", {
 				layout: "admin",
 				admin: {
 					title: "Panel | Editar",

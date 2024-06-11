@@ -26,7 +26,7 @@ router.put(
 	"/:pid",
 	authentication,
 	authorization(["ADMIN"]),
-	upload.array("photos", 4),
+	upload.array("photo", 4),
 	controllersProducts.putProduct
 );
 

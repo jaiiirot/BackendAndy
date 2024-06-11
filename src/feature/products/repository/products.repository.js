@@ -25,16 +25,16 @@ export default class ProductRepository {
 
 	post = async (data, photoFiles) => {
 		let photos = [];
-		console.log("data", data, "photoFiles", photoFiles);
+		data.status = data.status === "on";
+		data.promocion = data.promocion === "on";
 		if (!data.photoUrl) {
 			for (const photo of photoFiles) {
-				const buffer = await servicesExternal.resizeImageBuffer(
+				const result = await servicesExternal.postResizeCloudBuffer(
 					photo.buffer,
 					300,
 					300
 				);
-				const result = await servicesExternal.postCloudinaryBuffer(buffer);
-				photos.push(result.secure_url);
+				photos.push(result);
 			}
 		} else {
 			photos = data.photoUrl;
@@ -49,18 +49,18 @@ export default class ProductRepository {
 		try {
 			let photos = [];
 			let condition = false;
+			data.status = data.status === "on";
+			data.promocion = data.promocion === "on";
 			const photoUrls = await this.dao.getById(id);
-
 			if (data.photoUrl || photoFiles.length > 0) {
 				if (!data.photoUrl) {
 					for (const photo of photoFiles) {
-						const buffer = await servicesExternal.resizeImageBuffer(
+						const result = await servicesExternal.postResizeCloudBuffer(
 							photo.buffer,
 							300,
 							300
 						);
-						const result = await servicesExternal.postCloudinaryBuffer(buffer);
-						photos.push(result.secure_url);
+						photos.push(result);
 					}
 				} else {
 					photos = data.photoUrl;
@@ -71,7 +71,6 @@ export default class ProductRepository {
 						condition = true;
 					}
 				});
-
 				if (condition) {
 					await Promise.all(
 						photoUrls.photo.map(async element => {

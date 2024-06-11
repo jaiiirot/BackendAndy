@@ -1,0 +1,133 @@
+<aside class="flex flex-col justify-around align-center w-full h-full">
+   {{!-- Form --}}
+   <section class="bg-gray-200 px-8 py-4 w-full h-max">
+      <form id="product-form"   enctype="multipart/form-data">
+         <div class="flex gap-2">
+            <div class="flex gap-2 flex-col w-6/12">
+               <input type="text" name="title" id="title-input" placeholder="Titulo de producto" class="border-none outline-none text-black px-4 py-2" value="{{admin.product.title}}" />
+               <textarea name="description" id="description-input" class="border-none outline-none text-black px-4 py-2 resize-none h-32" placeholder="Descripción del producto">{{admin.product.description}}</textarea>
+               <input type="text" name="code" id="code-input" placeholder="Codigo del producto: 123d1AS" class="border-none outline-none text-black px-4 py-2" value="{{admin.product.code}}" />
+               <input type="number" name="price" id="price-input" placeholder="Precio del producto: 112233" class="border-none outline-none text-black px-4 py-2" min="0" pattern="^[0-9]+" value="{{admin.product.price}}" />
+               <input type="number" name="stock" id="stock-input" placeholder="Stock del producto: 12" class="border-none outline-none text-black px-4 py-2" min="0" pattern="^[0-9]+" value="{{admin.product.stock}}" />
+               <input type="text" name="category" id="category-input" placeholder="mujer,hombre,buzos,remera,etc..." class="border-none outline-none text-black px-4 py-2" value="{{admin.product.category}}" />
+               <input type="text" name="type" id="type-input" placeholder="Tipo del producto: físico, digital..." class="border-none outline-none text-black px-4 py-2" value="{{admin.product.type}}" />
+               <input type="text" name="genre" id="genre-input" placeholder="Género del producto: unisex, masculino, femenino..." class="border-none outline-none text-black px-4 py-2" value="{{admin.product.genre}}" />
+               <label class="flex items-center">
+                  <input type="checkbox" name="status" id="status-input" class="mr-2" {{#if admin.product.status}}checked{{/if}} />
+                  Producto activo
+               </label>
+               <label class="flex items-center">
+                  <input type="checkbox" name="promocion" id="promocion-input" class="mr-2" {{#if admin.product.promocion}}checked{{/if}} />
+                  Producto en promoción
+               </label>
+            </div>
+            <div class="flex gap-2 flex-col w-6/12">
+               <select name="optionPhotos" id="option-photos" class="border-none outline-none text-black px-4 py-3">
+                    {{#if admin.exist_product}}
+                        {{#if admin.product.photo}}
+                            <option value="nomyimg">Imagenes Externas</option>
+                            <option value="myimg">Mis Imagenes</option>
+                        {{/if}}
+                    {{else}}
+                        <option>Selecciona una opcion</option>
+                        <option value="myimg">Mis Imagenes</option>
+                        <option value="nomyimg">Imagenes Externas</option>
+                    {{/if}}
+               </select>
+               <div class="w-full" id="photos-input">
+                {{#if admin.exist_product}}
+                    {{#each admin.product.photo}}
+                        <input class="border-none outline-none text-black px-4 py-2 w-full" name="photoUrl" type="text" placeholder="URL de la imagen 1" value="{{this}}">
+                    {{/each}}
+                {{/if}}
+                  {{!-- IMG --}}
+               </div>
+            </div>
+         </div>
+         <br>
+         <div>
+            {{#if admin.product}}
+               <span id="submit-put" class="border-none outline-none px-4 py-2 bg-gray-700 text-white cursor-pointer hover:bg-gray-600 transition-all duration-300 ease-in-out">Actualizar Producto</span>
+            {{else}}
+               <span id="submit-post" class="border-none outline-none px-4 py-2 bg-gray-700 text-white cursor-pointer hover:bg-gray-600 transition-all duration-300 ease-in-out">Crear Producto</span>
+            {{/if}}
+            <a href="/panel/productos" class="border-none outline-none px-4 py-2 bg-red-700 text-white cursor-pointer hover:bg-red-600 transition-all duration-300 ease-in-out">Cancelar</a>
+         </div>
+      </form>
+   </section>
+</aside>
+<script type="module">
+	function createInputs(){
+      document.getElementById("photos-input").innerHTML = ""
+      for (let i = 0; i < 4; i++) {
+         let input = document.createElement("input")
+         input.classList.add("border-none","outline-none","text-black","px-4","py-2","w-full")
+         input.setAttribute("name","photoUrl")
+         input.setAttribute("type","text")
+         input.setAttribute("placeholder",`URL de la imagen ${i + 1}`)
+         input.setAttribute("id",`photo-url-${i + 1}`)
+         document.getElementById("photos-input").appendChild(input)
+      }
+	}
+
+	function createFileInputs(){
+      document.getElementById("photos-input").innerHTML = ""
+         let input = document.createElement("input")
+         input.classList.add("border-none","outline-none","text-black","px-4","py-2","w-full")
+         input.setAttribute("type","file")
+         input.setAttribute("name","photo")
+         input.setAttribute("multiple","")
+         document.getElementById("photos-input").appendChild(input)
+	}
+
+	document.getElementById("option-photos")?.addEventListener("change", (event) => {
+      const option = event.target.value
+      if(option === "nomyimg"){
+         createInputs()
+      } else if(option === "myimg"){
+         createFileInputs()
+      }
+	})
+
+	document.getElementById("submit-put")?.addEventListener("click", async (event) => {
+    const formData = new FormData(document.getElementById("product-form"));
+    const formElements = document.getElementById("product-form").elements;
+    const productId = new URLSearchParams(window.location.search).get("pid");
+    try {
+        const response = await fetch(`/api/products/${productId}`, {
+            method: "PUT",
+            body: formData,
+        });
+        console.log(response);
+        if (response.ok) {
+            alert("Producto actualizado exitosamente");
+            window.location.href = "/panel/productos";
+        } else {
+            window.location.href = response.url;
+        }
+    } catch (error) {
+        console.error("Error al actualizar el producto:", error);
+    }
+	})
+
+	document.getElementById("submit-post")?.addEventListener("click", async (event) => {
+        const formData = new FormData(document.getElementById("product-form"));
+        const formElements = document.getElementById("product-form").elements;
+
+        try {
+            const response = await fetch(`/api/products/`, {
+                method: "POST",
+                body: formData,
+            });
+            if (response.ok) {
+                alert("Producto agregado exitosamente");
+                window.location.href = "/panel/productos";
+            } else {
+                console.error("Error al agregar el producto:", response.statusText);
+            }
+        } catch (error) {
+            console.error("Error al agregar el producto:", error);
+            window.location.href = "/panel/productos?msg=error";
+        }
+    });
+</script>

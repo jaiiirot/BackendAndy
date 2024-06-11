@@ -9,7 +9,7 @@ const redirectToPanel = (res, status, message) => {
 
 const postProduct = async (req, res) => {
 	try {
-		console.log(!req.body && (!req.body.photoUrl || !req.files));
+		console.log(req.body, req.files);
 		if (!req.body && (!req.body.photoUrl || !req.files)) {
 			return redirectToPanel(res, 400, "postfailed");
 		}
@@ -36,6 +36,7 @@ const deleteProduct = async (req, res) => {
 
 const putProduct = async (req, res) => {
 	try {
+		console.log(req.body, req.files);
 		if (!req.body || !req.params.pid) {
 			return redirectToPanel(res, 400, "updatefailed");
 		}

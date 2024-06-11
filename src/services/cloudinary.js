@@ -14,7 +14,7 @@ const postCloudinary = async urlFile => {
 		const result = await cloudinary.uploader.upload(urlFile, {
 			folder: "ecommerce",
 		});
-		logger.info("🟢 Imagen subida a Cloudinary:", result); // Registra la imagen subida en Cloudinary
+		// logger.info("🟢 Imagen subida a Cloudinary:", result); // Registra la imagen subida en Cloudinary
 		return result.secure_url;
 	} catch (error) {
 		logger.error("🔴 Error al subir la imagen a Cloudinary:", error); // Registra el error al subir la imagen
@@ -40,7 +40,7 @@ const deleteCloudinary = async urlFile => {
 	try {
 		const pathUrl = urlFile.split("/").pop().split(".").shift();
 		const response = await cloudinary.uploader.destroy(`ecommerce/${pathUrl}`);
-		logger.info("🟢 Imagen eliminada de Cloudinary:", response);
+		// logger.info("🟢 Imagen eliminada de Cloudinary:", response);
 		return { msg: "Imagen eliminada", response };
 	} catch (error) {
 		logger.error("🔴 Error al eliminar la imagen de Cloudinary:", error);
