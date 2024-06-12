@@ -17,7 +17,7 @@ const verifyToken = token => {
 	try {
 		const result = jwt.verify(token, process.env.SECRET_COOKIE);
 		logger.info(`🔓 usuario ${result.email} en estado para cambiar contraseña`);
-		return result.email;
+		return result;
 	} catch (error) {
 		logger.warning("❌ TOKEN INCORRECTO de usuario: ", error);
 	}

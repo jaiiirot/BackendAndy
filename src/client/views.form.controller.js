@@ -45,7 +45,7 @@ const Reset = (req, res) => {
 			layout: "form",
 			login: {
 				title: "Recuperar contraseña",
-				email: req.email,
+				email: req.userreset.email,
 			},
 		});
 	} catch (error) {

@@ -62,7 +62,7 @@ router.get(
 		if (!req.params.token) res.redirect("/forget/");
 		if (!servicesExternal.getToken(req.signedCookies.token))
 			res.redirect("/forget/");
-		req.email = servicesExternal.getToken(req.signedCookies.token);
+		req.userreset = servicesExternal.getToken(req.signedCookies.token);
 		next();
 	},
 	controllersViewforms.Reset

@@ -32,10 +32,16 @@ router.post("/forget/:email", controllersSessions.forgetPassword);
 router.post(
 	"/reset/password/",
 	(req, res, next) => {
-		if (!req.params.token) res.redirect("/");
-		if (!servicesExternal.getToken(req.cookies.token)) res.redirect("/");
-		req.email = servicesExternal.getToken(req.cookies.token);
-		next();
+		try {
+			if (!servicesExternal.getToken(req.body.token)) res.redirect("/");
+			if (!servicesExternal.getToken(req.signedCookies.token))
+				res.redirect("/");
+			req.userreset = servicesExternal.getToken(req.signedCookies.token);
+			next();
+		} catch (error) {
+			console.error("🔴 Error al restablecer la contraseña:", error);
+			res.status(500).json({ msg: "Error interno del servidor" });
+		}
 	},
 	controllersSessions.resetPassword
 );

@@ -85,7 +85,6 @@ export default class UsersDAO {
 			);
 		} catch (error) {
 			logger.error("🔴 Error al actualizar la contraseña del usuario:", error);
-			throw error;
 		}
 	}
 

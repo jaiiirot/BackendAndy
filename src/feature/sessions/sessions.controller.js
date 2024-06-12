@@ -89,14 +89,14 @@ const forgetPassword = async (req, res) => {
 
 const resetPassword = async (req, res) => {
 	try {
-		const user = await usersService.putPasswordByEmail(req.body);
-		if (user) {
-			logger.info("🔐 Contraseña actualizada correctamente");
-			res.clearCookie("token");
-			res.status(200).json({ msg: "Contraseña actualizada correctamente" });
+		const result = await usersService.putPasswordByEmail(req.body);
+		if (result.msg) {
+			logger.warning(`⚠️ ${result.msg}`);
+			res.status(400).json({ msg: result.msg });
 		} else {
-			logger.error("🔴 Error al actualizar la contraseña");
-			res.status(400).json({ msg: "Error al actualizar la contraseña" });
+			messagesService.sendMailPasswordConfirmed(result.email, result.username);
+			logger.info("🔐 Contraseña actualizada correctamente");
+			res.status(200).json({ msg: "Contraseña actualizada correctamente" });
 		}
 	} catch (error) {
 		logger.error("🔴 Error al restablecer la contraseña:", error);

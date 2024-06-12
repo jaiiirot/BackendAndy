@@ -2,6 +2,7 @@ import { servicesExternal } from "../../../services/repository/external.service.
 import {
 	emailPurchaseConfirmation,
 	emailResetPassword,
+	emailPasswordChangeConfirmation,
 } from "../../../utils/emailtermplate.js";
 import { logger } from "../../../utils/logger/logger.js";
 
@@ -126,6 +127,26 @@ export default class MessagesRepository {
 		} catch (error) {
 			logger.error(
 				`⚠️ Error al enviar correo de confirmación de compra a ${email}:`,
+				error
+			);
+			throw error;
+		}
+	}
+
+	async sendMailPasswordConfirmed(email, username) {
+		try {
+			await servicesExternal.sendMailPasswordConfirmed(
+				email,
+				`Contraseña actualizada - ${username}`,
+				"Contraseña actualizada",
+				emailPasswordChangeConfirmation("localhost:8080", username)
+			);
+			logger.info(
+				`📧 Correo de confirmación de contraseña enviado a ${email}.`
+			);
+		} catch (error) {
+			logger.error(
+				`⚠️ Error al enviar correo de confirmación de contraseña a ${email}:`,
 				error
 			);
 			throw error;

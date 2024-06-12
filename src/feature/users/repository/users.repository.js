@@ -80,6 +80,21 @@ export default class UsersRepository {
 
 	putPasswordByEmail = async data => {
 		try {
+			const user = await this.dao.getByEmail(data.email);
+			if (!user) {
+				logger.warning(`⚠️ Usuario no encontrado para el email ${data.email}`);
+				return { msg: "Usuario no encontrado" };
+			}
+			const isSamePassword = await servicesExternal.comparePassword(
+				data.password,
+				user.password
+			);
+			if (isSamePassword) {
+				logger.warning(
+					`⚠️ La nueva contraseña no puede ser igual a la anterior para el email ${data.email}`
+				);
+				return { msg: "La nueva contraseña no puede ser igual a la anterior" };
+			}
 			data.password = await servicesExternal.hashPassword(data.password);
 			const updatedUser = await this.dao.putPasswordByEmail(data);
 			logger.info(

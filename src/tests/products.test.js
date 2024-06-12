@@ -1,7 +1,7 @@
 import chai from "chai";
 import chaiHttp from "chai-http";
-import app from "../app"; 
-import Products from "../models/products";
+import app from "../app";
+import Products from "../feature/products/products.schema.js";
 
 chai.use(chaiHttp);
 const expect = chai.expect;

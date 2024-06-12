@@ -74,6 +74,15 @@ export default class ExternalRepository {
 		}
 	}
 
+	async sendMailPasswordConfirmed(to, subject, text, html) {
+		try {
+			return await this.nodemailer.sendMail(to, subject, text, html);
+		} catch (error) {
+			logger.error("⚠️ Error al enviar correo de confirmación de contraseña:", error);
+			throw error;
+		}
+	}
+
 	async resizeImageBuffer(file, width, height) {
 		try {
 			return await this.sharp.resizeImageBuffer(file, width, height);
@@ -100,7 +109,7 @@ export default class ExternalRepository {
 	getToken(token) {
 		try {
 			const result = this.jwt.verifyToken(token);
-			logger.info("🔑 Token verificado correctamente");
+			logger.info(`🔑 Token verificado correctamente ${result}`);
 			return result;
 		} catch (error) {
 			logger.warning("⚠️ Error al obtener token:", error);
