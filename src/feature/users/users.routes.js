@@ -4,7 +4,10 @@ import { authentication } from "../../middlewares/authencations.js";
 import { controllerUsers } from "./users.controller.js";
 
 const router = Router();
-
+router.get(
+	"/",
+	controllerUsers.getAllUsersCondition
+);
 router.delete(
 	"/:uid",
 	authentication,

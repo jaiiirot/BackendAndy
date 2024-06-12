@@ -35,7 +35,27 @@ const deleteUser = async (req, res) => {
 	}
 };
 
+const getAllUsersCondition = async (req, res) => {
+	try {
+		logger.info("🔍 Buscando usuarios");
+		// GET  /  deberá obtener todos los usuarios, éste sólo debe devolver los datos principales como nombre, correo, tipo de cuenta (rol)
+		const users = await usersService.getAllCondition();
+		// const users = await usersService.getAll(req.query);
+		if (users) {
+			logger.info("✅ Usuarios encontrados");
+			res.status(200).json(users);
+		} else {
+			logger.error("🔴 Error al buscar usuarios");
+			res.status(400).json({ msg: "Error al buscar usuarios" });
+		}
+	} catch (error) {
+		logger.error("🔴 Error al buscar usuarios:", error);
+		res.status(500).json({ msg: "Error interno del servidor" });
+	}
+}
+
 export const controllerUsers = {
 	putUser,
 	deleteUser,
+	getAllUsersCondition
 };
