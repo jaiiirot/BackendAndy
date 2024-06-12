@@ -17,6 +17,20 @@ export default class TicketRepository {
 		}
 	};
 
+	getByEmail = async email => {
+		try {
+			const result = await this.dao.getByEmail(email);
+			logger.info(
+				`📄 Ticket con email ${email} obtenido exitosamente:`,
+				result
+			);
+			return result;
+		} catch (error) {
+			logger.error(`⚠️ Error al obtener ticket con email ${email}:`, error);
+			throw error;
+		}
+	};
+
 	get = async () => {
 		try {
 			const result = await this.dao.get();

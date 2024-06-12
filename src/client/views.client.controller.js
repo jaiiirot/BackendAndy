@@ -1,6 +1,7 @@
 import { productsService } from "../feature/products/repository/products.service.js";
 import { cartsService } from "../feature/carts/repository/carts.service.js";
 import { logger } from "../utils/logger/logger.js";
+import { ticketsService } from "../feature/tickets/repository/tickets.service.js";
 
 const RedirectHome = (req, res) => {
 	try {
@@ -120,13 +121,34 @@ const ProductDetail = async (req, res) => {
 	}
 };
 
+const Tickets = async (req, res) => {
+	try {
+		const tickets = await ticketsService.getByEmail(req.user.email);
+		res.render("components/user/tickets", {
+			layout: "main",
+			user: {
+				title: "Pedidos",
+				tickets,
+				ticketsCount: tickets.length,
+				reqinfo: req.user,
+				...req.infoUser,
+			},
+		});
+		// logger.info("🟢 Página de pedidos renderizada con éxito");
+	} catch (error) {
+		logger.warning(`🔴 Error al procesar la solicitud: ${error.message}`, {
+			stack: error.stack,
+		});
+		res.status(500).render("404");
+	}
+};
+
 const Contact = (req, res) => {
 	try {
 		res.render("components/user/contact", {
 			layout: "main",
 			user: {
 				title: "Contacto",
-				...req.infoUser,
 			},
 		});
 		// logger.info("🟢 Página de contacto renderizada con éxito");
@@ -174,6 +196,7 @@ export const controllersViewClient = {
 	Products,
 	ProductsSection,
 	ProductDetail,
+	Tickets,
 	Contact,
 	CardID,
 };

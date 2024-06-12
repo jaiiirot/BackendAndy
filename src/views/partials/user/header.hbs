@@ -43,9 +43,10 @@
           <li><a href="/productos/promocion">sale</a></li>
           <li><a href="/productos/indumentaria">productos</a></li>
           <li><a href="/productos/accesorio">accesorios</a></li>
-          <li><a href="/contacto">contacto</a></li>
           {{#if user.exist}}
-          <li><a href="/ticket/">pedidos</a></li>  
+          <li><a href="/pedidos/">pedidos</a></li>  
+          {{else}}
+          <li><a href="/contacto">contacto</a></li>
           {{/if}}
         </ul>
       </nav>

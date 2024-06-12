@@ -40,9 +40,16 @@ router.get(
 );
 
 router.get(
+	"/pedidos",
+	authentication,
+	authorization(["CLIENT"]),
+	controllersViewClient.Tickets
+);
+
+router.get(
 	"/contacto",
 	authentication,
-	authorization(["CLIENT", "USER"]),
+	authorization(["USER"]),
 	controllersViewClient.Contact
 );
 
@@ -52,6 +59,8 @@ router.get(
 	authorization(["CLIENT"]),
 	controllersViewClient.CardID
 );
+
+// FORMS
 
 router.get("/login", controllersViewforms.Login);
 router.get("/register", controllersViewforms.Register);

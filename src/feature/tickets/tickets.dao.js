@@ -22,6 +22,17 @@ export default class TicketsDAO {
 		}
 	};
 
+	getByEmail = async email => {
+		try {
+			// traer todos los tickets con ese email con mongoose
+			const tickets = await Tickets.find({ purchaser: email }).lean();
+			return tickets;
+		} catch (error) {
+			logger.error(`🔴 Error al obtener el ticket con email ${email}:`, error);
+			throw error;
+		}
+	};
+
 	post = async ticket => {
 		try {
 			const newTicket = await new Tickets(ticket).save();
