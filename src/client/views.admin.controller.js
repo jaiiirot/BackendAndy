@@ -106,27 +106,6 @@ const PanelMessages = async (req, res) => {
 	}
 };
 
-// const PanelUsers = async (req, res) => {
-// 	try {
-// 		const users = await usersService.getAll();
-// 		res.render("components/admin/sessions", {
-// 			layout: "admin",
-// 			admin: {
-// 				title: "Panel | Usuarios",
-// 				users,
-// 				...req.infoUser,
-// 			},
-// 		});
-// 		// logger.info("🟢 Usuarios del panel de administración renderizados con éxito");
-// 	} catch (error) {
-// 		logger.error(
-// 			`🔴 Error al renderizar los usuarios del panel de administración: ${error.message}`,
-// 			{ stack: error.stack }
-// 		);
-// 		res.status(500).send({ error: "Error interno del servidor" });
-// 	}
-// };
-
 const PanelUsers = async (req, res) => {
 	try {
 		const users = await usersService.getAll();

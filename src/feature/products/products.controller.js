@@ -67,7 +67,7 @@ const putProduct = async (req, res) => {
 	}
 };
 
-const getAllMockingProducts = async (req, res, next) => {
+const getAllMockingProducts = async (req, res) => {
 	try {
 		logger.info("🔍 Intentando obtener todos los productos mock");
 		const result = await generateListProducts();
@@ -76,10 +76,11 @@ const getAllMockingProducts = async (req, res, next) => {
 			return res.send({ status: "error", payload: [] });
 		}
 		logger.info("🛍️ Productos mock obtenidos correctamente");
+		await productsService.insertMany(result);
 		res.send({ status: "success", payload: [...result] });
 	} catch (error) {
 		logger.error("🔴 Error al obtener todos los productos mock:", error);
-		next(error);
+		res.send({ status: "error", payload: [] });
 	}
 };
 

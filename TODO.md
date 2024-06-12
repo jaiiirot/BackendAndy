@@ -81,45 +81,45 @@
 
 1. **SISTEMA DE RECUPERACIÓN DE CONTRASEÑA**
 
-- [] Implementar la funcionalidad para enviar un correo con un botón que redirija a una página para restablecer la contraseña.
-- [] Asegurarse de que el link del correo expire después de 1 hora de enviado.
-- [] Crear una vista que permita generar nuevamente el correo de restablecimiento si el link ha expirado, con una nueva duración de 1 hora.
-- [] Implementar la lógica para impedir que el usuario restablezca la contraseña con la misma contraseña que ya tenía, y mostrar un mensaje de error si intenta hacerlo.
+- [✅] Implementar la funcionalidad para enviar un correo con un botón que redirija a una página para restablecer la contraseña.
+- [✅] Asegurarse de que el link del correo expire después de 1 hora de enviado.
+- [✅] Crear una vista que permita generar nuevamente el correo de restablecimiento si el link ha expirado, con una nueva duración de 1 hora.
+- [✅] Implementar la lógica para impedir que el usuario restablezca la contraseña con la misma contraseña que ya tenía, y mostrar un mensaje de error si intenta hacerlo.
 
 2. **MODIFICACIONES EN EL SCHEMA DEL USUARIO Y EL PRODUCTO**
 
-- [] Añadir un nuevo rol "premium" al schema del usuario, habilitado para crear productos.
-- [] Modificar el schema del producto para incluir un campo "owner" que haga referencia a la persona que creó el producto.
-  - [] Asegurarse de que el campo "owner" guarde sólo el correo electrónico (o \_id) del usuario que creó el producto.
-  - [] Si un producto se crea sin owner, establecer "admin" como valor por defecto.
+- [✅] Añadir un nuevo rol "premium" al schema del usuario, habilitado para crear productos.
+- [✅] Modificar el schema del producto para incluir un campo "owner" que haga referencia a la persona que creó el producto.
+  - [✅] Asegurarse de que el campo "owner" guarde sólo el correo electrónico (o \_id) del usuario que creó el producto.
+  - [✅] Si un producto se crea sin owner, establecer "admin" como valor por defecto.
 
 3. **PERMISOS DE MODIFICACIÓN Y ELIMINACIÓN DE PRODUCTOS**
 
-- [] Modificar los permisos de los productos:
-  - [] Permitir que un usuario premium sólo pueda borrar los productos que le pertenecen.
-  - [] Permitir que el admin pueda borrar cualquier producto, incluso si tiene un owner.
-- [] Modificar la lógica del carrito para que un usuario premium NO pueda agregar a su carrito un producto que le pertenece.
+- [✅] Modificar los permisos de los productos:
+  - [✅] Permitir que un usuario premium sólo pueda borrar los productos que le pertenecen.
+  - [✅] Permitir que el admin pueda borrar cualquier producto, incluso si tiene un owner.
+- [✅] Modificar la lógica del carrito para que un usuario premium NO pueda agregar a su carrito un producto que le pertenece.
 
 4. **NUEVA RUTA EN EL ROUTER DE API**
 
-- [] Implementar una nueva ruta en el router de API `/api/users/premium/:uid`.
-  - [] Permitir cambiar el rol de un usuario de "user" a "premium" y viceversa.
+- [✅] Implementar una nueva ruta en el router de API `/api/users/premium/:uid`.
+  - [✅] Permitir cambiar el rol de un usuario de "user" a "premium" y viceversa.
 
 ## DOCUMENTAR API
 
-- [] Se debe tener documentado el módulo de productos.
-- [] Se debe tener documentado el módulo de carrito
-- [] No realizar documentación de sesiones
+- [✅] Se debe tener documentado el módulo de productos.
+- [✅] Se debe tener documentado el módulo de carrito
+- [✅] No realizar documentación de sesiones
 
 ## TESTING AVANZADO
 
 1. **PREPARACIÓN DEL ENTORNO DE TESTING**
 
-- [] Instalar Mocha, Chai y Supertest:
+- [✅] Instalar Mocha, Chai y Supertest:
   ```bash
   npm install mocha chai supertest --save-dev
   ```
-- [] Configurar un script de prueba en `package.json`:
+- [✅] Configurar un script de prueba en `package.json`:
   ```json
   "scripts": {
     "test": "mocha --timeout 10000"
@@ -128,8 +128,8 @@
 
 2. **CREAR LA ESTRUCTURA DE ARCHIVOS DE PRUEBAS**
 
-- [] Crear un directorio para las pruebas (e.g., `test`):
-  - [] Crear archivos de prueba para cada router:
+- [✅] Crear un directorio para las pruebas (e.g., `test`):
+  - [✅] Crear archivos de prueba para cada router:
     - `test/products.test.js`
     - `test/carts.test.js`
     - `test/sessions.test.js`
@@ -164,9 +164,7 @@
   npm test
   ```
 - [] Revisar y corregir cualquier error o falla en las pruebas.
-- [] Asegurarse de que las pruebas cubran adecuadamente las funcionalidades de cada router y las validaciones
-
-necesarias.
+- [] Asegurarse de que las pruebas cubran adecuadamente las funcionalidades de cada router y las validaciones necesarias.
 
 ## CUARTA PRÁCTICA INTEGRADORA
 

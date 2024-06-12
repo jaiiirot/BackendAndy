@@ -143,4 +143,16 @@ export default class ProductRepository {
 			throw error;
 		}
 	};
+
+	insertMany = async data => {
+		try {
+			logger.info("➕ Añadiendo varios productos");
+			const result = await this.dao.insertMany(data);
+			logger.info("🆕 Varios productos agregados correctamente");
+			return result;
+		} catch (error) {
+			logger.error("🔴 Error al agregar varios productos:", error);
+			throw error;
+		}
+	};
 }

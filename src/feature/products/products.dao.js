@@ -2,6 +2,15 @@ import Products from "./products.schema.js";
 import { logger } from "../../utils/logger/logger.js";
 
 export default class ProductsDAO {
+	async insertMany(products) {
+		try {
+			return await Products.insertMany(products);
+		} catch (error) {
+			logger.error("🔴 Error al insertar varios productos:", error);
+			throw error;
+		}
+	}
+
 	async getAll(query, options) {
 		try {
 			// console.log(query, options);

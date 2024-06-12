@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/Faker";
 import { logger } from "../logger/logger.js";
-
+import __dirname from "../utils.js";
+import fs from "fs";
 faker.location = "es";
 
 export const generateListProducts = async () => {
@@ -9,8 +10,17 @@ export const generateListProducts = async () => {
 		const products = [];
 
 		for (let i = 0; i < limitProducts; i++) {
-			products.push(await generateProduct());
+			const product = await generateProduct();
+			products.push(product);
 		}
+		const productIds = products.map(product => product._id);
+		const productListJSON = JSON.stringify(productIds);
+
+		fs.writeFileSync(
+			`${__dirname}/utils/mocks/productIdsMocking.json`,
+			productListJSON
+		);
+
 		logger.info("🟢 Lista de productos generada correctamente");
 		return products;
 	} catch (error) {
@@ -21,7 +31,7 @@ export const generateListProducts = async () => {
 
 export const generateProduct = async () => {
 	try {
-		return {
+		const product = {
 			_id: faker.database.mongodbObjectId(),
 			title: faker.commerce.productName(),
 			description: faker.commerce.productDescription(),
@@ -39,7 +49,9 @@ export const generateProduct = async () => {
 			photo: Array.from({ length: faker.number.int({ min: 1, max: 4 }) }, () =>
 				faker.image.url()
 			),
+			owner: faker.database.mongodbObjectId(),
 		};
+		return product;
 	} catch (error) {
 		logger.error("🔴 Error al generar el producto:", error);
 		throw error;
@@ -48,7 +60,7 @@ export const generateProduct = async () => {
 
 export const generateUsers = async () => {
 	try {
-		return {
+		const user = {
 			_id: faker.database.mongodbObjectId(),
 			username: faker.internet.userName(),
 			photo_user: faker.image.avatar(),
@@ -65,6 +77,7 @@ export const generateUsers = async () => {
 			},
 			role: faker.helpers.arrayElement(["CLIENT", "ADMIN"]),
 		};
+		return user;
 	} catch (error) {
 		logger.error("🔴 Error al generar el usuario:", error);
 		throw error;
