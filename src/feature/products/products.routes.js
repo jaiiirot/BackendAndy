@@ -5,7 +5,12 @@ import { controllersProducts } from "./products.controller.js";
 import express from "express";
 const router = express.Router();
 
-router.get("/mocking/productos", controllersProducts.getAllMockingProducts);
+router.post(
+	"/mocking/productos",
+	authentication,
+	authorization(["ADMIN"]),
+	controllersProducts.getAllMockingProducts
+);
 
 router.post(
 	"/",

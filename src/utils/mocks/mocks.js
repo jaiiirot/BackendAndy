@@ -36,10 +36,10 @@ export const generateProduct = async () => {
 			title: faker.commerce.productName(),
 			description: faker.commerce.productDescription(),
 			code: `#${faker.string.alphanumeric(6)}`,
-			price: parseFloat(faker.commerce.price()),
+			price: parseFloat(faker.commerce.price({ min: 10000, max: 6000000 })),
 			status: faker.datatype.boolean({ probability: 0.9 }),
-			promocion: faker.datatype.boolean(),
-			stock: faker.number.int({ min: 1, max: 50 }),
+			promocion: faker.datatype.boolean({ probability: 0.7 }),
+			stock: faker.number.int({ min: 1, max: 15 }),
 			type: faker.helpers.arrayElement(["accesorio", "indumentaria"]),
 			genre: "masculino",
 			category: Array.from(

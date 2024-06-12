@@ -14,12 +14,8 @@
           </div>
           <div class="flex justify-between w-full">
             <div class="flex w-max justify-center items-center gap-4 md:gap-0">
-            
                 {{>icons/menu x="30" y="30"}}
-              
-              <a href="/">
-                <h1 id="title" class="text-[2rem] md:text-[3rem] font-brygada style-logo" style="transform:scaleY(0.75)">ILICITO</h1>
-              </a>
+                {{>icons/logo direccion="/" color="white" circlex="6" circley="6" fontsize="2"}}
             </div>
             <div class="flex gap-4 w-max items-center justify-center">
               {{#if user.exist}}
@@ -48,6 +44,9 @@
           <li><a href="/productos/indumentaria">productos</a></li>
           <li><a href="/productos/accesorio">accesorios</a></li>
           <li><a href="/contacto">contacto</a></li>
+          {{#if user.exist}}
+          <li><a href="/ticket/">pedidos</a></li>  
+          {{/if}}
         </ul>
       </nav>
     </section>

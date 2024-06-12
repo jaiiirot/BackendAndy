@@ -13,85 +13,39 @@
 					Crear Producto
 				</a>
 			</div>
-			<div class="shadow  rounded-lg">
-				<table class="shadow text-sm text-gray-400 w-full">
-					<thead class="bg-gray-800 text-xs uppercase font-medium">
-						<tr class="bg-gray-900">
-							<th scope="col" class="px-4 py-2">
-								Titulo
-							</th>
-							<th scope="col" class="px-4 py-2">
-								Promocion
-							</th>
-							<th scope="col" class="px-4 py-2">
-								Precio
-							</th>
-							<th scope="col" class="px-4 py-2">
-								Stock
-							</th>
-							<th scope="col" class="px-4 py-2">
-								Acciones
-							</th>
-						</tr>
-					</thead>
-					<tbody class="text-black">
-						{{#each admin.products}}
-							<tr>
-								<td class="overflow-hidden px-2 py-1">
-									<p
-										style="white-space: nowrap; overflow: hidden; width: 225px; text-overflow:ellipsis;"
-									>
-										{{this.title}}
-									</p>
-								</td>
-								<td class="overflow-hidden px-2 py-1">
-									{{#if this.promocion}}
-										<p
-											class="bg-green-500 w-min py-1 px-4 rounded-full text-white"
-										>
-											Esta
-										</p>
-									{{else}}
-										<p
-											class="bg-red-500 w-min py-1 px-4 rounded-full text-white whitespace-nowrap overflow-hidden text-overflow"
-										>
-											No esta
-										</p>
-									{{/if}}
-								</td>
-								<td class="overflow-hidden px-2 py-1">
-									<p
-										style="white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;"
-									>
-										$
-										{{this.price}}
-									</p>
-								</td>
-								<td class="overflow-hidden px-4 py-2">
-									<p
-										style="white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;"
-									>
-										{{this.stock}}
-									</p>
-								</td>
-								<td class="overflow-hidden px-4 py-2">
-									<button
-										class="p-2 bg-yellow-500 text-black rounded cursor-pointer"
-										onclick="putProduct('{{this._id}}')"
-									>
-										Actualizar
-									</button>
-									<button
-										class="p-2 bg-red-500 text-black rounded border-none outline-none"
-										onclick="deleteProduct('{{this._id}}')"
-									>
-										Eliminar
-									</button>
-								</td>
-							</tr>
-						{{/each}}
-					</tbody>
-				</table>
+			<div class="shadow  rounded-lg w-max md:w-full">
+                <table class="w-max border-collapse block md:table">
+                    <thead class="block md:table-header-group">
+                        <tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto md:relative">
+                            <th scope="col" class="bg-gray-800 p-2 text-white md:border md:border-grey-500 text-left block md:table-cell">Titulo</th>
+                            <th scope="col" class="bg-gray-800 p-2 text-white md:border md:border-grey-500 text-left block md:table-cell">Promocion</th>
+                            <th scope="col" class="bg-gray-800 p-2 text-white md:border md:border-grey-500 text-left block md:table-cell">Precio</th>
+                            <th scope="col" class="bg-gray-800 p-2 text-white md:border md:border-grey-500 text-left block md:table-cell">Stock</th>
+                            <th scope="col" class="bg-gray-800 p-2 text-white md:border md:border-grey-500 text-left block md:table-cell">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="block md:table-row-group">
+                        {{#each admin.products}}
+                            <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
+                                <td class="p-2 flex text-nowrap overflow-hidden md:border md:border-grey-500 text-left block md:table-cell"><span class="text-blue-800 font-bold inline-block w-2/12 md:hidden">Titulo: </span>{{this.title}}</td>
+                                <td class="p-2 flex text-nowrap overflow-hidden md:border md:border-grey-500 text-left block md:table-cell"><span class="text-blue-800 font-bold inline-block w-2/12 md:hidden">Promocion: </span>
+                                    {{#if this.promocion}}
+                                        <p class="bg-green-500 w-min py-1 px-4 rounded-full text-white">Esta</p>
+                                    {{else}}
+                                        <p class="bg-red-500 w-min py-1 px-4 rounded-full text-white">No esta</p>
+                                    {{/if}}
+                                </td>
+                                <td class="p-2 flex text-nowrap overflow-hidden md:border md:border-grey-500 text-left block md:table-cell"><span class="text-blue-800 font-bold inline-block w-2/12 md:hidden">Precio: </span>${{this.price}}</td>
+                                <td class="p-2 flex text-nowrap overflow-hidden md:border md:border-grey-500 text-left block md:table-cell"><span class="text-blue-800 font-bold inline-block w-2/12 md:hidden">Stock: </span>{{this.stock}}</td>
+                                <td class="p-2 flex text-nowrap overflow-hidden md:border md:border-grey-500 text-left block md:table-cell">
+                                    <span class="text-blue-800 font-bold inline-block w-2/12 md:hidden">Acciones: </span>
+                                    <button class="bg-yellow-500 hover:bg-yellow-700 text-black py-2 px-4 rounded" onclick="putProduct('{{this._id}}')">Actualizar</button>
+                                    <button class="bg-red-500 hover:bg-red-700 text-black py-2 px-4 rounded" onclick="deleteProduct('{{this._id}}')">Eliminar</button>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
 			</div>
 			<div class="flex gap-6 justify-center items-center mt-2">
 				<a class="p-2 text-sm font-medium rounded bg-sky-950 text-white"
