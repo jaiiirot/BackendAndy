@@ -4,7 +4,7 @@ import { logger } from "../../utils/logger/logger.js";
 const putUser = async (req, res) => {
 	try {
 		logger.info(`🔄 Actualizando usuario con ID ${req.params.uid}`);
-		const user = await usersService.put(req.params.uid);
+		const user = await usersService.putRole(req.params.uid, req.body.role);
 		if (user) {
 			logger.info("✅ Usuario actualizado correctamente");
 			res.status(200).json({ msg: "Usuario actualizado correctamente" });

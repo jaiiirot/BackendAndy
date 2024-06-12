@@ -21,7 +21,11 @@ const productsSchema = new mongoose.Schema({
 			message: "Solo se permiten hasta 4 imágenes.",
 		},
 	},
-	owner: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
+	owner: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "users",
+		default: "ADMIN",
+	},
 });
 
 productsSchema.plugin(paginate);

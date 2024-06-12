@@ -1,0 +1,97 @@
+<section class="flex flex-col w-full">
+    <div>
+        <h1 class="text-2xl">Usuarios</h1>
+        <p>Administra los usuarios del sistema</p>
+    </div>
+    <div class="flex w-full h-full text-gray-400">
+        <div class="flex flex-col w-full">
+            <div class="shadow rounded-lg">
+                <table class="shadow text-sm text-gray-400 w-full">
+                    <thead class="bg-gray-800 text-xs uppercase font-medium">
+                        <tr class="bg-gray-900">
+                            <th scope="col" class="px-4 py-2">ID</th>
+                            <th scope="col" class="px-4 py-2">Nombre</th>
+                            <th scope="col" class="px-4 py-2">Correo</th>
+                            <th scope="col" class="px-4 py-2">Rol</th>
+                            <th scope="col" class="px-4 py-2">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-black">
+                        {{#each admin.users}}
+                            <tr>
+                                <td class="px-4 py-2">{{this._doc._id}}</td>
+                                <td class="px-4 py-2">{{this._doc.username}}</td>
+                                <td class="px-4 py-2">{{this._doc.email}}</td>
+                                <td class="px-4 py-2 relative">
+                                    <select class="role-select appearance-none border rounded-md px-3 py-1 focus:outline-none focus:border-blue-500">
+                                        <option value="">role: {{this.roleString}}</option>
+                                        <option value="ADMIN">ADMIN</option>
+                                        <option value="CLIENT">CLIENT</option>
+                                        <option value="PREMIUM">PREMIUM</option>
+                                    </select>
+                                </td>
+                                <td class="px-4 py-2">
+                                    <button class="change-role-btn bg-yellow-500 hover:bg-yellow-600 py-2 px-4 rounded" data-uid="{{this._doc._id}}">Cambiar Rol</button>
+                                    <button class="delete-user-btn bg-red-500 hover:bg-red-600 py-2 px-4 rounded" data-uid="{{this._doc._id}}">Eliminar</button>
+                                    <div class="loader hidden"></div>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const changeRoleButtons = document.querySelectorAll('.change-role-btn');
+    const deleteButtons = document.querySelectorAll('.delete-user-btn');
+    changeRoleButtons.forEach(button => {
+        button.addEventListener('click', async () => {
+            const uid = button.dataset.uid;
+            const roleSelect = button.closest('tr').querySelector('.role-select');
+            const selectedRole = roleSelect.value;
+
+            try {
+                const response = await fetch(`/api/users/premium/${uid}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ role: selectedRole })
+                });
+
+                if (response.ok) {
+                    location.href = window.location.pathname + `?status=success`;
+                } else {
+                    location.href = window.location.pathname + `?status=error`;
+                }
+            } catch (error) {
+                location.href = window.location.pathname + `?status=error`;
+            }
+        });
+    });
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', async () => {
+            const uid = button.dataset.uid;
+
+            try {
+                const response = await fetch(`/api/users/${uid}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    location.href = window.location.pathname + `?status=success`;
+                } else {
+                    location.href = window.location.pathname + `?status=error`;
+                }
+            } catch (error) {
+                location.href = window.location.pathname + `?status=error`;
+            }
+        });
+    });
+});
+</script>

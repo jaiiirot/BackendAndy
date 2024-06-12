@@ -95,6 +95,20 @@ export default class UsersRepository {
 		}
 	};
 
+	putRole = async (userId, newRole) => {
+		try {
+			logger.info(`🔄 Actualizando rol del usuario con ID ${userId}`);
+			const user = await this.dao.updateUserRole(userId, newRole);
+			logger.info("✅ Usuario actualizado correctamente");
+			return user;
+		} catch (error) {
+			logger.error(
+				`🔴 Error al actualizar el rol del usuario: ${error.message}`
+			);
+			throw error;
+		}
+	};
+
 	delete = async id => {
 		try {
 			const user = await this.dao.getById(id);

@@ -90,4 +90,11 @@ router.get(
 	controllersViewAdmin.PanelMessages
 );
 
+router.get(
+	"/panel/usuarios",
+	authentication,
+	authorization(["ADMIN"]),
+	controllersViewAdmin.PanelUsers
+);
+
 export default router;

@@ -1,105 +1,90 @@
 <section class="flex flex-col w-full">
-	<div>
-		<h1 class="text-2xl">Tickets</h1>
-		<p>Administra los tickets de los pedidos</p>
-	</div>
-	<div class="flex w-full h-full text-gray-400">
-		<div class="flex flex-col w-full">
-			<div class="shadow rounded-lg">
-				<table class="shadow text-sm text-gray-400 w-full">
-					<thead class="bg-gray-800 text-xs uppercase font-medium">
-						<tr class="bg-gray-900">
-							<th scope="col" class="px-4 py-2">
-								#id
-							</th>
-							<th scope="col" class="px-4 py-2">
-								fecha
-							</th>
-							<th scope="col" class="px-4 py-2">
-								code
-							</th>
-							<th scope="col" class="px-4 py-2">
-								correo
-							</th>
-							<th scope="col" class="px-4 py-2">
-								total
-							</th>
-							<th scope="col" class="px-4 py-2">
-								Acciones
-							</th>
-						</tr>
-					</thead>
-					<tbody class="text-black">
-						{{#each admin.tickets}}
-							<tr>
-								<td class="overflow-hidden px-2 py-1">
-									<p
-										style="white-space: nowrap; overflow: hidden; width: 225px; text-overflow:ellipsis;"
-									>
-										{{this._id}}
-									</p>
-								</td>
-								<td class="overflow-hidden px-2 py-1">
-									<p
-										style="white-space: nowrap; overflow: hidden; width: 225px; text-overflow:ellipsis;"
-									>
-										{{this.purchase_datetime}}
-									</p>
-								</td>
-								<td class="overflow-hidden px-2 py-1">
-									<p
-										class="bg-green-500 w-min py-1 px-4 rounded-full text-white"
-									>
-										{{this.code}}
-									</p>
-								</td>
-								<td class="overflow-hidden px-2 py-1">
-									<p
-										style="white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;"
-									>
-										{{this.purchaser}}
-									</p>
-								</td>
-								<td class="overflow-hidden px-4 py-2">
-									<p
-										style="white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;"
-									>
-										$
-										{{this.amount}}
-									</p>
-								</td>
-								<td class="overflow-hidden px-4 py-2">
-									<button
-										class="p-2 bg-yellow-500 text-black rounded cursor-pointer"
-										onclick="putProduct('{{this._id}}')"
-									>
-										Actualizar
-									</button>
-									<button
-										class="p-2 bg-red-500 text-black rounded border-none outline-none"
-										onclick="deleteProduct('{{this._id}}')"
-									>
-										Eliminar
-									</button>
-								</td>
-							</tr>
-						{{/each}}
-					</tbody>
-				</table>
-			</div>
-			<div class="flex gap-6 justify-center items-center mt-2">
-				<a
-					class="p-2 text-sm font-medium rounded bg-sky-950 text-white"
-					href="{{admin.prevLink}}"
-				>Anterior</a>
-				<span
-					class="p-2 text-sm font-medium rounded bg-blue-950 text-white"
-				>{{admin.actualLink}}</span>
-				<a
-					class="p-2 text-sm font-medium rounded bg-sky-950 text-white"
-					href="{{admin.nextLink}}"
-				>Siguiente</a>
-			</div>
-		</div>
-	</div>
+    <div>
+        <h1 class="text-2xl">Tickets</h1>
+        <p>Administra los tickets de los pedidos</p>
+    </div>
+    <div class="flex w-full h-full text-gray-400">
+        <div class="flex flex-col w-full">
+            <div class="shadow rounded-lg">
+                <table class="shadow text-sm text-gray-400 w-full">
+                    <thead class="bg-gray-800 text-xs uppercase font-medium">
+                        <tr class="bg-gray-900">
+                            <th scope="col" class="px-4 py-2">#id</th>
+                            <th scope="col" class="px-4 py-2">Fecha</th>
+                            <th scope="col" class="px-4 py-2">Code</th>
+                            <th scope="col" class="px-4 py-2">Correo</th>
+                            <th scope="col" class="px-4 py-2">Total</th>
+                            <th scope="col" class="px-4 py-2">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-black">
+                        {{#each admin.tickets}}
+                            <tr>
+                                <td class="overflow-hidden px-2 py-1">
+                                    <p style="white-space: nowrap; overflow: hidden; width: 225px; text-overflow:ellipsis;">{{this._id}}</p>
+                                </td>
+                                <td class="overflow-hidden px-2 py-1">
+                                    <p style="white-space: nowrap; overflow: hidden; width: 225px; text-overflow:ellipsis;">{{this.purchase_datetime}}</p>
+                                </td>
+                                <td class="overflow-hidden px-2 py-1">
+                                    <p class="bg-green-500 w-min py-1 px-4 rounded-full text-white">{{this.code}}</p>
+                                </td>
+                                <td class="overflow-hidden px-2 py-1">
+                                    <p style="white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;">{{this.purchaser}}</p>
+                                </td>
+                                <td class="overflow-hidden px-4 py-2">
+                                    <p style="white-space: nowrap; overflow: hidden; width: auto; text-overflow:ellipsis;">${{this.amount}}</p>
+                                </td>
+                                <td class="overflow-hidden px-4 py-2">
+                                    <button class="p-2 bg-yellow-500 text-black rounded cursor-pointer" onclick="putProduct('{{this._id}}')">Actualizar</button>
+                                    <button class="p-2 bg-red-500 text-black rounded border-none outline-none" onclick="deleteProduct('{{this._id}}')">Eliminar</button>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="flex gap-6 justify-center items-center mt-2">
+                <a class="p-2 text-sm font-medium rounded bg-sky-950 text-white" href="{{admin.prevLink}}">Anterior</a>
+                <span class="p-2 text-sm font-medium rounded bg-blue-950 text-white">{{admin.actualLink}}</span>
+                <a class="p-2 text-sm font-medium rounded bg-sky-950 text-white" href="{{admin.nextLink}}">Siguiente</a>
+            </div>
+        </div>
+    </div>
 </section>
+
+<script>
+    const putProduct = async (tid) => {
+        try {
+            const response = await fetch(`/api/tickets/${tid}`, {
+                method: 'PUT'
+            });
+
+            if (response.ok) {
+                window.location.href = `${window.location.pathname}?status=success&id=${tid}`;
+            } else {
+                window.location.href = `${window.location.pathname}?status=error&id=${tid}`;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            window.location.href = `${window.location.pathname}?status=error&id=${tid}`;
+        }
+    };
+
+    const deleteProduct = async (tid) => {
+        try {
+            const response = await fetch(`/api/tickets/${tid}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                window.location.href = `${window.location.pathname}?status=success&id=${tid}`;
+            } else {
+                window.location.href = `${window.location.pathname}?status=error&id=${tid}`;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            window.location.href = `${window.location.pathname}?status=error&id=${tid}`;
+        }
+    };
+</script>

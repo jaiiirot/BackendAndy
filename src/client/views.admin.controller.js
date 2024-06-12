@@ -1,5 +1,6 @@
 import { productsService } from "../feature/products/repository/products.service.js";
 import { ticketsService } from "../feature/tickets/repository/tickets.service.js";
+import { usersService } from "../feature/users/repository/users.service.js";
 import { logger } from "../utils/logger/logger.js";
 
 const Panel = async (req, res) => {
@@ -105,8 +106,53 @@ const PanelMessages = async (req, res) => {
 	}
 };
 
+// const PanelUsers = async (req, res) => {
+// 	try {
+// 		const users = await usersService.getAll();
+// 		res.render("components/admin/sessions", {
+// 			layout: "admin",
+// 			admin: {
+// 				title: "Panel | Usuarios",
+// 				users,
+// 				...req.infoUser,
+// 			},
+// 		});
+// 		// logger.info("🟢 Usuarios del panel de administración renderizados con éxito");
+// 	} catch (error) {
+// 		logger.error(
+// 			`🔴 Error al renderizar los usuarios del panel de administración: ${error.message}`,
+// 			{ stack: error.stack }
+// 		);
+// 		res.status(500).send({ error: "Error interno del servidor" });
+// 	}
+// };
+
+const PanelUsers = async (req, res) => {
+	try {
+		const users = await usersService.getAll();
+		const usersWithRoleString = users.map(user => {
+			return { ...user, roleString: user.role };
+		});
+		res.render("components/admin/sessions", {
+			layout: "admin",
+			admin: {
+				title: "Panel | Usuarios",
+				users: usersWithRoleString,
+				...req.infoUser,
+			},
+		});
+	} catch (error) {
+		logger.error(
+			`🔴 Error al renderizar los usuarios del panel de administración: ${error.message}`,
+			{ stack: error.stack }
+		);
+		res.status(500).send({ error: "Error interno del servidor" });
+	}
+};
+
 export const controllersViewAdmin = {
 	Panel,
 	PanelProducts,
 	PanelMessages,
+	PanelUsers,
 };

@@ -89,6 +89,24 @@ export default class UsersDAO {
 		}
 	}
 
+	async updateUserRole(userId, newRole) {
+		try {
+			logger.info(`🔄 Actualizando rol del usuario con ID ${userId}`);
+			const user = await Users.findById(userId);
+			if (!user) {
+				throw new Error("Usuario no encontrado");
+			}
+			user.role = newRole;
+			await user.save();
+			return user;
+		} catch (error) {
+			logger.error(
+				`🔴 Error al actualizar el rol del usuario: ${error.message}`
+			);
+			throw error;
+		}
+	}
+
 	async deleteUser(id) {
 		try {
 			logger.info(`🗑️ Eliminando usuario con ID ${id}`);

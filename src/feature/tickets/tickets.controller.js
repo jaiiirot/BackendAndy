@@ -14,8 +14,8 @@ const getAll = async (req, res) => {
 
 const getTicket = async (req, res) => {
 	try {
-		const ticket = await ticketsService.get(req.params.id);
-		logger.info(`🎟️ Obteniendo ticket con ID ${req.params.id}`);
+		const ticket = await ticketsService.get(req.params.tid);
+		logger.info(`🎟️ Obteniendo ticket con ID ${req.params.tid}`);
 		res.json(ticket);
 	} catch (error) {
 		logger.error("🔴 Error al obtener el ticket por ID:", error);
@@ -38,8 +38,8 @@ const postTicket = async (req, res) => {
 const putTicket = async (req, res) => {
 	try {
 		const ticket = req.body;
-		logger.info(`🔄 Actualizando ticket con ID ${req.params.id}`);
-		const ticketUpdated = await ticketsService.put(req.params.id, ticket);
+		logger.info(`🔄 Actualizando ticket con ID ${req.params.tid}`);
+		const ticketUpdated = await ticketsService.put(req.params.tid, ticket);
 		res.json(ticketUpdated);
 	} catch (error) {
 		logger.error("🔴 Error al actualizar el ticket:", error);
@@ -49,8 +49,8 @@ const putTicket = async (req, res) => {
 
 const deleteTicket = async (req, res) => {
 	try {
-		logger.info(`🗑️ Eliminando ticket con ID ${req.params.id}`);
-		const ticketDeleted = await ticketsService.delete(req.params.id);
+		logger.info(`🗑️ Eliminando ticket con ID ${req.params.tid}`);
+		const ticketDeleted = await ticketsService.delete(req.params.tid);
 		res.json(ticketDeleted);
 	} catch (error) {
 		logger.error("🔴 Error al eliminar el ticket:", error);
