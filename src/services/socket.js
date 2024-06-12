@@ -4,6 +4,9 @@ import { logger } from "../utils/logger/logger.js";
 const initialSocket = (socket, ENV) => {
 	socket.on("connection", async io => {
 		logger.info("🟢 usuario conectado");
+
+		
+
 		io.on("input_chat", async data => {
 			try {
 				await messagesService.postAddMessageInChat(
@@ -19,9 +22,14 @@ const initialSocket = (socket, ENV) => {
 				logger.warning("⚠️ Error al enviar mensaje:", error);
 			}
 		});
-	});
-	socket.on("disconnect", () => {
-		logger.info("⛔ usuario desconectado");
+
+		io.on("onchat", async data => {
+			try {
+				socket.emit("container_chat", await messagesService.getChatById(data));
+			} catch (error) {
+				logger.warning("⚠️ Error al enviar mensaje:", error);
+			}
+		});
 	});
 };
 

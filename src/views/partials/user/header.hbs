@@ -56,86 +56,86 @@
       class="fixed z-[102]  h-dvh top-0 right-0 w-full bg-black bg-opacity-50 hidden transition-all duration-300 ease-in-out"
       id="container-cart" {{#if user.exist}} data-cid="{{user.info.cart}}" {{/if}}>
       <aside class="relative h-full w-full ml-auto border border-gray-600 bg-gray-100 px-6 py-8 md:w-[450px]">
-        <button
-        id="close-cart"
-        class="absolute end-4 top-4 text-gray-600 transition hover:scale-110"
-      >
-        <span class="sr-only">Close cart</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="h-5 w-5"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </button>
+        <button id="close-cart" class="absolute end-4 top-4 text-gray-600 transition hover:scale-110">
+          <span class="sr-only">Close cart</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
         <div class="space-y-6 h-full flex flex-col justify-between items-center">
           <ul class="space-y-4 h-full w-full overflow-y-scroll list-prod-cart">
             {{!-- Products --}}
           </ul>
-          <div class=" text-center w-full">
-            <a href="/carrito/{{user.info.cart}}/purchase"
-              class="block w-full rounded border border-gray-600 px-5 py-3 text-sm text-gray-600 transition hover:ring-1 hover:ring-gray-400">
-              Ver mi carrito (<span class="count-prod-number"></span>)
+          <div class="text-center w-full">
+            <button id="continue-shopping" class="block w-full rounded border border-gray-600 px-5 py-3 text-sm text-gray-600 transition hover:ring-1 hover:ring-gray-400">
+              Seguir comprando
+            </button>
+            <div class="mt-4">
+              <span>Total: $<span id="total-price">0</span></span>
+            </div>
+            <a href="/carrito/{{user.info.cart}}/purchase" class="block w-full rounded border border-gray-600 px-5 py-3 text-sm text-gray-600 transition hover:ring-1 hover:ring-gray-400 mt-4">
+              Ver mi carrito (<span class="count-prod-number">0</span>)
             </a>
           </div>
         </div>
       </aside>
+
     </section>
   </header>
-    <script>
-    const action_cart = () =>{
-        container_cart.classList.toggle('hidden');
-    }
+<script>
+const action_cart = () => {
+    container_cart.classList.toggle('hidden');
+}
 
-    const item_cart = (product,quantity) => {
-        const li = document.createElement('li');
-        li.classList.add('py-1',"px-2",'bg-white',"rounded-md");
-        li.innerHTML =`
-        <div class="flex justify-between items-center" >
-            <img src="${product.photo[0]}" alt="${product.title}" class="w-16 h-16 object-cover rounded">
-            <div class="flex flex-col">
+const item_cart = (product, quantity) => {
+    const li = document.createElement('li');
+    li.classList.add('py-1', 'px-2', 'bg-white', 'rounded-md');
+    li.innerHTML = `
+    <div class="flex justify-between items-center gap-4">
+        <img src="${product.photo[0]}" alt="${product.title}" class="w-16 h-16 object-cover rounded">
+        <div class="flex flex-col">
             <span class="text-sm">${product.title}</span>
-            <span class="text-sm">${product.price}</span>
-            </div>
-            <span class="text-sm">${quantity}</span>
+            <span class="text-sm">$${product.price}</span>
         </div>
-        `;
-        return li;
-    }
-    const container_cart = document.getElementById('container-cart');
-    const header = document.getElementById('headertop');
-    const open_cart = document.getElementById('open-cart');
-    const count_prod_number = document.querySelectorAll('.count-prod-number');
-    const list_prod = document.querySelector('.list-prod-cart');
-    const close_cart = document.getElementById('close-cart');
-    open_cart.addEventListener('click',action_cart)
-    close_cart.addEventListener('click',action_cart)
+        <span class="text-sm">${quantity}</span>
+    </div>`;
+    return li;
+}
 
-    const cartId = !!container_cart.dataset.cid;
-    const reloadCart = () => {
+const container_cart = document.getElementById('container-cart');
+const header = document.getElementById('headertop');
+const open_cart = document.getElementById('open-cart');
+const count_prod_number = document.querySelectorAll('.count-prod-number');
+const list_prod = document.querySelector('.list-prod-cart');
+const close_cart = document.getElementById('close-cart');
+const total_price_element = document.getElementById('total-price');
+const continue_shopping = document.getElementById('continue-shopping');
+
+open_cart.addEventListener('click', action_cart);
+close_cart.addEventListener('click', action_cart);
+continue_shopping.addEventListener('click', action_cart);
+
+const cartId = !!container_cart.dataset.cid;
+
+const reloadCart = () => {
     list_prod.innerHTML = '';
     fetch(`/api/carts/${container_cart.dataset.cid}`)
         .then(response => response.json())
         .then(data => {
+            let total = 0;
             count_prod_number.forEach(item => item.textContent = data.products.length);
             data.products.forEach(product => {
-                list_prod.appendChild(item_cart(product.pid,product.quantity));
+                list_prod.appendChild(item_cart(product.pid, product.quantity));
+                total += product.pid.price * product.quantity;
             });
-            
+            total_price_element.textContent = total;
         })
         .catch(error => {
             console.log(error);
-        })
-    }
-    if (cartId) {
-    reloadCart()
-    }
-  </script>
+        });
+}
+
+if (cartId) {
+    reloadCart();
+}
+</script>

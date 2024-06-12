@@ -1,9 +1,8 @@
 import { Router } from "express";
 import { validateData } from "../../middlewares/validacion.js";
-import { authorization } from "../../middlewares/authorization.js";
-import { authentication } from "../../middlewares/authencations.js";
 import { controllersSessions } from "./sessions.controller.js";
 import passport from "passport";
+import { servicesExternal } from "../../services/repository/external.service.js";
 
 const router = Router();
 
@@ -28,22 +27,17 @@ router.get(
 	}),
 	controllersSessions.authGitHubCallback
 );
-router.get(
-	"/current",
-	authentication,
-	authorization(["ADMIN", "CLIENT"]),
-	function (req, res) {
-		res.json(req.user);
-	}
-);
-
 router.post("/forget/:email", controllersSessions.forgetPassword);
-router.post("/reset/password/", controllersSessions.resetPassword);
 
-router.delete(
-	"/:uid",
-	authentication,
-	authorization(["ADMIN"]),
-	controllersSessions.deleteUser
+router.post(
+	"/reset/password/",
+	(req, res, next) => {
+		if (!req.params.token) res.redirect("/");
+		if (!servicesExternal.getToken(req.cookies.token)) res.redirect("/");
+		req.email = servicesExternal.getToken(req.cookies.token);
+		next();
+	},
+	controllersSessions.resetPassword
 );
+
 export default router;

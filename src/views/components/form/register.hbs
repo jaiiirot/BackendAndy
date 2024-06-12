@@ -1,135 +1,165 @@
+<div class="flex flex-col-reverse gap-4 w-full md:flex-row md:gap-0">
 
-  <div class="flex flex-col-reverse gap-4 w-full md:flex-row md:gap-0">
-
-      <!-- Sidebar -->
-      <div class=' flex flex-col justify-between items-center md:items-start bg-[#000] md:p-8 md:w-2/4 text-white'>
-        <a href="/" class="hidden md:flex items-center  justify-start space-x-3 w-max">
-          <span class="bg-white rounded-full w-8 h-8"></span>
-          <span class="flex w-min justify-center flex-col items-center">
-            <h1 id="title" class="text-[3rem] font-brygada style-logo" style="transform:scaleY(0.75)">ILICITO</h1>
-          </span>
-        </a>
-        <div class='p-4 flex flex-col items-center md:px-12 md:items-start gap-4'>
-          <h1 class="hidden md:block text-3xl md:text-4xl md:leading-snug font-extrabold lg:text-5xl">
-            No dejes para mañana, lo que puedes comprar hoy.
-          </h1>
-          <p class="text-lg">¿Ya tengo cuenta?</p>
-          <a
-            href="/login"
-            class="w-max px-4 py-3 border-2 rounded-lg font-medium border-black bg-white text-black">Iniciar Sesion</a>
-        </div>
-        <p class="font-medium">© 2022 ILICITO by <a href="https://github.com/jaiiirot">jaiiirot</a></p>
-      </div>
-
-      <!-- Register -->
-      <form class="w-full md:w-2/4 flex flex-col items-center justify-center px-10 form-login h-full overflow-scroll form-register">
-        <!-- register container -->
-        <div class="flex flex-col  justify-center space-y-5 max-w-md">
-          <div class="flex flex-col space-y-2 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold">Registrarse</h2>
-            <span class="text-sm ml-2 hover:text-[#ff3737] cursor-pointer hover:-translate-y-1 duration-500 transition-all">Has olvidado tu contraseña ?</span>
-          </div>
-          <div class="flex flex-col max-w-[300px] gap-2">
-
-            <input 
-                id="register-username"
-                type="text"
-                name="username"
-			    placeholder="Nombre" class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" />
-            <input
-                id="register-email"
-                type="email"
-                name="email"
-                placeholder="Correo Electronico" class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"/>
-            <input 
-                id="register-reemail"
-                type="email"
-                name="reemail"
-			    placeholder="Correo Electronico" class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" />
-            <input
-                id="register-password"
-                placeholder="Contraseña"
-			    type="password"
-			    name="password" class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"/>
-            <input
-                type="password"
-                name="repassword"
-                id="register-repassword"
-                placeholder="Contraseña" class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"/>
-
-
-            <button type="submit" class="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white">Registrarse</button>
-
-            <div class="flex justify-center items-center">
-              <span class="w-full border border-black"></span>
-              <span class="px-4">O</span>
-              <span class="w-full border border-black"></span>
-            </div>
-            <a href="/api/sessions/auth/github" class="flex w-max items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black relative">
-              <span>
-                {{>icons/github x="24" y="24"}}
-              </span>
-              <span>Registrarse con GitHub</span>
-            </a>
-          </div>
-        </div>
-      </form>
-
-      <div class="flex bg-[#000] text-white justify-center md:hidden">
-        <a href="/" class="flex items-center justify-center space-x-3 w-max">
-          <span class="bg-white rounded-full w-8 h-8"></span>
-          <span class="flex w-min justify-center flex-col items-center">
-            <h1 id="title" class="text-[3rem] font-brygada style-logo" style="transform:scaleY(0.75)">ILICITO</h1>
-          </span>
-        </a>
-      </div>
+  <!-- Sidebar -->
+  <div class=' flex flex-col justify-between items-center md:items-start bg-[#000] md:p-8 md:w-2/4 text-white'>
+    <a href="/" class="hidden md:flex items-center  justify-start space-x-3 w-max">
+      <span class="bg-white rounded-full w-8 h-8"></span>
+      <span class="flex w-min justify-center flex-col items-center">
+        <h1 id="title" class="text-[3rem] font-brygada style-logo" style="transform:scaleY(0.75)">ILICITO</h1>
+      </span>
+    </a>
+    <div class='p-4 flex flex-col items-center md:px-12 md:items-start gap-4'>
+      <h1 class="hidden md:block text-3xl md:text-4xl md:leading-snug font-extrabold lg:text-5xl">
+        No dejes para mañana, lo que puedes comprar hoy.
+      </h1>
+      <p class="text-lg">¿Ya tengo cuenta?</p>
+      <a href="/login" class="w-max px-4 py-3 border-2 rounded-lg font-medium border-black bg-white text-black">Iniciar Sesion</a>
+    </div>
+    <p class="font-medium">© 2022 ILICITO by <a href="https://github.com/jaiiirot">jaiiirot</a></p>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>
-const formDataRegister = [
-    "register-username", 
-    "register-email", 
+
+  <!-- Register -->
+  <form class="w-full md:w-2/4 flex flex-col items-center justify-center px-10 form-login h-full overflow-scroll form-register">
+    <!-- register container -->
+    <div class="flex flex-col justify-center space-y-5 max-w-md">
+      <div class="flex flex-col space-y-2 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold">Registrarse</h2>
+        <span class="text-sm ml-2 hover:text-[#ff3737] cursor-pointer hover:-translate-y-1 duration-500 transition-all">Has olvidado tu contraseña ?</span>
+      </div>
+      <div class="flex flex-col max-w-[300px] gap-2">
+
+        <input id="register-username" type="text" name="username" placeholder="Nombre" class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" />
+        <input id="register-email" type="email" name="email" placeholder="Correo Electronico" class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"/>
+        <input id="register-reemail" type="email" name="reemail" placeholder="Correo Electronico" class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" />
+        <input id="register-password" placeholder="Contraseña" type="password" name="password" class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"/>
+        <input type="password" name="repassword" id="register-repassword" placeholder="Repetir Contraseña" class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"/>
+
+        <button type="submit" class="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white relative">
+          Registrarse
+          <div id="loader" class="hidden absolute right-4 h-5 w-5 border-4 border-t-4 border-white rounded-full animate-spin"></div>
+        </button>
+
+        <div class="flex justify-center items-center">
+          <span class="w-full border border-black"></span>
+          <span class="px-4">O</span>
+          <span class="w-full border border-black"></span>
+        </div>
+        <a href="/api/sessions/auth/github" class="flex w-max items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black relative">
+          <span>
+            {{>icons/github x="24" y="24"}}
+          </span>
+          <span>Registrarse con GitHub</span>
+        </a>
+      </div>
+    </div>
+  </form>
+
+  <div class="flex bg-[#000] text-white justify-center md:hidden">
+    <a href="/" class="flex items-center justify-center space-x-3 w-max">
+      <span class="bg-white rounded-full w-8 h-8"></span>
+      <span class="flex w-min justify-center flex-col items-center">
+        <h1 id="title" class="text-[3rem] font-brygada style-logo" style="transform:scaleY(0.75)">ILICITO</h1>
+      </span>
+    </a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  const formDataRegister = [
+    "register-username",
+    "register-email",
     "register-reemail",
-    "register-password", 
+    "register-password",
     "register-repassword"
-].map(id => document.getElementById(id));
+  ].map(id => document.getElementById(id));
 
-
-formDataRegister[1].addEventListener('input', (e) => 
+  formDataRegister[1].addEventListener('input', (e) =>
     compareInput(formDataRegister[2], e.target)
-);
-formDataRegister[2].addEventListener('input', (e) => 
+  );
+  formDataRegister[2].addEventListener('input', (e) =>
     compareInput(e.target, formDataRegister[1])
-);
-formDataRegister[3].addEventListener('input', (e) => 
+  );
+  formDataRegister[3].addEventListener('input', (e) =>
     compareInput(formDataRegister[4], e.target)
-);
-formDataRegister[4].addEventListener('input', (e) => 
+  );
+  formDataRegister[4].addEventListener('input', (e) =>
     compareInput(e.target, formDataRegister[3])
-);
+  );
 
-const formRegister = document.querySelector('.form-register');
+  function compareInput(input1, input2) {
+    if (input1.value !== input2.value) {
+      input1.classList.add('border-red-500');
+      input2.classList.add('border-red-500');
+    } else {
+      input1.classList.remove('border-red-500');
+      input2.classList.remove('border-red-500');
+    }
+  }
 
-formRegister.addEventListener('submit', (e) => {
+  const formRegister = document.querySelector('.form-register');
+  const loader = document.getElementById('loader');
+
+  formRegister.addEventListener('submit', (e) => {
     e.preventDefault();
     const formData = new FormData(formRegister);
     const data = Object.fromEntries(formData.entries());
     let status;
+    
+    const password = data.password;
+    const rePassword = data.repassword;
+    let isValid = true;
+
+    if (password.length < 8 || rePassword.length < 8) {
+      ToastNotification("Las contraseñas deben tener al menos 8 caracteres", "warning");
+      isValid = false;
+    }
+
+    if (password !== rePassword) {
+      ToastNotification("Las contraseñas no coinciden", "warning");
+      isValid = false;
+    }
+
+    if (!isValid) {
+      return;
+    }
+
+    loader.classList.remove('hidden');
+
     fetch('/api/sessions/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
     })
     .then(res => {
-        res.status === 200 ? status = "success" : status = "warning";
-        return res.json();
+      res.status === 200 ? status = "success" : status = "warning";
+      return res.json();
     })
     .then(data => {
+      setTimeout(() => {
+        loader.classList.add('hidden');
         ToastNotification(data.msg, status);
+      }, 1000);
     })
-    .catch(err => console.log(err));
-});
+    .catch(err => {
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        console.log(err);
+      }, 1000);
+    });
+  });
 
-  </script>
+  function ToastNotification(message, status) {
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      icon: status,
+      title: message,
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+    });
+  }
+</script>

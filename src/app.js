@@ -4,7 +4,7 @@ import MongoStore from "connect-mongo";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import __dirname from "./utils/utils.js";
-import routesApi from "./feature/api.routes.js";
+import routesApiV1 from "./feature/api.routes.js";
 import routesViews from "./client/views.routes.js";
 import compression from "express-compression";
 import { ENV } from "./config/config.js";
@@ -44,11 +44,7 @@ configSocketIo(httpServer, ENV); // SOCKET
 configSwagger(app); // DOCS
 
 // ROUTES
-app.use("/api/products", routesApi.products);
-app.use("/api/messages", routesApi.messages);
-app.use("/api/carts", routesApi.carts);
-app.use("/api/sessions", routesApi.users);
-app.use("/api/tickets", routesApi.tickets);
+routesApiV1(app);
 app.use("/", routesViews);
 
 // 404

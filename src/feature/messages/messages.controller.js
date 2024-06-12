@@ -3,6 +3,7 @@ import { logger } from "../../utils/logger/logger.js";
 
 const postMessage = async (req, res) => {
 	try {
+		logger.info("➕ Añadiendo un nuevo mensaje");
 		const newMessage = await messagesService.addMessage(req.body.mid);
 		res.status(201).json(newMessage);
 	} catch (error) {
@@ -13,6 +14,7 @@ const postMessage = async (req, res) => {
 
 const getMessages = async (req, res) => {
 	try {
+		logger.info("🔍 Obteniendo todos los mensajes");
 		const messages = await messagesService.getMessages();
 		res.status(200).json(messages);
 	} catch (error) {
@@ -24,6 +26,7 @@ const getMessages = async (req, res) => {
 const deleteMessage = async (req, res) => {
 	try {
 		const { id } = req.params;
+		logger.info(`🗑️ Eliminando mensaje con ID ${id}`);
 		const message = await messagesService.deleteMessage(id);
 		res.status(200).json(message);
 	} catch (error) {
@@ -36,6 +39,7 @@ const putMessage = async (req, res) => {
 	try {
 		const { id } = req.params;
 		const { name, email, message } = req.body;
+		logger.info(`🔄 Actualizando mensaje con ID ${id}`);
 		const messageUpdated = await messagesService.updateMessage(id, {
 			name,
 			email,

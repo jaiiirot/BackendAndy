@@ -1,18 +1,100 @@
-<div class="flex flex-col flex-grow h-ful w-full">
-  <div class="flex-grow overflow-auto bg-gray-800">
+<div class="flex flex-col flex-grow h-full w-full">
+  <div class="flex-grow overflow-auto bg-white">
     <div class="font-sans antialiased h-full flex">
       <div
-        class="bg-[#1C2531] text-purple-lighter flex-none w-24 p-6 hidden md:block"
+        class="bg-white text-black flex-none w-24 p-6 hidden md:block"
       >
-          {{> admin/personchat}}
-          {{> admin/personchat}}
-          {{> admin/personchat}}
-          {{> admin/personchat}}
+        <div class="cursor-pointer mb-4 hover:">
+          <div
+            class="h-12 w-12 flex items-center justify-center text-black text-2xl font-semibold rounded-3xl mb-1 overflow-hidden"
+          >
+            <img src="https://www.shareicon.net/data/512x512/2016/09/15/829452_user_512x512.png" alt="" />
+          </div>
+        </div>
+        <div class="cursor-pointer mb-4 hover:">
+          <div
+            class="h-12 w-12 flex items-center justify-center text-black text-2xl font-semibold rounded-3xl mb-1 overflow-hidden"
+          >
+            <img src="https://www.shareicon.net/data/512x512/2016/09/15/829452_user_512x512.png" alt="" />
+          </div>
+        </div>
+        <div class="cursor-pointer mb-4 hover:">
+          <div
+            class="h-12 w-12 flex items-center justify-center text-black text-2xl font-semibold rounded-3xl mb-1 overflow-hidden"
+          >
+            <img src="https://www.shareicon.net/data/512x512/2016/09/15/829452_user_512x512.png" alt="" />
+          </div>
+        </div>
       </div>
-      
-      <div class="flex-1 flex flex-col bg-gray-700 overflow-hidden h-full">
-        {{> admin/inputchat}}
+      <div class="flex-1 flex flex-col bg-white overflow-hidden h-full">
+        <div
+          class="border-b border-gray-200 flex px-6 py-2 items-center flex-none shadow-xl"
+          data-mid="66667f4fc40c84e6ff7ddd77" id="container-chat"
+        >
+          <div class="flex flex-col">
+            <h3 class="text-black mb-1 font-bold text-xl text-gray-800">
+              <span class="text-gray-400">#</span>
+              general
+            </h3>
+          </div>
+        </div>
+        <div class="px-6 py-4 flex-1 overflow-y-scroll" id="on-messages-container">
+          {{!-- MENSAJE --}}
+        </div>
+        <div class="p-4 flex">
+          <input
+            type="text"
+            class="p-4 h-full w-full px-4 bg-gray-200 rounded-lg overflow-hidden text-black border-none outline-none"
+            placeholder="Mensaje #general"
+            id="message-input"
+          />
+          <input
+            type="button"
+            value="Enviar"
+            class="bg-black p-4 border-none text-white rounded-lg cursor-pointer"
+          />
+        </div>
       </div>
     </div>
   </div>
 </div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+  const messageId = document.getElementById("container-chat");
+  const messageInput = document.getElementById("message-input");
+  const messagesContainer = document.getElementById("on-messages-container");
+
+  socket.emit("onchat", messageId.dataset.mid);
+  socket.on("loadingchat", (messages) => {
+    messagesContainer.innerHTML = "";
+    messages.forEach((msg) => {
+      const div = `<div class="flex items-start justify-end"><div class="bg-[#010101] p-3 rounded-lg"><p class="text-sm text-white">${msg.message}</p></div></div>`;
+      messagesContainer.innerHTML += div;
+    });
+  });
+
+messageInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    const message = e.target.value.trim();
+    if (message !== "") {
+      socket.emit("input_chat", { mid: messageId.dataset.mid, role: "admin", message: message });
+      e.target.value = "";
+    }
+  }
+});
+  socket.on("container_chat", (messages) => {
+    messagesContainer.innerHTML = "";
+    messages.forEach((msg) => {;
+      if(msg.role !== "user"){
+        const div = `<div class="flex items-start justify-end"><div class="bg-[#010101] p-3 rounded-lg"><p class="text-sm text-white">${msg.message}</p></div></div>`;
+        messagesContainer.innerHTML += div;
+      }else{
+        const div = `<div class="flex items-end"><div class="ml-3 bg-gray-100 p-3 rounded-lg"><p class="text-sm text-gray-800">${msg.message}</p></div></div>`;
+        messagesContainer.innerHTML += div;
+      }
+    });
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  });
+</script>
+

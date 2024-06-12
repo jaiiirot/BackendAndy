@@ -1,159 +1,3 @@
-{{!-- <section class="size-full flex flex-col bg-white align-center justify-center gap-8">
-	<header class="size-min mx-auto">
-		<a href="/" class="flex items-center justify-center space-x-3 w-max">
-			<span class="bg-black rounded-full w-8 h-8"></span>
-			<span class="flex w-min justify-center flex-col items-center">
-				<h1
-					id="title"
-					class="text-[3rem] font-brygada style-logo"
-					style="transform:scaleY(0.75)"
-				>ILICITO</h1>
-			</span>
-		</a>
-	</header>
-	<aside class="max-w-lg p-4 mx-auto">
-		<div class="text-center mb-8">
-			<h2 class="text-3xl md:text-4xl font-extrabold mb-2">Restablecer
-				contraseña</h2>
-			<p class="text-lg font-extrabold text-indigo-900">usuario@example.com</p>
-		</div>
-		<form action="" class="flex flex-col gap-4">
-
-			<input
-				class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
-				type="password"
-				name="password"
-				placeholder="Nueva contraseña"
-			/>
-
-			<input
-				class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
-				type="password"
-				name="confirmPassword"
-				placeholder="Confirmar nueva"
-			/>
-
-			<button
-				type="submit"
-				class="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white"
-			>Confirmar</button>
-
-		</form>
-	</aside>
-</section> --}}
-
-{{!-- <section class="size-full flex flex-col bg-white align-center justify-center gap-8">
-    <header class="size-min mx-auto">
-        <a href="/" class="flex items-center justify-center space-x-3 w-max">
-            <span class="bg-black rounded-full w-8 h-8"></span>
-            <span class="flex w-min justify-center flex-col items-center">
-                <h1 id="title" class="text-[3rem] font-brygada style-logo" style="transform:scaleY(0.75)">ILICITO</h1>
-            </span>
-        </a>
-    </header>
-    <aside class="max-w-lg p-4 mx-auto">
-        <div class="text-center mb-8">
-            <h2 class="text-3xl md:text-4xl font-extrabold mb-2">Restablecer contraseña</h2>
-            <p class="text-lg font-extrabold text-indigo-900">{{login.email}}</p>
-        </div>
-        <form id="reset-password-form" class="flex flex-col gap-4">
-            <div class="relative">
-                <input
-                    id="password"
-                    class="flex w-full px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
-                    type="password"
-                    name="password"
-                    placeholder="Nueva contraseña"
-                />
-                <button type="button" class="absolute inset-y-0 right-0 px-3 py-2 md:px-4 md:py-3" onclick="toggleVisibility('password')">Mostrar</button>
-            </div>
-            <div class="relative">
-                <input
-                    id="confirmPassword"
-                    class="flex w-full px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
-                    type="password"
-                    name="confirmPassword"
-                    placeholder="Confirmar nueva contraseña"
-                />
-                <button type="button" class="absolute inset-y-0 right-0 px-3 py-2 md:px-4 md:py-3" onclick="toggleVisibility('confirmPassword')">Mostrar</button>
-            </div>
-            <button
-                type="submit"
-                id="submit-button"
-                class="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white"
-                disabled
-            >Confirmar</button>
-        </form>
-        <div id="response-message" class="text-center mt-4 hidden"></div>
-    </aside>
-</section>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('reset-password-form');
-    const password = document.getElementById('password');
-    const confirmPassword = document.getElementById('confirmPassword');
-    const submitButton = document.getElementById('submit-button');
-    const responseMessage = document.getElementById('response-message');
-
-    const checkPasswords = () => {
-        if (password.value === confirmPassword.value && password.value.length > 0) {
-            password.classList.remove('border-red-500');
-            confirmPassword.classList.remove('border-red-500');
-            password.classList.add('border-green-500');
-            confirmPassword.classList.add('border-green-500');
-            submitButton.disabled = false;
-        } else {
-            password.classList.remove('border-green-500');
-            confirmPassword.classList.remove('border-green-500');
-            password.classList.add('border-red-500');
-            confirmPassword.classList.add('border-red-500');
-            submitButton.disabled = true;
-        }
-    };
-
-    password.addEventListener('input', checkPasswords);
-    confirmPassword.addEventListener('input', checkPasswords);
-
-    form.addEventListener('submit', async function(event) {
-        event.preventDefault();
-
-        try {
-            const response = await fetch('/api/sessions/reset/password/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ password: password.value, confirmPassword: confirmPassword.value })
-            });
-
-            if (response.ok) {
-                responseMessage.textContent = '¡La contraseña ha sido restablecida exitosamente!';
-                responseMessage.className = 'text-center mt-4 text-green-500';
-            } else {
-                responseMessage.textContent = 'Hubo un problema al restablecer la contraseña. Por favor, inténtelo de nuevo.';
-                responseMessage.className = 'text-center mt-4 text-red-500';
-            }
-        } catch (error) {
-            responseMessage.textContent = 'Hubo un error al intentar comunicarse con el servidor. Por favor, inténtelo de nuevo.';
-            responseMessage.className = 'text-center mt-4 text-red-500';
-        }
-
-        responseMessage.classList.remove('hidden');
-    });
-});
-
-function toggleVisibility(id) {
-    const input = document.getElementById(id);
-    if (input.type === 'password') {
-        input.type = 'text';
-    } else {
-        input.type = 'password';
-    }
-}
-</script> --}}
-
-
 <section class="size-full flex flex-col bg-white align-center justify-center gap-8">
     <header class="size-min mx-auto">
         <a href="/" class="flex items-center justify-center space-x-3 w-max">
@@ -171,21 +15,21 @@ function toggleVisibility(id) {
         <form id="reset-password-form" class="flex flex-col gap-4">
             <div class="relative">
                 <input
-                    class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
+                    class="flex w-full px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
                     type="password"
                     name="password"
                     placeholder="Nueva contraseña"
                 />
-                <button type="button" class="absolute inset-y-0 right-0 flex items-center px-3 toggle-visibility">👁️</button>
+                <button type="button" class="absolute bg-black text-white inset-y-0 right-0 flex items-center px-3 toggle-visibility">mostrar</button>
             </div>
             <div class="relative">
                 <input
-                    class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
+                    class="flex w-full px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
                     type="password"
                     name="confirmPassword"
                     placeholder="Confirmar nueva"
                 />
-                <button type="button" class="absolute inset-y-0 right-0 flex items-center px-3 toggle-visibility">👁️</button>
+                <button type="button" class="absolute bg-black text-white inset-y-0 right-0 flex items-center px-3 toggle-visibility">mostrar</button>
             </div>
             <button
                 type="submit"
@@ -195,10 +39,12 @@ function toggleVisibility(id) {
         </form>
         <div id="response-message" class="text-center mt-4 hidden"></div>
     </aside>
+    <div id="loader" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75 hidden z-50">
+        <div class="w-8 h-8 border-4 border-black border-t-transparent rounded-full animate-spin"></div>
+    </div>
 </section>
 
 <script>
-
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('reset-password-form');
     const passwordInput = form.password;
@@ -207,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const responseMessage = document.getElementById('response-message');
     const email = document.getElementById("user-email").textContent;
     const token = window.location.pathname.split("/")[3];
+    const loader = document.getElementById('loader');
 
     document.querySelectorAll('.toggle-visibility').forEach(button => {
         button.addEventListener('click', () => {
@@ -222,15 +69,42 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const validatePasswords = () => {
-        if (passwordInput.value === confirmPasswordInput.value) {
-            passwordInput.classList.remove('border-red-500');
-            confirmPasswordInput.classList.remove('border-red-500');
-            submitButton.disabled = false;
+        let isValid = true;
+        responseMessage.classList.add('hidden');
+
+        if (passwordInput.value.length < 8) {
+            passwordInput.classList.add('border-red-500');
+            responseMessage.textContent = 'La contraseña debe tener al menos 8 caracteres.';
+            responseMessage.className = 'text-center mt-4 text-red-500';
+            responseMessage.classList.remove('hidden');
+            isValid = false;
         } else {
+            passwordInput.classList.remove('border-red-500');
+        }
+
+        if (confirmPasswordInput.value.length < 8) {
+            confirmPasswordInput.classList.add('border-red-500');
+            responseMessage.textContent = 'La confirmación de contraseña debe tener al menos 8 caracteres.';
+            responseMessage.className = 'text-center mt-4 text-red-500';
+            responseMessage.classList.remove('hidden');
+            isValid = false;
+        } else {
+            confirmPasswordInput.classList.remove('border-red-500');
+        }
+
+        if (passwordInput.value !== confirmPasswordInput.value) {
             passwordInput.classList.add('border-red-500');
             confirmPasswordInput.classList.add('border-red-500');
-            submitButton.disabled = true;
+            responseMessage.textContent = 'Las contraseñas no coinciden.';
+            responseMessage.className = 'text-center mt-4 text-red-500';
+            responseMessage.classList.remove('hidden');
+            isValid = false;
+        } else if (isValid) {
+            passwordInput.classList.remove('border-red-500');
+            confirmPasswordInput.classList.remove('border-red-500');
         }
+
+        submitButton.disabled = !isValid;
     };
 
     passwordInput.addEventListener('input', validatePasswords);
@@ -238,6 +112,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     form.addEventListener('submit', async function(event) {
         event.preventDefault();
+        if (submitButton.disabled) return;
+
+        loader.classList.remove('hidden');
+        responseMessage.classList.add('hidden');
 
         try {
             const response = await fetch(`/api/sessions/reset/password/`, {
@@ -265,7 +143,19 @@ document.addEventListener('DOMContentLoaded', () => {
             responseMessage.className = 'text-center mt-4 text-red-500';
         }
 
-        responseMessage.classList.remove('hidden');
+        loader.classList.add('hidden');
+        responseMessage.classList.remove('hidden'); 
     });
 });
 </script>
+
+<style>
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+</style>

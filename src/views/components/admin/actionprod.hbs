@@ -23,22 +23,17 @@
             </div>
             <div class="flex gap-2 flex-col w-6/12">
                <select name="optionPhotos" id="option-photos" class="border-none outline-none text-black px-4 py-3">
-                    {{#if admin.exist_product}}
-                        {{#if admin.product.photo}}
-                            <option value="nomyimg">Imagenes Externas</option>
-                            <option value="myimg">Mis Imagenes</option>
-                        {{/if}}
-                    {{else}}
-                        <option>Selecciona una opcion</option>
-                        <option value="myimg">Mis Imagenes</option>
-                        <option value="nomyimg">Imagenes Externas</option>
-                    {{/if}}
+                    <option>Selecciona una opcion</option>
+                    <option value="myimg">Mis Imagenes</option>
+                    <option value="nomyimg">Imagenes Externas</option>
                </select>
                <div class="w-full" id="photos-input">
                 {{#if admin.exist_product}}
-                    {{#each admin.product.photo}}
-                        <input class="border-none outline-none text-black px-4 py-2 w-full" name="photoUrl" type="text" placeholder="URL de la imagen 1" value="{{this}}">
-                    {{/each}}
+                    <div class="flex flex-row gap-2">
+                        {{#each admin.product.photo}}
+                            <img src="{{this}}" alt="photo" class="w-32 h-32 object-cover" />
+                        {{/each}}
+                    </div>
                 {{/if}}
                   {{!-- IMG --}}
                </div>

@@ -3,6 +3,7 @@ import { logger } from "../../utils/logger/logger.js";
 
 const getAllCarts = async (req, res) => {
 	try {
+		logger.info("🔍 Obteniendo todos los carritos");
 		const carts = await cartsService.getAll();
 		res.status(200).send(carts);
 	} catch (error) {
@@ -13,6 +14,7 @@ const getAllCarts = async (req, res) => {
 
 const getCartById = async (req, res) => {
 	try {
+		logger.info(`🔍 Obteniendo carrito con ID ${req.params.cid}`);
 		const cart = await cartsService.getByIdPopulate(req.params.cid);
 		if (!cart) {
 			res.status(404).send({ error: "Carrito no encontrado" });
@@ -28,6 +30,9 @@ const getCartById = async (req, res) => {
 const getProductToCart = async (req, res) => {
 	try {
 		const { cid, pid } = req.params;
+		logger.info(
+			`🔍 Obteniendo producto con ID ${pid} del carrito con ID ${cid}`
+		);
 		const product = await cartsService.getProductToCart(cid, pid);
 		if (!product)
 			res.status(404).send({ error: "Producto no encontrado en el carrito" });
@@ -43,6 +48,7 @@ const getPurchaseCart = async (req, res) => {
 	try {
 		const { cid } = req.params;
 		const hostmorepost = req.rawHeaders[1];
+		logger.info(`🛒 Realizando compra del carrito con ID ${cid}`);
 		const ticket = await cartsService.getPurchaseCart(
 			hostmorepost,
 			cid,
@@ -52,9 +58,12 @@ const getPurchaseCart = async (req, res) => {
 			res.status(400).send({ error: "No se pudo realizar la compra" });
 			return;
 		}
+		logger.info(
+			`✔️ Compra del carrito con ID ${cid} realizada correctamente, código de ticket: ${ticket.code}`
+		);
 		res.status(200).send({
 			status: "success",
-			message: `, codigo de ticket: ${ticket.code}`,
+			message: `, código de ticket: ${ticket.code}`,
 		});
 	} catch (error) {
 		logger.error("🔴 Error al realizar la compra del carrito:", error);
@@ -64,6 +73,7 @@ const getPurchaseCart = async (req, res) => {
 
 const postCreateCart = async (req, res) => {
 	try {
+		logger.info("➕ Creando un nuevo carrito");
 		const newCart = await cartsService.post(req.body);
 		res.status(201).send(newCart);
 	} catch (error) {
@@ -75,6 +85,7 @@ const postCreateCart = async (req, res) => {
 const postAddProductToCart = async (req, res) => {
 	try {
 		const { cid, pid } = req.params;
+		logger.info(`➕ Agregando producto con ID ${pid} al carrito con ID ${cid}`);
 		if (cid && pid) {
 			await cartsService.postAddProductToCart(cid, pid);
 			res.status(200).send({ message: "Producto agregado al carrito" });
@@ -91,6 +102,7 @@ const postAddProductToCart = async (req, res) => {
 
 const putUpdateCart = async (req, res) => {
 	try {
+		logger.info(`🔄 Actualizando carrito con ID ${req.params.cid}`);
 		const updatedCart = await cartsService.put(req.params.cid, req.body);
 		if (!updatedCart) {
 			res.status(404).send({ error: "Carrito no encontrado" });
@@ -106,6 +118,9 @@ const putUpdateCart = async (req, res) => {
 const putUpdateProductInCart = async (req, res) => {
 	try {
 		const { cid, pid } = req.params;
+		logger.info(
+			`🔄 Actualizando producto con ID ${pid} en el carrito con ID ${cid}`
+		);
 		if (cid && pid) {
 			await cartsService.putUpdateProductInCart(cid, pid, req.query.action);
 			res.status(200).send({
@@ -124,6 +139,7 @@ const putUpdateProductInCart = async (req, res) => {
 
 const deleteCart = async (req, res) => {
 	try {
+		logger.info(`🗑️ Eliminando carrito con ID ${req.params.cid}`);
 		if (!req.params.cid) {
 			res.status(404).send({ error: "Carrito no encontrado" });
 		}
@@ -138,6 +154,9 @@ const deleteCart = async (req, res) => {
 const deleteProductFromCart = async (req, res) => {
 	try {
 		const { cid, pid } = req.params;
+		logger.info(
+			`🗑️ Eliminando producto con ID ${pid} del carrito con ID ${cid}`
+		);
 		if (cid && pid) {
 			await cartsService.deleteProductInCart(cid, pid);
 			res.status(200).send({ message: "Producto eliminado del carrito" });

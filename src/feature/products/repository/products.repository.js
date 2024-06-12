@@ -1,5 +1,6 @@
 import ProductDTO from "../products.dto.js";
 import { servicesExternal } from "../../../services/repository/external.service.js";
+import { logger } from "../../../utils/logger/logger.js";
 
 export default class ProductRepository {
 	constructor(dao) {
@@ -7,46 +8,77 @@ export default class ProductRepository {
 	}
 
 	getAll = async (query, options) => {
-		const products = await this.dao.getAll(query, options);
-		return products;
+		try {
+			logger.info(
+				"🔍 Buscando todos los productos con los parámetros proporcionados"
+			);
+			const products = await this.dao.getAll(query, options);
+			logger.info("🛍️ Todos los productos obtenidos correctamente");
+			return products;
+		} catch (error) {
+			logger.error("🔴 Error al obtener todos los productos:", error);
+			throw error;
+		}
 	};
 
 	getById = async id => {
-		const product = await this.dao.getById(id);
-		product.description = product.description.replace(/<br>/g, "\n");
-		return product;
+		try {
+			logger.info(`🔍 Buscando producto con ID ${id}`);
+			const product = await this.dao.getById(id);
+			product.description = product.description.replace(/<br>/g, "\n");
+			logger.info(`📦 Producto con ID ${id} obtenido correctamente`);
+			return product;
+		} catch (error) {
+			logger.error(`🔴 Error al obtener producto por ID ${id}:`, error);
+			throw error;
+		}
 	};
 
 	get = async id => {
-		const product = await this.dao.getById(id);
-		product.description = product.description.replace(/<br>/g, "\n");
-		return product;
+		try {
+			logger.info(`🔍 Buscando producto con ID ${id}`);
+			const product = await this.dao.getById(id);
+			product.description = product.description.replace(/<br>/g, "\n");
+			logger.info(`📦 Producto con ID ${id} obtenido correctamente`);
+			return product;
+		} catch (error) {
+			logger.error(`🔴 Error al obtener producto por ID ${id}:`, error);
+			throw error;
+		}
 	};
 
 	post = async (data, photoFiles) => {
-		let photos = [];
-		data.status = data.status === "on";
-		data.promocion = data.promocion === "on";
-		if (!data.photoUrl) {
-			for (const photo of photoFiles) {
-				const result = await servicesExternal.postResizeCloudBuffer(
-					photo.buffer,
-					300,
-					300
-				);
-				photos.push(result);
+		try {
+			logger.info("➕ Añadiendo un nuevo producto");
+			let photos = [];
+			data.status = data.status === "on";
+			data.promocion = data.promocion === "on";
+			if (!data.photoUrl) {
+				for (const photo of photoFiles) {
+					const result = await servicesExternal.postResizeCloudBuffer(
+						photo.buffer,
+						300,
+						300
+					);
+					photos.push(result);
+				}
+			} else {
+				photos = data.photoUrl;
 			}
-		} else {
-			photos = data.photoUrl;
+			data.photo = photos;
+			const newProduct = new ProductDTO(data);
+			const result = await this.dao.addProduct(newProduct);
+			logger.info("🆕 Nuevo producto agregado correctamente");
+			return result;
+		} catch (error) {
+			logger.error("🔴 Error al agregar un nuevo producto:", error);
+			throw error;
 		}
-		data.photo = photos;
-		const newProduct = new ProductDTO(data);
-		const result = await this.dao.addProduct(newProduct);
-		return result;
 	};
 
 	put = async (id, data, photoFiles) => {
 		try {
+			logger.info(`🔄 Actualizando producto con ID ${id}`);
 			let photos = [];
 			let condition = false;
 			data.status = data.status === "on";
@@ -85,19 +117,30 @@ export default class ProductRepository {
 			}
 			data.photo = photos;
 			const result = new ProductDTO(data);
-			return await this.dao.updateProduct(id, result);
+			const updatedProduct = await this.dao.updateProduct(id, result);
+			logger.info(`🔄 Producto con ID ${id} actualizado correctamente`);
+			return updatedProduct;
 		} catch (error) {
-			console.error("Error in put method:", error);
+			logger.error(`🔴 Error al actualizar el producto con ID ${id}:`, error);
 			throw error;
 		}
 	};
 
 	delete = async id => {
-		const photoUrls = await this.dao.getById(id);
-		photoUrls.photo.forEach(async element => {
-			await servicesExternal.deleteCloudinary(element);
-			// await deleteCloudinary(element);
-		});
-		return await this.dao.deleteProduct(id);
+		try {
+			logger.info(`🗑️ Eliminando producto con ID ${id}`);
+			const photoUrls = await this.dao.getById(id);
+			await Promise.all(
+				photoUrls.photo.map(async element => {
+					await servicesExternal.deleteCloudinary(element);
+				})
+			);
+			const result = await this.dao.deleteProduct(id);
+			logger.info(`🗑️ Producto con ID ${id} eliminado correctamente`);
+			return result;
+		} catch (error) {
+			logger.error(`🔴 Error al eliminar el producto con ID ${id}:`, error);
+			throw error;
+		}
 	};
 }

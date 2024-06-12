@@ -7,7 +7,7 @@ const ticketsSchema = new mongoose.Schema({
 		required: true,
 		unique: true,
 		default: function () {
-			return Math.random().toString(36).substring(2, 10).toUpperCase();
+			return Math.random().toString(36).substring(2, 17).toUpperCase();
 		},
 	},
 	purchase_datetime: {

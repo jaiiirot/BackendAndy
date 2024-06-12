@@ -12,6 +12,7 @@ export default class UsersRepository {
 	getAll = async (query, options) => {
 		try {
 			const users = await this.dao.getAll(query, options);
+			logger.info("👥 Todos los usuarios obtenidos correctamente");
 			return users;
 		} catch (error) {
 			logger.error("🔴 Error al obtener todos los usuarios:", error);
@@ -22,6 +23,7 @@ export default class UsersRepository {
 	getById = async id => {
 		try {
 			const user = await this.dao.getById(id);
+			logger.info(`👤 Usuario con ID ${id} obtenido correctamente`);
 			return user;
 		} catch (error) {
 			logger.error(`🔴 Error al obtener usuario por ID ${id}:`, error);
@@ -32,6 +34,7 @@ export default class UsersRepository {
 	getByEmail = async email => {
 		try {
 			const user = await this.dao.getByEmail(email);
+			logger.info(`📧 Usuario con email ${email} obtenido correctamente`);
 			return user;
 		} catch (error) {
 			logger.error("🔴 Error al obtener usuario por email:", error);
@@ -42,6 +45,7 @@ export default class UsersRepository {
 	getByEmailAndPassword = async data => {
 		try {
 			const user = await this.dao.getByEmailAndPassword(data);
+			logger.info(`🔑 Usuario obtenido por email y contraseña correctamente`);
 			return user;
 		} catch (error) {
 			logger.error(
@@ -55,6 +59,7 @@ export default class UsersRepository {
 	post = async data => {
 		try {
 			const newUser = await this.dao.postUser(data);
+			logger.info("🆕 Nuevo usuario creado correctamente");
 			return newUser;
 		} catch (error) {
 			logger.error("🔴 Error al crear un nuevo usuario:", error);
@@ -65,6 +70,7 @@ export default class UsersRepository {
 	put = async (id, data) => {
 		try {
 			const user = await this.dao.putUser(id, data);
+			logger.info(`♻️ Usuario con ID ${id} actualizado correctamente`);
 			return user;
 		} catch (error) {
 			logger.error(`🔴 Error al actualizar usuario por ID ${id}:`, error);
@@ -75,7 +81,11 @@ export default class UsersRepository {
 	putPasswordByEmail = async data => {
 		try {
 			data.password = await servicesExternal.hashPassword(data.password);
-			return await this.dao.putPasswordByEmail(data);
+			const updatedUser = await this.dao.putPasswordByEmail(data);
+			logger.info(
+				`🔒 Contraseña de usuario actualizada correctamente para el email ${data.email}`
+			);
+			return updatedUser;
 		} catch (error) {
 			logger.error(
 				"🔴 Error al actualizar contraseña de usuario por email:",
@@ -91,6 +101,7 @@ export default class UsersRepository {
 			await this.cartDao.delete(user.cart.cid);
 			await this.messageDao.delete(user.messages.mid);
 			const result = await this.dao.deleteUser(id);
+			logger.info(`🗑️ Usuario con ID ${id} eliminado correctamente`);
 			return result;
 		} catch (error) {
 			logger.error(`🔴 Error al eliminar usuario por ID ${id}:`, error);
@@ -103,11 +114,17 @@ export default class UsersRepository {
 			const db = await this.dao.getByEmail(data.email);
 			if (db) {
 				if (servicesExternal.comparePassword(data.password, db.password)) {
-					return await servicesExternal.postToken({ id: db._id }, 30);
+					const token = await servicesExternal.postToken({ id: db._id }, 30);
+					logger.info(
+						`🔓 Inicio de sesión exitoso para el email ${data.email}`
+					);
+					return token;
 				} else {
+					logger.warning(`⚠️ Datos incorrectos para el email ${data.email}`);
 					return { msg: "¡Datos incorrectos!" };
 				}
 			} else {
+				logger.warning(`⚠️ Datos incorrectos para el email ${data.email}`);
 				return { msg: "Datos incorrectos" };
 			}
 		} catch (error) {
@@ -118,7 +135,9 @@ export default class UsersRepository {
 
 	getLoginGithub = async data => {
 		try {
-			return await servicesExternal.postToken({ id: data._id }, 30);
+			const token = await servicesExternal.postToken({ id: data._id }, 30);
+			logger.info("🔓 Inicio de sesión con GitHub exitoso");
+			return token;
 		} catch (error) {
 			logger.error("🔴 Error al realizar inicio de sesión con GitHub:", error);
 			throw error;
@@ -127,15 +146,18 @@ export default class UsersRepository {
 
 	postFromGithub = async data => {
 		try {
-			const info = {};
-			info.username = data._json.login;
-			info.photo_user = data._json.avatar_url;
-			info.first_name = data._json.name;
-			info.email = data.emails[0].value;
-			info.cart = await this.cartDao.addCart();
-			info.messages = await this.messageDao.addMessage(data.emails[0].value);
+			const info = {
+				username: data._json.login,
+				photo_user: data._json.avatar_url,
+				first_name: data._json.name,
+				email: data.emails[0].value,
+				cart: await this.cartDao.addCart(),
+				messages: await this.messageDao.addMessage(data.emails[0].value),
+			};
 			const user = new UsersDTO(info);
-			return await this.dao.postUser(user);
+			const newUser = await this.dao.postUser(user);
+			logger.info("🆕 Usuario creado desde GitHub correctamente");
+			return newUser;
 		} catch (error) {
 			logger.error("🔴 Error al crear usuario desde GitHub:", error);
 			throw error;
@@ -144,14 +166,17 @@ export default class UsersRepository {
 
 	postFromLocalRegister = async data => {
 		try {
-			const info = {};
-			info.username = data.username;
-			info.email = data.email;
-			info.password = servicesExternal.hashPassword(data.password);
-			info.cart = await this.cartDao.addCart();
-			info.messages = await this.messageDao.addMessage(data.email);
+			const info = {
+				username: data.username,
+				email: data.email,
+				password: servicesExternal.hashPassword(data.password),
+				cart: await this.cartDao.addCart(),
+				messages: await this.messageDao.addMessage(data.email),
+			};
 			const user = new UsersDTO(info);
-			return await this.dao.postUser(user);
+			const newUser = await this.dao.postUser(user);
+			logger.info("🆕 Usuario registrado localmente correctamente");
+			return newUser;
 		} catch (error) {
 			logger.error(
 				"🔴 Error al registrar usuario desde registro local:",
@@ -163,7 +188,11 @@ export default class UsersRepository {
 
 	putLastConnection = async id => {
 		try {
-			return await this.dao.putLastConnection(id);
+			const updatedUser = await this.dao.putLastConnection(id);
+			logger.info(
+				`🔄 Última conexión del usuario con ID ${id} actualizada correctamente`
+			);
+			return updatedUser;
 		} catch (error) {
 			logger.error(
 				`🔴 Error al actualizar última conexión de usuario por ID ${id}:`,

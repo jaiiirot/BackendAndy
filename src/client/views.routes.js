@@ -59,9 +59,10 @@ router.get("/forget", controllersViewforms.Forget);
 router.get(
 	"/reset/password/:token",
 	(req, res, next) => {
-		if (!req.params.token) res.redirect("/");
-		if (!servicesExternal.getToken(req.params.token)) res.redirect("/");
-		req.email = servicesExternal.getToken(req.params.token);
+		if (!req.params.token) res.redirect("/forget/");
+		if (!servicesExternal.getToken(req.signedCookies.token))
+			res.redirect("/forget/");
+		req.email = servicesExternal.getToken(req.signedCookies.token);
 		next();
 	},
 	controllersViewforms.Reset
