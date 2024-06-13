@@ -16,6 +16,12 @@ const userSchema = new mongoose.Schema({
 	},
 	role: { type: String, default: "CLIENT" },
 	lastConnection: { type: Date, default: Date.now(), required: false },
+	documents: {
+		type: Array,
+		name: { type: String, required: true },
+		reference: { type: String, required: true },
+		default: [],
+	},
 });
 
 export const Users = mongoose.model("users", userSchema);

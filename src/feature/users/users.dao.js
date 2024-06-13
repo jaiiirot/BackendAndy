@@ -73,6 +73,20 @@ export default class UsersDAO {
 		}
 	}
 
+	async postDocument(uid, file) {
+		try {
+			logger.info(`📄 Agregando documento al usuario con ID ${uid}`);
+			return await Users.findByIdAndUpdate(
+				uid,
+				{ $push: { documents: [file.name, file.url] } },
+				{ new: true }
+			);
+		} catch (error) {
+			logger.error("🔴 Error al agregar documento al usuario:", error);
+			throw error;
+		}
+	}
+
 	async putPasswordByEmail(data) {
 		try {
 			logger.info(
@@ -131,6 +145,16 @@ export default class UsersDAO {
 				`🔴 Error al actualizar la última conexión para el usuario con ID ${userId}:`,
 				error
 			);
+			throw error;
+		}
+	}
+
+	async getAllCondition(query) {
+		try {
+			logger.info("🔍 Buscando usuarios");
+			return await Users.find({}, query);
+		} catch (error) {
+			logger.error("🔴 Error al buscar usuarios:", error);
 			throw error;
 		}
 	}

@@ -1,7 +1,8 @@
 <aside class="flex flex-col justify-around align-center w-full h-full">
    {{!-- Form --}}
    <section class="bg-gray-200 px-8 py-4 w-full h-max">
-      <form id="product-form"   enctype="multipart/form-data">
+        <span id="id-admin-change" class="hidden">{{admin.data._id}}</span>
+      <form id="product-form" enctype="multipart/form-data">
          <div class="flex gap-2">
             <div class="flex gap-2 flex-col w-6/12">
                <input type="text" name="title" id="title-input" placeholder="Titulo de producto" class="border-none outline-none text-black px-4 py-2" value="{{admin.product.title}}" />
@@ -52,6 +53,8 @@
    </section>
 </aside>
 <script type="module">
+    const uid = document.getElementById("id-admin-change").innerText;
+    console.log(uid);
 	function createInputs(){
       document.getElementById("photos-input").innerHTML = ""
       for (let i = 0; i < 4; i++) {
@@ -88,6 +91,7 @@
     const formData = new FormData(document.getElementById("product-form"));
     const formElements = document.getElementById("product-form").elements;
     const productId = new URLSearchParams(window.location.search).get("pid");
+    formData.append("owner", uid);
     try {
         const response = await fetch(`/api/products/${productId}`, {
             method: "PUT",
@@ -108,7 +112,7 @@
 	document.getElementById("submit-post")?.addEventListener("click", async (event) => {
         const formData = new FormData(document.getElementById("product-form"));
         const formElements = document.getElementById("product-form").elements;
-
+        formData.append("owner", uid);
         try {
             const response = await fetch(`/api/products/`, {
                 method: "POST",

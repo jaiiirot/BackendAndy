@@ -28,11 +28,13 @@ const PanelProducts = async (req, res) => {
 	try {
 		let products;
 		const action = req.query.action;
+		// console.log(req.infoUser);
 		if (action === "agregar") {
 			res.render("components/admin/actionprod", {
 				layout: "admin",
 				admin: {
 					title: "Panel | Agregar",
+					data: req.user,
 					...req.infoUser,
 				},
 			});
@@ -44,6 +46,7 @@ const PanelProducts = async (req, res) => {
 				admin: {
 					title: "Panel | Editar",
 					product: products,
+					data: req.user,
 					...req.infoUser,
 					exist_product: true,
 				},
@@ -108,7 +111,8 @@ const PanelMessages = async (req, res) => {
 
 const PanelUsers = async (req, res) => {
 	try {
-		const users = await usersService.getAll();
+		const query = { password: 0, lastConnection: 0, __v: 0 };
+		const users = await usersService.getAllCondition(query);
 		const usersWithRoleString = users.map(user => {
 			return { ...user, roleString: user.role };
 		});

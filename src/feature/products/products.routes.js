@@ -1,6 +1,6 @@
 import { authorization } from "../../middlewares/authorization.js";
 import { authentication } from "../../middlewares/authencations.js";
-import { upload } from "../../services/upload.js";
+import { handleFileUploadAndSave } from "../../services/upload.js";
 import { controllersProducts } from "./products.controller.js";
 import express from "express";
 const router = express.Router();
@@ -16,7 +16,7 @@ router.post(
 	"/",
 	authentication,
 	authorization(["ADMIN"]),
-	upload.array("photo", 4),
+	handleFileUploadAndSave,
 	controllersProducts.postProduct
 );
 
@@ -31,7 +31,7 @@ router.put(
 	"/:pid",
 	authentication,
 	authorization(["ADMIN"]),
-	upload.array("photo", 4),
+	handleFileUploadAndSave,
 	controllersProducts.putProduct
 );
 

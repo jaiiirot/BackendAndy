@@ -11,5 +11,6 @@ export default class ProductsDTO {
 		this.genre = product.genre || " ";
 		this.category = product.category || [];
 		this.photo = product.photo || [];
+		this.owner = product.owner || "0a0a0a0a0a0a0a000a0a0a";
 	}
 }

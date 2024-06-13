@@ -9,6 +9,18 @@ export default class UsersRepository {
 		this.messageDao = messageDao;
 	}
 
+	getAllCondition = async query => {
+		try {
+			logger.info("🔍 Buscando todos los productos");
+			const products = await this.dao.getAllCondition(query);
+			logger.info("🛍️ Todos los productos obtenidos correctamente");
+			return products;
+		} catch (error) {
+			logger.error("🔴 Error al obtener todos los productos:", error);
+			throw error;
+		}
+	};
+
 	getAll = async (query, options) => {
 		try {
 			const users = await this.dao.getAll(query, options);
@@ -63,6 +75,29 @@ export default class UsersRepository {
 			return newUser;
 		} catch (error) {
 			logger.error("🔴 Error al crear un nuevo usuario:", error);
+			throw error;
+		}
+	};
+
+	postDocument = async (uid, file) => {
+		try {
+			const user = await this.dao.getById(uid);
+			if (!user) {
+				logger.warning(`⚠️ Usuario no encontrado para el ID ${uid}`);
+				return { msg: "Usuario no encontrado" };
+			} else {
+				const document = await this.dao.postDocument(uid, file);
+				await this.putRole(uid, "PREMIUM");
+				logger.info(
+					`📄 Documento subido correctamente para el usuario con ID ${uid}`
+				);
+				return document;
+			}
+		} catch (error) {
+			logger.error(
+				`🔴 Error al subir documento para el usuario con ID ${uid}:`,
+				error
+			);
 			throw error;
 		}
 	};

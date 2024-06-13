@@ -79,12 +79,13 @@
 			cancelButtonText: 'Cancelar'
 		}).then(async (result) => {
 			if (!result.isConfirmed) return;
-			await fetch(`/api/products/${id}`, {
+			const res = await fetch(`/api/products/${id}`, {
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",
 				},
 			})
+			window.location.reload();
 		});
 	};
 </script>

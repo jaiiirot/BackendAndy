@@ -1,10 +1,46 @@
 import { usersService } from "./repository/users.service.js";
 import { logger } from "../../utils/logger/logger.js";
 
-const putUser = async (req, res) => {
+const postDocument = async (req, res) => {
+	try {
+		logger.info(
+			`📄 Subiendo documento para el usuario con ID ${req.params.uid}`
+		);
+		const user = await usersService.postDocument(req.params.uid, req.files);
+		if (user) {
+			logger.info("✅ Documento subido correctamente");
+			res.status(200).json({ msg: "Documento subido correctamente" });
+		} else {
+			logger.error("🔴 Error al subir el documento");
+			res.status(400).json({ msg: "Error al subir el documento" });
+		}
+	} catch (error) {
+		logger.error("🔴 Error al subir el documento:", error);
+		res.status(500).json({ msg: "Error interno del servidor" });
+	}
+};
+
+const putUserRole = async (req, res) => {
 	try {
 		logger.info(`🔄 Actualizando usuario con ID ${req.params.uid}`);
 		const user = await usersService.putRole(req.params.uid, req.body.role);
+		if (user) {
+			logger.info("✅ Usuario actualizado correctamente");
+			res.status(200).json({ msg: "Usuario actualizado correctamente" });
+		} else {
+			logger.error("🔴 Error al actualizar el usuario");
+			res.status(400).json({ msg: "Error al actualizar el usuario" });
+		}
+	} catch (error) {
+		logger.error("🔴 Error al actualizar el usuario:", error);
+		res.status(500).json({ msg: "Error interno del servidor" });
+	}
+};
+
+const putUserProfile = async (req, res) => {
+	try {
+		logger.info(`🔄 Actualizando usuario con ID ${req.params.uid}`);
+		const user = await usersService.putProfile(req.params.uid, req.body);
 		if (user) {
 			logger.info("✅ Usuario actualizado correctamente");
 			res.status(200).json({ msg: "Usuario actualizado correctamente" });
@@ -38,9 +74,8 @@ const deleteUser = async (req, res) => {
 const getAllUsersCondition = async (req, res) => {
 	try {
 		logger.info("🔍 Buscando usuarios");
-		// GET  /  deberá obtener todos los usuarios, éste sólo debe devolver los datos principales como nombre, correo, tipo de cuenta (rol)
-		const users = await usersService.getAllCondition();
-		// const users = await usersService.getAll(req.query);
+		const query = { password: 0, lastConnection: 0, __v: 0, _id: 0 };
+		const users = await usersService.getAllCondition(query);
 		if (users) {
 			logger.info("✅ Usuarios encontrados");
 			res.status(200).json(users);
@@ -52,10 +87,12 @@ const getAllUsersCondition = async (req, res) => {
 		logger.error("🔴 Error al buscar usuarios:", error);
 		res.status(500).json({ msg: "Error interno del servidor" });
 	}
-}
+};
 
 export const controllerUsers = {
-	putUser,
+	postDocument,
+	putUserRole,
+	putUserProfile,
 	deleteUser,
-	getAllUsersCondition
+	getAllUsersCondition,
 };
