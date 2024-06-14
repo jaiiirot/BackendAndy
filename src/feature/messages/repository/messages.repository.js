@@ -14,10 +14,10 @@ export default class MessagesRepository {
 	async post(data) {
 		try {
 			const result = await this.dao.addMessage(data);
-			logger.info("📩 Mensaje agregado exitosamente:", result);
+			logger.info("R: 📩 Mensaje agregado exitosamente:", result);
 			return result;
 		} catch (error) {
-			logger.error("⚠️ Error al agregar mensaje:", error);
+			logger.error("R: ⚠️ Error al agregar mensaje:", error);
 			throw error;
 		}
 	}
@@ -25,10 +25,10 @@ export default class MessagesRepository {
 	async getAll() {
 		try {
 			const result = await this.dao.getAll();
-			logger.info("📄 Todos los mensajes obtenidos exitosamente.");
+			logger.info("R: 📄 Todos los mensajes obtenidos exitosamente.");
 			return result;
 		} catch (error) {
-			logger.error("⚠️ Error al obtener todos los mensajes:", error);
+			logger.error("R: ⚠️ Error al obtener todos los mensajes:", error);
 			throw error;
 		}
 	}
@@ -36,10 +36,10 @@ export default class MessagesRepository {
 	async getById(mid) {
 		try {
 			const result = await this.dao.getById(mid);
-			logger.info(`📄 Mensaje con ID ${mid} obtenido exitosamente.`);
+			logger.info(`R: 📄 Mensaje con ID ${mid} obtenido exitosamente.`);
 			return result;
 		} catch (error) {
-			logger.error(`⚠️ Error al obtener mensaje con ID ${mid}:`, error);
+			logger.error(`R: ⚠️ Error al obtener mensaje con ID ${mid}:`, error);
 			throw error;
 		}
 	}
@@ -47,10 +47,10 @@ export default class MessagesRepository {
 	async getChatById(mid) {
 		try {
 			const chat = await this.dao.getById(mid);
-			logger.info(`💬 Chat con ID ${mid} obtenido exitosamente.`);
+			logger.info(`R: 💬 Chat con ID ${mid} obtenido exitosamente.`);
 			return chat.messages;
 		} catch (error) {
-			logger.error(`⚠️ Error al obtener chat con ID ${mid}:`, error);
+			logger.error(`R: ⚠️ Error al obtener chat con ID ${mid}:`, error);
 			throw error;
 		}
 	}
@@ -58,10 +58,10 @@ export default class MessagesRepository {
 	async postAddMessageInChat(id, role, message) {
 		try {
 			const result = await this.dao.postMessage(id, role, message);
-			logger.info("📩 Mensaje agregado en el chat exitosamente:", result);
+			logger.info("R: 📩 Mensaje agregado en el chat exitosamente:", result);
 			return result;
 		} catch (error) {
-			logger.error("⚠️ Error al agregar mensaje en el chat:", error);
+			logger.error("R: ⚠️ Error al agregar mensaje en el chat:", error);
 			throw error;
 		}
 	}
@@ -69,10 +69,10 @@ export default class MessagesRepository {
 	async delete(mid) {
 		try {
 			const result = await this.dao.delete(mid);
-			logger.info(`🗑️ Mensaje con ID ${mid} eliminado exitosamente.`);
+			logger.info(`R: 🗑️ Mensaje con ID ${mid} eliminado exitosamente.`);
 			return result;
 		} catch (error) {
-			logger.error(`⚠️ Error al eliminar mensaje con ID ${mid}:`, error);
+			logger.error(`R: ⚠️ Error al eliminar mensaje con ID ${mid}:`, error);
 			throw error;
 		}
 	}
@@ -81,12 +81,12 @@ export default class MessagesRepository {
 		try {
 			const result = await this.dao.deleteClearMessage(messageId);
 			logger.info(
-				`🗑️ Mensaje en chat con ID ${messageId} eliminado exitosamente.`
+				`R: 🗑️ Mensaje en chat con ID ${messageId} eliminado exitosamente.`
 			);
 			return result;
 		} catch (error) {
 			logger.error(
-				`⚠️ Error al eliminar mensaje en chat con ID ${messageId}:`,
+				`R: ⚠️ Error al eliminar mensaje en chat con ID ${messageId}:`,
 				error
 			);
 			throw error;
@@ -102,11 +102,13 @@ export default class MessagesRepository {
 				"Recuperar contraseña",
 				emailResetPassword(hostANDport, email, datatoken.token)
 			);
-			logger.info(`📧 Correo de recuperación enviado a ${email} exitosamente.`);
+			logger.info(
+				`R: 📧 Correo de recuperación enviado a ${email} exitosamente.`
+			);
 			return { datatoken, email };
 		} catch (error) {
 			logger.error(
-				`⚠️ Error al enviar correo de recuperación a ${email}:`,
+				`R: ⚠️ Error al enviar correo de recuperación a ${email}:`,
 				error
 			);
 			throw error;
@@ -122,11 +124,11 @@ export default class MessagesRepository {
 				emailPurchaseConfirmation(hostANDport, email, codeTicket, products)
 			);
 			logger.info(
-				`📧 Correo de confirmación de compra enviado a ${email} exitosamente.`
+				`R: 📧 Correo de confirmación de compra enviado a ${email} exitosamente.`
 			);
 		} catch (error) {
 			logger.error(
-				`⚠️ Error al enviar correo de confirmación de compra a ${email}:`,
+				`R: ⚠️ Error al enviar correo de confirmación de compra a ${email}:`,
 				error
 			);
 			throw error;
@@ -142,11 +144,11 @@ export default class MessagesRepository {
 				emailPasswordChangeConfirmation("localhost:8080", username)
 			);
 			logger.info(
-				`📧 Correo de confirmación de contraseña enviado a ${email}.`
+				`R: 📧 Correo de confirmación de contraseña enviado a ${email}.`
 			);
 		} catch (error) {
 			logger.error(
-				`⚠️ Error al enviar correo de confirmación de contraseña a ${email}:`,
+				`R: ⚠️ Error al enviar correo de confirmación de contraseña a ${email}:`,
 				error
 			);
 			throw error;

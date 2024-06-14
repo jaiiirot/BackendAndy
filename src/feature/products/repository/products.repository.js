@@ -10,46 +10,46 @@ export default class ProductRepository {
 	getAll = async (query, options) => {
 		try {
 			logger.info(
-				"🔍 Buscando todos los productos con los parámetros proporcionados"
+				"R: 🔍 Buscando todos los productos con los parámetros proporcionados"
 			);
 			const products = await this.dao.getAll(query, options);
-			logger.info("🛍️ Todos los productos obtenidos correctamente");
+			logger.info("R: 🛍️ Todos los productos obtenidos correctamente");
 			return products;
 		} catch (error) {
-			logger.error("🔴 Error al obtener todos los productos:", error);
+			logger.error("R: 🔴 Error al obtener todos los productos:", error);
 			throw error;
 		}
 	};
 
 	getById = async id => {
 		try {
-			logger.info(`🔍 Buscando producto con ID ${id}`);
+			logger.info(`R: 🔍 Buscando producto con ID ${id}`);
 			const product = await this.dao.getById(id);
 			product.description = product.description.replace(/<br>/g, "\n");
-			logger.info(`📦 Producto con ID ${id} obtenido correctamente`);
+			logger.info(`R: 📦 Producto con ID ${id} obtenido correctamente`);
 			return product;
 		} catch (error) {
-			logger.error(`🔴 Error al obtener producto por ID ${id}:`, error);
+			logger.error(`R: 🔴 Error al obtener producto por ID ${id}:`, error);
 			throw error;
 		}
 	};
 
 	get = async id => {
 		try {
-			logger.info(`🔍 Buscando producto con ID ${id}`);
+			logger.info(`R: 🔍 Buscando producto con ID ${id}`);
 			const product = await this.dao.getById(id);
 			product.description = product.description.replace(/<br>/g, "\n");
-			logger.info(`📦 Producto con ID ${id} obtenido correctamente`);
+			logger.info(`R: 📦 Producto con ID ${id} obtenido correctamente`);
 			return product;
 		} catch (error) {
-			logger.error(`🔴 Error al obtener producto por ID ${id}:`, error);
+			logger.error(`R: 🔴 Error al obtener producto por ID ${id}:`, error);
 			throw error;
 		}
 	};
 
 	post = async (data, photoFiles) => {
 		try {
-			logger.info("➕ Añadiendo un nuevo producto");
+			logger.info("R: ➕ Añadiendo un nuevo producto");
 			let photos = [];
 			data.status = data.status === "on";
 			data.promocion = data.promocion === "on";
@@ -68,17 +68,17 @@ export default class ProductRepository {
 			data.photo = photos;
 			const newProduct = new ProductDTO(data);
 			const result = await this.dao.addProduct(newProduct);
-			logger.info("🆕 Nuevo producto agregado correctamente");
+			logger.info("R: 🆕 Nuevo producto agregado correctamente");
 			return result;
 		} catch (error) {
-			logger.error("🔴 Error al agregar un nuevo producto:", error);
+			logger.error("R: 🔴 Error al agregar un nuevo producto:", error);
 			throw error;
 		}
 	};
 
 	put = async (id, data, photoFiles) => {
 		try {
-			logger.info(`🔄 Actualizando producto con ID ${id}`);
+			logger.info(`R: 🔄 Actualizando producto con ID ${id}`);
 			let photos = [];
 			let condition = false;
 			data.status = data.status === "on";
@@ -118,17 +118,20 @@ export default class ProductRepository {
 			data.photo = photos;
 			const result = new ProductDTO(data);
 			const updatedProduct = await this.dao.updateProduct(id, result);
-			logger.info(`🔄 Producto con ID ${id} actualizado correctamente`);
+			logger.info(`R: 🔄 Producto con ID ${id} actualizado correctamente`);
 			return updatedProduct;
 		} catch (error) {
-			logger.error(`🔴 Error al actualizar el producto con ID ${id}:`, error);
+			logger.error(
+				`R: 🔴 Error al actualizar el producto con ID ${id}:`,
+				error
+			);
 			throw error;
 		}
 	};
 
 	delete = async id => {
 		try {
-			logger.info(`🗑️ Eliminando producto con ID ${id}`);
+			logger.info(`R: 🗑️ Eliminando producto con ID ${id}`);
 			const photoUrls = await this.dao.getById(id);
 			await Promise.all(
 				photoUrls.photo.map(async element => {
@@ -136,22 +139,22 @@ export default class ProductRepository {
 				})
 			);
 			const result = await this.dao.deleteProduct(id);
-			logger.info(`🗑️ Producto con ID ${id} eliminado correctamente`);
+			logger.info(`R: 🗑️ Producto con ID ${id} eliminado correctamente`);
 			return result;
 		} catch (error) {
-			logger.error(`🔴 Error al eliminar el producto con ID ${id}:`, error);
+			logger.error(`R: 🔴 Error al eliminar el producto con ID ${id}:`, error);
 			throw error;
 		}
 	};
 
 	insertMany = async data => {
 		try {
-			logger.info("➕ Añadiendo varios productos");
+			logger.info("R: ➕ Añadiendo varios productos");
 			const result = await this.dao.insertMany(data);
-			logger.info("🆕 Varios productos agregados correctamente");
+			logger.info("R: 🆕 Varios productos agregados correctamente");
 			return result;
 		} catch (error) {
-			logger.error("🔴 Error al agregar varios productos:", error);
+			logger.error("R: 🔴 Error al agregar varios productos:", error);
 			throw error;
 		}
 	};

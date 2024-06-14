@@ -14,35 +14,35 @@ router.get("/inicio", controllersViewClient.RedirectHome);
 router.get(
 	"/",
 	authentication,
-	authorization(["CLIENT", "USER"]),
+	authorization(["CLIENT", "USER", "PREMIUM"]),
 	controllersViewClient.Home
 );
 
 router.get(
 	"/productos/",
 	authentication,
-	authorization(["CLIENT", "USER"]),
+	authorization(["CLIENT", "USER", "PREMIUM"]),
 	controllersViewClient.Products
 );
 
 router.get(
 	"/productos/:section",
 	authentication,
-	authorization(["CLIENT", "USER"]),
+	authorization(["CLIENT", "USER", "PREMIUM"]),
 	controllersViewClient.ProductsSection
 );
 
 router.get(
 	"/productos/:section/:id",
 	authentication,
-	authorization(["CLIENT", "USER"]),
+	authorization(["CLIENT", "USER", "PREMIUM"]),
 	controllersViewClient.ProductDetail
 );
 
 router.get(
 	"/pedidos",
 	authentication,
-	authorization(["CLIENT"]),
+	authorization(["CLIENT", "PREMIUM"]),
 	controllersViewClient.Tickets
 );
 
@@ -56,7 +56,7 @@ router.get(
 router.get(
 	"/carrito/:cid/purchase",
 	authentication,
-	authorization(["CLIENT"]),
+	authorization(["CLIENT", "PREMIUM"]),
 	controllersViewClient.CardID
 );
 

@@ -6,7 +6,7 @@ export default class ProductsDAO {
 		try {
 			return await Products.insertMany(products);
 		} catch (error) {
-			logger.error("🔴 Error al insertar varios productos:", error);
+			logger.error("D: 🔴 Error al insertar varios productos:", error);
 			throw error;
 		}
 	}
@@ -16,7 +16,7 @@ export default class ProductsDAO {
 			// console.log(query, options);
 			return await Products.paginate(query, { ...options, lean: true });
 		} catch (error) {
-			logger.error("🔴 Error al obtener todos los productos:", error);
+			logger.error("D: 🔴 Error al obtener todos los productos:", error);
 			throw error;
 		}
 	}
@@ -26,7 +26,10 @@ export default class ProductsDAO {
 			limit = limit || 25;
 			return await Products.paginate(query, { limit, lean: true });
 		} catch (error) {
-			logger.error(`🔴 Error al obtener productos con límite ${limit}:`, error);
+			logger.error(
+				`D: 🔴 Error al obtener productos con límite ${limit}:`,
+				error
+			);
 			throw error;
 		}
 	}
@@ -39,7 +42,7 @@ export default class ProductsDAO {
 			);
 		} catch (error) {
 			logger.error(
-				`🔴 Error al obtener productos por categoría ${categorys}:`,
+				`D: 🔴 Error al obtener productos por categoría ${categorys}:`,
 				error
 			);
 			throw error;
@@ -51,7 +54,7 @@ export default class ProductsDAO {
 			return await Products.paginate({ promocion }, { limit: 25, lean: true });
 		} catch (error) {
 			logger.error(
-				`🔴 Error al obtener productos por promocion ${promocion}:`,
+				`D: 🔴 Error al obtener productos por promocion ${promocion}:`,
 				error
 			);
 			throw error;
@@ -63,7 +66,7 @@ export default class ProductsDAO {
 			return await Products.findById(id, { stock: 1 }).lean();
 		} catch (error) {
 			logger.error(
-				`🔴 Error al obtener stock de producto con ID ${id}:`,
+				`D: 🔴 Error al obtener stock de producto con ID ${id}:`,
 				error
 			);
 			throw error;
@@ -74,7 +77,7 @@ export default class ProductsDAO {
 		try {
 			return await Products.findOne({ _id: id }).lean();
 		} catch (error) {
-			logger.error(`🔴 Error al obtener producto con ID ${id}:`, error);
+			logger.error(`D: 🔴 Error al obtener producto con ID ${id}:`, error);
 			throw error;
 		}
 	}
@@ -101,7 +104,7 @@ export default class ProductsDAO {
 			return updatedProduct;
 		} catch (error) {
 			logger.error(
-				`🔴 Error al actualizar stock de producto con ID ${id}:`,
+				`D: 🔴 Error al actualizar stock de producto con ID ${id}:`,
 				error
 			);
 			throw error;
@@ -112,7 +115,7 @@ export default class ProductsDAO {
 		try {
 			return await Products.create(product);
 		} catch (error) {
-			logger.error("🔴 Error al agregar un producto:", error);
+			logger.error("D: 🔴 Error al agregar un producto:", error);
 			throw error;
 		}
 	}
@@ -121,7 +124,7 @@ export default class ProductsDAO {
 		try {
 			return await Products.findByIdAndDelete(id);
 		} catch (error) {
-			logger.error(`🔴 Error al eliminar producto con ID ${id}:`, error);
+			logger.error(`D: 🔴 Error al eliminar producto con ID ${id}:`, error);
 			throw error;
 		}
 	}
@@ -132,7 +135,7 @@ export default class ProductsDAO {
 				new: true,
 			}).lean();
 		} catch (error) {
-			logger.error(`🔴 Error al actualizar producto con ID ${id}:`, error);
+			logger.error(`D: 🔴 Error al actualizar producto con ID ${id}:`, error);
 			throw error;
 		}
 	}

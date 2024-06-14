@@ -6,7 +6,7 @@ export default class MessagesDAO {
 		try {
 			return await Messages.find().lean();
 		} catch (error) {
-			logger.error("🔴 Error al obtener todos los mensajes:", error);
+			logger.error("D: 🔴 Error al obtener todos los mensajes:", error);
 			throw error;
 		}
 	}
@@ -15,7 +15,7 @@ export default class MessagesDAO {
 		try {
 			return await Messages.findById(mid);
 		} catch (error) {
-			logger.error("🔴 Error al obtener mensaje por id:", error);
+			logger.error("D: 🔴 Error al obtener mensaje por id:", error);
 			throw error;
 		}
 	}
@@ -25,7 +25,7 @@ export default class MessagesDAO {
 			const message = new Messages({ messages: [], user: data });
 			return await message.save();
 		} catch (error) {
-			logger.error("🔴 Error al agregar un mensaje:", error);
+			logger.error("D: 🔴 Error al agregar un mensaje:", error);
 			throw error;
 		}
 	}
@@ -44,7 +44,7 @@ export default class MessagesDAO {
 				throw new Error("Chat no encontrado");
 			}
 		} catch (error) {
-			logger.error("🔴 Error al agregar un mensaje:", error);
+			logger.error("D: 🔴 Error al agregar un mensaje:", error);
 			throw error;
 		}
 	}
@@ -53,7 +53,7 @@ export default class MessagesDAO {
 		try {
 			return await Messages.find();
 		} catch (error) {
-			logger.error("🔴 Error al obtener todos los mensajes:", error);
+			logger.error("D: 🔴 Error al obtener todos los mensajes:", error);
 			throw error;
 		}
 	}
@@ -62,7 +62,7 @@ export default class MessagesDAO {
 		try {
 			return await Messages.findByIdAndDelete(mid);
 		} catch (error) {
-			logger.error("🔴 Error al eliminar mensaje por id:", error);
+			logger.error("D: 🔴 Error al eliminar mensaje por id:", error);
 			throw error;
 		}
 	}
@@ -74,7 +74,7 @@ export default class MessagesDAO {
 				await Messages.updateOne({ _id: mid }, { $pull: { messages: [] } });
 			}
 		} catch (error) {
-			logger.error("🔴 Error al eliminar un mensaje:", error);
+			logger.error("D: 🔴 Error al eliminar un mensaje:", error);
 			throw error;
 		}
 	}

@@ -18,7 +18,7 @@ export const authorization = (ROLE = []) => {
 						email: req.user.email,
 					},
 				};
-			} else if (role === "CLIENT") {
+			} else if (role === "CLIENT" || role === "PREMIUM") {
 				req.infoUser = {
 					exist: true,
 					info: {

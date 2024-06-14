@@ -11,10 +11,10 @@ export default class CartRepository {
 	getAll = async (query, options) => {
 		try {
 			const carts = await this.dao.getAll(query, options);
-			logger.info("🛒 Todos los carros obtenidos correctamente");
+			logger.info("R: 🛒 Todos los carros obtenidos correctamente");
 			return carts;
 		} catch (error) {
-			logger.error("❌ Error al obtener todos los carros", error);
+			logger.error("R: ❌ Error al obtener todos los carros", error);
 			throw error;
 		}
 	};
@@ -22,10 +22,10 @@ export default class CartRepository {
 	getById = async id => {
 		try {
 			const cart = await this.dao.getById(id);
-			logger.info(`🛒 Carro con ID ${id} obtenido correctamente`);
+			logger.info(`R: 🛒 Carro con ID ${id} obtenido correctamente`);
 			return cart;
 		} catch (error) {
-			logger.error(`❌ Error al obtener el carro con ID ${id}`, error);
+			logger.error(`R: ❌ Error al obtener el carro con ID ${id}`, error);
 			throw error;
 		}
 	};
@@ -33,15 +33,10 @@ export default class CartRepository {
 	getProductToCart = async (cartId, productId) => {
 		try {
 			const product = await this.dao.getProductToCart(cartId, productId);
-			logger.info(
-				`🛒 Producto con ID ${productId} en el carro con ID ${cartId} obtenido correctamente`
-			);
+			logger.info(`R: 🛒 Producto con ID ${productId} en el carro con ID ${cartId} obtenido correctamente`);
 			return product;
 		} catch (error) {
-			logger.error(
-				`❌ Error al obtener el producto con ID ${productId} en el carro con ID ${cartId}`,
-				error
-			);
+			logger.error(`R: ❌ Error al obtener el producto con ID ${productId} en el carro con ID ${cartId}`, error);
 			throw error;
 		}
 	};
@@ -49,10 +44,10 @@ export default class CartRepository {
 	getByIdPopulate = async id => {
 		try {
 			const cart = await this.dao.getByIdPopulate(id);
-			logger.info(`🛒 Carro con ID ${id} obtenido y poblado correctamente`);
+			logger.info(`R: 🛒 Carro con ID ${id} obtenido y poblado correctamente`);
 			return cart;
 		} catch (error) {
-			logger.error(`❌ Error al obtener y poblar el carro con ID ${id}`, error);
+			logger.error(`R: ❌ Error al obtener y poblar el carro con ID ${id}`, error);
 			throw error;
 		}
 	};
@@ -83,15 +78,10 @@ export default class CartRepository {
 				});
 				await this.dao.deleteCart(cid);
 			}
-			logger.info(
-				`🛒 Compra realizada correctamente para el carro con ID ${cid}`
-			);
+			logger.info(`R: 🛒 Compra realizada correctamente para el carro con ID ${cid}`);
 			return result;
 		} catch (error) {
-			logger.error(
-				`❌ Error al realizar la compra para el carro con ID ${cid}`,
-				error
-			);
+			logger.error(`R: ❌ Error al realizar la compra para el carro con ID ${cid}`, error);
 			throw error;
 		}
 	};
@@ -99,10 +89,10 @@ export default class CartRepository {
 	post = async cart => {
 		try {
 			const newCart = await this.dao.addCart(cart);
-			logger.info("🛒 Nuevo carro agregado correctamente");
+			logger.info("R: 🛒 Nuevo carro agregado correctamente");
 			return newCart;
 		} catch (error) {
-			logger.error("❌ Error al agregar un nuevo carro", error);
+			logger.error("R: ❌ Error al agregar un nuevo carro", error);
 			throw error;
 		}
 	};
@@ -110,14 +100,9 @@ export default class CartRepository {
 	postAddProductToCart = async (cartId, productId) => {
 		try {
 			await this.dao.CartAddProduct(cartId, productId);
-			logger.info(
-				`🛒 Producto con ID ${productId} añadido al carro con ID ${cartId} correctamente`
-			);
+			logger.info(`R: 🛒 Producto con ID ${productId} añadido al carro con ID ${cartId} correctamente`);
 		} catch (error) {
-			logger.error(
-				`❌ Error al añadir el producto con ID ${productId} al carro con ID ${cartId}`,
-				error
-			);
+			logger.error(`R: ❌ Error al añadir el producto con ID ${productId} al carro con ID ${cartId}`, error);
 			throw error;
 		}
 	};
@@ -125,10 +110,10 @@ export default class CartRepository {
 	put = async (id, data) => {
 		try {
 			const updatedCart = await this.dao.updateCart(id, data);
-			logger.info(`🛒 Carro con ID ${id} actualizado correctamente`);
+			logger.info(`R: 🛒 Carro con ID ${id} actualizado correctamente`);
 			return updatedCart;
 		} catch (error) {
-			logger.error(`❌ Error al actualizar el carro con ID ${id}`, error);
+			logger.error(`R: ❌ Error al actualizar el carro con ID ${id}`, error);
 			throw error;
 		}
 	};
@@ -136,14 +121,9 @@ export default class CartRepository {
 	putUpdateProductInCart = async (cartId, productId, action) => {
 		try {
 			await this.dao.CartUpdateProduct(cartId, productId, action);
-			logger.info(
-				`🛒 Producto con ID ${productId} en el carro con ID ${cartId} actualizado correctamente`
-			);
+			logger.info(`R: 🛒 Producto con ID ${productId} en el carro con ID ${cartId} actualizado correctamente`);
 		} catch (error) {
-			logger.error(
-				`❌ Error al actualizar el producto con ID ${productId} en el carro con ID ${cartId}`,
-				error
-			);
+			logger.error(`R: ❌ Error al actualizar el producto con ID ${productId} en el carro con ID ${cartId}`, error);
 			throw error;
 		}
 	};
@@ -151,10 +131,10 @@ export default class CartRepository {
 	delete = async id => {
 		try {
 			const deletedCart = await this.dao.deleteCart(id);
-			logger.info(`🛒 Carro con ID ${id} eliminado correctamente`);
+			logger.info(`R: 🛒 Carro con ID ${id} eliminado correctamente`);
 			return deletedCart;
 		} catch (error) {
-			logger.error(`❌ Error al eliminar el carro con ID ${id}`, error);
+			logger.error(`R: ❌ Error al eliminar el carro con ID ${id}`, error);
 			throw error;
 		}
 	};
@@ -162,14 +142,9 @@ export default class CartRepository {
 	deleteProductInCart = async (cartId, productId) => {
 		try {
 			await this.dao.CartDeleteProduct(cartId, productId);
-			logger.info(
-				`🛒 Producto con ID ${productId} eliminado del carro con ID ${cartId} correctamente`
-			);
+			logger.info(`R: 🛒 Producto con ID ${productId} eliminado del carro con ID ${cartId} correctamente`);
 		} catch (error) {
-			logger.error(
-				`❌ Error al eliminar el producto con ID ${productId} del carro con ID ${cartId}`,
-				error
-			);
+			logger.error(`R: ❌ Error al eliminar el producto con ID ${productId} del carro con ID ${cartId}`, error);
 			throw error;
 		}
 	};

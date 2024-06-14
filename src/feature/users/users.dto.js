@@ -1,7 +1,7 @@
 export default class UsersDTO {
 	constructor(data) {
 		this.username = data.username || "";
-		this.photo_user = data.photo_user || "";
+		this.photo_user = data.photo_user || "/image/sinavatar.png";
 		this.first_name = data.first_name || "";
 		this.last_name = data.last_name || "";
 		this.email = data.email || "";

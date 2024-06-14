@@ -11,12 +11,12 @@ export default class UsersRepository {
 
 	getAllCondition = async query => {
 		try {
-			logger.info("🔍 Buscando todos los productos");
+			logger.info("R: 🔍 Buscando todos los productos");
 			const products = await this.dao.getAllCondition(query);
-			logger.info("🛍️ Todos los productos obtenidos correctamente");
+			logger.info("R: 🛍️ Todos los productos obtenidos correctamente");
 			return products;
 		} catch (error) {
-			logger.error("🔴 Error al obtener todos los productos:", error);
+			logger.error("R: 🔴 Error al obtener todos los productos:", error);
 			throw error;
 		}
 	};
@@ -24,10 +24,10 @@ export default class UsersRepository {
 	getAll = async (query, options) => {
 		try {
 			const users = await this.dao.getAll(query, options);
-			logger.info("👥 Todos los usuarios obtenidos correctamente");
+			logger.info("R: 👥 Todos los usuarios obtenidos correctamente");
 			return users;
 		} catch (error) {
-			logger.error("🔴 Error al obtener todos los usuarios:", error);
+			logger.error("R: 🔴 Error al obtener todos los usuarios:", error);
 			throw error;
 		}
 	};
@@ -35,10 +35,10 @@ export default class UsersRepository {
 	getById = async id => {
 		try {
 			const user = await this.dao.getById(id);
-			logger.info(`👤 Usuario con ID ${id} obtenido correctamente`);
+			logger.info(`R: 👤 Usuario con ID ${id} obtenido correctamente`);
 			return user;
 		} catch (error) {
-			logger.error(`🔴 Error al obtener usuario por ID ${id}:`, error);
+			logger.error(`R: 🔴 Error al obtener usuario por ID ${id}:`, error);
 			throw error;
 		}
 	};
@@ -46,10 +46,10 @@ export default class UsersRepository {
 	getByEmail = async email => {
 		try {
 			const user = await this.dao.getByEmail(email);
-			logger.info(`📧 Usuario con email ${email} obtenido correctamente`);
+			logger.info(`R: 📧 Usuario con email ${email} obtenido correctamente`);
 			return user;
 		} catch (error) {
-			logger.error("🔴 Error al obtener usuario por email:", error);
+			logger.error("R: 🔴 Error al obtener usuario por email:", error);
 			throw error;
 		}
 	};
@@ -57,11 +57,13 @@ export default class UsersRepository {
 	getByEmailAndPassword = async data => {
 		try {
 			const user = await this.dao.getByEmailAndPassword(data);
-			logger.info(`🔑 Usuario obtenido por email y contraseña correctamente`);
+			logger.info(
+				"R: 🔑 Usuario obtenido por email y contraseña correctamente"
+			);
 			return user;
 		} catch (error) {
 			logger.error(
-				"🔴 Error al obtener usuario por email y contraseña:",
+				"R: 🔴 Error al obtener usuario por email y contraseña:",
 				error
 			);
 			throw error;
@@ -71,10 +73,10 @@ export default class UsersRepository {
 	post = async data => {
 		try {
 			const newUser = await this.dao.postUser(data);
-			logger.info("🆕 Nuevo usuario creado correctamente");
+			logger.info("R: 🆕 Nuevo usuario creado correctamente");
 			return newUser;
 		} catch (error) {
-			logger.error("🔴 Error al crear un nuevo usuario:", error);
+			logger.error("R: 🔴 Error al crear un nuevo usuario:", error);
 			throw error;
 		}
 	};
@@ -83,19 +85,19 @@ export default class UsersRepository {
 		try {
 			const user = await this.dao.getById(uid);
 			if (!user) {
-				logger.warning(`⚠️ Usuario no encontrado para el ID ${uid}`);
+				logger.warning(`R: ⚠️ Usuario no encontrado para el ID ${uid}`);
 				return { msg: "Usuario no encontrado" };
 			} else {
 				const document = await this.dao.postDocument(uid, file);
 				await this.putRole(uid, "PREMIUM");
 				logger.info(
-					`📄 Documento subido correctamente para el usuario con ID ${uid}`
+					`R: 📄 Documento subido correctamente para el usuario con ID ${uid}`
 				);
 				return document;
 			}
 		} catch (error) {
 			logger.error(
-				`🔴 Error al subir documento para el usuario con ID ${uid}:`,
+				`R: 🔴 Error al subir documento para el usuario con ID ${uid}:`,
 				error
 			);
 			throw error;
@@ -105,10 +107,10 @@ export default class UsersRepository {
 	put = async (id, data) => {
 		try {
 			const user = await this.dao.putUser(id, data);
-			logger.info(`♻️ Usuario con ID ${id} actualizado correctamente`);
+			logger.info(`R: ♻️ Usuario con ID ${id} actualizado correctamente`);
 			return user;
 		} catch (error) {
-			logger.error(`🔴 Error al actualizar usuario por ID ${id}:`, error);
+			logger.error(`R: 🔴 Error al actualizar usuario por ID ${id}:`, error);
 			throw error;
 		}
 	};
@@ -117,7 +119,9 @@ export default class UsersRepository {
 		try {
 			const user = await this.dao.getByEmail(data.email);
 			if (!user) {
-				logger.warning(`⚠️ Usuario no encontrado para el email ${data.email}`);
+				logger.warning(
+					`R: ⚠️ Usuario no encontrado para el email ${data.email}`
+				);
 				return { msg: "Usuario no encontrado" };
 			}
 			const isSamePassword = await servicesExternal.comparePassword(
@@ -126,19 +130,19 @@ export default class UsersRepository {
 			);
 			if (isSamePassword) {
 				logger.warning(
-					`⚠️ La nueva contraseña no puede ser igual a la anterior para el email ${data.email}`
+					`R: ⚠️ La nueva contraseña no puede ser igual a la anterior para el email ${data.email}`
 				);
 				return { msg: "La nueva contraseña no puede ser igual a la anterior" };
 			}
 			data.password = await servicesExternal.hashPassword(data.password);
 			const updatedUser = await this.dao.putPasswordByEmail(data);
 			logger.info(
-				`🔒 Contraseña de usuario actualizada correctamente para el email ${data.email}`
+				`R: 🔒 Contraseña de usuario actualizada correctamente para el email ${data.email}`
 			);
 			return updatedUser;
 		} catch (error) {
 			logger.error(
-				"🔴 Error al actualizar contraseña de usuario por email:",
+				"R: 🔴 Error al actualizar contraseña de usuario por email:",
 				error
 			);
 			throw error;
@@ -147,13 +151,13 @@ export default class UsersRepository {
 
 	putRole = async (userId, newRole) => {
 		try {
-			logger.info(`🔄 Actualizando rol del usuario con ID ${userId}`);
+			logger.info(`R: 🔄 Actualizando rol del usuario con ID ${userId}`);
 			const user = await this.dao.updateUserRole(userId, newRole);
-			logger.info("✅ Usuario actualizado correctamente");
+			logger.info("R: ✅ Usuario actualizado correctamente");
 			return user;
 		} catch (error) {
 			logger.error(
-				`🔴 Error al actualizar el rol del usuario: ${error.message}`
+				`R: 🔴 Error al actualizar el rol del usuario: ${error.message}`
 			);
 			throw error;
 		}
@@ -165,10 +169,10 @@ export default class UsersRepository {
 			await this.cartDao.delete(user.cart.cid);
 			await this.messageDao.delete(user.messages.mid);
 			const result = await this.dao.deleteUser(id);
-			logger.info(`🗑️ Usuario con ID ${id} eliminado correctamente`);
+			logger.info(`R: 🗑️ Usuario con ID ${id} eliminado correctamente`);
 			return result;
 		} catch (error) {
-			logger.error(`🔴 Error al eliminar usuario por ID ${id}:`, error);
+			logger.error(`R: 🔴 Error al eliminar usuario por ID ${id}:`, error);
 			throw error;
 		}
 	};
@@ -180,19 +184,19 @@ export default class UsersRepository {
 				if (servicesExternal.comparePassword(data.password, db.password)) {
 					const token = await servicesExternal.postToken({ id: db._id }, 30);
 					logger.info(
-						`🔓 Inicio de sesión exitoso para el email ${data.email}`
+						`R: 🔓 Inicio de sesión exitoso para el email ${data.email}`
 					);
 					return token;
 				} else {
-					logger.warning(`⚠️ Datos incorrectos para el email ${data.email}`);
+					logger.warning(`R: ⚠️ Datos incorrectos para el email ${data.email}`);
 					return { msg: "¡Datos incorrectos!" };
 				}
 			} else {
-				logger.warning(`⚠️ Datos incorrectos para el email ${data.email}`);
+				logger.warning(`R: ⚠️ Datos incorrectos para el email ${data.email}`);
 				return { msg: "Datos incorrectos" };
 			}
 		} catch (error) {
-			logger.error("🔴 Error al realizar inicio de sesión:", error);
+			logger.error("R: 🔴 Error al realizar inicio de sesión:", error);
 			throw error;
 		}
 	};
@@ -200,10 +204,13 @@ export default class UsersRepository {
 	getLoginGithub = async data => {
 		try {
 			const token = await servicesExternal.postToken({ id: data._id }, 30);
-			logger.info("🔓 Inicio de sesión con GitHub exitoso");
+			logger.info("R: 🔓 Inicio de sesión con GitHub exitoso");
 			return token;
 		} catch (error) {
-			logger.error("🔴 Error al realizar inicio de sesión con GitHub:", error);
+			logger.error(
+				"R: 🔴 Error al realizar inicio de sesión con GitHub:",
+				error
+			);
 			throw error;
 		}
 	};
@@ -220,10 +227,10 @@ export default class UsersRepository {
 			};
 			const user = new UsersDTO(info);
 			const newUser = await this.dao.postUser(user);
-			logger.info("🆕 Usuario creado desde GitHub correctamente");
+			logger.info("R: 🆕 Usuario creado desde GitHub correctamente");
 			return newUser;
 		} catch (error) {
-			logger.error("🔴 Error al crear usuario desde GitHub:", error);
+			logger.error("R: 🔴 Error al crear usuario desde GitHub:", error);
 			throw error;
 		}
 	};
@@ -239,11 +246,11 @@ export default class UsersRepository {
 			};
 			const user = new UsersDTO(info);
 			const newUser = await this.dao.postUser(user);
-			logger.info("🆕 Usuario registrado localmente correctamente");
+			logger.info("R: 🆕 Usuario registrado localmente correctamente");
 			return newUser;
 		} catch (error) {
 			logger.error(
-				"🔴 Error al registrar usuario desde registro local:",
+				"R: 🔴 Error al registrar usuario desde registro local:",
 				error
 			);
 			throw error;
@@ -254,12 +261,12 @@ export default class UsersRepository {
 		try {
 			const updatedUser = await this.dao.putLastConnection(id);
 			logger.info(
-				`🔄 Última conexión del usuario con ID ${id} actualizada correctamente`
+				`R: 🔄 Última conexión del usuario con ID ${id} actualizada correctamente`
 			);
 			return updatedUser;
 		} catch (error) {
 			logger.error(
-				`🔴 Error al actualizar última conexión de usuario por ID ${id}:`,
+				`R: 🔴 Error al actualizar última conexión de usuario por ID ${id}:`,
 				error
 			);
 			throw error;

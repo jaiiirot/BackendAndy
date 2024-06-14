@@ -6,7 +6,7 @@ export default class CartsDAO {
 		try {
 			return await Carts.find({}).lean();
 		} catch (error) {
-			logger.error("🔴 Error al obtener todos los carritos:", error);
+			logger.error("D: 🔴 Error al obtener todos los carritos:", error);
 			throw error;
 		}
 	}
@@ -15,7 +15,7 @@ export default class CartsDAO {
 		try {
 			return await Carts.findById(id).lean();
 		} catch (error) {
-			logger.error("🔴 Error al obtener carrito por id:", error);
+			logger.error("D: 🔴 Error al obtener carrito por id:", error);
 			throw error;
 		}
 	}
@@ -23,12 +23,12 @@ export default class CartsDAO {
 	async getProductToCart(cartId, productId) {
 		try {
 			const cart = await this.getById(cartId);
-			if (!cart) logger.error("🔴 Carrito no encontrado");
+			if (!cart) logger.error("D: 🔴 Carrito no encontrado");
 			const product = cart.products.find(prod => prod.pid.equals(productId));
-			if (!product) logger.error("🔴 Producto no encontrado en el carrito");
+			if (!product) logger.error("D: 🔴 Producto no encontrado en el carrito");
 			return product;
 		} catch (error) {
-			logger.error("🔴 Error al obtener producto del carrito:", error);
+			logger.error("D: 🔴 Error al obtener producto del carrito:", error);
 			throw error;
 		}
 	}
@@ -37,7 +37,7 @@ export default class CartsDAO {
 		try {
 			return await Carts.findById(id).populate("products.pid").lean();
 		} catch (error) {
-			logger.error("🔴 Error al obtener carrito por id:", error);
+			logger.error("D: 🔴 Error al obtener carrito por id:", error);
 			throw error;
 		}
 	}
@@ -46,7 +46,7 @@ export default class CartsDAO {
 		try {
 			return await Carts.create(cart);
 		} catch (error) {
-			logger.error("🔴 Error al agregar carrito:", error);
+			logger.error("D: 🔴 Error al agregar carrito:", error);
 			throw error;
 		}
 	}
@@ -55,9 +55,8 @@ export default class CartsDAO {
 		try {
 			const existcart = await this.getById(cartId);
 			if (!existcart) {
-				logger.error("🔴 Carrito no encontrado");
+				logger.error("D: 🔴 Carrito no encontrado");
 			}
-			// console.log(cartId, productId, existcart);
 			const existprod = existcart.products.find(prod =>
 				prod.pid.equals(productId)
 			);
@@ -75,7 +74,7 @@ export default class CartsDAO {
 				);
 			}
 		} catch (error) {
-			logger.error("🔴 Error al agregar producto al carrito:", error);
+			logger.error("D: 🔴 Error al agregar producto al carrito:", error);
 			throw error;
 		}
 	}
@@ -84,7 +83,7 @@ export default class CartsDAO {
 		try {
 			return await Carts.findByIdAndUpdate(cartId, cart, { new: true });
 		} catch (error) {
-			logger.error("🔴 Error al actualizar carrito:", error);
+			logger.error("D: 🔴 Error al actualizar carrito:", error);
 			throw error;
 		}
 	}
@@ -101,13 +100,13 @@ export default class CartsDAO {
 					update = { $inc: { "products.$.quantity": -1 } };
 					break;
 				default:
-					logger.error("🔴 Error: Acción inválida");
+					logger.error("D: 🔴 Error: Acción inválida");
 					return;
 			}
 			await Carts.updateOne({ _id: cartId, "products.pid": productId }, update);
 		} catch (error) {
 			logger.error(
-				"🔴 Error al actualizar la cantidad del producto en el carrito:",
+				"D: 🔴 Error al actualizar la cantidad del producto en el carrito:",
 				error
 			);
 			throw error;
@@ -118,7 +117,7 @@ export default class CartsDAO {
 		try {
 			return await Carts.findByIdAndDelete(cartId);
 		} catch (error) {
-			logger.error("🔴 Error al eliminar carrito:", error);
+			logger.error("D: 🔴 Error al eliminar carrito:", error);
 			throw error;
 		}
 	}
@@ -127,7 +126,7 @@ export default class CartsDAO {
 		try {
 			return await Carts.updateOne({ _id: cartId }, { $set: { products: [] } });
 		} catch (error) {
-			logger.error("🔴 Error al eliminar carrito:", error);
+			logger.error("D: 🔴 Error al eliminar carrito:", error);
 			throw error;
 		}
 	}
@@ -139,7 +138,7 @@ export default class CartsDAO {
 				{ $pull: { products: { pid: productId } } }
 			);
 		} catch (error) {
-			logger.error("🔴 Error al eliminar producto del carrito:", error);
+			logger.error("D: 🔴 Error al eliminar producto del carrito:", error);
 			throw error;
 		}
 	}

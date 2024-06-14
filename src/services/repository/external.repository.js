@@ -16,7 +16,7 @@ export default class ExternalRepository {
 		try {
 			return await this.cloudinary.postCloudinaryBuffer(buffer);
 		} catch (error) {
-			logger.error("⚠️ Error al subir buffer a Cloudinary:", error);
+			logger.error("SX: ⚠️ Error al subir buffer a Cloudinary:", error);
 			throw error;
 		}
 	}
@@ -25,7 +25,7 @@ export default class ExternalRepository {
 		try {
 			return await this.cloudinary.postCloudinary(urlFile);
 		} catch (error) {
-			logger.error("⚠️ Error al subir archivo a Cloudinary:", error);
+			logger.error("SX: ⚠️ Error al subir archivo a Cloudinary:", error);
 			throw error;
 		}
 	}
@@ -34,7 +34,7 @@ export default class ExternalRepository {
 		try {
 			return await this.cloudinary.deleteCloudinary(urlFile);
 		} catch (error) {
-			logger.error("⚠️ Error al eliminar archivo de Cloudinary:", error);
+			logger.error("SX: ⚠️ Error al eliminar archivo de Cloudinary:", error);
 			throw error;
 		}
 	}
@@ -43,7 +43,7 @@ export default class ExternalRepository {
 		try {
 			return await this.cloudinary.updateCloudinary(urlFile, newUrl);
 		} catch (error) {
-			logger.error("⚠️ Error al actualizar archivo en Cloudinary:", error);
+			logger.error("SX: ⚠️ Error al actualizar archivo en Cloudinary:", error);
 			throw error;
 		}
 	}
@@ -60,7 +60,7 @@ export default class ExternalRepository {
 		try {
 			return await this.nodemailer.sendMail(to, subject, text, html);
 		} catch (error) {
-			logger.error("⚠️ Error al enviar correo electrónico:", error);
+			logger.error("SX: ⚠️ Error al enviar correo electrónico:", error);
 			throw error;
 		}
 	}
@@ -69,7 +69,7 @@ export default class ExternalRepository {
 		try {
 			return await this.nodemailer.sendMail(to, subject, text, html);
 		} catch (error) {
-			logger.error("⚠️ Error al enviar correo de compra:", error);
+			logger.error("SX: ⚠️ Error al enviar correo de compra:", error);
 			throw error;
 		}
 	}
@@ -78,7 +78,10 @@ export default class ExternalRepository {
 		try {
 			return await this.nodemailer.sendMail(to, subject, text, html);
 		} catch (error) {
-			logger.error("⚠️ Error al enviar correo de confirmación de contraseña:", error);
+			logger.error(
+				"SX: ⚠️ Error al enviar correo de confirmación de contraseña:",
+				error
+			);
 			throw error;
 		}
 	}
@@ -87,7 +90,7 @@ export default class ExternalRepository {
 		try {
 			return await this.sharp.resizeImageBuffer(file, width, height);
 		} catch (error) {
-			logger.error("⚠️ Error al redimensionar imagen en buffer:", error);
+			logger.error("SX: ⚠️ Error al redimensionar imagen en buffer:", error);
 			throw error;
 		}
 	}
@@ -101,7 +104,7 @@ export default class ExternalRepository {
 			await usersService.putLastConnection(data.id);
 			return this.jwt.createToken(data, time);
 		} catch (error) {
-			logger.error("⚠️ Error al crear token:", error);
+			logger.error("SX: ⚠️ Error al crear token:", error);
 			throw error;
 		}
 	}
@@ -109,10 +112,10 @@ export default class ExternalRepository {
 	getToken(token) {
 		try {
 			const result = this.jwt.verifyToken(token);
-			logger.info(`🔑 Token verificado correctamente ${result}`);
+			logger.info(`SX: 🔑 Token verificado correctamente ${result}`);
 			return result;
 		} catch (error) {
-			logger.warning("⚠️ Error al obtener token:", error);
+			logger.warning("SX: ⚠️ Error al obtener token:", error);
 			throw error;
 		}
 	}
@@ -128,7 +131,7 @@ export default class ExternalRepository {
 			return result.secure_url;
 		} catch (error) {
 			logger.error(
-				"⚠️ Error al redimensionar y subir buffer a Cloudinary:",
+				"SX: ⚠️ Error al redimensionar y subir buffer a Cloudinary:",
 				error
 			);
 			throw error;
