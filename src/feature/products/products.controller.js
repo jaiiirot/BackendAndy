@@ -10,7 +10,7 @@ const redirectToPanel = (res, status, message) => {
 const postProduct = async (req, res) => {
 	try {
 		logger.info("C: ➕ Intentando agregar un nuevo producto");
-		console.log(req.body, req.files);
+		// console.log(req.body, req.files);
 		if (!req.body && (!req.body.photoUrl || !req.files)) {
 			logger.warning("C: ⚠️ Datos insuficientes para agregar el producto");
 			return redirectToPanel(res, 400, "postfailed");
@@ -52,7 +52,7 @@ const putProduct = async (req, res) => {
 		logger.info(
 			`C: 🔄 Intentando actualizar el producto con ID ${req.params.pid}`
 		);
-		console.log(req.body, req.files);
+		// console.log(req.body, req.files);
 		if (!req.body || !req.params.pid) {
 			logger.warning("C: ⚠️ Datos insuficientes para actualizar el producto");
 			return redirectToPanel(res, 400, "updatefailed");

@@ -17,6 +17,7 @@ export const authenticateJWT = (req, res, next) => {
 				logger.error("🔴 Usuario no autenticado");
 				return res.redirect("/");
 			}
+			// console.log(user);
 			req.user = user;
 			next();
 		}

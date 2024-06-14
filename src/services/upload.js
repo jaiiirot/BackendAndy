@@ -46,7 +46,7 @@ export const fsSaveDocumentsBuffer = (req, res, next) => {
 		if (err) {
 			return res.status(400).json({ error: "error al obtener el archivo" });
 		}
-		console.log(req.file);
+		// console.log(req.file);
 		const fileName = `${ramdomName()}.pdf`;
 		const file = req.file;
 		const dir = path.join(__dirname, `public/uploads/documents`);

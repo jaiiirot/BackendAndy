@@ -2,6 +2,9 @@ import { usersService } from "../../feature/users/repository/users.service.js";
 import { logger } from "../../utils/logger/logger.js";
 
 export default class ExternalRepository {
+	#PORT = 8080;
+	#HOST = "";
+
 	constructor(cloudinary, crypt, jwt, nodemailer, sharp, socket, upload) {
 		this.cloudinary = cloudinary;
 		this.crypt = crypt;
@@ -10,6 +13,8 @@ export default class ExternalRepository {
 		this.sharp = sharp;
 		this.socket = socket;
 		this.upload = upload;
+
+		// this.#HOST = window.location
 	}
 
 	async postCloudinaryBuffer(buffer) {
@@ -83,6 +88,17 @@ export default class ExternalRepository {
 				error
 			);
 			throw error;
+		}
+	}
+
+	async sendMailDeleteInactive(to, subject, text, html) {
+		try {
+			return await this.nodemailer.sendMail(to, subject, text, html);
+		} catch (error) {
+			logger.error(
+				`SX:⚠️ Error al enviar correo de Elimiaccion de contraseña: `,
+				error
+			);
 		}
 	}
 

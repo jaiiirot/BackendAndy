@@ -1,5 +1,6 @@
 import { Users } from "./users.schema.js";
 import { logger } from "../../utils/logger/logger.js";
+import { servicesExternal } from "../../services/repository/external.service.js";
 
 export default class UsersDAO {
 	async getAll() {
@@ -165,30 +166,17 @@ export default class UsersDAO {
 		}
 	}
 
-	async deleteInactiveUsers() {
-		try {
-			// const threshold = new Date(Date.now() - 30 * 60 * 1000); // 30 minutos de inactividad para pruebas, cambiar a 2 días para producción
-			// const inactiveUsers = await Users.find({ lastConnection: { $lt: threshold } });
-			// const transporter = nodemailer.createTransport({
-			// 	service: 'gmail',
-			// 	auth: {
-			// 		user: 'tu-email@gmail.com',
-			// 		pass: 'tu-password'
-			// 	}
-			// });
-			// for (const user of inactiveUsers) {
-			// 	await transporter.sendMail({
-			// 		from: 'tu-email@gmail.com',
-			// 		to: user.email,
-			// 		subject: 'Cuenta eliminada por inactividad',
-			// 		text: 'Tu cuenta ha sido eliminada debido a la inactividad en los últimos días.'
-			// 	});
-			// 	await Users.findByIdAndDelete(user._id);
-			// 	logger.info(`D: 🗑️ Usuario eliminado por inactividad: ${user.email}`);
-			// }
-		} catch (error) {
-			logger.error("D: 🔴 Error al eliminar usuarios inactivos:", error);
-			throw error;
-		}
-	}
+	// async deleteInactiveUsers() {
+	// 	try {
+	// 		const threshold = new Date(Date.now() - 30 * 60 * 1000); // 30 minutos de inactividad para pruebas, cambiar a 2 días para producción
+	// 		const inactiveUsers = await Users.find({ lastConnection: { $lt: threshold } });
+	// 		for (const user of inactiveUsers) {
+	// 			await servicesExternal // REALIZAR EL EMAIL				await Users.findByIdAndDelete(user._id);
+	// 			logger.info(`D: 🗑️ Usuario eliminado por inactividad: ${user.email}`);
+	// 		}
+	// 	} catch (error) {
+	// 		logger.error("D: 🔴 Error al eliminar usuarios inactivos:", error);
+	// 		throw error;
+	// 	}
+	// }
 }

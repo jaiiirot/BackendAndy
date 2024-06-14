@@ -142,3 +142,32 @@ export const emailPasswordChangeConfirmation = (host, email) => {
         </div>
     `;
 };
+
+export const emailDeleteCountInactive=(host,email)=> {
+    return `
+        <div style="max-width:600px;padding:20px;margin:auto;">
+            <header style="margin:0; overflow:hidden;">
+                <a href="http://${host}/" style="display:inline-block; color:#2E8B57;text-decoration:none; float:left; margin:0;padding:0;" target="_blank">
+                    <img src="https://example.com/logo.png" alt="Logo" style="height: 2rem;">
+                </a>
+                <div style="float:right; font-size:1.6rem;">
+                    <span>SOPORTE TECNICO</span>
+                </div>
+            </header>
+            <div style="margin-bottom:25px">
+                <div>
+                    <h1 style="margin:5px 0;padding: 0;">Cuenta Eliminada por inactividad</h1>
+                    <h4 style="margin:0;padding: 0;">Hola, ${email}</h4>
+                    <p style="margin:0;padding 0;">Debido a la inactividad de 2 dias Ilicito decidio elimiar la informacion de tu cuenta por inactividad</p>
+                </div>
+                <div>
+                    <a href="http://${host}/productos" style="display:inline-block;padding:10px 20px;background-color:#2E8B57;color:#ffffff;text-decoration:none;margin:20px 0" target="_blank">Volver a compara</a>
+                    <a href="http://${host}/login" style="display:inline-block;padding:10px 20px;background-color:#FF4500;color:#ffffff;text-decoration:none;margin:20px 0" target="_blank">Iniciar sesión</a>
+                </div>
+            </div>
+            <footer style="margin-top:20px;font-size:0.9em;color:#666666">
+                © ${new Date().getFullYear()} Ilicito. Todos los derechos reservados by <a href="https://github.com/tu-usuario" target="_blank">Tu Nombre</a>.
+            </footer>
+        </div>
+    `;
+}

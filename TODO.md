@@ -170,24 +170,24 @@
 
 1. **REORGANIZACIÓN DE RUTAS**
 
-- [] Mover la ruta `/api/users/premium/:uid` a un router específico para usuarios en `/api/users/`.
+- [✅] Mover la ruta `/api/users/premium/:uid` a un router específico para usuarios en `/api/users/`.
 
 2. **MODIFICACIÓN DEL MODELO DE USER**
 
-- [] Añadir una nueva propiedad `documents` al modelo de User, que será un array de objetos con las propiedades:
+- [✅] Añadir una nueva propiedad `documents` al modelo de User, que será un array de objetos con las propiedades:
   - `name: String` (Nombre del documento)
   - `reference: String` (Link al documento)
-- [] Añadir una nueva propiedad `last_connection` al modelo de User, que se actualizará en cada login y logout.
+- [✅] Añadir una nueva propiedad `last_connection` al modelo de User, que se actualizará en cada login y logout.
 
 3. **ENDPOINT PARA SUBIR DOCUMENTOS**
 
-- [] Crear un endpoint en el router de usuarios `api/users/:uid/documents` con el método POST.
+- [✅] Crear un endpoint en el router de usuarios `api/users/:uid/documents` con el método POST.
 - [] Utilizar el middleware de Multer para recibir y gestionar los documentos cargados.
 - [] Actualizar el modelo de User para reflejar que el usuario ha subido documentos específicos.
 
 4. **CONFIGURACIÓN DE MULTER**
 
-- [] Configurar Multer para guardar archivos en diferentes carpetas según el tipo de archivo:
+- [✅] Configurar Multer para guardar archivos en diferentes carpetas según el tipo de archivo:
   - Imágenes de perfil en una carpeta `profiles`.
   - Imágenes de productos en una carpeta `products`.
   - Documentos en una carpeta `documents`.
@@ -201,28 +201,28 @@
 
 6. **VALIDACIONES Y ACTUALIZACIONES DE CONEXIÓN**
 
-- [] Asegurarse de que la propiedad `last_connection` se actualice correctamente cada vez que el usuario inicie sesión (login) o cierre sesión (logout).
+- [✅] Asegurarse de que la propiedad `last_connection` se actualice correctamente cada vez que el usuario inicie sesión (login) o cierre sesión (logout).
 
 7. **PRUEBAS Y VALIDACIÓN**
 
-- [] Probar la carga de documentos y verificar que se guardan en las carpetas correctas.
-- [] Verificar que la promoción a usuario premium sólo ocurre si se han subido los documentos requeridos.
-- [] Asegurarse de que las rutas reorganizadas funcionan correctamente.
-- [] Validar que la propiedad `last_connection` se actualice en los procesos de login y logout.
+- [✅] Probar la carga de documentos y verificar que se guardan en las carpetas correctas.
+- [✅] Verificar que la promoción a usuario premium sólo ocurre si se han subido los documentos requeridos.
+- [✅] Asegurarse de que las rutas reorganizadas funcionan correctamente.
+- [✅] Validar que la propiedad `last_connection` se actualice en los procesos de login y logout.
 
 ## FINAL
 
 1. **NUEVAS RUTAS EN EL ROUTER DE /API/USERS**
 
-- [] **GET /API/USERS**: Obtener todos los usuarios devolviendo los datos principales (nombre, correo, tipo de cuenta).
-- [] **DELETE /API/USERS**: Limpiar a todos los usuarios que no hayan tenido conexión en los últimos 2 días.
+  - [✅] **GET /API/USERS**: Obtener todos los usuarios devolviendo los datos principales (nombre, correo, tipo de cuenta).
+  - [] **DELETE /API/USERS**: Limpiar a todos los usuarios que no hayan tenido conexión en los últimos 2 días.
   - [] Implementar la lógica para verificar la última conexión y eliminar los usuarios inactivos.
   - [] Enviar un correo notificando a los usuarios que su cuenta ha sido eliminada por inactividad.
 
 2. **VISTA DE ADMINISTRACIÓN DE USUARIOS**
 
-- [] Crear una vista accesible solo para el administrador para visualizar, modificar el rol y eliminar un usuario.
-  - [] Asegurarse de que esta vista incluya:
+  - [✅] Crear una vista accesible solo para el administrador para visualizar, modificar el rol y eliminar un usuario.
+  - [✅] Asegurarse de que esta vista incluya:
     - Listado de usuarios con datos principales.
     - Opciones para modificar el rol de un usuario.
     - Opción para eliminar un usuario.
