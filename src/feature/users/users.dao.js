@@ -1,6 +1,6 @@
 import { Users } from "./users.schema.js";
 import { logger } from "../../utils/logger/logger.js";
-import { servicesExternal } from "../../services/repository/external.service.js";
+// import { servicesExternal } from "../../services/repository/external.service.js";
 
 export default class UsersDAO {
 	async getAll() {
