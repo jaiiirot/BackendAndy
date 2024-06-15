@@ -47,3 +47,6 @@
 {"level":"error","message":"CS: 🔴 Error al realizar el inicio de sesión","timestamp":"2024-06-15T21:08:47.653Z"}
 {"level":"warning","message":"R: ⚠️ Datos incorrectos para el email pasconstumi@gmail.com","timestamp":"2024-06-15T21:09:30.958Z"}
 {"level":"error","message":"CS: 🔴 Error al realizar el inicio de sesión","timestamp":"2024-06-15T21:09:30.959Z"}
+{"level":"warning","message":"R: ⚠️ Datos incorrectos para el email pasconstumi@gmail.com","timestamp":"2024-06-15T21:19:12.350Z"}
+{"level":"error","message":"CS: 🔴 Error al realizar el inicio de sesión","timestamp":"2024-06-15T21:19:12.352Z"}
+{"level":"warning","message":"🚧 Autorización fallida. IP: ::1","timestamp":"2024-06-15T21:19:12.360Z"}
