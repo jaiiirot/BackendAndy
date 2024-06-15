@@ -8,7 +8,7 @@
     "start": "node ./src/app.js",
     "dev": "set NODE_ENV=dev&& npx nodemon src/app.js",
     "prod": "set NODE_ENV=production&& node ./src/app.js",
-    "test": "mocha ./src/test/products.test.js --timeout 10000"
+    "test": "mocha ./src/tests/products.test.js --timeout 10000"
   },
   "author": "",
   "license": "ISC",
