@@ -2,11 +2,6 @@ import { productsService } from "./repository/products.service.js";
 import { generateListProducts } from "../../utils/mocks/mocks.js";
 import { logger } from "../../utils/logger/logger.js";
 
-const redirectToPanel = (res, status, message) => {
-	const redirectUrl = `/panel/productos?st=${message}`;
-	res.status(status).redirect(redirectUrl);
-};
-
 const postProduct = async (req, res) => {
 	try {
 		logger.info("C: ➕ Intentando agregar un nuevo producto");
@@ -17,12 +12,13 @@ const postProduct = async (req, res) => {
 				.status(400)
 				.send({ msg: "Datos insuficientes para agregar el producto" });
 		}
-		await productsService.post(req.body, req.files);
+		const payload = await productsService.post(req.body, req.files);
 		logger.info("C: 🆕 Producto agregado correctamente");
-		res.status(200).send({ msg: "Producto agregado correctamente" });
+		res.status(200).send({ msg: "Producto agregado correctamente", payload });
 	} catch (error) {
 		logger.error("C: 🔴 Error al agregar producto:", error);
-		redirectToPanel(res, 500, "failed");
+		// redirectToPanel(res, 500, "failed");
+		res.status(500).send({ msg: "Error al agregar el producto" });
 	}
 };
 
@@ -33,19 +29,25 @@ const deleteProduct = async (req, res) => {
 		);
 		if (!req.params.pid) {
 			logger.warning("C: ⚠️ ID de producto no proporcionado");
-			return redirectToPanel(res, 400, "failed");
+			res.status(400).send({ msg: "ID de producto no proporcionado" });
 		}
-		await productsService.delete(req.params.pid);
+		const response = await productsService.delete(req.params.pid);
+		if (!response) {
+			logger.error(
+				`C: 🔴 Error al eliminar el producto con ID ${req.params.pid}`
+			);
+			res.status(404).send({ msg: "Error al eliminar el producto" });
+		}
 		logger.info(
 			`C: 🗑️ Producto con ID ${req.params.pid} eliminado correctamente`
 		);
-		redirectToPanel(res, 200, "deletesuccess");
+		res.status(200).send({ msg: "Producto eliminado correctamente" });
 	} catch (error) {
 		logger.error(
 			`C: 🔴 Error al eliminar producto con ID ${req.params.pid}:`,
 			error
 		);
-		redirectToPanel(res, 500, "deletefailed");
+		res.status(500).send({ msg: "Error al eliminar el producto" });
 	}
 };
 
@@ -54,22 +56,21 @@ const putProduct = async (req, res) => {
 		logger.info(
 			`C: 🔄 Intentando actualizar el producto con ID ${req.params.pid}`
 		);
-		// console.log(req.body, req.files);
 		if (!req.body || !req.params.pid) {
 			logger.warning("C: ⚠️ Datos insuficientes para actualizar el producto");
-			return redirectToPanel(res, 400, "updatefailed");
+			res.status(400).send({ msg: "Datos insuficientes para actualizar" });
 		}
 		await productsService.put(req.params.pid, req.body, req.files);
 		logger.info(
 			`C: 🔄 Producto con ID ${req.params.pid} actualizado correctamente`
 		);
-		redirectToPanel(res, 200, "updatesuccess");
+		res.status(200).send({ msg: "Producto actualizado correctamente" });
 	} catch (error) {
 		logger.error(
 			`C: 🔴 Error al actualizar producto con ID ${req.params.pid}:`,
 			error
 		);
-		redirectToPanel(res, 500, "updatefailed");
+		res.status(500).send({ msg: "Error al actualizar el producto" });
 	}
 };
 
@@ -105,13 +106,11 @@ const getIdProduct = async (req, res) => {
 		logger.info(
 			`C: 🛍️ Producto con ID ${req.params.pid} obtenido correctamente`
 		);
-		res
-			.status(200)
-			.send({
-				status: "success",
-				payload: { ...result },
-				msg: "¡Producto obtenido correctamente!",
-			});
+		res.status(200).send({
+			status: "success",
+			payload: { ...result },
+			msg: "¡Producto obtenido correctamente!",
+		});
 	} catch (error) {
 		logger.error(
 			`C: 🔴 Error al obtener el producto con ID ${req.params.pid}:`,

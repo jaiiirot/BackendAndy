@@ -1,26 +1,29 @@
 export const PRODUCTS_TESTS = (http, expect, mock) => {
+	// eslint-disable-next-line no-undef
 	describe("🏪 TEST PRODUCTS", function () {
-		const loginAndGetCookies = async () => {
+		const data = {};
+		// eslint-disable-next-line no-undef
+		before(async () => {
 			const user = await http.post("/api/sessions/login").send(mock.user.admin);
 			const cookieJWT = user.headers["set-cookie"][0].split(";")[0].split("=");
-			return { name: cookieJWT[0], value: cookieJWT[1] };
-		};
-
-		it("POST PRODUCT - URL", async function () {
-			const cookies = await loginAndGetCookies();
+			data.cookie = { name: cookieJWT[0], value: cookieJWT[1] };
+		});
+		// eslint-disable-next-line no-undef
+		it("POST: /api/products/ - PRODUCT URL", async function () {
 			const res = await http
 				.post("/api/products/")
-				.set("Cookie", [`${cookies.name}=${cookies.value}`])
+				.set("Cookie", [`${data.cookie.name}=${data.cookie.value}`])
 				.send(mock.prod.producturl);
 			expect(res.status).to.equal(200);
 			expect(res.body).to.have.property("msg");
 			expect(res.body.msg).to.equal("Producto agregado correctamente");
+			data.produrl = res.body.payload;
 		});
-		it("POST PRODUCT - FILES", async function () {
-			const cookies = await loginAndGetCookies();
+		// eslint-disable-next-line no-undef
+		it("POST: /api/products/ - PRODUCT FILES", async function () {
 			const res = await http
 				.post("/api/products/")
-				.set("Cookie", [`${cookies.name}=${cookies.value}`])
+				.set("Cookie", [`${data.cookie.name}=${data.cookie.value}`])
 				.field("title", mock.prod.productfile.title)
 				.field("description", mock.prod.productfile.description)
 				.field("code", mock.prod.productfile.code)
@@ -37,12 +40,13 @@ export const PRODUCTS_TESTS = (http, expect, mock) => {
 			expect(res.status).to.equal(200);
 			expect(res.body).to.have.property("msg");
 			expect(res.body.msg).to.equal("Producto agregado correctamente");
+			data.prodfile = res.body.payload;
 		});
-		it("GET PRODUCT ID", async function () {
-			const cookies = await loginAndGetCookies();
+		// eslint-disable-next-line no-undef
+		it("GET: /api/products/pid: - PRODUCT ID", async function () {
 			const res = await http
 				.get("/api/products/665fc9d832ee05a1ea4a8eb8")
-				.set("Cookie", [`${cookies.name}=${cookies.value}`]);
+				.set("Cookie", [`${data.cookie.name}=${data.cookie.value}`]);
 			expect(res.status).to.equal(200);
 			expect(res.body).to.have.property("payload");
 			expect(res.body).to.have.property("msg");
@@ -50,20 +54,20 @@ export const PRODUCTS_TESTS = (http, expect, mock) => {
 			expect(res.status).to.equal(200);
 			expect(res.body.msg).to.equal("¡Producto obtenido correctamente!");
 		});
-		it("PUT PRODUCT ID", async function () {
-			const cookies = await loginAndGetCookies();
+		// eslint-disable-next-line no-undef
+		it("PUT: /api/products/:pid - PRODUCT ID", async function () {
 			const res = await http
 				.put("/api/products/665fc9d832ee05a1ea4a8eb8")
-				.set("Cookie", [`${cookies.name}=${cookies.value}`])
+				.set("Cookie", [`${data.cookie.name}=${data.cookie.value}`])
 				.send(mock.prod.putproduct);
 			expect(res.status).to.equal(200);
 		});
-		// it("DELETE PRODUCT ID", async function () {
-		// 	const cookies = await loginAndGetCookies();
-		// 	const res = await http
-		// 		.delete("/api/products/abcdefghij1234567890abcdefgh0")
-		// 		.set("Cookie", [`${cookies.name}=${cookies.value}`]);
-		// 	expect(res.status).to.equal(200);
-		// });
+		// eslint-disable-next-line no-undef
+		it("DELETE: /api/products/:pid - PRODUCT ID", async function () {
+			const res = await http
+				.delete(`/api/products/${data.prodfile._id}`)
+				.set("Cookie", [`${data.cookie.name}=${data.cookie.value}`]);
+			expect(res.status).to.equal(200);
+		});
 	});
 };

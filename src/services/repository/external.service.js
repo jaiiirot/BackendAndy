@@ -1,5 +1,6 @@
 import { cloudinaryService } from "../cloudinary.js";
 import { cryptService } from "../crypt.js";
+import { fsService } from "../fs.js";
 import { jwtService } from "../jwt.js";
 import { nodemailerService } from "../nodemailer.js";
 import { sharpService } from "../sharp.js";
@@ -13,5 +14,6 @@ export const servicesExternal = new ExternalRepository(
 	jwtService,
 	nodemailerService,
 	sharpService,
-	socketService
+	socketService,
+	fsService
 );

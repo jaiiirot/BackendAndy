@@ -1,6 +1,3 @@
-import { de } from "@faker-js/faker";
-import { ObjectId } from "mongodb";
-
 export const mockprod = {
 	productfile: {
 		title:
@@ -16,7 +13,7 @@ export const mockprod = {
     Con conector USB-C y WiFi 6 con el doble de velocidad
     Funcionalidad esencial de seguridad con detección de choques para pedir ayuda
     Con tecnologías de privacidad que te ayudan a mantener el control de tus datos`,
-		code: "IPHONE15PRO",
+		code: "TESTIPHONE15PRO",
 		price: 2799999,
 		status: "on",
 		promocion: "on",
@@ -43,7 +40,7 @@ Procesador Snapdragon 680 Octa-Core de 2.4GHz con 4GB de RAM.
 Batería de 5000mAh.
 Memoria interna de 128GB.
 Con reconocimiento facial y sensor de huella dactilar.`,
-		code: "XIAOMIREDMI10C",
+		code: "TESTXIAOMIREDMI10C",
 		price: 249999,
 		status: "on",
 		promocion: "on",
@@ -60,7 +57,7 @@ Con reconocimiento facial y sensor de huella dactilar.`,
 		owner: "60f7c5f6d2d0f8a8b8b1f5f2",
 	},
 	putproduct: {
-		title: "JAIRO Memoria Ram Ddr4 16gb 3200mhz Xpg Spectrix D45 Rgb 1x16gb",
+		title: "TEST Memoria Ram Ddr4 16gb 3200mhz Xpg Spectrix D45 Rgb 1x16gb",
 		description:
 			"Lo que tenés que saber de este producto\r<br>Optimizá el rendimiento de tu máquina con la tecnología DDR4 SDRAM.\r<br>Memoria con formato DIMM.\r<br>Alcanza una velocidad de 3200 MHz.\r<br>Apta para servidores.\r<br>Cuenta con una tasa de transferencia de 25600 MB/s.",
 		code: "#nk64sa",
@@ -70,7 +67,7 @@ Con reconocimiento facial y sensor de huella dactilar.`,
 		stock: 3,
 		type: "accesorio",
 		genre: "masculino",
-		category: ["ram", "ddr4", "16gb", "3200mhz"],
+		category: "ram,ddr4,16gb,3200mhz",
 		owner: "60f7c5f6d2d0f8a8b8b1f5f2",
 	},
 };

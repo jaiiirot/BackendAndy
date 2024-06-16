@@ -3,7 +3,7 @@ import { logger } from "../utils/logger/logger.js";
 
 const resizeImageBuffer = async (file, width, height) => {
 	try {
-		const resizeBuffer = await sharp(file.buffer)
+		const resizeBuffer = await sharp(file)
 			.resize(width, height, {
 				fit: "contain",
 				background: { r: 255, g: 255, b: 255, alpha: 0.5 },

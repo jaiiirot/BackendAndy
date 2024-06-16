@@ -1,6 +1,9 @@
 import { authorization } from "../../middlewares/authorization.js";
 import { authentication } from "../../middlewares/authencations.js";
-import { fsSaveImagesProductsBuffer } from "../../services/upload.js";
+import {
+	// fsSaveImagesProductsBuffer,
+	uploadBuffer,
+} from "../../services/upload.js";
 import { controllersProducts } from "./products.controller.js";
 import express from "express";
 const router = express.Router();
@@ -23,7 +26,8 @@ router.post(
 	"/",
 	authentication,
 	authorization(["ADMIN"]),
-	fsSaveImagesProductsBuffer,
+	// fsSaveImagesProductsBuffer,
+	uploadBuffer.array("photo", 4),
 	controllersProducts.postProduct
 );
 
@@ -38,7 +42,7 @@ router.put(
 	"/:pid",
 	authentication,
 	authorization(["ADMIN"]),
-	fsSaveImagesProductsBuffer,
+	// fsSaveImagesProductsBuffer,
 	controllersProducts.putProduct
 );
 

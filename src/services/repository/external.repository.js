@@ -5,15 +5,14 @@ export default class ExternalRepository {
 	#PORT = 8080;
 	#HOST = "";
 
-	constructor(cloudinary, crypt, jwt, nodemailer, sharp, socket, upload) {
+	constructor(cloudinary, crypt, jwt, nodemailer, sharp, socket, fs) {
 		this.cloudinary = cloudinary;
 		this.crypt = crypt;
 		this.jwt = jwt;
 		this.nodemailer = nodemailer;
 		this.sharp = sharp;
 		this.socket = socket;
-		this.upload = upload;
-
+		this.fs = fs;
 		// this.#HOST = window.location
 	}
 
@@ -144,10 +143,25 @@ export default class ExternalRepository {
 		try {
 			const resizeImage = await this.resizeImageBuffer(buffer, width, height);
 			const result = await this.postCloudinaryBuffer(resizeImage);
+			await this.fs.postFsImages(resizeImage, result.secure_url);
 			return result.secure_url;
 		} catch (error) {
 			logger.error(
 				"SX: ⚠️ Error al redimensionar y subir buffer a Cloudinary:",
+				error
+			);
+			throw error;
+		}
+	}
+
+	async deleteCloudinaryAndFs(urlFile) {
+		try {
+			await this.deleteCloudinary(urlFile);
+			await this.fs.deleteFsImages(urlFile);
+			logger.info("SX: ✅ Archivo eliminado correctamente");
+		} catch (error) {
+			logger.error(
+				"SX: ⚠️ Error al eliminar archivo de Cloudinary y FS:",
 				error
 			);
 			throw error;

@@ -50,22 +50,23 @@ export default class ProductRepository {
 	post = async (data, photoFiles) => {
 		try {
 			logger.info("R: ➕ Añadiendo un nuevo producto");
-			let photos = [];
 			data.status = data.status === "on";
 			data.promocion = data.promocion === "on";
+
 			if (!data.photoUrl) {
-				for (const photo of photoFiles) {
-					const result = await servicesExternal.postResizeCloudBuffer(
-						photo.buffer,
-						300,
-						300
-					);
-					photos.push(result);
-				}
+				data.photo = await Promise.all(
+					photoFiles.map(async photo => {
+						return await servicesExternal.postResizeCloudBuffer(
+							photo.buffer,
+							300,
+							300
+						);
+					})
+				);
 			} else {
-				photos = data.photoUrl;
+				data.photo = data.photoUrl;
 			}
-			data.photo = photos;
+
 			const newProduct = new ProductDTO(data);
 			const result = await this.dao.addProduct(newProduct);
 			logger.info("R: 🆕 Nuevo producto agregado correctamente");
@@ -84,7 +85,9 @@ export default class ProductRepository {
 			data.status = data.status === "on";
 			data.promocion = data.promocion === "on";
 			const photoUrls = await this.dao.getById(id);
-			if (data.photoUrl || photoFiles.length > 0) {
+			const conditionPhotoFiles =
+				Array.isArray(photoFiles) && photoFiles.length > 0;
+			if (data.photoUrl || conditionPhotoFiles) {
 				if (!data.photoUrl) {
 					for (const photo of photoFiles) {
 						const result = await servicesExternal.postResizeCloudBuffer(
@@ -104,13 +107,11 @@ export default class ProductRepository {
 					}
 				});
 				if (condition) {
-					await Promise.all(
-						photoUrls.photo.map(async element => {
-							if (element.includes("res.cloudinary.com")) {
-								await servicesExternal.deleteCloudinary(element);
-							}
-						})
-					);
+					photoUrls.photo.map(async element => {
+						if (element.includes("res.cloudinary.com")) {
+							await servicesExternal.deleteCloudinary(element);
+						}
+					});
 				}
 			} else {
 				photos = photoUrls.photo;
@@ -133,11 +134,13 @@ export default class ProductRepository {
 		try {
 			logger.info(`R: 🗑️ Eliminando producto con ID ${id}`);
 			const photoUrls = await this.dao.getById(id);
+
 			await Promise.all(
 				photoUrls.photo.map(async element => {
-					await servicesExternal.deleteCloudinary(element);
+					await servicesExternal.deleteCloudinaryAndFs(element);
 				})
 			);
+
 			const result = await this.dao.deleteProduct(id);
 			logger.info(`R: 🗑️ Producto con ID ${id} eliminado correctamente`);
 			return result;

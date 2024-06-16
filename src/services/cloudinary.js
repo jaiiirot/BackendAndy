@@ -22,9 +22,9 @@ const postCloudinary = async urlFile => {
 	}
 };
 
-const postCloudinaryBuffer = imageBuffer => {
+const postCloudinaryBuffer = async imageBuffer => {
 	try {
-		return new Promise((resolve, reject) => {
+		return await new Promise((resolve, reject) => {
 			cloudinary.uploader
 				.upload_stream({ folder: "ecommerce" }, (error, result) =>
 					!result ? reject(error) : resolve(result)
@@ -37,15 +37,18 @@ const postCloudinaryBuffer = imageBuffer => {
 };
 
 const deleteCloudinary = async urlFile => {
-	try {
-		const pathUrl = urlFile.split("/").pop().split(".").shift();
-		const response = await cloudinary.uploader.destroy(`ecommerce/${pathUrl}`);
-		// logger.info("🟢 Imagen eliminada de Cloudinary:", response);
-		return { msg: "Imagen eliminada", response };
-	} catch (error) {
-		logger.error("🔴 Error al eliminar la imagen de Cloudinary:", error);
-		return { msg: "Error al eliminar la imagen de Cloudinary:", error };
-	}
+	const pathUrl = urlFile.split("/").pop().split(".").shift();
+	return await new Promise((resolve, reject) => {
+		cloudinary.uploader.destroy(`ecommerce/${pathUrl}`, (error, result) => {
+			if (error) {
+				logger.error("🔴 Error al eliminar la imagen de Cloudinary:", error);
+				reject(error);
+			} else {
+				// logger.info("🟢 Imagen eliminada de Cloudinary:", result);
+				resolve({ msg: "🟢 Imagen eliminada", result });
+			}
+		});
+	});
 };
 
 const updateCloudinary = async (urlFile, newUrl) => {

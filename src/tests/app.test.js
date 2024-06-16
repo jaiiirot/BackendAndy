@@ -11,9 +11,29 @@ import mongoose from "mongoose";
 mongoose.connect("mongodb://localhost:27017/ecommerce");
 const http = supertest("http://localhost:8080");
 
+// eslint-disable-next-line no-undef
 describe("TEST API", () => {
+	// eslint-disable-next-line no-undef
 	before(async () => {
-		await Users.deleteOne({ email: mockuser.userregister.email });
+		try {
+			await Users.deleteOne({
+				email: mockuser.userregister.email,
+			}).then(() => {
+				console.log("Usuario de test borrado correctamente");
+			});
+			await Products.deleteOne({
+				code: mockprod.productfile.code,
+			}).then(() => {
+				console.log("Producto de test borrado correctamente");
+			});
+			await Products.deleteOne({
+				code: mockprod.producturl.code,
+			}).then(() => {
+				console.log("Producto de test borrado correctamente");
+			});
+		} catch (error) {
+			console.log("Error al borrar los registros de la base de datos");
+		}
 	});
 
 	SESSIONS_TESTS(http, expect, mockuser);

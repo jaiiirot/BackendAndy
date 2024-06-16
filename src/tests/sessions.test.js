@@ -1,6 +1,8 @@
 export const SESSIONS_TESTS = (http, expect, mock) => {
+	// eslint-disable-next-line no-undef
 	describe("🔐 TEST SESSIONS", function () {
-		it("REGISTER", async function () {
+		// eslint-disable-next-line no-undef
+		it("POST: /api/sessions/register - REGISTER", async function () {
 			const res = await http
 				.post("/api/sessions/register")
 				.send(mock.userregister);
@@ -10,7 +12,8 @@ export const SESSIONS_TESTS = (http, expect, mock) => {
 			expect(res.body.msg).to.equal("Usuario registrado correctamente");
 		});
 
-		it("LOGIN USER - FAILED", async function () {
+		// eslint-disable-next-line no-undef
+		it("POST: /api/sessions/login - LOGIN FAILED", async function () {
 			const res = await http.post("/api/sessions/login").send(mock.userfailed);
 
 			expect(res.status).to.equal(400);
@@ -18,7 +21,8 @@ export const SESSIONS_TESTS = (http, expect, mock) => {
 			expect(res.body.msg).to.equal("¡Datos incorrectos!");
 		});
 
-		it("LOGIN USER - SUCCESS", async function () {
+		// eslint-disable-next-line no-undef
+		it("POST: /api/sessions/login - LOGIN SUCCESS", async function () {
 			const res = await http.post("/api/sessions/login").send(mock.usersuccess);
 
 			expect(res.status).to.equal(200);
@@ -26,10 +30,11 @@ export const SESSIONS_TESTS = (http, expect, mock) => {
 			expect(res.body.msg).to.equal("Usuario logueado correctamente");
 		});
 
-		// it("LOGOUT USER - AUTH", async function () {
-		// 	const res = await http.get("/api/sessions/logout");
-		// 	console.log("status:", res.status);
-		// 	expect(res.status).to.equal(404);
-		// });
+		// eslint-disable-next-line no-undef
+		it("GET: /api/sessions/logout - LOGOUT", async function () {
+			const res = await http.get("/api/sessions/logout");
+			// console.log("status:", res.status);
+			expect(res.status).to.equal(302);
+		});
 	});
 };
