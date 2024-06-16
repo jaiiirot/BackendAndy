@@ -56,9 +56,10 @@ const logout = async (req, res) => {
 		req.session.destroy();
 		res.clearCookie("jwt");
 		logger.info("CS: 🚪 Sesión cerrada correctamente");
-		res.redirect("/");
+		res.status(200).redirect("/");
 	} catch (error) {
 		logger.error("CS: 🔴 Error al cerrar sesión:", error);
+		res.status(500).send({ msg: "Error interno del servidor" });
 	}
 };
 

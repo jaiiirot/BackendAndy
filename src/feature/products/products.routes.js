@@ -5,6 +5,13 @@ import { controllersProducts } from "./products.controller.js";
 import express from "express";
 const router = express.Router();
 
+router.get(
+	"/:pid",
+	authentication,
+	authorization(["ADMIN"]),
+	controllersProducts.getIdProduct
+);
+
 router.post(
 	"/mocking/productos",
 	authentication,

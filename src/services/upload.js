@@ -13,31 +13,35 @@ const ramdomName = () => {
 
 export const fsSaveImagesProductsBuffer = (req, res, next) => {
 	uploadBuffer.array("photo", 4)(req, res, async err => {
-		if (err) {
-			return res
-				.status(400)
-				.json({ error: "Error al guardar los archivos uploads" });
-		}
-		req.uploadedFilePath = {
-			photos: req.files.map(file => {
-				const dir = path.join(__dirname, `public/uploads/products`);
-				if (!fs.existsSync(dir)) {
-					fs.mkdirSync(dir, { recursive: true });
-				}
-				const filePath = path.join(dir, `${ramdomName()}.jpg	`);
-
-				fs.writeFile(filePath, file.buffer, err => {
-					if (err) {
-						console.error("Error: al escribir el archivo", err);
-						return res
-							.status(500)
-							.json({ error: "Error al guardar el archivo" });
+		if (req.files) {
+			if (err) {
+				return res
+					.status(400)
+					.json({ error: "Error al guardar los archivos uploads" });
+			}
+			req.uploadedFilePath = {
+				photos: req.files.map(file => {
+					const dir = path.join(__dirname, `public/uploads/products`);
+					if (!fs.existsSync(dir)) {
+						fs.mkdirSync(dir, { recursive: true });
 					}
-				});
-				return filePath;
-			}),
-		};
-		next();
+					const filePath = path.join(dir, `${ramdomName()}.webp`);
+
+					fs.writeFile(filePath, file.buffer, err => {
+						if (err) {
+							console.error("Error: al escribir el archivo", err);
+							return res
+								.status(500)
+								.json({ error: "Error al guardar el archivo" });
+						}
+					});
+					return filePath;
+				}),
+			};
+			next();
+		} else {
+			next();
+		}
 	});
 };
 

@@ -152,10 +152,10 @@
 
 5. **PRUEBAS PARA EL ROUTER DE SESSIONS**
 
-- [] Incluir por lo menos 3 tests desarrollados para el router de sessions:
-  - [] Test para iniciar sesión correctamente con credenciales válidas.
-  - [] Test para fallar al iniciar sesión con credenciales inválidas y verificar el mensaje de error.
-  - [] Test para cerrar sesión y verificar que el usuario ya no esté autenticado.
+- [✅] Incluir por lo menos 3 tests desarrollados para el router de sessions:
+  - [✅] Test para iniciar sesión correctamente con credenciales válidas.
+  - [✅] Test para fallar al iniciar sesión con credenciales inválidas y verificar el mensaje de error.
+  - [✅] Test para cerrar sesión y verificar que el usuario ya no esté autenticado.
 
 6. **EJECUCIÓN Y VALIDACIÓN DE LAS PRUEBAS**
 

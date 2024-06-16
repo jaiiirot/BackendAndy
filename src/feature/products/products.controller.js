@@ -13,11 +13,13 @@ const postProduct = async (req, res) => {
 		// console.log(req.body, req.files);
 		if (!req.body && (!req.body.photoUrl || !req.files)) {
 			logger.warning("C: ⚠️ Datos insuficientes para agregar el producto");
-			return redirectToPanel(res, 400, "postfailed");
+			res
+				.status(400)
+				.send({ msg: "Datos insuficientes para agregar el producto" });
 		}
 		await productsService.post(req.body, req.files);
 		logger.info("C: 🆕 Producto agregado correctamente");
-		redirectToPanel(res, 200, "postsuccess");
+		res.status(200).send({ msg: "Producto agregado correctamente" });
 	} catch (error) {
 		logger.error("C: 🔴 Error al agregar producto:", error);
 		redirectToPanel(res, 500, "failed");
@@ -88,7 +90,39 @@ const getAllMockingProducts = async (req, res) => {
 	}
 };
 
+const getIdProduct = async (req, res) => {
+	try {
+		logger.info(
+			`C: 🔍 Intentando obtener el producto con ID ${req.params.pid}`
+		);
+		const result = await productsService.getById(req.params.pid);
+		if (!result) {
+			logger.error(
+				`C: 🔴 Error al obtener el producto con ID ${req.params.pid}`
+			);
+			return res.status(404).send({ status: "error", payload: {} });
+		}
+		logger.info(
+			`C: 🛍️ Producto con ID ${req.params.pid} obtenido correctamente`
+		);
+		res
+			.status(200)
+			.send({
+				status: "success",
+				payload: { ...result },
+				msg: "¡Producto obtenido correctamente!",
+			});
+	} catch (error) {
+		logger.error(
+			`C: 🔴 Error al obtener el producto con ID ${req.params.pid}:`,
+			error
+		);
+		res.status(500).send({ status: "error", payload: {} });
+	}
+};
+
 export const controllersProducts = {
+	getIdProduct,
 	postProduct,
 	deleteProduct,
 	putProduct,
