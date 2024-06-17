@@ -4,3 +4,5 @@
 ./.eslintrc.js
 ./TODO.md
 ./.env.dev
+./.env.*
+./.errors.log
