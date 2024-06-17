@@ -98,9 +98,7 @@ export const emailPurchaseConfirmation = (
                     <tfoot>
                         <tr>
                             <td colspan="2" style="padding: 10px; border-top: 2px solid #ddd; text-align: right; font-weight: bold;">Total</td>
-                            <td style="padding: 10px; border-top: 2px solid #ddd; text-align: right; font-weight: bold;">$${total.toFixed(
-															2
-														)}</td>
+                            <td style="padding: 10px; border-top: 2px solid #ddd; text-align: right; font-weight: bold;">$${total.toFixed(2)}</td>
                         </tr>
                     </tfoot>
                 </table>

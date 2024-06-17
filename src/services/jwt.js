@@ -1,8 +1,9 @@
 import jwt from "jsonwebtoken";
 import { logger } from "../utils/logger/logger.js";
+import { ENV } from "../config/config.js";
 
 const createToken = (data, time) => {
-	const token = jwt.sign(data, process.env.SECRET_COOKIE, {
+	const token = jwt.sign(data, ENV.SECRET_COOKIE, {
 		expiresIn: `${time}min`,
 	});
 	const cookieOptions = {
@@ -15,7 +16,7 @@ const createToken = (data, time) => {
 
 const verifyToken = token => {
 	try {
-		const result = jwt.verify(token, process.env.SECRET_COOKIE);
+		const result = jwt.verify(token, ENV.SECRET_COOKIE);
 		logger.info(`🔓 usuario ${result.email} en estado para cambiar contraseña`);
 		return result;
 	} catch (error) {

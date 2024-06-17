@@ -17,7 +17,7 @@ import { logger, loggerServer } from "./utils/logger/logger.js";
 
 const app = express();
 const httpServer = app.listen(ENV.PORT, () => {
-	logger.info(`🟢 Servidor en http://localhost:${ENV.PORT}`);
+	logger.info(`🟢 Servidor en ${ENV.PORT}`);
 });
 
 // MIDDLAWARES

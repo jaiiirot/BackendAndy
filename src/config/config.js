@@ -27,6 +27,3 @@ export const ENV = {
 		KEY: process.env.NODEMAILER_KEY,
 	},
 };
-
-// hacer algo on nodemailer
-// https://www.youtube.com/watch?v=rleozFydcKk

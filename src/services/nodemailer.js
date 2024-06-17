@@ -1,18 +1,18 @@
 import nodemailer from "nodemailer";
 import { ENV } from "../config/config.js";
-const { USER, KEY } = ENV.NODEMAILER;
+
 const transporter = nodemailer.createTransport({
 	service: "gmail",
 	auth: {
-		user: USER,
-		pass: KEY,
+		user: ENV.NODEMAILER.USER,
+		pass: ENV.NODEMAILER.KEY,
 	},
 });
 
 const sendMail = async (to, subject, text, html) => {
 	try {
 		const info = await transporter.sendMail({
-			from: `"Ilicito" <${USER}>`,
+			from: `"Ilicito" <${ENV.NODEMAILER.USER}>`,
 			to,
 			subject,
 			text,

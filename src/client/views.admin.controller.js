@@ -28,7 +28,6 @@ const PanelProducts = async (req, res) => {
 	try {
 		let products;
 		const action = req.query.action;
-		// console.log(req.infoUser);
 		if (action === "agregar") {
 			res.render("components/admin/actionprod", {
 				layout: "admin",
@@ -38,7 +37,6 @@ const PanelProducts = async (req, res) => {
 					...req.infoUser,
 				},
 			});
-			// logger.info("🟢 Renderizado el formulario para agregar productos");
 		} else if (action === "editar") {
 			products = await productsService.getById(req.query.pid);
 			res.render("components/admin/actionprod", {
@@ -51,7 +49,6 @@ const PanelProducts = async (req, res) => {
 					exist_product: true,
 				},
 			});
-			// logger.info("🟢 Renderizado el formulario para editar productos");
 		} else {
 			const page = parseInt(req.query.page) || 1;
 			products = await productsService.getAll({}, { page, limit: 10 });
@@ -78,7 +75,6 @@ const PanelProducts = async (req, res) => {
 					...req.infoUser,
 				},
 			});
-			// logger.info("🟢 Productos del panel de administración renderizados con éxito");
 		}
 	} catch (error) {
 		logger.error(

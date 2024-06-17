@@ -13,7 +13,6 @@ export default class ProductsDAO {
 
 	async getAll(query, options) {
 		try {
-			// console.log(query, options);
 			return await Products.paginate(query, { ...options, lean: true });
 		} catch (error) {
 			logger.error("D: 🔴 Error al obtener todos los productos:", error);

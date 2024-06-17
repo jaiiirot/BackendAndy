@@ -6,7 +6,6 @@ const postDocument = async (req, res) => {
 		logger.info(
 			`C: 📄 Subiendo documento para el usuario con ID ${req.params.uid}`
 		);
-		// console.log(req.file);
 		const user = await usersService.postDocument(
 			req.params.uid,
 			req.uploadedFilePath.doc
