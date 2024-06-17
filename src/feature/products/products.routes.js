@@ -43,6 +43,7 @@ router.put(
 	authentication,
 	authorization(["ADMIN"]),
 	// fsSaveImagesProductsBuffer,
+	uploadBuffer.array("photo", 4),
 	controllersProducts.putProduct
 );
 

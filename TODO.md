@@ -144,11 +144,11 @@
 
 4. **PRUEBAS PARA EL ROUTER DE CARTS**
 
-- [] Incluir por lo menos 3 tests desarrollados para el router de carts:
-  - [] Test para agregar un producto al carrito y verificar que se ha agregado correctamente.
-  - [] Test para obtener el carrito y validar que contiene los productos esperados.
-  - [] Test para actualizar la cantidad de un producto en el carrito y verificar los cambios.
-  - [] Test para eliminar un producto del carrito y verificar que ya no esté presente.
+- [✅] Incluir por lo menos 3 tests desarrollados para el router de carts:
+  - [✅] Test para agregar un producto al carrito y verificar que se ha agregado correctamente.
+  - [✅] Test para obtener el carrito y validar que contiene los productos esperados.
+  - [✅] Test para actualizar la cantidad de un producto en el carrito y verificar los cambios.
+  - [✅] Test para eliminar un producto del carrito y verificar que ya no esté presente.
 
 5. **PRUEBAS PARA EL ROUTER DE SESSIONS**
 
@@ -159,12 +159,12 @@
 
 6. **EJECUCIÓN Y VALIDACIÓN DE LAS PRUEBAS**
 
-- [] Ejecutar las pruebas y asegurarse de que todas pasen:
+- [✅] Ejecutar las pruebas y asegurarse de que todas pasen:
   ```bash
   npm test
   ```
-- [] Revisar y corregir cualquier error o falla en las pruebas.
-- [] Asegurarse de que las pruebas cubran adecuadamente las funcionalidades de cada router y las validaciones necesarias.
+- [✅] Revisar y corregir cualquier error o falla en las pruebas.
+- [✅] Asegurarse de que las pruebas cubran adecuadamente las funcionalidades de cada router y las validaciones necesarias.
 
 ## CUARTA PRÁCTICA INTEGRADORA
 
@@ -182,8 +182,8 @@
 3. **ENDPOINT PARA SUBIR DOCUMENTOS**
 
 - [✅] Crear un endpoint en el router de usuarios `api/users/:uid/documents` con el método POST.
-- [] Utilizar el middleware de Multer para recibir y gestionar los documentos cargados.
-- [] Actualizar el modelo de User para reflejar que el usuario ha subido documentos específicos.
+- [✅] Utilizar el middleware de Multer para recibir y gestionar los documentos cargados.
+- [✅] Actualizar el modelo de User para reflejar que el usuario ha subido documentos específicos.
 
 4. **CONFIGURACIÓN DE MULTER**
 

@@ -56,6 +56,7 @@ const putProduct = async (req, res) => {
 		logger.info(
 			`C: 🔄 Intentando actualizar el producto con ID ${req.params.pid}`
 		);
+		console.log(req.body);
 		if (!req.body || !req.params.pid) {
 			logger.warning("C: ⚠️ Datos insuficientes para actualizar el producto");
 			res.status(400).send({ msg: "Datos insuficientes para actualizar" });

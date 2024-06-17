@@ -102,7 +102,8 @@
             alert("Producto actualizado exitosamente");
             window.location.href = "/panel/productos";
         } else {
-            window.location.href = response.url;
+            console.log("Error al actualizar el producto:", response.statusText);
+            // window.location.href = response.url;
         }
     } catch (error) {
         console.error("Error al actualizar el producto:", error);
