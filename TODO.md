@@ -136,11 +136,11 @@
 
 3. **PRUEBAS PARA EL ROUTER DE PRODUCTS**
 
-- [] Incluir por lo menos 3 tests desarrollados para el router de products:
-  - [] Test para crear un producto correctamente.
-  - [] Test para obtener un producto por ID y validar su contenido.
-  - [] Test para actualizar un producto y verificar los cambios.
-  - [] Test para eliminar un producto y verificar que ya no exista.
+- [✅] Incluir por lo menos 3 tests desarrollados para el router de products:
+  - [✅] Test para crear un producto correctamente.
+  - [✅] Test para obtener un producto por ID y validar su contenido.
+  - [✅] Test para actualizar un producto y verificar los cambios.
+  - [✅] Test para eliminar un producto y verificar que ya no exista.
 
 4. **PRUEBAS PARA EL ROUTER DE CARTS**
 

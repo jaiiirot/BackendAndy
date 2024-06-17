@@ -75,7 +75,9 @@ const getPurchaseCart = async (req, res) => {
 const postCreateCart = async (req, res) => {
 	try {
 		logger.info("C: ➕ Creando un nuevo carrito");
+		console.log("req.body: ", req.body);
 		const newCart = await cartsService.post(req.body);
+		console.log("newCart: ", newCart);
 		res.status(201).send(newCart);
 	} catch (error) {
 		logger.error("C: 🔴 Error al crear el carrito:", error);

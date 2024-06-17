@@ -18,7 +18,7 @@ export const mockuser = {
 	},
 
 	admin: {
-		email: "jhon.jairo.tumiri@gmail.com",
+		email: "admincoder@coder.com",
 		password: "adminCod3r123",
 	},
 };

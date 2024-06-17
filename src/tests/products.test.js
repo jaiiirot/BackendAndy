@@ -1,14 +1,13 @@
+/* eslint-disable no-undef */
 export const PRODUCTS_TESTS = (http, expect, mock) => {
-	// eslint-disable-next-line no-undef
 	describe("🏪 TEST PRODUCTS", function () {
 		const data = {};
-		// eslint-disable-next-line no-undef
 		before(async () => {
 			const user = await http.post("/api/sessions/login").send(mock.user.admin);
 			const cookieJWT = user.headers["set-cookie"][0].split(";")[0].split("=");
 			data.cookie = { name: cookieJWT[0], value: cookieJWT[1] };
 		});
-		// eslint-disable-next-line no-undef
+
 		it("POST: /api/products/ - PRODUCT URL", async function () {
 			const res = await http
 				.post("/api/products/")
@@ -19,7 +18,6 @@ export const PRODUCTS_TESTS = (http, expect, mock) => {
 			expect(res.body.msg).to.equal("Producto agregado correctamente");
 			data.produrl = res.body.payload;
 		});
-		// eslint-disable-next-line no-undef
 		it("POST: /api/products/ - PRODUCT FILES", async function () {
 			const res = await http
 				.post("/api/products/")
@@ -42,7 +40,6 @@ export const PRODUCTS_TESTS = (http, expect, mock) => {
 			expect(res.body.msg).to.equal("Producto agregado correctamente");
 			data.prodfile = res.body.payload;
 		});
-		// eslint-disable-next-line no-undef
 		it("GET: /api/products/pid: - PRODUCT ID", async function () {
 			const res = await http
 				.get("/api/products/665fc9d832ee05a1ea4a8eb8")
@@ -54,7 +51,6 @@ export const PRODUCTS_TESTS = (http, expect, mock) => {
 			expect(res.status).to.equal(200);
 			expect(res.body.msg).to.equal("¡Producto obtenido correctamente!");
 		});
-		// eslint-disable-next-line no-undef
 		it("PUT: /api/products/:pid - PRODUCT ID", async function () {
 			const res = await http
 				.put("/api/products/665fc9d832ee05a1ea4a8eb8")
@@ -62,10 +58,15 @@ export const PRODUCTS_TESTS = (http, expect, mock) => {
 				.send(mock.prod.putproduct);
 			expect(res.status).to.equal(200);
 		});
-		// eslint-disable-next-line no-undef
 		it("DELETE: /api/products/:pid - PRODUCT ID", async function () {
 			const res = await http
 				.delete(`/api/products/${data.prodfile._id}`)
+				.set("Cookie", [`${data.cookie.name}=${data.cookie.value}`]);
+			expect(res.status).to.equal(200);
+		});
+		it("DELETE: /api/products/:pid - PRODUCT ID", async function () {
+			const res = await http
+				.delete(`/api/products/${data.produrl._id}`)
 				.set("Cookie", [`${data.cookie.name}=${data.cookie.value}`]);
 			expect(res.status).to.equal(200);
 		});
