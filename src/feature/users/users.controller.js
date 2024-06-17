@@ -6,7 +6,7 @@ const postDocument = async (req, res) => {
 		logger.info(
 			`C: 📄 Subiendo documento para el usuario con ID ${req.params.uid}`
 		);
-		console.log(req.file);
+		// console.log(req.file);
 		const user = await usersService.postDocument(
 			req.params.uid,
 			req.uploadedFilePath.doc
@@ -94,16 +94,15 @@ const getAllUsersCondition = async (req, res) => {
 };
 
 const deleteAllUserTwoDays = async (req, res) => {
-	try{
+	try {
 		const response = await usersService.deleInactiveUsers();
-		if(response){
-			logger.info("C: 🗑 Lo usuarios fueron eliminados")
-		}else{
-			logger.info("C: 🚯 No hay usuarios inactivos hace 2 dias")
+		if (response) {
+			logger.info("C: 🗑 Lo usuarios fueron eliminados");
+		} else {
+			logger.info("C: 🚯 No hay usuarios inactivos hace 2 dias");
 		}
-
-	}catch(error){
-		logger.error("C: 🔴 Error al eliminar a los usuarios inactivos")
+	} catch (error) {
+		logger.error("C: 🔴 Error al eliminar a los usuarios inactivos");
 	}
 };
 
