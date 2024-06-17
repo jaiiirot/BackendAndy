@@ -17,7 +17,6 @@ export const CARTS_TESTS = (http, expect, mock) => {
 			const res = await http
 				.get(`/api/carts/${data.user.cart.cid}`)
 				.set("Cookie", [`${data.cookie.name}=${data.cookie.value}`]);
-
 			expect(res.status).to.equal(200);
 		});
 		it("POST: /api/carts/:cid/productos/:pid - POST PRODUCT TO CART", async function () {
@@ -59,6 +58,16 @@ export const CARTS_TESTS = (http, expect, mock) => {
 				.set("Cookie", [`${data.cookie.name}=${data.cookie.value}`]);
 
 			expect(res.status).to.equal(200);
+		});
+		it("DELETE: /api/carts/:cid - DELETE CART", async function () {
+			const res = await http
+				.delete(`/api/carts/${data.user.cart.cid}`)
+				.set("Cookie", [`${data.cookie.name}=${data.cookie.value}`]);
+
+			expect(res.status).to.equal(200);
+		});
+		after(async () => {
+			await mock.schema.Carts.deleteOne({ _id: data.user.cart.cid });
 		});
 	});
 };

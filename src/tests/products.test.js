@@ -7,7 +7,6 @@ export const PRODUCTS_TESTS = (http, expect, mock) => {
 			const cookieJWT = user.headers["set-cookie"][0].split(";")[0].split("=");
 			data.cookie = { name: cookieJWT[0], value: cookieJWT[1] };
 		});
-
 		it("POST: /api/products/ - PRODUCT URL", async function () {
 			const res = await http
 				.post("/api/products/")

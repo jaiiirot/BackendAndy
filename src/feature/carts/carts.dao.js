@@ -115,7 +115,7 @@ export default class CartsDAO {
 
 	async delete(cartId) {
 		try {
-			return await Carts.findByIdAndDelete(cartId);
+			return await Carts.deleteOne(cartId);
 		} catch (error) {
 			logger.error("D: 🔴 Error al eliminar carrito:", error);
 			throw error;
