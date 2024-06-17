@@ -1,4 +1,4 @@
-import { faker } from "@faker-js/Faker";
+import { faker } from "@faker-js/faker";
 import { logger } from "../logger/logger.js";
 import __dirname from "../utils.js";
 import fs from "fs";

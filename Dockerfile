@@ -1,12 +1,19 @@
-FROM node:14
+FROM node:20-buster-slim
 
+# Crear directorio de la aplicación
 WORKDIR /app
 
-COPY package.json .
-COPY package-lock.json .
+# Copiar el package.json y package-lock.json
+COPY package*.json ./
 
+# Instalar las dependencias
 RUN npm install
 
+# Copiar el resto del código de la aplicación
 COPY . .
 
-CMD [ "npm", "start" ]
+# Exponer el puerto en el que la aplicación estará escuchando
+EXPOSE 8080
+
+# Comando para ejecutar la aplicación
+CMD ["npm", "start"]
