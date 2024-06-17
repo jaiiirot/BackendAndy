@@ -15,7 +15,7 @@
           </span>
         {{/each}}
       </div>
-      <div class="flex-1 flex flex-col bg-white overflow-hidden h-full">
+      <div class="flex-1 flex flex-col bg-white overflow-hidden h-[90%]">
         <div
           class="border-b border-gray-200 flex px-6 py-2 items-center flex-none shadow-xl" id="container-chat"
         >
@@ -57,25 +57,30 @@
   const loadingchat = (mid,email) => {
   dataUserMessage.innerHTML = "";
   dataUserMessage.innerHTML = `<span class="text-gray-400">#</span><span class="text-gray-800">${email}</span>`;
+  messageId.setAttribute("data-mid", mid);
+
   socket.emit("onchat", mid);
   socket.on(`loadingchat_${mid}`, (messages) => {
     messagesContainer.innerHTML = "";
     messages.forEach((msg) => {
-      const div = `<div class="flex items-start justify-end"><div class="bg-[#010101] p-3 rounded-lg"><p class="text-sm text-white">${msg.message}</p></div></div>`;
-      messagesContainer.innerHTML += div;
+      if(msg.role !== "user"){
+        const div = `<div class="flex items-start justify-end"><div class="bg-[#010101] p-3 rounded-lg"><p class="text-sm text-white">${msg.message}</p></div></div>`;
+        messagesContainer.innerHTML += div;
+      }else{
+        const div = `<div class="flex items-end"><div class="ml-3 bg-gray-100 p-3 rounded-lg"><p class="text-sm text-gray-800">${msg.message}</p></div></div>`;
+        messagesContainer.innerHTML += div;
+      }
     });
   });
-
+  }
 messageInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
     const message = e.target.value.trim();
     if (message !== "") {
-      socket.emit("input_chat", { mid: mid, role: "admin", message: message });
+      socket.emit("input_chat", { mid: messageId.dataset.mid, role: "admin", message: message });
       e.target.value = "";
-    }
-  }
-});
-  socket.on(`container_chat_${mid}`, (messages) => {
+
+        socket.on(`container_chat_${messageId.dataset.mid}`, (messages) => {
     messagesContainer.innerHTML = "";
     messages.forEach((msg) => {;
       if(msg.role !== "user"){
@@ -88,6 +93,9 @@ messageInput.addEventListener("keypress", (e) => {
     });
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
   });
-  };
+    }
+  }
+});
+
 </script>
 

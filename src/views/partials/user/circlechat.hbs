@@ -63,16 +63,6 @@
   const messageInput = document.getElementById("message-input");
   const messagesContainer = document.getElementById("messages-container");
 
-  socket.emit("onchat", messageId.dataset.mid);
-  socket.on(`loadingchat_${messageId.dataset.mid}`, async (messages) => {
-    messagesContainer.innerHTML = "";
-    messages.forEach((msg) => {
-      const div = `<div class="flex items-start justify-end"><div class="bg-[#010101] p-3 rounded-lg"><p class="text-sm text-white">${msg.message}</p></div></div>`;
-      messagesContainer.innerHTML += div;
-    });
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-  });
-
  messageInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
     const message = e.target.value.trim();

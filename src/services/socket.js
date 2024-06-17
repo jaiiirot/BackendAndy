@@ -24,7 +24,7 @@ const initialSocket = (socket, ENV) => {
 		io.on("onchat", async data => {
 			try {
 				socket.emit(
-					`container_chat_${data}`,
+					`loadingchat_${data}`,
 					await messagesService.getChatById(data)
 				);
 			} catch (error) {
