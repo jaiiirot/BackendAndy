@@ -1,3 +1,4 @@
+import { messagesService } from "../feature/messages/repository/messages.service.js";
 import { productsService } from "../feature/products/repository/products.service.js";
 import { ticketsService } from "../feature/tickets/repository/tickets.service.js";
 import { usersService } from "../feature/users/repository/users.service.js";
@@ -87,12 +88,15 @@ const PanelProducts = async (req, res) => {
 
 const PanelMessages = async (req, res) => {
 	try {
+		const chats = await messagesService.getAll();
+		const messages = chats.filter(chat => chat.messages.length > 0);
 		res.render("components/admin/chats", {
 			layout: "admin",
 			admin: {
 				title: "Mensajes || Panel",
-				messages: [],
-				chat: [],
+				...req.infoUser,
+				messages,
+				chats: messages,
 			},
 		});
 		// logger.info("🟢 Página de mensajes del panel de administración renderizada con éxito");

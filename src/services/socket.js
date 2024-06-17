@@ -5,8 +5,6 @@ const initialSocket = (socket, ENV) => {
 	socket.on("connection", async io => {
 		logger.info("🟢 usuario conectado");
 
-		
-
 		io.on("input_chat", async data => {
 			try {
 				await messagesService.postAddMessageInChat(
@@ -15,7 +13,7 @@ const initialSocket = (socket, ENV) => {
 					data.message
 				);
 				socket.emit(
-					"container_chat",
+					`container_chat_${data.mid}`,
 					await messagesService.getChatById(data.mid)
 				);
 			} catch (error) {
@@ -25,7 +23,10 @@ const initialSocket = (socket, ENV) => {
 
 		io.on("onchat", async data => {
 			try {
-				socket.emit("container_chat", await messagesService.getChatById(data));
+				socket.emit(
+					`container_chat_${data}`,
+					await messagesService.getChatById(data)
+				);
 			} catch (error) {
 				logger.warning("⚠️ Error al enviar mensaje:", error);
 			}

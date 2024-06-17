@@ -1,8 +1,40 @@
-    <header class="h-16 w-full flex items-center relative justify-between px-5 space-x-10 bg-[#121212]">
+    <header class="h-16 w-full flex items-center justify-between bg-[#121212] sm:px-4">
       <!-- Bar -->
       <div class="flex flex-row w-max items-center justify-center">
+        <span id="button-header" class="z-[100]">
         {{>icons/menu x="30" y="30"}}
-        {{>icons/logo direccion="/panel" color="white" confirmcircle=false circlex="6" circley="6" fontsize="2"}}
+        </span>
+        {{>icons/logo direccion="/panel" color="white" confirmcircle=false circlex="6" circley="6" fontsize="1.8"}}
+      </div>
+
+      <div id="active-header" class="md:w-max hidden sm:flex items-center justify-center text-white gap-4">
+        <a href="/panel" class="p-2 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+          {{!-- {{>icons/github x="30" y="30"}} --}}
+          tickets
+        </a>
+        
+        <!-- Profile -->
+        <a href="/panel/usuarios" class="p-2 flex items-center justify-center rounded-lg cursor-pointer hover:text-[#121212] hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+          {{!-- {{>icons/login x="30" y="30"}} --}}
+          usuarios
+        </a>
+
+        <!-- Courses -->
+        <a href="/panel/productos" class="p-2 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+          {{!-- {{>icons/store x="30" y="30"}} --}}
+          productos
+        </a>
+
+        <!-- Theme -->
+        <a href="/panel/chat" class="p-2 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+          {{!-- {{> icons/message x="30" y="30"}} --}}
+          chats
+        </a>
+
+        {{!-- <!-- logout -->
+        <a href="/api/sessions/logout" class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+          {{>icons/logout x="30" y="30"}}
+        </a> --}}
       </div>
 
       <!-- Informacion -->
@@ -14,5 +46,28 @@
           <!-- Título -->
           <div class="text-xs md:text-sm font-regular">Panel de Control</div>
         </div>
+        <div class="h-full rounded-full overflow-hidden">
+          <img src="/image/sinavatar.png" alt="avatar {{user.username}}" class="h-10">
+        </div>
+        <a href="/api/sessions/logout" class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
+          {{>icons/logout x="30" y="30"}}
+        </a>
       </div>
     </header>
+
+    <script>
+      const button = document.getElementById('button-header');
+      const active = document.getElementById('active-header');
+
+      button.addEventListener('click', () => {
+        active.classList.toggle('hidden');
+        active.classList.toggle('flex');
+        active.classList.toggle('flex-col');
+        active.classList.toggle('absolute');
+        active.classList.toggle('top-0');
+        active.classList.toggle('w-full');
+        active.classList.toggle('h-full');
+        active.classList.toggle('bg-[#121212]');
+        active.classList.toggle('z-50');
+      });
+    </script>

@@ -4,8 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link 
       rel="shortcut icon" 
-      href="https://cdn-icons-png.flaticon.com/512/12205/12205479.png" 
-      type="image/jpeg" />
+      href="/image/avatar.png" 
+      type="image/png" />
     {{! ICONS }}
     <script
       src="https://kit.fontawesome.com/de8fe1cee1.js"
@@ -56,35 +56,7 @@
       }
     </style>
   </head>
-  <body class="h-screen w-full bg-white relative flex overflow-hidden">
-      <!-- Sidebar -->
-      <aside class="h-full w-0 flex flex-col space-y-10 items-center justify-center relative bg-[#121212] text-white sm:w-max sm:px-4">
-        <a href="/panel" class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
-          {{>icons/github x="30" y="30"}}
-        </a>
-        
-        <!-- Profile -->
-        <a href="/panel/usuarios" class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-[#121212] hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
-          {{>icons/login x="30" y="30"}}
-        </a>
-
-        <!-- Courses -->
-        <a href="/panel/productos" class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
-          {{>icons/store x="30" y="30"}}
-        </a>
-
-        <!-- Theme -->
-        <a href="/panel/chat" class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
-          {{> icons/message x="30" y="30"}}
-        </a>
-
-        <!-- logout -->
-        <a href="/api/sessions/logout" class="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white  hover:duration-300 hover:ease-linear focus:bg-white">
-          {{>icons/logout x="30" y="30"}}
-        </a>
-      </aside>
-
-      <div class="w-full h-full flex flex-col justify-between">
+  <body class="h-screen w-full bg-white relative overflow-hidden">
         <!-- Header -->
         {{>admin/header user=admin.info}}
 
