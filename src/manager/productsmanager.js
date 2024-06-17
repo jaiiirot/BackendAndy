@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { logger } from '../utils/logger/logger'
 
 class ManagerProduct {
   static id = 0
@@ -13,7 +14,7 @@ class ManagerProduct {
       const data = await fs.promises.readFile(this.path, 'utf-8')
       this.products = JSON.parse(data)
     } catch (error) {
-      console.log('No se encontraron productos')
+      logger.error('🔴 No se encontraron productos', error)
     }
   }
 
