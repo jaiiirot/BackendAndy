@@ -194,7 +194,7 @@
 
 5. **MODIFICACIÓN DEL ENDPOINT PARA ACTUALIZAR A PREMIUM**
 
-- [] Modificar el endpoint `/api/users/premium/:uid` para que sólo actualice al usuario a premium si ya ha cargado los siguientes documentos:
+- [✅] Modificar el endpoint `/api/users/premium/:uid` para que sólo actualice al usuario a premium si ya ha cargado los siguientes documentos:
   - Identificación
   - Comprobante de domicilio
   - Comprobante de estado de cuenta
@@ -215,9 +215,9 @@
 1. **NUEVAS RUTAS EN EL ROUTER DE /API/USERS**
 
   - [✅] **GET /API/USERS**: Obtener todos los usuarios devolviendo los datos principales (nombre, correo, tipo de cuenta).
-  - [] **DELETE /API/USERS**: Limpiar a todos los usuarios que no hayan tenido conexión en los últimos 2 días.
-  - [] Implementar la lógica para verificar la última conexión y eliminar los usuarios inactivos.
-  - [] Enviar un correo notificando a los usuarios que su cuenta ha sido eliminada por inactividad.
+  - [✅] **DELETE /API/USERS**: Limpiar a todos los usuarios que no hayan tenido conexión en los últimos 2 días.
+  - [✅] Implementar la lógica para verificar la última conexión y eliminar los usuarios inactivos.
+  - [✅] Enviar un correo notificando a los usuarios que su cuenta ha sido eliminada por inactividad.
 
 2. **VISTA DE ADMINISTRACIÓN DE USUARIOS**
 
