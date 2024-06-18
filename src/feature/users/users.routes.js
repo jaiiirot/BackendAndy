@@ -10,7 +10,12 @@ import {
 const router = Router();
 router.get("/", controllerUsers.getAllUsersCondition);
 
-router.delete("/time", controllerUsers.deleteAllUserTwoDays);
+router.delete(
+	"/time",
+	authentication,
+	authorization(["ADMIN"]),
+	controllerUsers.deleteAllUserTwoDays
+);
 
 router.delete(
 	"/:uid",
