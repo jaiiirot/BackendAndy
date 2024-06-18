@@ -97,6 +97,9 @@ const deleteAllUserTwoDays = async (req, res) => {
 		const response = await usersService.deleInactiveUsers();
 		if (response) {
 			logger.info("C: 🗑 Lo usuarios fueron eliminados");
+			res
+				.status(200)
+				.json({ msg: "Usuarios eliminados correctamente", response });
 		} else {
 			logger.info("C: 🚯 No hay usuarios inactivos hace 2 dias");
 		}

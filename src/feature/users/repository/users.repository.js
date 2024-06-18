@@ -1,4 +1,5 @@
 import { servicesExternal } from "../../../services/repository/external.service.js";
+import { emailDeleteCountInactive } from "../../../utils/emailtermplate.js";
 import { logger } from "../../../utils/logger/logger.js";
 import UsersDTO from "../users.dto.js";
 
@@ -269,6 +270,34 @@ export default class UsersRepository {
 				`R: 🔴 Error al actualizar última conexión de usuario por ID ${id}:`,
 				error
 			);
+			throw error;
+		}
+	};
+
+	deleInactiveUsers = async () => {
+		try {
+			const response = await this.dao.deleteInactiveUsers();
+			if (!response) {
+				logger.warning("R: ⚠️ No se eliminaron usuarios inactivos");
+				return { msg: "No se eliminaron usuarios inactivos" };
+			}
+			logger.info("R: 🗑️ Usuarios inactivos eliminados correctamente");
+			response.forEach(async user => {
+				await this.cartDao.delete(user.cart.cid);
+				await this.messageDao.delete(user.messages.mid);
+				await servicesExternal.sendMailDeleteInactive(
+					user.email,
+					"Eliminación de usuarios inactivos",
+					"Eliminación de usuarios inactivos",
+					emailDeleteCountInactive("localhost:8080", user.email)
+				);
+				logger.info(
+					`R: 📧 Correo de eliminación de usuario inactivo enviado ${user.username}`
+				);
+			});
+			return response;
+		} catch (error) {
+			logger.error("R: 🔴 Error al eliminar usuarios inactivos:", error);
 			throw error;
 		}
 	};

@@ -166,17 +166,23 @@ export default class UsersDAO {
 		}
 	}
 
-	// async deleteInactiveUsers() {
-	// 	try {
-	// 		const threshold = new Date(Date.now() - 30 * 60 * 1000); // 30 minutos de inactividad para pruebas, cambiar a 2 días para producción
-	// 		const inactiveUsers = await Users.find({ lastConnection: { $lt: threshold } });
-	// 		for (const user of inactiveUsers) {
-	// 			await servicesExternal // REALIZAR EL EMAIL				await Users.findByIdAndDelete(user._id);
-	// 			logger.info(`D: 🗑️ Usuario eliminado por inactividad: ${user.email}`);
-	// 		}
-	// 	} catch (error) {
-	// 		logger.error("D: 🔴 Error al eliminar usuarios inactivos:", error);
-	// 		throw error;
-	// 	}
-	// }
+	async deleteInactiveUsers() {
+		try {
+			console.log("D: 🔄 Eliminando usuarios inactivos");
+			const threshold = new Date(Date.now() - 60 * 60 * 1000); // 1 hora
+			const email = await Users.find({
+				lastConnection: { $lt: threshold },
+				role: ["CLIENT", "PREMIUM"],
+			});
+			await Users.deleteMany({
+				lastConnection: { $lt: threshold },
+				role: ["CLIENT", "PREMIUM"],
+			});
+			logger.info("D: 🗑️ Usuarios inactivos eliminados:", email);
+			return email;
+		} catch (error) {
+			logger.error("D: 🔴 Error al eliminar usuarios inactivos:", error);
+			throw error;
+		}
+	}
 }

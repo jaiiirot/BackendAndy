@@ -1,10 +1,10 @@
-<aside class="flex flex-col justify-around align-center w-full h-full">
+<aside class="flex flex-col align-center w-full h-full">
    {{!-- Form --}}
    <section class="bg-gray-200 px-8 py-4 w-full h-max">
         <span id="id-admin-change" class="hidden">{{admin.data._id}}</span>
       <form id="product-form" enctype="multipart/form-data">
-         <div class="flex gap-2">
-            <div class="flex gap-2 flex-col w-6/12">
+         <div class="flex flex-col md:flex-row gap-2">
+            <div class="flex gap-2 flex-col w-full md:w-6/12">
                <input type="text" name="title" id="title-input" placeholder="Titulo de producto" class="border-none outline-none text-black px-4 py-2" value="{{admin.product.title}}" />
                <textarea name="description" id="description-input" class="border-none outline-none text-black px-4 py-2 resize-none h-32" placeholder="Descripción del producto">{{admin.product.description}}</textarea>
                <input type="text" name="code" id="code-input" placeholder="Codigo del producto: 123d1AS" class="border-none outline-none text-black px-4 py-2" value="{{admin.product.code}}" />

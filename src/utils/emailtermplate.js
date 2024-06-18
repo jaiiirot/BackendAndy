@@ -98,7 +98,9 @@ export const emailPurchaseConfirmation = (
                     <tfoot>
                         <tr>
                             <td colspan="2" style="padding: 10px; border-top: 2px solid #ddd; text-align: right; font-weight: bold;">Total</td>
-                            <td style="padding: 10px; border-top: 2px solid #ddd; text-align: right; font-weight: bold;">$${total.toFixed(2)}</td>
+                            <td style="padding: 10px; border-top: 2px solid #ddd; text-align: right; font-weight: bold;">$${total.toFixed(
+															2
+														)}</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -117,7 +119,7 @@ export const emailPasswordChangeConfirmation = (host, email) => {
         <div style="max-width:600px;padding:20px;margin:auto;">
             <header style="margin:0; overflow:hidden;">
                 <a href="http://${host}/" style="display:inline-block; color:#2E8B57;text-decoration:none; float:left; margin:0;padding:0;" target="_blank">
-                    <img src="https://example.com/logo.png" alt="Logo" style="height: 2rem;">
+                    <img src="https://raw.githubusercontent.com/jaiiirot/backend-ilicito/main/src/public/image/logo.png" alt="Logo" style="height: 2rem;">
                 </a>
                 <div style="float:right; font-size:1.6rem;">
                     <span>SOPORTE TECNICO</span>
@@ -141,12 +143,12 @@ export const emailPasswordChangeConfirmation = (host, email) => {
     `;
 };
 
-export const emailDeleteCountInactive=(host,email)=> {
-    return `
+export const emailDeleteCountInactive = (host, email) => {
+	return `
         <div style="max-width:600px;padding:20px;margin:auto;">
             <header style="margin:0; overflow:hidden;">
                 <a href="http://${host}/" style="display:inline-block; color:#2E8B57;text-decoration:none; float:left; margin:0;padding:0;" target="_blank">
-                    <img src="https://example.com/logo.png" alt="Logo" style="height: 2rem;">
+                    <img src="https://raw.githubusercontent.com/jaiiirot/backend-ilicito/main/src/public/image/logo.png" alt="Logo" style="height: 2rem;">
                 </a>
                 <div style="float:right; font-size:1.6rem;">
                     <span>SOPORTE TECNICO</span>
@@ -159,8 +161,8 @@ export const emailDeleteCountInactive=(host,email)=> {
                     <p style="margin:0;padding 0;">Debido a la inactividad de 2 dias Ilicito decidio elimiar la informacion de tu cuenta por inactividad</p>
                 </div>
                 <div>
-                    <a href="http://${host}/productos" style="display:inline-block;padding:10px 20px;background-color:#2E8B57;color:#ffffff;text-decoration:none;margin:20px 0" target="_blank">Volver a compara</a>
-                    <a href="http://${host}/login" style="display:inline-block;padding:10px 20px;background-color:#FF4500;color:#ffffff;text-decoration:none;margin:20px 0" target="_blank">Iniciar sesión</a>
+                    <a href="http://${host}/productos" style="display:inline-block;padding:10px 20px;background-color:#000000;color:#ffffff;text-decoration:none;margin:20px 0" target="_blank">Volver a compara</a>
+                    <a href="http://${host}/login" style="display:inline-block;padding:10px 20px;background-color:#000000;color:#ffffff;text-decoration:none;margin:20px 0" target="_blank">Iniciar sesión</a>
                 </div>
             </div>
             <footer style="margin-top:20px;font-size:0.9em;color:#666666">
@@ -168,4 +170,4 @@ export const emailDeleteCountInactive=(host,email)=> {
             </footer>
         </div>
     `;
-}
+};
