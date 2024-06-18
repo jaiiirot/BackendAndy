@@ -82,14 +82,30 @@ export default class UsersRepository {
 		}
 	};
 
-	postDocument = async (uid, file) => {
+	postDocuments = async (uid, files) => {
 		try {
 			const user = await this.dao.getById(uid);
 			if (!user) {
 				logger.warning(`R: ⚠️ Usuario no encontrado para el ID ${uid}`);
 				return { msg: "Usuario no encontrado" };
 			} else {
-				const document = await this.dao.postDocument(uid, file);
+				const iden = ["ID", "CDD", "CDEDC"];
+				const documentsUrl = [];
+				for (const [i, file] of files.entries()) {
+					const url = await servicesExternal.postDocumentBuffer(
+						file.buffer,
+						`${iden[i]}-${uid}.pdf`
+					);
+					console.log({ name: `${iden[i]}.${uid}`, reference: url });
+					documentsUrl.push({ name: `${iden[i]}${uid}`, reference: url });
+				}
+				if (!documentsUrl || documentsUrl.length < 3) {
+					logger.error(
+						`R: 🔴 Error al subir documento para el usuario con ID ${uid}`
+					);
+					return null;
+				}
+				const document = await this.dao.postDocument(uid, documentsUrl);
 				await this.putRole(uid, "PREMIUM");
 				logger.info(
 					`R: 📄 Documento subido correctamente para el usuario con ID ${uid}`

@@ -2,6 +2,7 @@ import { productsService } from "../feature/products/repository/products.service
 import { cartsService } from "../feature/carts/repository/carts.service.js";
 import { logger } from "../utils/logger/logger.js";
 import { ticketsService } from "../feature/tickets/repository/tickets.service.js";
+import { usersService } from "../feature/users/repository/users.service.js";
 
 const RedirectHome = (req, res) => {
 	try {
@@ -172,6 +173,7 @@ const CardID = async (req, res) => {
 				cid: totalProd._id,
 			};
 		});
+		console.log(req.infoUser);
 		res.render("components/user/cart", {
 			layout: "main",
 			user: {
@@ -190,6 +192,36 @@ const CardID = async (req, res) => {
 	}
 };
 
+const Profile = async (req, res) => {
+	try {
+		const uid = req.params.uid;
+		const datauser = await usersService.getById(uid);
+		// console.log(datauser, req.infoUser);
+		if (
+			datauser.email === req.infoUser.info.email &&
+			datauser._id.toString() === req.infoUser.info.id.toString()
+		) {
+			res.render("components/user/profile", {
+				layout: "main",
+				user: {
+					title: "Perfil",
+					...req.infoUser,
+					data: datauser,
+					role: datauser.role === "CLIENT",
+				},
+			});
+		} else {
+			res.status(401).render("404");
+		}
+		// logger.info("🟢 Carrito renderizado con éxito");
+	} catch (error) {
+		logger.warning(`🔴 Error al procesar la solicitud: ${error.message}`, {
+			stack: error.stack,
+		});
+		res.status(500).render("404");
+	}
+};
+
 export const controllersViewClient = {
 	RedirectHome,
 	Home,
@@ -198,5 +230,6 @@ export const controllersViewClient = {
 	ProductDetail,
 	Tickets,
 	Contact,
+	Profile,
 	CardID,
 };

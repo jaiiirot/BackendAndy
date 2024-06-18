@@ -2,10 +2,7 @@ import { Router } from "express";
 import { authorization } from "../../middlewares/authorization.js";
 import { authentication } from "../../middlewares/authencations.js";
 import { controllerUsers } from "./users.controller.js";
-import {
-	fsSaveDocumentsBuffer,
-	fsSaveProfileImageBuffer,
-} from "../../services/upload.js";
+import { uploadBuffer } from "../../services/upload.js";
 
 const router = Router();
 router.get("/", controllerUsers.getAllUsersCondition);
@@ -33,14 +30,14 @@ router.post(
 	"/documents/:uid",
 	authentication,
 	authorization(["CLIENT"]),
-	fsSaveDocumentsBuffer,
-	controllerUsers.postDocument
+	uploadBuffer.array("documents", 3),
+	controllerUsers.postDocuments
 );
 router.put(
 	"/profile/:uid",
 	authentication,
 	authorization(["CLIENT"]),
-	fsSaveProfileImageBuffer,
+	uploadBuffer.single("profile"),
 	controllerUsers.putUserProfile
 );
 

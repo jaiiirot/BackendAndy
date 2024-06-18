@@ -1,0 +1,174 @@
+<!-- This is an example component -->
+
+<div class="h-full">
+
+	<div class="border-b-2 block md:flex">
+
+		<div class="w-full md:w-2/5 p-4 sm:p-6 lg:p-8 bg-white shadow-md">
+			<div class="flex justify-between">
+				<span class="text-xl font-semibold block">PERFIL: {{user.data.role}}</span>
+				<a
+					href="#"
+					class="-mt-2 text-md font-bold text-white bg-gray-700 rounded-full px-5 py-2 hover:bg-gray-800"
+				>Edit</a>
+			</div>
+
+			<span class="text-gray-600">Esta información es secreta así que ten cuidado.</span>
+			<div class="w-full p-8 mx-2 flex justify-center">
+				<img
+					id="showImage"
+					class="max-w-xs w-32 items-center border"
+					src="{{user.data.photo_user}}"
+					alt=""
+				/>
+			</div>
+		</div>
+
+		<div class="w-full md:w-3/5 p-8 bg-white lg:ml-4 shadow-md">
+			<div class="rounded shadow p-6">
+				<div class="pb-6">
+					<label
+						for="name"
+						class="font-semibold text-gray-700 block pb-1"
+					>Name</label>
+					<div class="flex">
+						<input
+							disabled
+							id="username"
+							class="border-1 rounded-r px-4 py-2 w-full"
+							type="text"
+							value="{{user.data.username}}"
+						/>
+					</div>
+				</div>
+				<div class="pb-4">
+					<label
+						for="about"
+						class="font-semibold text-gray-700 block pb-1"
+					>Email</label>
+					<input
+						disabled
+						id="email"
+						class="border-1 rounded-r px-4 py-2 w-full"
+						type="email"
+						value="{{user.data.email}}"
+					/>
+				</div>
+
+			</div>
+			{{#if user.role}}
+				<section class="p-6 bg-white w-[50%]">
+					<form
+						id="uploadForm"
+						enctype="multipart/form-data"
+						class="space-y-4"
+						data-uid="{{user.info.id}}"
+					>
+						<div>
+							<label
+								for="file1"
+								class="block text-sm font-medium text-gray-700"
+							>Identificación</label>
+							<input
+								type="file"
+								id="file1"
+								name="documents"
+								accept=".pdf"
+								class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+							/>
+						</div>
+						<div>
+							<label
+								for="file2"
+								class="block text-sm font-medium text-gray-700"
+							>Comprobante de domicilio</label>
+							<input
+								type="file"
+								id="file2"
+								name="documents"
+								accept=".pdf"
+								class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+							/>
+						</div>
+						<div>
+							<label
+								for="file3"
+								class="block text-sm font-medium text-gray-700"
+							>Comprobante de estado de cuenta</label>
+							<input
+								type="file"
+								id="file3"
+								name="documents"
+								accept=".pdf"
+								class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+							/>
+						</div>
+						<div>
+							<button
+								type="submit"
+								class="w-min py-2 px-4 bg-black text-white font-semibold rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+							>Enviar</button>
+						</div>
+					</form>
+				</section>
+			{{/if}}
+		</div>
+	</div>
+
+</div>
+
+<script>
+
+ const ToastNotification = (message, icon = "warning") => {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: icon,
+        title: message
+      });
+    }
+
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const uid = document.getElementById('uploadForm').dataset.uid;
+      const file1 = document.getElementById('file1').files[0];
+      const file2 = document.getElementById('file2').files[0];
+      const file3 = document.getElementById('file3').files[0];
+      if (!file1 || !file2 || !file3) {
+        if (!file1) ToastNotification('Falta el documento de Identificación');
+        if (!file2) ToastNotification('Falta el Comprobante de domicilio');
+        if (!file3) ToastNotification('Falta el Comprobante de estado de cuenta');
+      } else {
+        const formData = new FormData();
+        formData.append('documents', file1);
+        formData.append('documents', file2);
+        formData.append('documents', file3);
+        console.log(formData);
+        fetch(`/api/users/documents/${uid}`, {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          ToastNotification('Archivos enviados con éxito', 'success')
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          ToastNotification('Error al enviar los archivos', 'error');
+        })
+        .finally(() => {
+          window.location.reload();
+        })
+      }
+    });
+</script>

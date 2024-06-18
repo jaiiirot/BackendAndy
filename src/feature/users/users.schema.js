@@ -20,7 +20,6 @@ const userSchema = new mongoose.Schema({
 		type: Array,
 		name: { type: String, required: true },
 		reference: { type: String, required: true },
-		default: [],
 	},
 });
 

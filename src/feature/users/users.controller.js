@@ -1,15 +1,13 @@
 import { usersService } from "./repository/users.service.js";
 import { logger } from "../../utils/logger/logger.js";
 
-const postDocument = async (req, res) => {
+const postDocuments = async (req, res) => {
 	try {
 		logger.info(
 			`C: 📄 Subiendo documento para el usuario con ID ${req.params.uid}`
 		);
-		const user = await usersService.postDocument(
-			req.params.uid,
-			req.uploadedFilePath.doc
-		);
+		const user = await usersService.postDocuments(req.params.uid, req.files);
+
 		if (user) {
 			logger.info("C: ✅ Documento subido correctamente");
 			res.status(200).json({ msg: "Documento subido correctamente" });
@@ -110,7 +108,7 @@ const deleteAllUserTwoDays = async (req, res) => {
 
 export const controllerUsers = {
 	getAllUsersCondition,
-	postDocument,
+	postDocuments,
 	putUserRole,
 	putUserProfile,
 	deleteUser,

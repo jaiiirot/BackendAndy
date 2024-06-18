@@ -77,12 +77,12 @@ export default class UsersDAO {
 		}
 	}
 
-	async postDocument(uid, file) {
+	async postDocument(uid, files) {
 		try {
 			logger.info(`D: 📄 Agregando documento al usuario con ID ${uid}`);
 			return await Users.findByIdAndUpdate(
 				uid,
-				{ $push: { documents: [`comprobante-${uid}`, file] } },
+				{ $push: { documents: [...files] } },
 				{ new: true }
 			);
 		} catch (error) {

@@ -60,6 +60,13 @@ router.get(
 	controllersViewClient.CardID
 );
 
+router.get(
+	"/profile/:uid",
+	authentication,
+	authorization(["CLIENT", "PREMIUM"]),
+	controllersViewClient.Profile
+);
+
 // FORMS
 
 router.get("/login", controllersViewforms.Login);

@@ -45,6 +45,7 @@
           <li><a href="/productos/accesorio">accesorios</a></li>
           {{#if user.exist}}
           <li><a href="/pedidos/">pedidos</a></li>  
+          <li><a href="/profile/{{user.info.id}}">perfil</a></li>  
           {{else}}
           <li><a href="/contacto">contacto</a></li>
           {{/if}}

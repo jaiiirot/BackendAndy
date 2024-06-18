@@ -22,6 +22,7 @@ export const authorization = (ROLE = []) => {
 				req.infoUser = {
 					exist: true,
 					info: {
+						id: req.user._id,
 						username: req.user.username,
 						cart: req.user.cart.cid,
 						chat: req.user.messages.mid,

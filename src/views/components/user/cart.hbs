@@ -1,6 +1,6 @@
 <section>
   <header class="text-center">
-    <h1 class="text-xl font-bold text-gray-900 sm:text-3xl">Tu Carrito</h1>
+    <h1 class="text-xl font-bold text-gray-900 sm:text-3xl" >Tu Carrito</h1>
     {{#if user.permit}}
     {{else}}
       <p class="text-sm text-red-700">No se puede finalizar la compra, no hay stock de algunos productos</p>
@@ -80,25 +80,6 @@
       </div>
     </div>
   </article>
-</section>
-<section>
-  <form method="post" enctype="multipart/form-data">
-  <div>
-    <label for="file">Identificación</label>
-    <input type="file" id="file" name="documents" accept=".pdf" />
-  </div>
-  <div>
-    <label for="file">Comprobante de domicilio</label>
-    <input type="file" id="file" name="documents" accept=".pdf" />
-  </div>
-  <div>
-    <label for="file">Comprobante de estado de cuenta</label>
-    <input type="file" id="file" name="documents" accept=".pdf" />
-  </div>
-  <div>
-    <button>Enviar</button>
-  </div>
-</form>
 </section>
 
 <!-- Loader -->

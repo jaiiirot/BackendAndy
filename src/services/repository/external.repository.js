@@ -167,4 +167,22 @@ export default class ExternalRepository {
 			throw error;
 		}
 	}
+
+	async postDocumentBuffer(buffer, name) {
+		try {
+			const ramdomname = Math.random()
+				.toString(36)
+				.substring(7)
+				.toLocaleUpperCase();
+			const url = await this.fs.postFsDocuments(
+				buffer,
+				`${ramdomname}-${name}`
+			);
+			logger.info(`SX: ✅ Archivo guardado correctamente ${url}`);
+			return url;
+		} catch (error) {
+			logger.error("SX: ⚠️ Error al guardar buffer en FS:", error);
+			throw error;
+		}
+	}
 }
