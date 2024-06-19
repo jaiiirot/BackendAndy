@@ -229,7 +229,7 @@
 
 3. **MODIFICACIÓN DEL ENDPOINT DE ELIMINACIÓN DE PRODUCTOS**
 
-- [] Modificar el endpoint que elimina productos para que, en caso de que el producto pertenezca a un usuario premium, se envíe un correo indicándole que el producto fue eliminado.
+- [❌] Modificar el endpoint que elimina productos para que, en caso de que el producto pertenezca a un usuario premium, se envíe un correo indicándole que el producto fue eliminado.
 
 4. **VISTAS PARA EL FLUJO COMPLETO DE COMPRA**
 
