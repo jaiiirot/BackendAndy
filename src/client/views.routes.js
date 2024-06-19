@@ -112,5 +112,11 @@ router.get(
 	authorization(["ADMIN"]),
 	controllersViewAdmin.PanelUsers
 );
+router.get(
+	"/panel/profile/:uid",
+	authentication,
+	authorization(["ADMIN"]),
+	controllersViewAdmin.Profile
+);
 
 export default router;
