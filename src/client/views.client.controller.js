@@ -173,7 +173,7 @@ const CardID = async (req, res) => {
 				cid: totalProd._id,
 			};
 		});
-		console.log(req.infoUser);
+		// console.log(req.infoUser);
 		res.render("components/user/cart", {
 			layout: "main",
 			user: {

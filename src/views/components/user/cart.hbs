@@ -1,85 +1,111 @@
 <section>
-  <header class="text-center">
-    <h1 class="text-xl font-bold text-gray-900 sm:text-3xl" >Tu Carrito</h1>
-    {{#if user.permit}}
-    {{else}}
-      <p class="text-sm text-red-700">No se puede finalizar la compra, no hay stock de algunos productos</p>
-    {{/if}}
-  </header>
+    <header class="text-center">
+        <h1 class="text-xl font-bold text-gray-900 sm:text-3xl">Tu Carrito</h1>
+        {{#if user.permit}} {{else}}
+        <p class="text-sm text-red-700">No se puede finalizar la compra, no hay stock de algunos productos</p>
+        {{/if}}
+    </header>
 </section>
 <section class="w-11/12 m-auto mt-4 flex flex-col md:flex-row">
-  <article class="w-full">
-    <ul class="space-y-4 list-item-cart">
-      {{#each user.products_cart}}
-        <li class="flex justify-between items-center {{#if this.confirm}} text-white bg-red-500 {{/if}}" data-prod-id="{{this.pid}}">
-          <div class="flex items-center space-x-4">
-            <img
-              src="{{this.photo.[0]}}"
-              alt="{{this.title}}"
-              class="w-16 h-16 object-cover rounded"
-            />
-            <div class="flex flex-col">
-              <span class="text-sm">{{this.title}}</span>
-              <span class="text-sm"> 
-                {{#if this.confirm}}
-                  <span class="text-xs text-white">No Hay stock, stock: {{this.stock}}</span>
-                {{else}}
-                  $ <span class="price-item-prod">{{this.price}}</span>
-                {{/if}}
-              </span>
+    <article class="w-full">
+        <ul class="space-y-4 list-item-cart">
+            {{#each user.products_cart}}
+            <li class="flex justify-between items-center {{#if this.confirm}} text-white bg-red-500 {{/if}}" data-prod-id="{{this.pid}}">
+                <div class="flex items-center space-x-4">
+                    <img src="{{this.photo.[0]}}" alt="{{this.title}}" class="w-16 h-16 object-cover rounded" />
+                    <div class="flex flex-col">
+                        <span class="text-sm">{{this.title}}</span>
+                        <span class="text-sm">
+                            {{#if this.confirm}}
+                            <span class="text-xs text-white">No Hay stock, stock: {{this.stock}}</span>
+                            {{else}} $ <span class="price-item-prod">{{this.price}}</span>
+                            {{/if}}
+                        </span>
+                    </div>
+                </div>
+                <div class="flex gap-2 h-min items-center justify-end">
+                    <id class="w-[100px] flex gap-2 items-center justify-between">
+                        <span class="bg-[#000] text-white px-2 cursor-pointer" onclick="actionLess('{{this.cid}}','{{this._id}}')">-</span>
+                        <span class="text-sm quantity-item-prod" data-cid="{{this.cid}}" data-pid="{{this._id}}">{{this.quantity}}</span>
+                        <span class="bg-[#000] text-white px-2 cursor-pointer" onclick="actionAdd('{{this.cid}}','{{this._id}}')">+</span>
+                    </id>
+                    <div class="">
+                        <span class="bg-[#EF4444] text-white px-2 cursor-pointer py-2 rounded-lg">
+                            <i class="fa-solid fa-trash"></i>
+                        </span>
+                    </div>
+                </div>
+            </li>
+            {{/each}}
+        </ul>
+    </article>
+    <article class="w-full">
+      
+        <div class="w-full p-8">
+            <div class="space-y-0.5 text-sm text-gray-700">
+                <div class="flex justify-between !text-base font-medium">
+                    <h2 class="text-bold">Total</h2>
+                    <h2>$ <span id="amount-total"></span></h2>
+                </div>
             </div>
-          </div>
-          <div class="flex gap-2 h-min items-center justify-end">
-            <id class="w-[100px] flex gap-2 items-center justify-between">
-              <span
-                class="bg-[#000] text-white px-2 cursor-pointer" onclick="actionLess('{{this.cid}}','{{this._id}}')">-</span>
-              <span class="text-sm quantity-item-prod" data-cid="{{this.cid}}" data-pid="{{this._id}}">{{this.quantity}}</span>
-              <span
-                class="bg-[#000] text-white px-2 cursor-pointer" onclick="actionAdd('{{this.cid}}','{{this._id}}')">+</span>
-            </id>
-            <div class="">
-              <span
-                class="bg-[#EF4444] text-white px-2 cursor-pointer py-2 rounded-lg"
-              >
-              <i class="fa-solid fa-trash"></i>
-              </span>
+
+            <div class="flex justify-end w-full gap-4 flex-wrap">
+                <span href="#" id="delete-cart" class="block rounded bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600 cursor-pointer">
+                    Eliminar carrito
+                </span>
             </div>
-          </div>
-        </li>
-      {{/each}}
-    </ul>
-  </article>
-  <article class="w-full">
-    <div class="mt-8 flex justify-end border-t border-gray-100 pt-8">
-      <div class="w-screen max-w-lg space-y-4">
-        <div class="space-y-0.5 text-sm text-gray-700">
-          <div class="flex justify-between !text-base font-medium">
-            <h2 class="text-bold">Total</h2>
-            <h2>$ <span id="amount-total"></span></h2>
-          </div>
         </div>
 
-        <div class="flex justify-end w-full gap-4 flex-wrap">
-          <span
-            href="#"
-            id="delete-cart"
-            class="block rounded bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600 cursor-pointer"
-          >
-            Eliminar carrito
-          </span>
-          {{#if user.permit}}
-            <button
-              onclick="postTicket('{{user.info.cart}}')"
-              class="block rounded bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600"
-              id="finalize-purchase"
-            >
-              Finalizar compra
-            </button>
-          {{/if}}
+        <div class="flex flex-col justify-end border-t border-gray-100">
+            <div class="p-8 bg-white flex flex-col w-full">
+
+                <label class="text-base leading-4 text-black">Detalles de la tarjeta</label>
+                <div class="mt-2 flex-col">
+                    <div>
+                        <input class="border rounded-tl rounded-tr border-black p-4 w-full text-base leading-4 placeholder-black text-black" type="text" name="" id="" placeholder="0000 1234 6549 15151" />
+                    </div>
+                    <div class="flex-row flex">
+                        <input class="border rounded-bl border-black p-4 w-full text-base leading-4 placeholder-black text-black" type="text" name="" id="" placeholder="MM/AA" />
+                        <input class="border rounded-br border-black p-4 w-full text-base leading-4 placeholder-black text-black" type="text" name="" id="" placeholder="CVC" />
+                    </div>
+                </div>
+
+                <label class="mt-8 text-base leading-4 text-black">Nombre en la tarjeta</label>
+                <div class="mt-2 flex-col">
+                    <div>
+                        <input class="border rounded border-black p-4 w-full text-base leading-4 placeholder-black text-black" type="text" name="" id="" placeholder="Nombre en la tarjeta" />
+                    </div>
+                </div>
+
+                <label class="mt-8 text-base leading-4 text-black">País o región</label>
+                <div class="mt-2 flex-col">
+                    <div class="relative">
+                        <button id="changetext" class="text-left border rounded-tr rounded-tl border-black p-4 w-full text-base leading-4 placeholder-black text-black bg-white" type="button" name="" id="">Argentina</button>
+                        <svg onclick="showMenu(true)" id="closeIcon" class="cursor-pointer absolute top-4 right-4" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3.5 5.75L8 10.25L12.5 5.75" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <svg onclick="showMenu(true)" id="openIcon" class="cursor-pointer hidden transform rotate-180 absolute top-4 right-4" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3.5 5.75L8 10.25L12.5 5.75" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <div id="dropdown" class="mt-1 hidden absolute z-10 w-full flex bg-gray-50 justify-start flex-col text-black">
+                            <div onclick="changeText('China')" class="cursor-pointer hover:bg-black hover:text-white px-4 py-2">China</div>
+                            <div onclick="changeText('Rusia')" class="cursor-pointer hover:bg-black hover:text-white px-4 py-2">Rusia</div>
+                            <div onclick="changeText('Reino Unido')" class="cursor-pointer hover:bg-black hover:text-white px-4 py-2">Reino Unido</div>
+                        </div>
+                    </div>
+                    <input class="border rounded-bl rounded-br border-black p-4 w-full text-base leading-4 placeholder-black text-black" type="text" name="" id="" placeholder="Código Postal" />
+                </div>
+
+                {{#if user.permit}}
+                <button onclick="postTicket('{{user.info.cart}}')" class="block mt-8 rounded bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600" id="finalize-purchase">
+                    Finalizar compra
+                </button>
+                {{/if}}
+
+            </div>
         </div>
-      </div>
-    </div>
-  </article>
+
+    </article>
 </section>
 
 <!-- Loader -->
