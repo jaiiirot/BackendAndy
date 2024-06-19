@@ -66,13 +66,16 @@
             const response = await fetch(`/api/tickets/${tid}`, {
                 method: 'DELETE'
             });
-
+            
+        const loader = document.getElementById('loader');
+    	loader.classList.remove('hidden');
             if (response.ok) {
                 window.location.href = `${window.location.pathname}?status=success&id=${tid}`;
             } else {
                 window.location.href = `${window.location.pathname}?status=error&id=${tid}`;
             }
         } catch (error) {
+            loader.classList.add('hidden');
             console.error('Error:', error);
             window.location.href = `${window.location.pathname}?status=error&id=${tid}`;
         }

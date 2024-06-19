@@ -3,8 +3,10 @@ import { servicesExternal } from "../../../services/repository/external.service.
 import { logger } from "../../../utils/logger/logger.js";
 
 export default class ProductRepository {
-	constructor(dao) {
+	constructor(dao, userDao, cartDao) {
 		this.dao = dao;
+		this.userDao = userDao;
+		this.cartDao = cartDao;
 	}
 
 	getAll = async (query, options) => {
@@ -134,6 +136,9 @@ export default class ProductRepository {
 		try {
 			logger.info(`R: 🗑️ Eliminando producto con ID ${id}`);
 			const photoUrls = await this.dao.getById(id);
+
+			// const dataUser = await this.userDao.getPopulateCart();
+			// const cartsPremium = dataUser.map(user => user.cart.cid);
 
 			await Promise.all(
 				photoUrls.photo.map(async element => {
