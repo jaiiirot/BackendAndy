@@ -66,8 +66,5 @@ export const CARTS_TESTS = (http, expect, mock) => {
 
 			expect(res.status).to.equal(200);
 		});
-		after(async () => {
-			await mock.schema.Carts.deleteOne({ _id: data.user.cart.cid });
-		});
 	});
 };

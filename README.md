@@ -116,7 +116,6 @@ La API de esta aplicación incluye los siguientes endpoints principales:
 #### Usuarios:
 
 - **GET /api/users**: Obtiene la lista de usuarios.
-- **DELETE /api/users**: Elimina usuarios inactivos.
 - **POST /api/users/:uid/documents**: Sube documentos para un usuario.
 - **POST /api/users/premium/:uid**: Cambia el rol de un usuario a premium.
 - **DELETE /api/users/time**: Elimina usuarios que no se han conectado en los últimos dos días.

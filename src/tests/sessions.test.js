@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 export const SESSIONS_TESTS = (http, expect, mock) => {
-	describe("🔐 TEST SESSIONS", function () {
+	describe("🔑 TEST SESSIONS", function () {
 		it("POST: /api/sessions/register - REGISTER", async function () {
 			const res = await http
 				.post("/api/sessions/register")

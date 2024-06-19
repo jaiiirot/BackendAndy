@@ -247,13 +247,13 @@
 
 6. **VALIDACIÓN Y PRUEBAS**
 
-- [] Probar las nuevas rutas y funcionalidades para asegurar que funcionan correctamente.
-- [] Asegurarse de que la vista de administración es accesible solo para el administrador.
+- [✅] Probar las nuevas rutas y funcionalidades para asegurar que funcionan correctamente.
+- [✅] Asegurarse de que la vista de administración es accesible solo para el administrador.
 - [] Verificar que los correos se envían correctamente tanto para la eliminación de usuarios inactivos como para la eliminación de productos de usuarios premium.
-- [] Realizar pruebas de flujo de compra completo en el entorno desplegado para asegurar que todo funciona según lo esperado.
+- [✅] Realizar pruebas de flujo de compra completo en el entorno desplegado para asegurar que todo funciona según lo esperado.
 
 7. **DOCUMENTACIÓN Y ACTUALIZACIÓN DEL REPOSITORIO**
 
-- [] Actualizar la documentación del proyecto para reflejar las nuevas rutas, funcionalidades y vistas.
-- [] Asegurarse de que el código esté debidamente comentado y estructurado.
+- [✅] Actualizar la documentación del proyecto para reflejar las nuevas rutas, funcionalidades y vistas.
+- [✅] Asegurarse de que el código esté debidamente comentado y estructurado.
 - [✅] Publicar y actualizar el repositorio en GitHub.
