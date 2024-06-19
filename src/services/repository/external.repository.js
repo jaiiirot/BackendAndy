@@ -185,4 +185,33 @@ export default class ExternalRepository {
 			throw error;
 		}
 	}
+
+	async putImageBuffer(buffer, name) {
+		try {
+			const user = await this.fs.postFsProfile(buffer, name);
+			if (user) {
+				logger.info("C: ✅ Usuario actualizado correctamente");
+				return user;
+			} else {
+				logger.error("C: 🔴 Error al actualizar el usuario");
+				return null;
+			}
+		} catch (error) {
+			logger.error("C: 🔴 Error al actualizar el usuario:", error);
+			return { msg: "Error interno del servidor" };
+		}
+	}
+
+	async deleteFsDataUser(photoUser, documents) {
+		try {
+			await this.fs.deleteFsProfile(photoUser);
+			for (const doc of documents) {
+				await this.fs.deleteFsDocuments(doc.reference);
+			}
+			logger.info("SX: ✅ Datos de usuario eliminados correctamente");
+		} catch (error) {
+			logger.error("SX: ⚠️ Error al eliminar datos de usuario:", error);
+			throw error;
+		}
+	}
 }

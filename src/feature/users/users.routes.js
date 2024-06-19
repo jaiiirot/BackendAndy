@@ -36,7 +36,7 @@ router.post(
 router.put(
 	"/profile/:uid",
 	authentication,
-	authorization(["CLIENT"]),
+	authorization(["CLIENT", "PREMIUM", "ADMIN"]),
 	uploadBuffer.single("profile"),
 	controllerUsers.putUserProfile
 );

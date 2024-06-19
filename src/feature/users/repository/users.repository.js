@@ -180,11 +180,37 @@ export default class UsersRepository {
 		}
 	};
 
+	putProfileImage = async (id, buffer) => {
+		try {
+			logger.info(
+				`R: 🔄 Actualizando imagen de perfil del usuario con ID ${id}`
+			);
+			const url = await servicesExternal.putImageBuffer(
+				buffer,
+				`profile-${id}.png`
+			);
+			const user = await this.dao.putProfileImage(id, url);
+			logger.info(
+				`R: 🔄 Imagen de perfil del usuario con ID ${id} actualizada`
+			);
+			return user;
+		} catch (error) {
+			logger.error(
+				`R: 🔴 Error al actualizar la imagen de perfil del usuario: ${error.message}`
+			);
+			throw error;
+		}
+	};
+
 	delete = async id => {
 		try {
 			const user = await this.dao.getById(id);
 			await this.cartDao.delete(user.cart.cid);
 			await this.messageDao.delete(user.messages.mid);
+			await servicesExternal.deleteFsDataUser(
+				user.photo_user,
+				user.documents[0]
+			);
 			const result = await this.dao.deleteUser(id);
 			logger.info(`R: 🗑️ Usuario con ID ${id} eliminado correctamente`);
 			return result;
@@ -301,6 +327,10 @@ export default class UsersRepository {
 			response.forEach(async user => {
 				await this.cartDao.delete(user.cart.cid);
 				await this.messageDao.delete(user.messages.mid);
+				await servicesExternal.deleteFsDataUser(
+					user.photo_user,
+					user.documents[0]
+				);
 				await servicesExternal.sendMailDeleteInactive(
 					user.email,
 					"Eliminación de usuarios inactivos",

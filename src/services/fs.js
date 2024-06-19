@@ -51,11 +51,38 @@ const postFsDocuments = async (buffer, name) => {
 	}
 };
 
+const postFsProfile = async (buffer, name) => {
+	try {
+		const dir = path.join(__dirname, `public/uploads/profile`);
+		const filePath = path.join(dir, name);
+		await fs.promises.writeFile(filePath, buffer, err => {
+			if (err) {
+				logger.error("🔴 Error al escribir el archivo", err);
+			}
+		});
+		logger.info("✅ Archivo guardado correctamente");
+		return "/uploads/profile/" + name;
+	} catch (error) {
+		logger.error("🔴 Error al guardar el archivo", error);
+	}
+};
+
 const deleteFsDocuments = async name => {
 	try {
-		const fileName = name.split("/").pop();
-		const dir = path.join(__dirname, `public/uploads/documents`);
-		const filePath = path.join(dir, fileName);
+		await fs.promises.unlink(name, err => {
+			if (err) {
+				logger.error("🔴 Error al eliminar el archivo", err);
+			}
+		});
+		logger.info("✅ Archivo eliminado correctamente");
+	} catch (error) {
+		logger.error("🔴 Error al eliminar el archivo", error);
+	}
+};
+
+const deleteFsProfile = async name => {
+	try {
+		const filePath = path.join(__dirname, "public", name);
 		await fs.promises.unlink(filePath, err => {
 			if (err) {
 				logger.error("🔴 Error al eliminar el archivo", err);
@@ -70,6 +97,8 @@ const deleteFsDocuments = async name => {
 export const fsService = {
 	postFsImages,
 	postFsDocuments,
+	postFsProfile,
 	deleteFsImages,
 	deleteFsDocuments,
+	deleteFsProfile,
 };

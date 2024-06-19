@@ -137,6 +137,25 @@ export default class UsersDAO {
 		}
 	}
 
+	async putProfileImage(userId, urlFile) {
+		try {
+			logger.info(
+				`D: 🔄 Actualizando imagen de perfil del usuario con ID ${userId}`
+			);
+			return await Users.findByIdAndUpdate(
+				userId,
+				{ photo_user: urlFile },
+				{ new: true }
+			);
+		} catch (error) {
+			logger.error(
+				"D: 🔴 Error al actualizar la imagen de perfil del usuario:",
+				error
+			);
+			throw error;
+		}
+	}
+
 	async putLastConnection(userId) {
 		try {
 			logger.info(

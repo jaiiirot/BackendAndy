@@ -41,7 +41,8 @@ const putUserRole = async (req, res) => {
 const putUserProfile = async (req, res) => {
 	try {
 		logger.info(`C: 🔄 Actualizando usuario con ID ${req.params.uid}`);
-		const user = await usersService.putProfile(req.params.uid, req.body);
+		console.log(req.file);
+		const user = await usersService.putProfileImage(req.params.uid, req.file.buffer);
 		if (user) {
 			logger.info("C: ✅ Usuario actualizado correctamente");
 			res.status(200).json({ msg: "Usuario actualizado correctamente" });
