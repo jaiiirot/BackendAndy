@@ -74,39 +74,74 @@ e-commerce Ilicito es una aplicación de comercio electrónico que permite a los
   - Swagger (para documentación de la API)
 
 ## Endpoints de la API
+
 La API de esta aplicación incluye los siguientes endpoints principales:
-- **Productos**:
-  - `GET /api/products`: Obtiene la lista de productos.
-  - `POST /api/products`: Crea un nuevo producto (requiere autorización).
-  - `GET /api/products/:id`: Obtiene un producto por su ID.
-  - `PUT /api/products/:id`: Actualiza un producto por su ID (requiere autorización).
-  - `DELETE /api/products/:id`: Elimina un producto por su ID (requiere autorización).
 
-- **Mensajes**:
-  - `GET /api/messages`: Obtiene la lista de mensajes.
-  - `POST /api/messages`: Envía un nuevo mensaje (requiere autorización).
+#### Productos:
 
-- **Carritos**:
-  - `GET /api/carts`: Obtiene la lista de carritos.
-  - `POST /api/carts`: Crea un nuevo carrito.
-  - `PUT /api/carts/:cid`: Actualiza un carrito por su ID.
-  - `DELETE /api/carts/:cid`: Elimina un carrito por su ID.
-  - `POST /api/carts/:cid/purchase`: Finaliza la compra de un carrito.
+- **GET /api/products**: Obtiene la lista de productos.
+- **POST /api/products**: Crea un nuevo producto (requiere autorización).
+- **GET /api/products/:id**: Obtiene un producto por su ID.
+- **PUT /api/products/:id**: Actualiza un producto por su ID (requiere autorización).
+- **DELETE /api/products/:id**: Elimina un producto por su ID (requiere autorización).
 
-- **Sesiones**:
-  - `POST /api/sessions/login`: Inicia sesión.
-  - `POST /api/sessions/logout`: Cierra sesión.
-  - `GET /api/sessions/current`: Obtiene la información de la sesión actual en un DTO.
+#### Carritos:
 
-- **Tickets**:
-  - `GET /api/tickets`: Obtiene la lista de tickets.
-  - `POST /api/tickets`: Crea un nuevo ticket.
+- **GET /api/carts**: Obtiene la lista de carritos.
+- **POST /api/carts**: Crea un nuevo carrito.
+- **PUT /api/carts/:cid**: Actualiza un carrito por su ID.
+- **DELETE /api/carts/:cid**: Elimina un carrito por su ID.
+- **POST /api/carts/:cid/purchase**: Finaliza la compra de un carrito.
 
-- **Usuarios**:
-  - `GET /api/users`: Obtiene la lista de usuarios.
-  - `DELETE /api/users`: Elimina usuarios inactivos.
-  - `POST /api/users/:uid/documents`: Sube documentos para un usuario.
-  - `POST /api/users/premium/:uid`: Cambia el rol de un usuario a premium.
+#### Sesiones:
+
+- **POST /api/sessions/login**: Inicia sesión.
+- **POST /api/sessions/logout**: Cierra sesión.
+- **GET /api/sessions/current**: Obtiene la información de la sesión actual en un DTO.
+- **POST /api/sessions/register**: Registra un nuevo usuario.
+- **GET /api/sessions/auth/github**: Inicia la autenticación con GitHub.
+- **GET /api/sessions/auth/github/callback**: Callback de autenticación con GitHub.
+- **POST /api/sessions/forget/:email**: Solicita el restablecimiento de la contraseña.
+- **POST /api/sessions/reset/password**: Restablece la contraseña del usuario.
+
+#### Tickets:
+
+- **GET /api/tickets**: Obtiene la lista de tickets.
+- **POST /api/tickets**: Crea un nuevo ticket.
+- **GET /api/tickets/:tid**: Obtiene un ticket por su ID.
+- **PUT /api/tickets/:tid**: Actualiza un ticket por su ID.
+- **DELETE /api/tickets/:tid**: Elimina un ticket por su ID.
+
+#### Usuarios:
+
+- **GET /api/users**: Obtiene la lista de usuarios.
+- **DELETE /api/users**: Elimina usuarios inactivos.
+- **POST /api/users/:uid/documents**: Sube documentos para un usuario.
+- **POST /api/users/premium/:uid**: Cambia el rol de un usuario a premium.
+- **DELETE /api/users/time**: Elimina usuarios que no se han conectado en los últimos dos días.
+- **DELETE /api/users/:uid**: Elimina un usuario por su ID.
+- **PUT /api/users/profile/:uid**: Actualiza el perfil de un usuario.
+
+#### Mensajes:
+
+- **GET /api/messages/:mid**: Obtiene la lista de mensajes de un usuario.
+- **POST /api/messages/:mid**: Envía un nuevo mensaje.
+- **PUT /api/messages/:mid**: Actualiza un mensaje.
+- **DELETE /api/messages/:mid**: Elimina un mensaje.
+
+### Endpoints con Funciones Adicionales
+
+Estos endpoints no estaban especificados en las tareas pero añaden funcionalidad extra a la API:
+
+- **POST /api/products/mocking/productos**: Genera productos de prueba para la API.
+- **POST /api/users/:uid/documents**: Sube documentos para un usuario específico.
+- **PUT /api/users/profile/:uid**: Actualiza la imagen de perfil de un usuario.
+- **POST /api/users/documents/:uid**: Sube documentos para un usuario.
+- **PUT /api/users/premium/:uid**: Cambia el rol de un usuario a premium.
+- **POST /api/carts/:cid/productos/:pid**: Agrega un producto al carrito.
+- **GET /api/carts/:cid/productos/:pid**: Obtiene un producto específico del carrito.
+- **PUT /api/carts/:cid/productos/:pid**: Actualiza la cantidad de un producto en el carrito.
+- **DELETE /api/carts/:cid/productos/:pid**: Elimina un producto del carrito.
 
 Para obtener detalles sobre todos los endpoints disponibles y cómo usarlos, consulta la documentación de la API generada con Swagger UI.
 
