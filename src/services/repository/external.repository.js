@@ -204,9 +204,15 @@ export default class ExternalRepository {
 
 	async deleteFsDataUser(photoUser, documents) {
 		try {
-			await this.fs.deleteFsProfile(photoUser);
-			for (const doc of documents) {
-				await this.fs.deleteFsDocuments(doc.reference);
+			console.log("photoUser", photoUser);
+			console.log("documents", documents);
+			if (photoUser !== "/image/sinavatar.png") {
+				await this.fs.deleteFsProfile(photoUser);
+			}
+			if (documents) {
+				for (const doc of documents) {
+					await this.fs.deleteFsDocuments(doc.reference);
+				}
 			}
 			logger.info("SX: ✅ Datos de usuario eliminados correctamente");
 		} catch (error) {

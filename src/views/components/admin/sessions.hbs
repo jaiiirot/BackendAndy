@@ -54,7 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const uid = button.dataset.uid;
             const roleSelect = button.closest('tr').querySelector('.role-select');
             const selectedRole = roleSelect.value;
-
+            const loader = document.getElementById('loader');
+            loader.classList.remove('hidden');
             try {
                 const response = await fetch(`/api/users/premium/${uid}`, {
                     method: 'PUT',
@@ -62,14 +63,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({ role: selectedRole })
-                });
-
+                });         
                 if (response.ok) {
+                loader.classList.add('hidden');
                     location.href = window.location.pathname + `?status=success`;
                 } else {
+                    loader.classList.add('hidden');
                     location.href = window.location.pathname + `?status=error`;
                 }
             } catch (error) {
+                loader.classList.add('hidden');
                 location.href = window.location.pathname + `?status=error`;
             }
         });
@@ -77,18 +80,23 @@ document.addEventListener('DOMContentLoaded', () => {
     deleteButtons.forEach(button => {
         button.addEventListener('click', async () => {
             const uid = button.dataset.uid;
-
+            const loader = document.getElementById('loader');
+            loader.classList.remove('hidden');
+            
             try {
                 const response = await fetch(`/api/users/${uid}`, {
                     method: 'DELETE'
                 });
-
+                
                 if (response.ok) {
+                    loader.classList.add('hidden');
                     location.href = window.location.pathname + `?status=success`;
                 } else {
+                    loader.classList.add('hidden');
                     location.href = window.location.pathname + `?status=error`;
                 }
             } catch (error) {
+                loader.classList.add('hidden');
                 location.href = window.location.pathname + `?status=error`;
             }
         });

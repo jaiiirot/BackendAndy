@@ -23,6 +23,18 @@ export default class UsersDAO {
 		}
 	}
 
+	async getPopulateCart() {
+		try {
+			logger.info(`D: 🔍 Obteniendo usuarios con rol PREMIUM`);
+			return await Users.find({ role: "PREMIUM" }, { password: 0 })
+				.populate("cart.cid")
+				.lean();
+		} catch (error) {
+			logger.error("D: 🔴 Error al obtener usuarios con rol PREMIUM:", error);
+			throw error;
+		}
+	}
+
 	async getByEmail(email) {
 		try {
 			logger.info(`D: 🔍 Obteniendo usuario con correo electrónico ${email}`);

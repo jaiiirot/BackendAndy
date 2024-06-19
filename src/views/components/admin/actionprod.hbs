@@ -93,19 +93,22 @@
     const productId = new URLSearchParams(window.location.search).get("pid");
     formData.append("owner", uid);
     try {
+        const loader = document.getElementById('loader');
+    	loader.classList.remove('hidden');
         const response = await fetch(`/api/products/${productId}`, {
             method: "PUT",
             body: formData,
         });
-        console.log(response);
         if (response.ok) {
-            alert("Producto actualizado exitosamente");
+            loader.classList.add('hidden');
             window.location.href = "/panel/productos";
         } else {
+            loader.classList.add('hidden');
             console.log("Error al actualizar el producto:", response.statusText);
             // window.location.href = response.url;
         }
     } catch (error) {
+        loader.classList.add('hidden');
         console.error("Error al actualizar el producto:", error);
     }
 	})
@@ -115,17 +118,21 @@
         const formElements = document.getElementById("product-form").elements;
         formData.append("owner", uid);
         try {
+            const loader = document.getElementById('loader');
+            loader.classList.remove('hidden');
             const response = await fetch(`/api/products/`, {
                 method: "POST",
                 body: formData,
             });
             if (response.ok) {
-                alert("Producto agregado exitosamente");
+                loader.classList.add('hidden');
                 window.location.href = "/panel/productos";
             } else {
+                loader.classList.add('hidden');
                 console.error("Error al agregar el producto:", response.statusText);
             }
         } catch (error) {
+            loader.classList.add('hidden');
             console.error("Error al agregar el producto:", error);
             window.location.href = "/panel/productos?msg=error";
         }

@@ -26,7 +26,6 @@ router.post(
 	"/",
 	authentication,
 	authorization(["ADMIN"]),
-	// fsSaveImagesProductsBuffer,
 	uploadBuffer.array("photo", 4),
 	controllersProducts.postProduct
 );
@@ -42,7 +41,6 @@ router.put(
 	"/:pid",
 	authentication,
 	authorization(["ADMIN"]),
-	// fsSaveImagesProductsBuffer,
 	uploadBuffer.array("photo", 4),
 	controllersProducts.putProduct
 );

@@ -3,8 +3,6 @@ import { logger } from "../../utils/logger/logger.js";
 
 const postDocuments = async (req, res) => {
 	try {
-		console.log("DOCUMENTOSSSSSSSSSSSSSSSSSSSSSSSSSSS");
-		console.log(req.files);
 		logger.info(
 			`C: 📄 Subiendo documento para el usuario con ID ${req.params.uid}`
 		);
