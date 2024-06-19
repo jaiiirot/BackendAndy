@@ -233,17 +233,17 @@
 
 4. **VISTAS PARA EL FLUJO COMPLETO DE COMPRA**
 
-- [] Finalizar las vistas necesarias para realizar el flujo completo de compra. Esto puede incluir:
-  - Página de listado de productos.
-  - Página de detalles del producto.
-  - Página de carrito de compras.
-  - Página de checkout (pago y confirmación).
-  - Página de confirmación de pedido.
+- [✅] Finalizar las vistas necesarias para realizar el flujo completo de compra. Esto puede incluir:
+  - [✅] Página de listado de productos.
+  - [✅] Página de detalles del producto.
+  - [✅] Página de carrito de compras.
+  - [✅] Página de checkout (pago y confirmación).
+  - [✅] Página de confirmación de pedido.
 
 5. **DESPLIEGUE DEL APLICATIVO**
 
-- [] Realizar el despliegue de tu aplicativo en la plataforma de tu elección (preferentemente Railway.app).
-- [] Corroborar que se puede llevar a cabo un proceso de compra completo en el entorno desplegado.
+- [✅] Realizar el despliegue de tu aplicativo en la plataforma de tu elección (preferentemente Railway.app).
+- [✅] Corroborar que se puede llevar a cabo un proceso de compra completo en el entorno desplegado.
 
 6. **VALIDACIÓN Y PRUEBAS**
 
@@ -256,4 +256,4 @@
 
 - [] Actualizar la documentación del proyecto para reflejar las nuevas rutas, funcionalidades y vistas.
 - [] Asegurarse de que el código esté debidamente comentado y estructurado.
-- [] Publicar y actualizar el repositorio en GitHub.
+- [✅] Publicar y actualizar el repositorio en GitHub.

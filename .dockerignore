@@ -1,8 +1,16 @@
+
 ./node_modules
+
 ./.prettierrc
+
 ./.gitignore
+
 ./.eslintrc.js
+
 ./TODO.md
+
 ./.env.dev
+
 ./.env.*
+
 ./.errors.log
