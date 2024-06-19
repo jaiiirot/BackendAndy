@@ -1,5 +1,5 @@
 <section class="h-max">
-   <section class="relative w-full p-2">
+   <section class="relative w-full h-max p-2">
       <div class="sticky top-0 bg-white p-2 w-full z-[10]">
          <div id="filter-categories" class="flex flex-col items-center justify-center md:flex-row">
             <h6 class="font-bold text-lg">Filtrar</h6>
@@ -48,7 +48,7 @@
             </ul>
          </div>
       </div>
-      <div class="grid grid-cols-2 w-full h-full sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-5 gap-2">
+      <div class="grid grid-cols-2 w-full h-max sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-5 gap-2">
          {{#each user.products}}
          <div class="h-max">
             {{> user/cardproduct _id=this._id title=this.title price=this.price photo=this.photo }}

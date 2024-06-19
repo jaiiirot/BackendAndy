@@ -54,10 +54,10 @@
   </style>
 </head>
 
-<body>
+<body class="h-full">
   {{>user/header user=user}}
-  <main class="relative py-2 h-full">
-    {{{body}}}
+  <main class="relative py-2 h-max">
+      {{{body}}}
     {{#if user.exist}}
       {{>user/circlechat}}
     {{/if}}
