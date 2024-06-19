@@ -143,7 +143,7 @@ const Profile = async (req, res) => {
 			datauser._id.toString() === req.infoUser.info.id.toString()
 		) {
 			res.render("components/profile", {
-				layout: "main",
+				layout: "admin",
 				user: {
 					title: "Perfil",
 					...req.infoUser,
