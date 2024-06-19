@@ -201,7 +201,7 @@ const Profile = async (req, res) => {
 			datauser.email === req.infoUser.info.email &&
 			datauser._id.toString() === req.infoUser.info.id.toString()
 		) {
-			res.render("components/user/profile", {
+			res.render("components/profile", {
 				layout: "main",
 				user: {
 					title: "Perfil",

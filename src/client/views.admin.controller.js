@@ -133,9 +133,40 @@ const PanelUsers = async (req, res) => {
 	}
 };
 
+const Profile = async (req, res) => {
+	try {
+		const uid = req.params.uid;
+		const datauser = await usersService.getById(uid);
+		// console.log(datauser, req.infoUser);
+		if (
+			datauser.email === req.infoUser.info.email &&
+			datauser._id.toString() === req.infoUser.info.id.toString()
+		) {
+			res.render("components/profile", {
+				layout: "main",
+				user: {
+					title: "Perfil",
+					...req.infoUser,
+					data: datauser,
+					role: datauser.role === "CLIENT",
+				},
+			});
+		} else {
+			res.status(401).render("404");
+		}
+		// logger.info("🟢 Carrito renderizado con éxito");
+	} catch (error) {
+		logger.warning(`🔴 Error al procesar la solicitud: ${error.message}`, {
+			stack: error.stack,
+		});
+		res.status(500).render("404");
+	}
+};
+
 export const controllersViewAdmin = {
 	Panel,
 	PanelProducts,
 	PanelMessages,
 	PanelUsers,
+	Profile,
 };

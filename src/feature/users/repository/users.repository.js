@@ -96,7 +96,7 @@ export default class UsersRepository {
 						file.buffer,
 						`${iden[i]}-${uid}.pdf`
 					);
-					console.log({ name: `${iden[i]}.${uid}`, reference: url });
+					// console.log({ name: `${iden[i]}.${uid}`, reference: url });
 					documentsUrl.push({ name: `${iden[i]}${uid}`, reference: url });
 				}
 				if (!documentsUrl || documentsUrl.length < 3) {
