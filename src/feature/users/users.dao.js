@@ -187,8 +187,8 @@ export default class UsersDAO {
 
 	async deleteInactiveUsers() {
 		try {
-			logger.info("D: 🔄 Eliminando usuarios inactivos");
-			const threshold = new Date(Date.now() - 60 * 60 * 1000); // 1 hora
+			console.log("D: 🔄 Eliminando usuarios inactivos");
+			const threshold = new Date(Date.now() - 48 * 60 * 60 * 1000); // 1 hora
 			const email = await Users.find({
 				lastConnection: { $lt: threshold },
 				role: ["CLIENT", "PREMIUM"],
