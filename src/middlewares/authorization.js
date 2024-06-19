@@ -13,6 +13,7 @@ export const authorization = (ROLE = []) => {
 				req.infoUser = {
 					exist: true,
 					info: {
+						id: req.user._id,
 						username: req.user.username,
 						chat: req.user.messages.mid,
 						email: req.user.email,
