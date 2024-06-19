@@ -48,10 +48,9 @@ const getProductToCart = async (req, res) => {
 const getPurchaseCart = async (req, res) => {
 	try {
 		const { cid } = req.params;
-		const hostmorepost = req.rawHeaders[1];
 		logger.info(`C: 🛒 Realizando compra del carrito con ID ${cid}`);
 		const ticket = await cartsService.getPurchaseCart(
-			hostmorepost,
+			req.rawHeaders[1],
 			cid,
 			req.infoUser.info.email
 		);

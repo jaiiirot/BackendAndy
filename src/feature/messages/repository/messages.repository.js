@@ -135,13 +135,13 @@ export default class MessagesRepository {
 		}
 	}
 
-	async sendMailPasswordConfirmed(email, username) {
+	async sendMailPasswordConfirmed(host, email, username) {
 		try {
 			await servicesExternal.sendMailPasswordConfirmed(
 				email,
 				`Contraseña actualizada - ${username}`,
 				"Contraseña actualizada",
-				emailPasswordChangeConfirmation("localhost:8080", username)
+				emailPasswordChangeConfirmation(host, username)
 			);
 			logger.info(
 				`R: 📧 Correo de confirmación de contraseña enviado a ${email}.`

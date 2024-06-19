@@ -16,13 +16,13 @@ e-commerce Ilicito es una aplicación de comercio electrónico que permite a los
 
 3. Crea un archivo `.env` en el directorio raíz del proyecto y define las variables de entorno necesarias. Aquí tienes un ejemplo:
    ```plaintext
+   # Asegúrate de configurar estas credenciales antes de iniciar la aplicación
    PORT=<tu_puerto>
    DB_MONGO=<tu_puerto_mongo>
    SECRET_COOKIE=<tu_secret_cookie>
    SECRET_SESSION=<tu_secret_session>
    TTL=<tu_ttl>
 
-   # Asegúrate de configurar estas credenciales antes de iniciar la aplicación
    # GitHub OAuth
    GITHUB_CLIENT_ID=<tu_id_client>
    GITHUB_CLIENT_SECRET=<tu_secreto_de_cliente_github>

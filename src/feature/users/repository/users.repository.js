@@ -316,7 +316,7 @@ export default class UsersRepository {
 		}
 	};
 
-	deleInactiveUsers = async () => {
+	deleInactiveUsers = async host => {
 		try {
 			const response = await this.dao.deleteInactiveUsers();
 			if (!response) {
@@ -335,7 +335,7 @@ export default class UsersRepository {
 					user.email,
 					"Eliminación de usuarios inactivos",
 					"Eliminación de usuarios inactivos",
-					emailDeleteCountInactive("localhost:8080", user.email)
+					emailDeleteCountInactive(host, user.email)
 				);
 				logger.info(
 					`R: 📧 Correo de eliminación de usuario inactivo enviado ${user.username}`

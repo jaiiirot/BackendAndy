@@ -65,11 +65,10 @@ const logout = async (req, res) => {
 
 const forgetPassword = async (req, res) => {
 	try {
-		const hostmoreport = req.rawHeaders[1];
 		const result = await usersService.getByEmail(req.params.email);
 		if (result) {
 			const { datatoken } = await messagesService.postMessageByEmail(
-				hostmoreport,
+				req.rawHeaders[1],
 				result,
 				req.params.email
 			);
@@ -95,7 +94,11 @@ const resetPassword = async (req, res) => {
 			logger.warning(`CS: ⚠️ ${result.msg}`);
 			res.status(400).json({ msg: result.msg });
 		} else {
-			messagesService.sendMailPasswordConfirmed(result.email, result.username);
+			messagesService.sendMailPasswordConfirmed(
+				req.rawHeaders[1],
+				result.email,
+				result.username
+			);
 			logger.info("CS: 🔐 Contraseña actualizada correctamente");
 			res.status(200).json({ msg: "Contraseña actualizada correctamente" });
 		}

@@ -128,7 +128,7 @@ export const emailPasswordChangeConfirmation = (host, email) => {
             <div style="margin-bottom:25px">
                 <div>
                     <h1 style="margin:5px 0;padding: 0;">Cambio de contraseña confirmado</h1>
-                    <h4 style="margin:0;padding: 0;">Hola,</h4>
+                    <h4 style="margin:0;padding: 0;">Hola,${email}</h4>
                     <p style="margin:0;padding 0;">Hemos recibido su solicitud de cambio de contraseña. Ahora puede disfrutar de su experiencia de compra en nuestra plataforma.</p>
                 </div>
                 <div>

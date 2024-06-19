@@ -113,31 +113,15 @@ if (cartId) {
 				}),
 			}
 		);
-		console.log(response);
 		if (response.ok) {
-			Swal.fire({
-				title: "Producto agregado al carrito",
-				icon: "success",
-				showConfirmButton: false,
-				timer: 1500,
-			});
+      ToastNotification("Producto agregado al carrito", "success");
 			reloadCart();
 		} else {
-			Swal.fire({
-				title: "Error al agregar el producto al carrito",
-				icon: "error",
-				showConfirmButton: false,
-				timer: 1500,
-			});
+			ToastNotification("Error al agregar el producto al carrito", "error");
 			console.error(response);
 		}
 } else {
-	Swal.fire({
-		title: "Primero debes iniciar sesión",
-		icon: "warning",
-		showConfirmButton: false,
-		timer: 1500,
-	});
+  ToastNotification("Debes iniciar sesión para agregar productos al carrito");
 }
 	};
 </script>

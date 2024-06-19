@@ -96,7 +96,7 @@ const getAllUsersCondition = async (req, res) => {
 
 const deleteAllUserTwoDays = async (req, res) => {
 	try {
-		const response = await usersService.deleInactiveUsers();
+		const response = await usersService.deleInactiveUsers(req.rawHeaders[1]);
 		if (response) {
 			logger.info("C: 🗑 Lo usuarios fueron eliminados");
 			res
